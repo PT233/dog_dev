@@ -41,6 +41,7 @@ Core/Src/gpio.c \
 Core/Src/freertos.c \
 Core/Src/dma.c \
 Core/Src/tim.c \
+Core/Src/servo_driver.c \
 Core/Src/usart.c \
 Core/Src/iwdg.c \
 Core/Src/stm32f1xx_it.c \

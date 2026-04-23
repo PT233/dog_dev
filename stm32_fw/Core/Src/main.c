@@ -28,6 +28,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "servo_driver.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,6 +39,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define SERVO_SWING_TEST 1
 
 /* USER CODE END PD */
 
@@ -98,8 +102,22 @@ int main(void)
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 
+#if SERVO_SWING_TEST
+  Servo_Init();
+#endif
+
   /* USER CODE END 2 */
 
+#if SERVO_SWING_TEST
+  while (1)
+  {
+    Servo_SetAngle(0, 0.0f);
+    HAL_Delay(1000);
+
+    Servo_SetAngle(0, 180.0f);
+    HAL_Delay(1000);
+  }
+#else
   /* Init scheduler */
   osKernelInitialize();  /* Call init function for freertos objects (in cmsis_os2.c) */
   MX_FREERTOS_Init();
@@ -117,6 +135,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
   }
+#endif
   /* USER CODE END 3 */
 }
 
