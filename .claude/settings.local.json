@@ -5,7 +5,12 @@
       "Bash(ros2 pkg *)",
       "Bash(colcon build *)",
       "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_read.sh)",
-      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_read.sh)"
+      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_read.sh)",
+      "Bash(git reset *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(g++ -Wall -Wextra tests/test_uart_frame_parser.cpp shared/uart_protocol.c -I. -o tests/test_frame_parser)",
+      "Bash(./tests/test_frame_parser)"
     ]
   }
 }

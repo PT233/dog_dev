@@ -1,0 +1,38 @@
+[0.175s] Invoking command in '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge -- -j16 -l16
+[0.880s] [ 25%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o
+[0.888s] [ 50%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o
+[0.914s] [ 75%] Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o
+[1.306s] /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp: In member function ‘void FrameParser::OnFrameComplete(uint8_t, uint8_t)’:
+[1.310s] /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:94:43: warning: unused parameter ‘crc_h’ [-Wunused-parameter]
+[1.312s]    94 | void FrameParser::OnFrameComplete(uint8_t crc_h, uint8_t crc_l) {
+[1.314s]       |                                   ~~~~~~~~^~~~~
+[1.316s] /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:94:58: warning: unused parameter ‘crc_l’ [-Wunused-parameter]
+[1.319s]    94 | void FrameParser::OnFrameComplete(uint8_t crc_h, uint8_t crc_l) {
+[1.321s]       |                                                  ~~~~~~~~^~~~~
+[6.130s] [100%] Linking CXX executable uart_bridge_node
+[7.752s] [100%] Built target uart_bridge_node
+[7.828s] Invoked command in '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge -- -j16 -l16
+[7.902s] Invoking command in '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge
+[7.964s] -- Install configuration: ""
+[8.070s] -- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/lib/uart_bridge/uart_bridge_node
+[8.346s] -- Set non-toolchain portion of runtime path of "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/lib/uart_bridge/uart_bridge_node" to ""
+[8.383s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/config
+[8.433s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/config/uart_bridge.yaml
+[8.459s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/launch
+[8.520s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/launch/uart_bridge.launch.py
+[8.583s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/package_run_dependencies/uart_bridge
+[8.647s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/parent_prefix_path/uart_bridge
+[8.676s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/ament_prefix_path.sh
+[8.715s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/ament_prefix_path.dsv
+[8.741s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/path.sh
+[8.795s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/path.dsv
+[8.845s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.bash
+[8.888s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.sh
+[8.910s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.zsh
+[8.951s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.dsv
+[8.983s] -- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/package.dsv
+[9.140s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/packages/uart_bridge
+[9.176s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/cmake/uart_bridgeConfig.cmake
+[9.211s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/cmake/uart_bridgeConfig-version.cmake
+[9.258s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/package.xml
+[9.277s] Invoked command in '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge

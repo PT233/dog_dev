@@ -1,0 +1,151 @@
+[0.000000] (-) TimerEvent: {}
+[0.000945] (-) JobUnselected: {'identifier': 'robot_interfaces'}
+[0.004260] (uart_bridge) JobQueued: {'identifier': 'uart_bridge', 'dependencies': OrderedDict()}
+[0.005424] (uart_bridge) JobStarted: {'identifier': 'uart_bridge'}
+[0.070939] (uart_bridge) JobProgress: {'identifier': 'uart_bridge', 'progress': 'cmake'}
+[0.086753] (-) TimerEvent: {}
+[0.126565] (uart_bridge) JobProgress: {'identifier': 'uart_bridge', 'progress': 'build'}
+[0.137542] (uart_bridge) Command: {'cmd': ['/usr/bin/cmake', '--build', '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge', '--', '-j16', '-l16'], 'cwd': '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'HTTPS_PROXY': 'http://127.0.0.1:7897', 'no_proxy': '172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>', 'USER': 'peter', 'CLAUDE_CODE_ENTRYPOINT': 'cli', 'GIT_EDITOR': 'true', 'ALLUSERSPROFILE': '/opt/MVS/MVFG', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/32:', 'HOME': '/home/peter', 'CONDA_SHLVL': '0', 'OLDPWD': '/home/peter', 'NO_PROXY': '172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', '_CE_M': '', 'WSL_DISTRO_NAME': 'Ubuntu-24.04', '_CONDA_ROOT': '/home/peter/anaconda3', 'NVM_DIR': '/home/peter/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'WAYLAND_DISPLAY': 'wayland-0', 'https_proxy': 'http://127.0.0.1:7897', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'peter', 'NAME': 'DESKTOP-SQLKBKN', 'WSL_INTEROP': '/run/WSL/2776_interop', 'http_proxy': 'http://127.0.0.1:7897', 'PULSE_SERVER': 'unix:/mnt/wslg/PulseServer', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm-256color', 'OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE': 'delta', '_CE_CONDA': '', 'MVCAM_SDK_PATH': '/opt/MVS', 'PATH': '/home/peter/.local/bin:/opt/ros/jazzy/bin:/home/peter/.claude/bin:/home/peter/anaconda3/condabin:/home/peter/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_2.6.1.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Razer Chroma SDK/bin:/mnt/c/Program Files/Razer Chroma SDK/bin:/mnt/e/development/Android/sdk/emulator:/mnt/e/development/Android/sdk/platform-tools:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win32_i86:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win64_x64:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/e/texlive/2025/bin/windows:/mnt/c/Program Files/usbipd-win/:/mnt/c/Program Files/dotnet/:/mnt/e/MATLAB/R2024a/runtime/win64:/mnt/e/MATLAB/R2024a/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/e/OpenOCD-20250710-0.12.0/bin:/mnt/e/cursor/resources/app/bin:/mnt/c/Program Files/Microsoft SQL Server/170/Tools/Binn/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/mingw64/bin:/mnt/e/AOMEI/AOMEI Backupper/6.20.0:/mnt/e/gstreamer/1.0/msvc_x86_64/bin:/mnt/e/ffmpeg-master-latest-win64-lgpl-shared/bin:/mnt/e/Git/cmd:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/e/Java/jdk-26/bin:/mnt/c/Windows/system32/config/systemprofile/AppData/Local/Microsoft/WindowsApps:/mnt/c/Windows/system32/config/systemprofile/.dotnet/tools:/mnt/c/Program Files (x86)/Razer/ChromaBroadcast/bin:/mnt/c/Program Files/Razer/ChromaBroadcast/bin:/mnt/e/Keil_v5/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/e/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Users/Pt/AppData/Local/Programs/Python/Launcher/:/mnt/e/miniAnaconda3:/mnt/e/miniAnaconda3/Library/mingw-w64/bin:/mnt/e/miniAnaconda3/Library/usr/bin:/mnt/e/miniAnaconda3/Library/bin:/mnt/e/miniAnaconda3/Scripts:/mnt/c/Users/Pt/AppData/Local/Microsoft/WindowsApps:/mnt/e/Microsoft VS Code/bin:/mnt/e/bandzip/:/mnt/e/PyCharm 2025.2.0.1/bin:/mnt/e/Antigravity/bin:/mnt/e/CLion 2025.3/bin:/mnt/c/Users/Pt/.dotnet/tools:/mnt/c/Users/Pt/AppData/Local/Microsoft/WinGet/Links:/mnt/c/Program Files/PowerShell/7:/mnt/c/Program Files (x86)/Razer Chroma SDK/bin:/mnt/c/Program Files/Razer Chroma SDK/bin:/mnt/e/development/Android/sdk/emulator:/mnt/e/development/Android/sdk/platform-tools:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win32_i86:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win64_x64:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/e/texlive/2025/bin/windows:/mnt/c/Program Files/usbipd-win/:/mnt/c/Program Files/dotnet/:/mnt/e/MATLAB/R2024a/runtime/win64:/mnt/e/MATLAB/R2024a/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/e/OpenOCD-20250710-0.12.0/bin:/mnt/e/cursor/resources/app/bin:/mnt/c/Program Files/Microsoft SQL Server/170/Tools/Binn/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/mingw64/bin:/mnt/e/AOMEI/AOMEI Backupper/6.20.0:/mnt/e/gstreamer/1.0/msvc_x86_64/bin:/mnt/e/ffmpeg-master-latest-win64-lgpl-shared/bin:/mnt/e/Git/cmd:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/e/Java/jdk-26/bin:/mnt/c/Windows/system32/config/systemprofile/AppData/Local/Microsoft/WindowsApps:/mnt/c/Windows/system32/config/systemprofile/.dotnet/tools:/mnt/c/Program Files (x86)/Razer/ChromaBroadcast/bin:/mnt/c/Program Files/Razer/ChromaBroadcast/bin:/mnt/e/Keil_v5/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/e/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Users/Pt/AppData/Local/Programs/Python/Launcher/:/mnt/e/miniAnaconda3:/mnt/e/miniAnaconda3/Library/mingw-w64/bin:/mnt/e/miniAnaconda3/Library/usr/bin:/mnt/e/miniAnaconda3/Library/bin:/mnt/e/miniAnaconda3/Scripts:/mnt/c/Users/Pt/AppData/Local/Microsoft/WindowsApps:/mnt/e/Microsoft VS Code/bin:/mnt/e/bandzip/:/mnt/e/PyCharm 2025.2.0.1/bin:/mnt/e/CLion 2025.3/bin:/mnt/c/Users/Pt/.dotnet/tools:/mnt/c/Users/Pt/AppData/Local/Microsoft/WinGet/Links:/mnt/c/Users/Pt/AppData/Local/Microsoft/WinGet/Packages/Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe:/mnt/c/Users/Pt/.local/bin:/snap/bin:/usr/local/qemu/mini2440/bin:/home/peter/.local/bin:/home/peter/.local/bin', 'MVCAM_GENICAM_CLPROTOCOL': '/opt/MVS/lib/CLProtocol', 'COREPACK_ENABLE_AUTO_PIN': '0', 'XDG_RUNTIME_DIR': '/run/user/1000/', 'DISPLAY': ':0', 'NoDefaultCurrentDirectoryInExePath': '1', 'LANG': 'C.UTF-8', 'ZH_CN_REAL_CLAUDE': '/usr/local/bin/claude', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CONDA_PYTHON_EXE': '/home/peter/anaconda3/bin/python', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CLAUDECODE': '1', '_CONDA_EXE': '/home/peter/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'PWD': '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge', 'CONDA_EXE': '/home/peter/anaconda3/bin/conda', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'CLAUDE_CODE_EXECPATH': '/usr/local/lib/node_modules/@anthropic-ai/claude-code/bin/claude.exe', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'HTTP_PROXY': 'http://127.0.0.1:7897', 'MVCAM_SDK_VERSION': '', 'COLCON': '1', 'WSL2_GUI_APPS_ENABLED': '1', 'HOSTTYPE': 'x86_64', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy', 'MVCAM_COMMON_RUNENV': '/opt/MVS/lib', 'WSLENV': ''}), 'shell': False}
+[0.186843] (-) TimerEvent: {}
+[0.288436] (-) TimerEvent: {}
+[0.388970] (-) TimerEvent: {}
+[0.489535] (-) TimerEvent: {}
+[0.590339] (-) TimerEvent: {}
+[0.691415] (-) TimerEvent: {}
+[0.791904] (-) TimerEvent: {}
+[0.884305] (uart_bridge) StdoutLine: {'line': b'[ 25%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o\n'}
+[0.892187] (uart_bridge) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o\n'}
+[0.894232] (-) TimerEvent: {}
+[0.916977] (uart_bridge) StdoutLine: {'line': b'[ 75%] Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o\n'}
+[0.994359] (-) TimerEvent: {}
+[1.095034] (-) TimerEvent: {}
+[1.195585] (-) TimerEvent: {}
+[1.296307] (-) TimerEvent: {}
+[1.310325] (uart_bridge) StderrLine: {'line': b'/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp: In member function \xe2\x80\x98void FrameParser::OnFrameComplete(uint8_t, uint8_t)\xe2\x80\x99:\n'}
+[1.313760] (uart_bridge) StderrLine: {'line': b'/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:94:43: warning: unused parameter \xe2\x80\x98crc_h\xe2\x80\x99 [-Wunused-parameter]\n'}
+[1.316146] (uart_bridge) StderrLine: {'line': b'   94 | void FrameParser::OnFrameComplete(uint8_t crc_h, uint8_t crc_l) {\n'}
+[1.318684] (uart_bridge) StderrLine: {'line': b'      |                                   ~~~~~~~~^~~~~\n'}
+[1.320903] (uart_bridge) StderrLine: {'line': b'/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:94:58: warning: unused parameter \xe2\x80\x98crc_l\xe2\x80\x99 [-Wunused-parameter]\n'}
+[1.323017] (uart_bridge) StderrLine: {'line': b'   94 | void FrameParser::OnFrameComplete(uint8_t crc_h, uint8_t crc_l) {\n'}
+[1.325757] (uart_bridge) StderrLine: {'line': b'      |                                                  ~~~~~~~~^~~~~\n'}
+[1.396438] (-) TimerEvent: {}
+[1.497352] (-) TimerEvent: {}
+[1.598441] (-) TimerEvent: {}
+[1.699481] (-) TimerEvent: {}
+[1.800929] (-) TimerEvent: {}
+[1.901604] (-) TimerEvent: {}
+[2.002117] (-) TimerEvent: {}
+[2.102940] (-) TimerEvent: {}
+[2.203450] (-) TimerEvent: {}
+[2.304224] (-) TimerEvent: {}
+[2.405144] (-) TimerEvent: {}
+[2.505588] (-) TimerEvent: {}
+[2.606207] (-) TimerEvent: {}
+[2.706939] (-) TimerEvent: {}
+[2.807515] (-) TimerEvent: {}
+[2.908114] (-) TimerEvent: {}
+[3.008737] (-) TimerEvent: {}
+[3.109444] (-) TimerEvent: {}
+[3.210202] (-) TimerEvent: {}
+[3.310744] (-) TimerEvent: {}
+[3.411264] (-) TimerEvent: {}
+[3.511912] (-) TimerEvent: {}
+[3.612673] (-) TimerEvent: {}
+[3.713288] (-) TimerEvent: {}
+[3.813759] (-) TimerEvent: {}
+[3.914187] (-) TimerEvent: {}
+[4.014671] (-) TimerEvent: {}
+[4.115209] (-) TimerEvent: {}
+[4.215822] (-) TimerEvent: {}
+[4.316382] (-) TimerEvent: {}
+[4.417219] (-) TimerEvent: {}
+[4.518022] (-) TimerEvent: {}
+[4.618622] (-) TimerEvent: {}
+[4.719213] (-) TimerEvent: {}
+[4.819727] (-) TimerEvent: {}
+[4.920520] (-) TimerEvent: {}
+[5.021167] (-) TimerEvent: {}
+[5.121783] (-) TimerEvent: {}
+[5.222542] (-) TimerEvent: {}
+[5.323052] (-) TimerEvent: {}
+[5.423654] (-) TimerEvent: {}
+[5.524186] (-) TimerEvent: {}
+[5.624667] (-) TimerEvent: {}
+[5.725174] (-) TimerEvent: {}
+[5.825893] (-) TimerEvent: {}
+[5.926496] (-) TimerEvent: {}
+[6.027064] (-) TimerEvent: {}
+[6.127724] (-) TimerEvent: {}
+[6.134473] (uart_bridge) StdoutLine: {'line': b'[100%] Linking CXX executable uart_bridge_node\n'}
+[6.227848] (-) TimerEvent: {}
+[6.328530] (-) TimerEvent: {}
+[6.429495] (-) TimerEvent: {}
+[6.530303] (-) TimerEvent: {}
+[6.631029] (-) TimerEvent: {}
+[6.732282] (-) TimerEvent: {}
+[6.833073] (-) TimerEvent: {}
+[6.933720] (-) TimerEvent: {}
+[7.034328] (-) TimerEvent: {}
+[7.135278] (-) TimerEvent: {}
+[7.235930] (-) TimerEvent: {}
+[7.336856] (-) TimerEvent: {}
+[7.437521] (-) TimerEvent: {}
+[7.538132] (-) TimerEvent: {}
+[7.639217] (-) TimerEvent: {}
+[7.739727] (-) TimerEvent: {}
+[7.757047] (uart_bridge) StdoutLine: {'line': b'[100%] Built target uart_bridge_node\n'}
+[7.833108] (uart_bridge) CommandEnded: {'returncode': 0}
+[7.839837] (-) TimerEvent: {}
+[7.855294] (uart_bridge) JobProgress: {'identifier': 'uart_bridge', 'progress': 'install'}
+[7.905821] (uart_bridge) Command: {'cmd': ['/usr/bin/cmake', '--install', '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge'], 'cwd': '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'HTTPS_PROXY': 'http://127.0.0.1:7897', 'no_proxy': '172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>', 'USER': 'peter', 'CLAUDE_CODE_ENTRYPOINT': 'cli', 'GIT_EDITOR': 'true', 'ALLUSERSPROFILE': '/opt/MVS/MVFG', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib:/opt/MVS/lib/64:/opt/MVS/lib/32:/opt/MVS/lib/64:/opt/MVS/lib/32:', 'HOME': '/home/peter', 'CONDA_SHLVL': '0', 'OLDPWD': '/home/peter', 'NO_PROXY': '172.31.*,172.30.*,172.29.*,172.28.*,172.27.*,172.26.*,172.25.*,172.24.*,172.23.*,172.22.*,172.21.*,172.20.*,172.19.*,172.18.*,172.17.*,172.16.*,10.*,192.168.*,127.*,localhost,<local>', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', '_CE_M': '', 'WSL_DISTRO_NAME': 'Ubuntu-24.04', '_CONDA_ROOT': '/home/peter/anaconda3', 'NVM_DIR': '/home/peter/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'WAYLAND_DISPLAY': 'wayland-0', 'https_proxy': 'http://127.0.0.1:7897', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'peter', 'NAME': 'DESKTOP-SQLKBKN', 'WSL_INTEROP': '/run/WSL/2776_interop', 'http_proxy': 'http://127.0.0.1:7897', 'PULSE_SERVER': 'unix:/mnt/wslg/PulseServer', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm-256color', 'OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE': 'delta', '_CE_CONDA': '', 'MVCAM_SDK_PATH': '/opt/MVS', 'PATH': '/home/peter/.local/bin:/opt/ros/jazzy/bin:/home/peter/.claude/bin:/home/peter/anaconda3/condabin:/home/peter/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_2.6.1.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Razer Chroma SDK/bin:/mnt/c/Program Files/Razer Chroma SDK/bin:/mnt/e/development/Android/sdk/emulator:/mnt/e/development/Android/sdk/platform-tools:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win32_i86:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win64_x64:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/e/texlive/2025/bin/windows:/mnt/c/Program Files/usbipd-win/:/mnt/c/Program Files/dotnet/:/mnt/e/MATLAB/R2024a/runtime/win64:/mnt/e/MATLAB/R2024a/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/e/OpenOCD-20250710-0.12.0/bin:/mnt/e/cursor/resources/app/bin:/mnt/c/Program Files/Microsoft SQL Server/170/Tools/Binn/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/mingw64/bin:/mnt/e/AOMEI/AOMEI Backupper/6.20.0:/mnt/e/gstreamer/1.0/msvc_x86_64/bin:/mnt/e/ffmpeg-master-latest-win64-lgpl-shared/bin:/mnt/e/Git/cmd:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/e/Java/jdk-26/bin:/mnt/c/Windows/system32/config/systemprofile/AppData/Local/Microsoft/WindowsApps:/mnt/c/Windows/system32/config/systemprofile/.dotnet/tools:/mnt/c/Program Files (x86)/Razer/ChromaBroadcast/bin:/mnt/c/Program Files/Razer/ChromaBroadcast/bin:/mnt/e/Keil_v5/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/e/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Users/Pt/AppData/Local/Programs/Python/Launcher/:/mnt/e/miniAnaconda3:/mnt/e/miniAnaconda3/Library/mingw-w64/bin:/mnt/e/miniAnaconda3/Library/usr/bin:/mnt/e/miniAnaconda3/Library/bin:/mnt/e/miniAnaconda3/Scripts:/mnt/c/Users/Pt/AppData/Local/Microsoft/WindowsApps:/mnt/e/Microsoft VS Code/bin:/mnt/e/bandzip/:/mnt/e/PyCharm 2025.2.0.1/bin:/mnt/e/Antigravity/bin:/mnt/e/CLion 2025.3/bin:/mnt/c/Users/Pt/.dotnet/tools:/mnt/c/Users/Pt/AppData/Local/Microsoft/WinGet/Links:/mnt/c/Program Files/PowerShell/7:/mnt/c/Program Files (x86)/Razer Chroma SDK/bin:/mnt/c/Program Files/Razer Chroma SDK/bin:/mnt/e/development/Android/sdk/emulator:/mnt/e/development/Android/sdk/platform-tools:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win32_i86:/mnt/c/Program Files (x86)/Common Files/MVS/Runtime/Win64_x64:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/e/texlive/2025/bin/windows:/mnt/c/Program Files/usbipd-win/:/mnt/c/Program Files/dotnet/:/mnt/e/MATLAB/R2024a/runtime/win64:/mnt/e/MATLAB/R2024a/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/e/OpenOCD-20250710-0.12.0/bin:/mnt/e/cursor/resources/app/bin:/mnt/c/Program Files/Microsoft SQL Server/170/Tools/Binn/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files (x86)/Windows Kits/8.1/Windows Performance Toolkit/:/mnt/c/mingw64/bin:/mnt/e/AOMEI/AOMEI Backupper/6.20.0:/mnt/e/gstreamer/1.0/msvc_x86_64/bin:/mnt/e/ffmpeg-master-latest-win64-lgpl-shared/bin:/mnt/e/Git/cmd:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/e/Java/jdk-26/bin:/mnt/c/Windows/system32/config/systemprofile/AppData/Local/Microsoft/WindowsApps:/mnt/c/Windows/system32/config/systemprofile/.dotnet/tools:/mnt/c/Program Files (x86)/Razer/ChromaBroadcast/bin:/mnt/c/Program Files/Razer/ChromaBroadcast/bin:/mnt/e/Keil_v5/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/e/GNU Arm Embedded Toolchain/10 2021.10/bin:/mnt/c/Users/Pt/AppData/Local/Programs/Python/Launcher/:/mnt/e/miniAnaconda3:/mnt/e/miniAnaconda3/Library/mingw-w64/bin:/mnt/e/miniAnaconda3/Library/usr/bin:/mnt/e/miniAnaconda3/Library/bin:/mnt/e/miniAnaconda3/Scripts:/mnt/c/Users/Pt/AppData/Local/Microsoft/WindowsApps:/mnt/e/Microsoft VS Code/bin:/mnt/e/bandzip/:/mnt/e/PyCharm 2025.2.0.1/bin:/mnt/e/CLion 2025.3/bin:/mnt/c/Users/Pt/.dotnet/tools:/mnt/c/Users/Pt/AppData/Local/Microsoft/WinGet/Links:/mnt/c/Users/Pt/AppData/Local/Microsoft/WinGet/Packages/Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe:/mnt/c/Users/Pt/.local/bin:/snap/bin:/usr/local/qemu/mini2440/bin:/home/peter/.local/bin:/home/peter/.local/bin', 'MVCAM_GENICAM_CLPROTOCOL': '/opt/MVS/lib/CLProtocol', 'COREPACK_ENABLE_AUTO_PIN': '0', 'XDG_RUNTIME_DIR': '/run/user/1000/', 'DISPLAY': ':0', 'NoDefaultCurrentDirectoryInExePath': '1', 'LANG': 'C.UTF-8', 'ZH_CN_REAL_CLAUDE': '/usr/local/bin/claude', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CONDA_PYTHON_EXE': '/home/peter/anaconda3/bin/python', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CLAUDECODE': '1', '_CONDA_EXE': '/home/peter/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'PWD': '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge', 'CONDA_EXE': '/home/peter/anaconda3/bin/conda', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'CLAUDE_CODE_EXECPATH': '/usr/local/lib/node_modules/@anthropic-ai/claude-code/bin/claude.exe', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'HTTP_PROXY': 'http://127.0.0.1:7897', 'MVCAM_SDK_VERSION': '', 'COLCON': '1', 'WSL2_GUI_APPS_ENABLED': '1', 'HOSTTYPE': 'x86_64', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy', 'MVCAM_COMMON_RUNENV': '/opt/MVS/lib', 'WSLENV': ''}), 'shell': False}
+[7.939970] (-) TimerEvent: {}
+[7.968084] (uart_bridge) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[8.040096] (-) TimerEvent: {}
+[8.074170] (uart_bridge) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/lib/uart_bridge/uart_bridge_node\n'}
+[8.140248] (-) TimerEvent: {}
+[8.241833] (-) TimerEvent: {}
+[8.343390] (-) TimerEvent: {}
+[8.351210] (uart_bridge) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/lib/uart_bridge/uart_bridge_node" to ""\n'}
+[8.386230] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/config\n'}
+[8.436576] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/config/uart_bridge.yaml\n'}
+[8.443475] (-) TimerEvent: {}
+[8.462972] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/launch\n'}
+[8.523951] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/launch/uart_bridge.launch.py\n'}
+[8.543674] (-) TimerEvent: {}
+[8.585181] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/package_run_dependencies/uart_bridge\n'}
+[8.643787] (-) TimerEvent: {}
+[8.650669] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/parent_prefix_path/uart_bridge\n'}
+[8.680843] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/ament_prefix_path.sh\n'}
+[8.719488] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/ament_prefix_path.dsv\n'}
+[8.743899] (-) TimerEvent: {}
+[8.745573] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/path.sh\n'}
+[8.798945] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/path.dsv\n'}
+[8.844010] (-) TimerEvent: {}
+[8.848566] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.bash\n'}
+[8.892891] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.sh\n'}
+[8.915572] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.zsh\n'}
+[8.944156] (-) TimerEvent: {}
+[8.956528] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/local_setup.dsv\n'}
+[8.987475] (uart_bridge) StdoutLine: {'line': b'-- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/package.dsv\n'}
+[9.044263] (-) TimerEvent: {}
+[9.144076] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/packages/uart_bridge\n'}
+[9.146824] (-) TimerEvent: {}
+[9.180428] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/cmake/uart_bridgeConfig.cmake\n'}
+[9.216002] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/cmake/uart_bridgeConfig-version.cmake\n'}
+[9.246936] (-) TimerEvent: {}
+[9.261837] (uart_bridge) StdoutLine: {'line': b'-- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/package.xml\n'}
+[9.282165] (uart_bridge) CommandEnded: {'returncode': 0}
+[9.347085] (-) TimerEvent: {}
+[9.453280] (-) TimerEvent: {}
+[9.554194] (-) TimerEvent: {}
+[9.655062] (-) TimerEvent: {}
+[9.755646] (-) TimerEvent: {}
+[9.857061] (-) TimerEvent: {}
+[9.957594] (-) TimerEvent: {}
+[10.058284] (-) TimerEvent: {}
+[10.158850] (-) TimerEvent: {}
+[10.259731] (-) TimerEvent: {}
+[10.360268] (-) TimerEvent: {}
+[10.460724] (-) TimerEvent: {}
+[10.519900] (uart_bridge) JobEnded: {'identifier': 'uart_bridge', 'rc': 0}
+[10.535083] (-) EventReactorShutdown: {}

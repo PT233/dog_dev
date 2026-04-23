@@ -12,18 +12,18 @@ find_package(sensor_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
   set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 
 # Build executable
-add_executable(uart_bridge_node src/uart_bridge_node.cpp)
+add_executable(uart_bridge_node
+  src/uart_bridge_node.cpp
+  src/frame_parser.cpp
+  src/uart_protocol.c
+)
+target_include_directories(uart_bridge_node PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 ament_target_dependencies(uart_bridge_node rclcpp sensor_msgs)
 
 install(TARGETS uart_bridge_node DESTINATION lib/${PROJECT_NAME})

@@ -1,0 +1,47 @@
+[0.100s] Invoking command in '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge -- -j16 -l16
+[0.416s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.848s] -- Found rclcpp: 28.1.18 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.600s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.667s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.736s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.843s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.155s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.187s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[3.237s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[4.006s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[4.099s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[5.169s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[5.171s] -- Configured cppcheck include dirs: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/include
+[5.173s] -- Configured cppcheck exclude dirs and/or files: 
+[5.322s] -- Added test 'flake8' to check Python code syntax and style conventions
+[5.324s] -- Configured 'flake8' exclude dirs and/or files: 
+[5.653s] -- Added test 'lint_cmake' to check CMake code style
+[5.714s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[6.408s] -- Added test 'uncrustify' to check C / C++ code style
+[6.410s] -- Configured uncrustify additional arguments: 
+[6.542s] -- Added test 'xmllint' to check XML markup files
+[6.699s] -- Configuring done (6.4s)
+[7.588s] -- Generating done (0.8s)
+[7.883s] -- Build files have been written to: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge
+[9.207s] [ 50%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o
+[9.210s] [ 50%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o
+[9.231s] [ 75%] Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o
+[9.243s] /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:1:10: fatal error: frame_parser.hpp: No such file or directory
+[9.244s]     1 | #include "frame_parser.hpp"
+[9.246s]       |          ^~~~~~~~~~~~~~~~~~
+[9.247s] compilation terminated.
+[9.254s] gmake[2]: *** [CMakeFiles/uart_bridge_node.dir/build.make:90: CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o] Error 1
+[9.257s] gmake[2]: *** Waiting for unfinished jobs....
+[9.272s] /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_protocol.c:1:10: fatal error: uart_protocol.h: No such file or directory
+[9.274s]     1 | #include "uart_protocol.h"
+[9.276s]       |          ^~~~~~~~~~~~~~~~~
+[9.278s] compilation terminated.
+[9.279s] gmake[2]: *** [CMakeFiles/uart_bridge_node.dir/build.make:104: CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o] Error 1
+[11.416s] /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_bridge_node.cpp:7:10: fatal error: frame_parser.hpp: No such file or directory
+[11.419s]     7 | #include "frame_parser.hpp"
+[11.422s]       |          ^~~~~~~~~~~~~~~~~~
+[11.424s] compilation terminated.
+[11.428s] gmake[2]: *** [CMakeFiles/uart_bridge_node.dir/build.make:76: CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o] Error 1
+[11.432s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/uart_bridge_node.dir/all] Error 2
+[11.436s] gmake: *** [Makefile:146: all] Error 2
+[11.438s] Invoked command in '/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge -- -j16 -l16

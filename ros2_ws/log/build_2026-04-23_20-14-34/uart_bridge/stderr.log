@@ -1,0 +1,18 @@
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:1:10: fatal error: frame_parser.hpp: No such file or directory
+    1 | #include "frame_parser.hpp"
+      |          ^~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/uart_bridge_node.dir/build.make:90: CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_protocol.c:1:10: fatal error: uart_protocol.h: No such file or directory
+    1 | #include "uart_protocol.h"
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/uart_bridge_node.dir/build.make:104: CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o] Error 1
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_bridge_node.cpp:7:10: fatal error: frame_parser.hpp: No such file or directory
+    7 | #include "frame_parser.hpp"
+      |          ^~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/uart_bridge_node.dir/build.make:76: CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/uart_bridge_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

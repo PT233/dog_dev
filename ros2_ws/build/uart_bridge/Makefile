@@ -210,6 +210,30 @@ uart_bridge_node/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/build
 .PHONY : uart_bridge_node/fast
 
+src/frame_parser.o: src/frame_parser.cpp.o
+.PHONY : src/frame_parser.o
+
+# target to build an object file
+src/frame_parser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o
+.PHONY : src/frame_parser.cpp.o
+
+src/frame_parser.i: src/frame_parser.cpp.i
+.PHONY : src/frame_parser.i
+
+# target to preprocess a source file
+src/frame_parser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.i
+.PHONY : src/frame_parser.cpp.i
+
+src/frame_parser.s: src/frame_parser.cpp.s
+.PHONY : src/frame_parser.s
+
+# target to generate assembly for a file
+src/frame_parser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.s
+.PHONY : src/frame_parser.cpp.s
+
 src/uart_bridge_node.o: src/uart_bridge_node.cpp.o
 .PHONY : src/uart_bridge_node.o
 
@@ -234,6 +258,30 @@ src/uart_bridge_node.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.s
 .PHONY : src/uart_bridge_node.cpp.s
 
+src/uart_protocol.o: src/uart_protocol.c.o
+.PHONY : src/uart_protocol.o
+
+# target to build an object file
+src/uart_protocol.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o
+.PHONY : src/uart_protocol.c.o
+
+src/uart_protocol.i: src/uart_protocol.c.i
+.PHONY : src/uart_protocol.i
+
+# target to preprocess a source file
+src/uart_protocol.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.i
+.PHONY : src/uart_protocol.c.i
+
+src/uart_protocol.s: src/uart_protocol.c.s
+.PHONY : src/uart_protocol.s
+
+# target to generate assembly for a file
+src/uart_protocol.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.s
+.PHONY : src/uart_protocol.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -250,9 +298,15 @@ help:
 	@echo "... uart_bridge_uninstall"
 	@echo "... uninstall"
 	@echo "... uart_bridge_node"
+	@echo "... src/frame_parser.o"
+	@echo "... src/frame_parser.i"
+	@echo "... src/frame_parser.s"
 	@echo "... src/uart_bridge_node.o"
 	@echo "... src/uart_bridge_node.i"
 	@echo "... src/uart_bridge_node.s"
+	@echo "... src/uart_protocol.o"
+	@echo "... src/uart_protocol.i"
+	@echo "... src/uart_protocol.s"
 .PHONY : help
 
 
