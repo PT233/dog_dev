@@ -1,4 +1,6 @@
 /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/lib/uart_bridge/uart_bridge_node
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/config/uart_bridge.yaml
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/launch/uart_bridge.launch.py
 /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/package_run_dependencies/uart_bridge
 /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/ament_index/resource_index/parent_prefix_path/uart_bridge
 /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/uart_bridge/share/uart_bridge/environment/ament_prefix_path.sh

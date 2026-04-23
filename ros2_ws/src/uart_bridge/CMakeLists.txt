@@ -28,4 +28,8 @@ ament_target_dependencies(uart_bridge_node rclcpp sensor_msgs)
 
 install(TARGETS uart_bridge_node DESTINATION lib/${PROJECT_NAME})
 
+# Install config and launch files
+install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
 ament_package()

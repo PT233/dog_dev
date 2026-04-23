@@ -6,8 +6,8 @@
 ## 当前状态
 - 总体状态：进行中
 - 当前阶段：阶段 2（树莓派 UART 桥）
-- 当前任务：2.4（uart_bridge 打开串口并持续读）
-- 状态：任务 2.3 已完成
+- 当前任务：2.5（uart_bridge 实现帧解析）
+- 状态：任务 2.4 已完成
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -23,11 +23,12 @@
 | 2.1 | 已完成 | 创建 scripts/test_uart_rpi.py：支持 921600bps UART 通信，能发送舵机控制帧并接收状态反馈 | 树莓派端验证通过 |
 | 2.2 | 已完成 | 创建 robot_interfaces 包：TargetInfo.msg + SetTargetClass.srv + CalibrateCenter.srv + CMakeLists.txt + package.xml | 自动测试 PASS（colcon build 成功，所有接口生成正常） |
 | 2.3 | 已完成 | 创建 uart_bridge ROS 2 C++ 包骨架：uart_bridge_node.cpp 继承 rclcpp::Node，构造函数打印启动信息 | 自动测试 PASS（colcon build 成功，ros2 run 正常启动并打印日志） |
+| 2.4 | 已完成 | uart_bridge 打开串口并持续读：加入 POSIX termios 串口读写，参数化设备路径和波特率，单独线程读取并打印字节数 | 自动测试 PASS（colcon build 成功，launch 正确加载参数，节点优雅处理设备缺失） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
 - 阶段 1：5/5 ✅
-- 阶段 2：3/7
+- 阶段 2：4/7
 - 阶段 3：0/7
 - 阶段 4：0/6
 - 阶段 5：0/3

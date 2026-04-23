@@ -67,6 +67,14 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/uart_bridge" TYPE DIRECTORY FILES "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/config")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/uart_bridge" TYPE DIRECTORY FILES "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/launch")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/uart_bridge")
 endif()
 

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(colcon --version)",
       "Bash(ros2 pkg *)",
-      "Bash(colcon build *)"
+      "Bash(colcon build *)",
+      "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_read.sh)",
+      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_read.sh)"
     ]
   }
 }
