@@ -46,6 +46,7 @@ Core/Src/usart.c \
 Core/Src/iwdg.c \
 Core/Src/uart_protocol.c \
 Core/Src/uart_rx_task.c \
+Core/Src/traj_planner.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
 Core/Src/stm32f1xx_hal_timebase_tim.c \

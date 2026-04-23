@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
+ARM GAS  /tmp/cct0Z9V1.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -17,14 +17,14 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.UartRx_ResetFrameParser,"ax",%progbits
-  18              		.align	1
-  19              		.syntax unified
-  20              		.thumb
-  21              		.thumb_func
-  23              	UartRx_ResetFrameParser:
-  24              	.LFB69:
-  25              		.file 1 "Core/Src/uart_rx_task.c"
+  17              		.file 1 "Core/Src/uart_rx_task.c"
+  18              		.section	.text.UartRx_ResetFrameParser,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	UartRx_ResetFrameParser:
+  25              	.LFB69:
    1:Core/Src/uart_rx_task.c **** #include "uart_rx_task.h"
    2:Core/Src/uart_rx_task.c **** 
    3:Core/Src/uart_rx_task.c **** #include <string.h>
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   26:Core/Src/uart_rx_task.c ****   s_frame_len = 0;
   31              		.loc 1 26 3 view .LVU1
   32              		.loc 1 26 15 is_stmt 0 view .LVU2
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 2
+ARM GAS  /tmp/cct0Z9V1.s 			page 2
 
 
   33 0000 014B     		ldr	r3, .L2
@@ -70,7 +70,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   38              	.L3:
   39              		.align	2
   40              	.L2:
-  41 0008 00000000 		.word	.LANCHOR0
+  41 0008 00000000 		.word	s_frame_len
   42              		.cfi_endproc
   43              	.LFE69:
   45              		.section	.text.UartRx_HandleFrame,"ax",%progbits
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   76              		.loc 1 39 15 is_stmt 0 view .LVU12
   77 0006 C678     		ldrb	r6, [r0, #3]	@ zero_extendqisi2
   78              	.LVL1:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 3
+ARM GAS  /tmp/cct0Z9V1.s 			page 3
 
 
   40:Core/Src/uart_rx_task.c ****   crc_recv = (uint16_t)frame[4U + payload_len] | ((uint16_t)frame[5U + payload_len] << 8);
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   59:Core/Src/uart_rx_task.c ****   }
   60:Core/Src/uart_rx_task.c **** 
   61:Core/Src/uart_rx_task.c ****   if (xQueueSend(uart_rx_queue, &item, 0) != pdPASS)
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 4
+ARM GAS  /tmp/cct0Z9V1.s 			page 4
 
 
   62:Core/Src/uart_rx_task.c ****   {
@@ -238,10 +238,10 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  153 004e FFF7FEFF 		bl	xQueueGenericSend
  154              	.LVL9:
   61:Core/Src/uart_rx_task.c ****   {
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 5
+ARM GAS  /tmp/cct0Z9V1.s 			page 5
 
 
- 155              		.loc 1 61 6 view .LVU40
+ 155              		.loc 1 61 6 discriminator 1 view .LVU40
  156 0052 0128     		cmp	r0, #1
  157 0054 E8D0     		beq	.L4
   63:Core/Src/uart_rx_task.c ****   }
@@ -256,9 +256,9 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  165              	.L11:
  166              		.align	2
  167              	.L10:
- 168 0060 00000000 		.word	.LANCHOR1
- 169 0064 00000000 		.word	.LANCHOR2
- 170 0068 00000000 		.word	.LANCHOR3
+ 168 0060 00000000 		.word	uart_crc_error_count
+ 169 0064 00000000 		.word	uart_rx_queue
+ 170 0068 00000000 		.word	uart_queue_drop_count
  171              		.cfi_endproc
  172              	.LFE70:
  174              		.section	.text.UartRx_ParseByte,"ax",%progbits
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   75:Core/Src/uart_rx_task.c ****       s_frame_buf[s_frame_len++] = byte;
   76:Core/Src/uart_rx_task.c ****     }
   77:Core/Src/uart_rx_task.c ****     return;
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 6
+ARM GAS  /tmp/cct0Z9V1.s 			page 6
 
 
   78:Core/Src/uart_rx_task.c ****   }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  111:Core/Src/uart_rx_task.c ****   expected_len = (uint16_t)(7U + s_frame_buf[3]);
  221              		.loc 1 111 3 is_stmt 1 view .LVU58
  222              		.loc 1 111 45 is_stmt 0 view .LVU59
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 7
+ARM GAS  /tmp/cct0Z9V1.s 			page 7
 
 
  223 0020 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  258              		.loc 1 128 1 view .LVU72
  259 0040 08BD     		pop	{r3, pc}
  260              	.LVL16:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 8
+ARM GAS  /tmp/cct0Z9V1.s 			page 8
 
 
  261              	.L28:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  299              		.loc 1 94 5 view .LVU88
  300 0068 FFF7FEFF 		bl	UartRx_ResetFrameParser
  301              	.LVL17:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 9
+ARM GAS  /tmp/cct0Z9V1.s 			page 9
 
 
   95:Core/Src/uart_rx_task.c ****   }
@@ -518,8 +518,8 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  328              	.L31:
  329 0082 00BF     		.align	2
  330              	.L30:
- 331 0084 00000000 		.word	.LANCHOR0
- 332 0088 00000000 		.word	.LANCHOR4
+ 331 0084 00000000 		.word	s_frame_len
+ 332 0088 00000000 		.word	s_frame_buf
  333              		.cfi_endproc
  334              	.LFE71:
  336              		.section	.text.UartRx_ProcessDmaData,"ax",%progbits
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  347              		@ frame_needed = 0, uses_anonymous_args = 0
  348 0000 10B5     		push	{r4, lr}
  349              	.LCFI5:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 10
+ARM GAS  /tmp/cct0Z9V1.s 			page 10
 
 
  350              		.cfi_def_cfa_offset 8
@@ -558,202 +558,200 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  136:Core/Src/uart_rx_task.c ****   while (s_uart_dma_read_pos != write_pos)
  360              		.loc 1 136 3 is_stmt 1 view .LVU101
  361              	.L34:
- 362              		.loc 1 136 9 view .LVU102
- 363              		.loc 1 136 30 is_stmt 0 view .LVU103
- 364 0008 0A4B     		ldr	r3, .L38+4
- 365 000a 1B88     		ldrh	r3, [r3]
- 366              		.loc 1 136 9 view .LVU104
- 367 000c A342     		cmp	r3, r4
- 368 000e 0ED0     		beq	.L37
+ 362              		.loc 1 136 30 view .LVU102
+ 363 0008 0A4B     		ldr	r3, .L38+4
+ 364 000a 1B88     		ldrh	r3, [r3]
+ 365 000c A342     		cmp	r3, r4
+ 366 000e 0ED0     		beq	.L37
  137:Core/Src/uart_rx_task.c ****   {
  138:Core/Src/uart_rx_task.c ****     UartRx_ParseByte(s_uart_dma_buf[s_uart_dma_read_pos]);
- 369              		.loc 1 138 5 is_stmt 1 view .LVU105
- 370 0010 094A     		ldr	r2, .L38+8
- 371 0012 D05C     		ldrb	r0, [r2, r3]	@ zero_extendqisi2
- 372 0014 FFF7FEFF 		bl	UartRx_ParseByte
- 373              	.LVL26:
+ 367              		.loc 1 138 5 view .LVU103
+ 368 0010 094A     		ldr	r2, .L38+8
+ 369 0012 D05C     		ldrb	r0, [r2, r3]	@ zero_extendqisi2
+ 370 0014 FFF7FEFF 		bl	UartRx_ParseByte
+ 371              	.LVL26:
  139:Core/Src/uart_rx_task.c **** 
  140:Core/Src/uart_rx_task.c ****     s_uart_dma_read_pos++;
- 374              		.loc 1 140 5 view .LVU106
- 375              		.loc 1 140 24 is_stmt 0 view .LVU107
- 376 0018 064A     		ldr	r2, .L38+4
- 377 001a 1388     		ldrh	r3, [r2]
- 378 001c 0133     		adds	r3, r3, #1
- 379 001e 9BB2     		uxth	r3, r3
- 380 0020 1380     		strh	r3, [r2]	@ movhi
+ 372              		.loc 1 140 5 view .LVU104
+ 373              		.loc 1 140 24 is_stmt 0 view .LVU105
+ 374 0018 064A     		ldr	r2, .L38+4
+ 375 001a 1388     		ldrh	r3, [r2]
+ 376 001c 0133     		adds	r3, r3, #1
+ 377 001e 9BB2     		uxth	r3, r3
+ 378 0020 1380     		strh	r3, [r2]	@ movhi
  141:Core/Src/uart_rx_task.c ****     if (s_uart_dma_read_pos >= UART_RX_DMA_BUF_LEN)
- 381              		.loc 1 141 5 is_stmt 1 view .LVU108
- 382              		.loc 1 141 8 is_stmt 0 view .LVU109
- 383 0022 FF2B     		cmp	r3, #255
- 384 0024 F0D9     		bls	.L34
+ 379              		.loc 1 141 5 is_stmt 1 view .LVU106
+ 380              		.loc 1 141 8 is_stmt 0 view .LVU107
+ 381 0022 FF2B     		cmp	r3, #255
+ 382 0024 F0D9     		bls	.L34
  142:Core/Src/uart_rx_task.c ****     {
  143:Core/Src/uart_rx_task.c ****       s_uart_dma_read_pos = 0U;
- 385              		.loc 1 143 7 is_stmt 1 view .LVU110
- 386              		.loc 1 143 27 is_stmt 0 view .LVU111
- 387 0026 1346     		mov	r3, r2
- 388 0028 0022     		movs	r2, #0
- 389 002a 1A80     		strh	r2, [r3]	@ movhi
- 390 002c ECE7     		b	.L34
- 391              	.L37:
+ 383              		.loc 1 143 7 is_stmt 1 view .LVU108
+ 384              		.loc 1 143 27 is_stmt 0 view .LVU109
+ 385 0026 1346     		mov	r3, r2
+ 386 0028 0022     		movs	r2, #0
+ 387 002a 1A80     		strh	r2, [r3]	@ movhi
+ 388 002c ECE7     		b	.L34
+ 389              	.L37:
  144:Core/Src/uart_rx_task.c ****     }
  145:Core/Src/uart_rx_task.c ****   }
  146:Core/Src/uart_rx_task.c **** }
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 11
+ 390              		.loc 1 146 1 view .LVU110
+ 391 002e 10BD     		pop	{r4, pc}
+ARM GAS  /tmp/cct0Z9V1.s 			page 11
 
 
- 392              		.loc 1 146 1 view .LVU112
- 393 002e 10BD     		pop	{r4, pc}
- 394              	.LVL27:
- 395              	.L39:
- 396              		.loc 1 146 1 view .LVU113
- 397              		.align	2
- 398              	.L38:
- 399 0030 00000000 		.word	.LANCHOR5
- 400 0034 00000000 		.word	.LANCHOR7
- 401 0038 00000000 		.word	.LANCHOR6
- 402              		.cfi_endproc
- 403              	.LFE72:
- 405              		.section	.text.Task_UART_RX,"ax",%progbits
- 406              		.align	1
- 407              		.syntax unified
- 408              		.thumb
- 409              		.thumb_func
- 411              	Task_UART_RX:
- 412              	.LVL28:
- 413              	.LFB73:
+ 392              	.LVL27:
+ 393              	.L39:
+ 394              		.loc 1 146 1 view .LVU111
+ 395              		.align	2
+ 396              	.L38:
+ 397 0030 00000000 		.word	s_uart_dma_write_pos
+ 398 0034 00000000 		.word	s_uart_dma_read_pos
+ 399 0038 00000000 		.word	s_uart_dma_buf
+ 400              		.cfi_endproc
+ 401              	.LFE72:
+ 403              		.section	.text.Task_UART_RX,"ax",%progbits
+ 404              		.align	1
+ 405              		.syntax unified
+ 406              		.thumb
+ 407              		.thumb_func
+ 409              	Task_UART_RX:
+ 410              	.LVL28:
+ 411              	.LFB73:
  147:Core/Src/uart_rx_task.c **** 
  148:Core/Src/uart_rx_task.c **** static void Task_UART_RX(void* argument)
  149:Core/Src/uart_rx_task.c **** {
- 414              		.loc 1 149 1 is_stmt 1 view -0
- 415              		.cfi_startproc
- 416              		@ Volatile: function does not return.
- 417              		@ args = 0, pretend = 0, frame = 0
- 418              		@ frame_needed = 0, uses_anonymous_args = 0
- 419              		.loc 1 149 1 is_stmt 0 view .LVU115
- 420 0000 08B5     		push	{r3, lr}
- 421              	.LCFI6:
- 422              		.cfi_def_cfa_offset 8
- 423              		.cfi_offset 3, -8
- 424              		.cfi_offset 14, -4
+ 412              		.loc 1 149 1 is_stmt 1 view -0
+ 413              		.cfi_startproc
+ 414              		@ Volatile: function does not return.
+ 415              		@ args = 0, pretend = 0, frame = 0
+ 416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 417              		.loc 1 149 1 is_stmt 0 view .LVU113
+ 418 0000 08B5     		push	{r3, lr}
+ 419              	.LCFI6:
+ 420              		.cfi_def_cfa_offset 8
+ 421              		.cfi_offset 3, -8
+ 422              		.cfi_offset 14, -4
  150:Core/Src/uart_rx_task.c ****   (void)argument;
- 425              		.loc 1 150 3 is_stmt 1 view .LVU116
+ 423              		.loc 1 150 3 is_stmt 1 view .LVU114
  151:Core/Src/uart_rx_task.c **** 
  152:Core/Src/uart_rx_task.c ****   if (HAL_UART_Receive_DMA(&huart1, s_uart_dma_buf, UART_RX_DMA_BUF_LEN) != HAL_OK)
- 426              		.loc 1 152 3 view .LVU117
- 427              		.loc 1 152 7 is_stmt 0 view .LVU118
- 428 0002 4FF48072 		mov	r2, #256
- 429 0006 0B49     		ldr	r1, .L45
- 430 0008 0B48     		ldr	r0, .L45+4
- 431              	.LVL29:
- 432              		.loc 1 152 7 view .LVU119
- 433 000a FFF7FEFF 		bl	HAL_UART_Receive_DMA
- 434              	.LVL30:
- 435              		.loc 1 152 6 view .LVU120
- 436 000e 70B9     		cbnz	r0, .L44
- 437              	.L41:
+ 424              		.loc 1 152 3 view .LVU115
+ 425              		.loc 1 152 7 is_stmt 0 view .LVU116
+ 426 0002 4FF48072 		mov	r2, #256
+ 427 0006 0B49     		ldr	r1, .L45
+ 428 0008 0B48     		ldr	r0, .L45+4
+ 429              	.LVL29:
+ 430              		.loc 1 152 7 view .LVU117
+ 431 000a FFF7FEFF 		bl	HAL_UART_Receive_DMA
+ 432              	.LVL30:
+ 433              		.loc 1 152 6 discriminator 1 view .LVU118
+ 434 000e 70B9     		cbnz	r0, .L44
+ 435              	.L41:
  153:Core/Src/uart_rx_task.c ****   {
  154:Core/Src/uart_rx_task.c ****     Error_Handler();
  155:Core/Src/uart_rx_task.c ****   }
  156:Core/Src/uart_rx_task.c **** 
  157:Core/Src/uart_rx_task.c ****   __HAL_DMA_DISABLE_IT(huart1.hdmarx, DMA_IT_HT);
- 438              		.loc 1 157 3 is_stmt 1 view .LVU121
- 439 0010 094B     		ldr	r3, .L45+4
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 12
+ 436              		.loc 1 157 3 is_stmt 1 view .LVU119
+ 437 0010 094B     		ldr	r3, .L45+4
+ 438 0012 DB6B     		ldr	r3, [r3, #60]
+ 439 0014 1A68     		ldr	r2, [r3]
+ARM GAS  /tmp/cct0Z9V1.s 			page 12
 
 
- 440 0012 DB6B     		ldr	r3, [r3, #60]
- 441 0014 1A68     		ldr	r2, [r3]
- 442 0016 1368     		ldr	r3, [r2]
- 443 0018 23F00403 		bic	r3, r3, #4
- 444 001c 1360     		str	r3, [r2]
- 445              	.L42:
+ 440 0016 1368     		ldr	r3, [r2]
+ 441 0018 23F00403 		bic	r3, r3, #4
+ 442 001c 1360     		str	r3, [r2]
+ 443              	.L42:
  158:Core/Src/uart_rx_task.c **** 
  159:Core/Src/uart_rx_task.c ****   for (;;)
- 446              		.loc 1 159 3 discriminator 1 view .LVU122
+ 444              		.loc 1 159 3 view .LVU120
  160:Core/Src/uart_rx_task.c ****   {
  161:Core/Src/uart_rx_task.c ****     (void)ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
- 447              		.loc 1 161 5 discriminator 1 view .LVU123
- 448              		.loc 1 161 11 is_stmt 0 discriminator 1 view .LVU124
- 449 001e 4FF0FF31 		mov	r1, #-1
- 450 0022 0120     		movs	r0, #1
- 451 0024 FFF7FEFF 		bl	ulTaskNotifyTake
- 452              	.LVL31:
+ 445              		.loc 1 161 5 view .LVU121
+ 446              		.loc 1 161 11 is_stmt 0 view .LVU122
+ 447 001e 4FF0FF31 		mov	r1, #-1
+ 448 0022 0120     		movs	r0, #1
+ 449 0024 FFF7FEFF 		bl	ulTaskNotifyTake
+ 450              	.LVL31:
  162:Core/Src/uart_rx_task.c ****     UartRx_ProcessDmaData();
- 453              		.loc 1 162 5 is_stmt 1 discriminator 1 view .LVU125
- 454 0028 FFF7FEFF 		bl	UartRx_ProcessDmaData
- 455              	.LVL32:
+ 451              		.loc 1 162 5 is_stmt 1 discriminator 1 view .LVU123
+ 452 0028 FFF7FEFF 		bl	UartRx_ProcessDmaData
+ 453              	.LVL32:
  159:Core/Src/uart_rx_task.c ****   {
- 456              		.loc 1 159 9 discriminator 1 view .LVU126
- 457 002c F7E7     		b	.L42
- 458              	.L44:
+ 454              		.loc 1 159 3 view .LVU124
+ 455 002c F7E7     		b	.L42
+ 456              	.L44:
  154:Core/Src/uart_rx_task.c ****   }
- 459              		.loc 1 154 5 view .LVU127
- 460 002e FFF7FEFF 		bl	Error_Handler
- 461              	.LVL33:
- 462 0032 EDE7     		b	.L41
- 463              	.L46:
- 464              		.align	2
- 465              	.L45:
- 466 0034 00000000 		.word	.LANCHOR6
- 467 0038 00000000 		.word	huart1
- 468              		.cfi_endproc
- 469              	.LFE73:
- 471              		.section	.rodata.UartRxTask_Create.str1.4,"aMS",%progbits,1
- 472              		.align	2
- 473              	.LC0:
- 474 0000 5461736B 		.ascii	"Task_UART_RX\000"
- 474      5F554152 
- 474      545F5258 
- 474      00
- 475              		.section	.text.UartRxTask_Create,"ax",%progbits
- 476              		.align	1
- 477              		.global	UartRxTask_Create
- 478              		.syntax unified
- 479              		.thumb
- 480              		.thumb_func
- 482              	UartRxTask_Create:
- 483              	.LFB74:
+ 457              		.loc 1 154 5 view .LVU125
+ 458 002e FFF7FEFF 		bl	Error_Handler
+ 459              	.LVL33:
+ 460 0032 EDE7     		b	.L41
+ 461              	.L46:
+ 462              		.align	2
+ 463              	.L45:
+ 464 0034 00000000 		.word	s_uart_dma_buf
+ 465 0038 00000000 		.word	huart1
+ 466              		.cfi_endproc
+ 467              	.LFE73:
+ 469              		.section	.rodata.UartRxTask_Create.str1.4,"aMS",%progbits,1
+ 470              		.align	2
+ 471              	.LC0:
+ 472 0000 5461736B 		.ascii	"Task_UART_RX\000"
+ 472      5F554152 
+ 472      545F5258 
+ 472      00
+ 473              		.section	.text.UartRxTask_Create,"ax",%progbits
+ 474              		.align	1
+ 475              		.global	UartRxTask_Create
+ 476              		.syntax unified
+ 477              		.thumb
+ 478              		.thumb_func
+ 480              	UartRxTask_Create:
+ 481              	.LFB74:
  163:Core/Src/uart_rx_task.c ****   }
  164:Core/Src/uart_rx_task.c **** }
  165:Core/Src/uart_rx_task.c **** 
  166:Core/Src/uart_rx_task.c **** void UartRxTask_Create(void)
  167:Core/Src/uart_rx_task.c **** {
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 13
+ 482              		.loc 1 167 1 view -0
+ 483              		.cfi_startproc
+ARM GAS  /tmp/cct0Z9V1.s 			page 13
 
 
- 484              		.loc 1 167 1 view -0
- 485              		.cfi_startproc
- 486              		@ args = 0, pretend = 0, frame = 0
- 487              		@ frame_needed = 0, uses_anonymous_args = 0
- 488 0000 00B5     		push	{lr}
- 489              	.LCFI7:
- 490              		.cfi_def_cfa_offset 4
- 491              		.cfi_offset 14, -4
- 492 0002 83B0     		sub	sp, sp, #12
- 493              	.LCFI8:
- 494              		.cfi_def_cfa_offset 16
+ 484              		@ args = 0, pretend = 0, frame = 0
+ 485              		@ frame_needed = 0, uses_anonymous_args = 0
+ 486 0000 00B5     		push	{lr}
+ 487              	.LCFI7:
+ 488              		.cfi_def_cfa_offset 4
+ 489              		.cfi_offset 14, -4
+ 490 0002 83B0     		sub	sp, sp, #12
+ 491              	.LCFI8:
+ 492              		.cfi_def_cfa_offset 16
  168:Core/Src/uart_rx_task.c ****   if (uart_rx_queue == NULL)
- 495              		.loc 1 168 3 view .LVU129
- 496              		.loc 1 168 21 is_stmt 0 view .LVU130
- 497 0004 134B     		ldr	r3, .L54
- 498 0006 1B68     		ldr	r3, [r3]
- 499              		.loc 1 168 6 view .LVU131
- 500 0008 2BB1     		cbz	r3, .L52
- 501              	.L48:
+ 493              		.loc 1 168 3 view .LVU127
+ 494              		.loc 1 168 21 is_stmt 0 view .LVU128
+ 495 0004 134B     		ldr	r3, .L54
+ 496 0006 1B68     		ldr	r3, [r3]
+ 497              		.loc 1 168 6 view .LVU129
+ 498 0008 2BB1     		cbz	r3, .L52
+ 499              	.L48:
  169:Core/Src/uart_rx_task.c ****   {
  170:Core/Src/uart_rx_task.c ****     uart_rx_queue = xQueueCreate(UART_RX_QUEUE_LEN, sizeof(ServoCmdItem));
  171:Core/Src/uart_rx_task.c ****     configASSERT(uart_rx_queue != NULL);
- 502              		.loc 1 171 40 is_stmt 1 discriminator 2 view .LVU132
+ 500              		.loc 1 171 40 is_stmt 1 discriminator 2 view .LVU130
  172:Core/Src/uart_rx_task.c ****   }
  173:Core/Src/uart_rx_task.c **** 
  174:Core/Src/uart_rx_task.c ****   if (s_uart_rx_task_handle == NULL)
- 503              		.loc 1 174 3 discriminator 2 view .LVU133
- 504              		.loc 1 174 29 is_stmt 0 discriminator 2 view .LVU134
- 505 000a 134B     		ldr	r3, .L54+4
- 506 000c 1B68     		ldr	r3, [r3]
- 507              		.loc 1 174 6 discriminator 2 view .LVU135
- 508 000e A3B1     		cbz	r3, .L53
- 509              	.L47:
+ 501              		.loc 1 174 3 view .LVU131
+ 502              		.loc 1 174 29 is_stmt 0 view .LVU132
+ 503 000a 134B     		ldr	r3, .L54+4
+ 504 000c 1B68     		ldr	r3, [r3]
+ 505              		.loc 1 174 6 view .LVU133
+ 506 000e A3B1     		cbz	r3, .L53
+ 507              	.L47:
  175:Core/Src/uart_rx_task.c ****   {
  176:Core/Src/uart_rx_task.c ****     (void)xTaskCreate(Task_UART_RX,
  177:Core/Src/uart_rx_task.c ****                       "Task_UART_RX",
@@ -763,41 +761,41 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  181:Core/Src/uart_rx_task.c ****                       &s_uart_rx_task_handle);
  182:Core/Src/uart_rx_task.c ****   }
  183:Core/Src/uart_rx_task.c **** }
- 510              		.loc 1 183 1 view .LVU136
- 511 0010 03B0     		add	sp, sp, #12
- 512              	.LCFI9:
- 513              		.cfi_remember_state
- 514              		.cfi_def_cfa_offset 4
- 515              		@ sp needed
- 516 0012 5DF804FB 		ldr	pc, [sp], #4
- 517              	.L52:
- 518              	.LCFI10:
- 519              		.cfi_restore_state
+ 508              		.loc 1 183 1 view .LVU134
+ 509 0010 03B0     		add	sp, sp, #12
+ 510              	.LCFI9:
+ 511              		.cfi_remember_state
+ 512              		.cfi_def_cfa_offset 4
+ 513              		@ sp needed
+ 514 0012 5DF804FB 		ldr	pc, [sp], #4
+ 515              	.L52:
+ 516              	.LCFI10:
+ 517              		.cfi_restore_state
  170:Core/Src/uart_rx_task.c ****     configASSERT(uart_rx_queue != NULL);
- 520              		.loc 1 170 5 is_stmt 1 view .LVU137
+ 518              		.loc 1 170 5 is_stmt 1 view .LVU135
  170:Core/Src/uart_rx_task.c ****     configASSERT(uart_rx_queue != NULL);
- 521              		.loc 1 170 21 is_stmt 0 view .LVU138
- 522 0016 0022     		movs	r2, #0
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 14
+ 519              		.loc 1 170 21 is_stmt 0 view .LVU136
+ 520 0016 0022     		movs	r2, #0
+ 521 0018 0521     		movs	r1, #5
+ 522 001a 0820     		movs	r0, #8
+ARM GAS  /tmp/cct0Z9V1.s 			page 14
 
 
- 523 0018 0521     		movs	r1, #5
- 524 001a 0820     		movs	r0, #8
- 525 001c FFF7FEFF 		bl	xQueueGenericCreate
- 526              	.LVL34:
+ 523 001c FFF7FEFF 		bl	xQueueGenericCreate
+ 524              	.LVL34:
  170:Core/Src/uart_rx_task.c ****     configASSERT(uart_rx_queue != NULL);
- 527              		.loc 1 170 19 view .LVU139
- 528 0020 0C4B     		ldr	r3, .L54
- 529 0022 1860     		str	r0, [r3]
+ 525              		.loc 1 170 19 discriminator 1 view .LVU137
+ 526 0020 0C4B     		ldr	r3, .L54
+ 527 0022 1860     		str	r0, [r3]
  171:Core/Src/uart_rx_task.c ****   }
- 530              		.loc 1 171 5 is_stmt 1 view .LVU140
- 531 0024 0028     		cmp	r0, #0
- 532 0026 F0D1     		bne	.L48
+ 528              		.loc 1 171 5 is_stmt 1 view .LVU138
+ 529 0024 0028     		cmp	r0, #0
+ 530 0026 F0D1     		bne	.L48
  171:Core/Src/uart_rx_task.c ****   }
- 533              		.loc 1 171 5 view .LVU141
- 534              	.LBB4:
- 535              	.LBI4:
- 536              		.file 2 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h"
+ 531              		.loc 1 171 5 discriminator 1 view .LVU139
+ 532              	.LBB4:
+ 533              	.LBI4:
+ 534              		.file 2 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h"
    1:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** /*
    2:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  * FreeRTOS Kernel V10.3.1
    3:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
@@ -838,11 +836,11 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   38:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  *
   39:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  * The settings in this file configure FreeRTOS correctly for the
   40:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  * given hardware and compiler.
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 15
-
-
   41:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  *
   42:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  * These settings should not be altered.
+ARM GAS  /tmp/cct0Z9V1.s 			page 15
+
+
   43:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  *-----------------------------------------------------------
   44:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h ****  */
   45:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
@@ -898,11 +896,11 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
   95:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
   96:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** /* Critical section management. */
   97:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** extern void vPortEnterCritical( void );
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 16
-
-
   98:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** extern void vPortExitCritical( void );
   99:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** #define portSET_INTERRUPT_MASK_FROM_ISR()		ulPortRaiseBASEPRI()
+ARM GAS  /tmp/cct0Z9V1.s 			page 16
+
+
  100:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** #define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)	vPortSetBASEPRI(x)
  101:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** #define portDISABLE_INTERRUPTS()				vPortRaiseBASEPRI()
  102:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** #define portENABLE_INTERRUPTS()					vPortSetBASEPRI(0)
@@ -958,11 +956,11 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  152:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
  153:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** /*-----------------------------------------------------------*/
  154:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 17
-
-
  155:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** #ifdef configASSERT
  156:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 	void vPortValidateInterruptPriority( void );
+ARM GAS  /tmp/cct0Z9V1.s 			page 17
+
+
  157:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 	#define portASSERT_IF_INTERRUPT_PRIORITY_INVALID() 	vPortValidateInterruptPriority()
  158:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** #endif
  159:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
@@ -1000,291 +998,278 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 1
  191:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** /*-----------------------------------------------------------*/
  192:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
  193:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** portFORCE_INLINE static void vPortRaiseBASEPRI( void )
- 537              		.loc 2 193 30 view .LVU142
- 538              	.LBB5:
+ 535              		.loc 2 193 30 view .LVU140
+ 536              	.LBB5:
  194:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** {
  195:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** uint32_t ulNewBASEPRI;
- 539              		.loc 2 195 1 view .LVU143
+ 537              		.loc 2 195 1 view .LVU141
  196:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 
  197:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h **** 	__asm volatile
- 540              		.loc 2 197 2 view .LVU144
- 541              		.syntax unified
- 542              	@ 197 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h" 1
- 543 0028 4FF05003 			mov r3, #80												
- 544 002c 83F31188 		msr basepri, r3											
- 545 0030 BFF36F8F 		isb														
- 546 0034 BFF34F8F 		dsb														
- 547              	
- 548              	@ 0 "" 2
- 549              	.LVL35:
- 550              		.thumb
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 18
+ 538              		.loc 2 197 2 view .LVU142
+ 539              		.syntax unified
+ 540              	@ 197 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h" 1
+ 541 0028 4FF05003 			mov r3, #80												
+ 542 002c 83F31188 		msr basepri, r3											
+ 543 0030 BFF36F8F 		isb														
+ 544 0034 BFF34F8F 		dsb														
+ 545              	
+ 546              	@ 0 "" 2
+ 547              		.thumb
+ 548              		.syntax unified
+ 549              	.L49:
+ 550              	.LBE5:
+ARM GAS  /tmp/cct0Z9V1.s 			page 18
 
 
- 551              		.syntax unified
- 552              	.L49:
- 553              		.loc 2 197 2 is_stmt 0 view .LVU145
- 554              	.LBE5:
- 555              	.LBE4:
+ 551              	.LBE4:
  171:Core/Src/uart_rx_task.c ****   }
- 556              		.loc 1 171 5 is_stmt 1 discriminator 1 view .LVU146
+ 552              		.loc 1 171 5 discriminator 3 view .LVU143
  171:Core/Src/uart_rx_task.c ****   }
- 557              		.loc 1 171 5 discriminator 1 view .LVU147
- 171:Core/Src/uart_rx_task.c ****   }
- 558              		.loc 1 171 5 discriminator 1 view .LVU148
- 559 0038 FEE7     		b	.L49
- 560              	.L53:
+ 553              		.loc 1 171 5 discriminator 3 view .LVU144
+ 554 0038 FEE7     		b	.L49
+ 555              	.L53:
  176:Core/Src/uart_rx_task.c ****                       "Task_UART_RX",
- 561              		.loc 1 176 5 view .LVU149
+ 556              		.loc 1 176 5 view .LVU145
  176:Core/Src/uart_rx_task.c ****                       "Task_UART_RX",
- 562              		.loc 1 176 11 is_stmt 0 view .LVU150
- 563 003a 074B     		ldr	r3, .L54+4
- 564 003c 0193     		str	r3, [sp, #4]
- 565 003e 0223     		movs	r3, #2
- 566 0040 0093     		str	r3, [sp]
- 567 0042 0023     		movs	r3, #0
- 568 0044 4FF48072 		mov	r2, #256
- 569 0048 0449     		ldr	r1, .L54+8
- 570 004a 0548     		ldr	r0, .L54+12
- 571 004c FFF7FEFF 		bl	xTaskCreate
- 572              	.LVL36:
- 573              		.loc 1 183 1 view .LVU151
- 574 0050 DEE7     		b	.L47
- 575              	.L55:
- 576 0052 00BF     		.align	2
- 577              	.L54:
- 578 0054 00000000 		.word	.LANCHOR2
- 579 0058 00000000 		.word	.LANCHOR8
- 580 005c 00000000 		.word	.LC0
- 581 0060 00000000 		.word	Task_UART_RX
- 582              		.cfi_endproc
- 583              	.LFE74:
- 585              		.section	.text.UartRxTask_NotifyFromIdleIrq,"ax",%progbits
- 586              		.align	1
- 587              		.global	UartRxTask_NotifyFromIdleIrq
- 588              		.syntax unified
- 589              		.thumb
- 590              		.thumb_func
- 592              	UartRxTask_NotifyFromIdleIrq:
- 593              	.LFB75:
+ 557              		.loc 1 176 11 is_stmt 0 view .LVU146
+ 558 003a 074B     		ldr	r3, .L54+4
+ 559 003c 0193     		str	r3, [sp, #4]
+ 560 003e 0223     		movs	r3, #2
+ 561 0040 0093     		str	r3, [sp]
+ 562 0042 0023     		movs	r3, #0
+ 563 0044 4FF48072 		mov	r2, #256
+ 564 0048 0449     		ldr	r1, .L54+8
+ 565 004a 0548     		ldr	r0, .L54+12
+ 566 004c FFF7FEFF 		bl	xTaskCreate
+ 567              	.LVL35:
+ 568              		.loc 1 183 1 view .LVU147
+ 569 0050 DEE7     		b	.L47
+ 570              	.L55:
+ 571 0052 00BF     		.align	2
+ 572              	.L54:
+ 573 0054 00000000 		.word	uart_rx_queue
+ 574 0058 00000000 		.word	s_uart_rx_task_handle
+ 575 005c 00000000 		.word	.LC0
+ 576 0060 00000000 		.word	Task_UART_RX
+ 577              		.cfi_endproc
+ 578              	.LFE74:
+ 580              		.section	.text.UartRxTask_NotifyFromIdleIrq,"ax",%progbits
+ 581              		.align	1
+ 582              		.global	UartRxTask_NotifyFromIdleIrq
+ 583              		.syntax unified
+ 584              		.thumb
+ 585              		.thumb_func
+ 587              	UartRxTask_NotifyFromIdleIrq:
+ 588              	.LFB75:
  184:Core/Src/uart_rx_task.c **** 
  185:Core/Src/uart_rx_task.c **** void UartRxTask_NotifyFromIdleIrq(void)
  186:Core/Src/uart_rx_task.c **** {
- 594              		.loc 1 186 1 is_stmt 1 view -0
- 595              		.cfi_startproc
- 596              		@ args = 0, pretend = 0, frame = 8
- 597              		@ frame_needed = 0, uses_anonymous_args = 0
- 598 0000 00B5     		push	{lr}
- 599              	.LCFI11:
- 600              		.cfi_def_cfa_offset 4
- 601              		.cfi_offset 14, -4
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 19
-
-
- 602 0002 83B0     		sub	sp, sp, #12
- 603              	.LCFI12:
- 604              		.cfi_def_cfa_offset 16
+ 589              		.loc 1 186 1 is_stmt 1 view -0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 8
+ 592              		@ frame_needed = 0, uses_anonymous_args = 0
+ 593 0000 00B5     		push	{lr}
+ 594              	.LCFI11:
+ 595              		.cfi_def_cfa_offset 4
+ 596              		.cfi_offset 14, -4
+ 597 0002 83B0     		sub	sp, sp, #12
+ 598              	.LCFI12:
+ 599              		.cfi_def_cfa_offset 16
  187:Core/Src/uart_rx_task.c ****   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
- 605              		.loc 1 187 3 view .LVU153
- 606              		.loc 1 187 14 is_stmt 0 view .LVU154
- 607 0004 0023     		movs	r3, #0
- 608 0006 0193     		str	r3, [sp, #4]
+ 600              		.loc 1 187 3 view .LVU149
+ 601              		.loc 1 187 14 is_stmt 0 view .LVU150
+ARM GAS  /tmp/cct0Z9V1.s 			page 19
+
+
+ 602 0004 0023     		movs	r3, #0
+ 603 0006 0193     		str	r3, [sp, #4]
  188:Core/Src/uart_rx_task.c **** 
  189:Core/Src/uart_rx_task.c ****   if (huart1.hdmarx == NULL)
- 609              		.loc 1 189 3 is_stmt 1 view .LVU155
- 610              		.loc 1 189 13 is_stmt 0 view .LVU156
- 611 0008 0F4B     		ldr	r3, .L61
- 612 000a DB6B     		ldr	r3, [r3, #60]
- 613              		.loc 1 189 6 view .LVU157
- 614 000c C3B1     		cbz	r3, .L56
+ 604              		.loc 1 189 3 is_stmt 1 view .LVU151
+ 605              		.loc 1 189 13 is_stmt 0 view .LVU152
+ 606 0008 0F4B     		ldr	r3, .L61
+ 607 000a DB6B     		ldr	r3, [r3, #60]
+ 608              		.loc 1 189 6 view .LVU153
+ 609 000c C3B1     		cbz	r3, .L56
  190:Core/Src/uart_rx_task.c ****   {
  191:Core/Src/uart_rx_task.c ****     return;
  192:Core/Src/uart_rx_task.c ****   }
  193:Core/Src/uart_rx_task.c **** 
  194:Core/Src/uart_rx_task.c ****   s_uart_dma_write_pos = (uint16_t)(UART_RX_DMA_BUF_LEN - __HAL_DMA_GET_COUNTER(huart1.hdmarx));
- 615              		.loc 1 194 3 is_stmt 1 view .LVU158
- 616              		.loc 1 194 59 is_stmt 0 view .LVU159
- 617 000e 1B68     		ldr	r3, [r3]
- 618 0010 5B68     		ldr	r3, [r3, #4]
- 619              		.loc 1 194 26 view .LVU160
- 620 0012 C3F58073 		rsb	r3, r3, #256
- 621 0016 9BB2     		uxth	r3, r3
- 622              		.loc 1 194 24 view .LVU161
- 623 0018 0C4A     		ldr	r2, .L61+4
- 624 001a 1380     		strh	r3, [r2]	@ movhi
+ 610              		.loc 1 194 3 is_stmt 1 view .LVU154
+ 611              		.loc 1 194 59 is_stmt 0 view .LVU155
+ 612 000e 1B68     		ldr	r3, [r3]
+ 613 0010 5B68     		ldr	r3, [r3, #4]
+ 614              		.loc 1 194 26 view .LVU156
+ 615 0012 C3F58073 		rsb	r3, r3, #256
+ 616 0016 9BB2     		uxth	r3, r3
+ 617              		.loc 1 194 24 view .LVU157
+ 618 0018 0C4A     		ldr	r2, .L61+4
+ 619 001a 1380     		strh	r3, [r2]	@ movhi
  195:Core/Src/uart_rx_task.c **** 
  196:Core/Src/uart_rx_task.c ****   if (s_uart_rx_task_handle != NULL)
- 625              		.loc 1 196 3 is_stmt 1 view .LVU162
- 626              		.loc 1 196 29 is_stmt 0 view .LVU163
- 627 001c 0C4B     		ldr	r3, .L61+8
- 628 001e 1868     		ldr	r0, [r3]
- 629              		.loc 1 196 6 view .LVU164
- 630 0020 70B1     		cbz	r0, .L56
+ 620              		.loc 1 196 3 is_stmt 1 view .LVU158
+ 621              		.loc 1 196 29 is_stmt 0 view .LVU159
+ 622 001c 0C4B     		ldr	r3, .L61+8
+ 623 001e 1868     		ldr	r0, [r3]
+ 624              		.loc 1 196 6 view .LVU160
+ 625 0020 70B1     		cbz	r0, .L56
  197:Core/Src/uart_rx_task.c ****   {
  198:Core/Src/uart_rx_task.c ****     vTaskNotifyGiveFromISR(s_uart_rx_task_handle, &xHigherPriorityTaskWoken);
- 631              		.loc 1 198 5 is_stmt 1 view .LVU165
- 632 0022 01A9     		add	r1, sp, #4
- 633 0024 FFF7FEFF 		bl	vTaskNotifyGiveFromISR
- 634              	.LVL37:
+ 626              		.loc 1 198 5 is_stmt 1 view .LVU161
+ 627 0022 01A9     		add	r1, sp, #4
+ 628 0024 FFF7FEFF 		bl	vTaskNotifyGiveFromISR
+ 629              	.LVL36:
  199:Core/Src/uart_rx_task.c ****     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
- 635              		.loc 1 199 5 view .LVU166
- 636 0028 019B     		ldr	r3, [sp, #4]
- 637 002a 4BB1     		cbz	r3, .L56
- 638              		.loc 1 199 5 discriminator 1 view .LVU167
- 639 002c 4FF0E023 		mov	r3, #-536813568
- 640 0030 4FF08052 		mov	r2, #268435456
- 641 0034 C3F8042D 		str	r2, [r3, #3332]
- 642              		.loc 1 199 5 discriminator 1 view .LVU168
- 643              		.syntax unified
- 644              	@ 199 "Core/Src/uart_rx_task.c" 1
- 645 0038 BFF34F8F 		dsb
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 20
+ 630              		.loc 1 199 5 view .LVU162
+ 631 0028 019B     		ldr	r3, [sp, #4]
+ 632 002a 4BB1     		cbz	r3, .L56
+ 633              		.loc 1 199 5 discriminator 1 view .LVU163
+ 634 002c 4FF0E023 		mov	r3, #-536813568
+ 635 0030 4FF08052 		mov	r2, #268435456
+ 636 0034 C3F8042D 		str	r2, [r3, #3332]
+ 637              		.loc 1 199 5 discriminator 1 view .LVU164
+ 638              		.syntax unified
+ 639              	@ 199 "Core/Src/uart_rx_task.c" 1
+ 640 0038 BFF34F8F 		dsb
+ 641              	@ 0 "" 2
+ 642              		.loc 1 199 5 discriminator 1 view .LVU165
+ 643              	@ 199 "Core/Src/uart_rx_task.c" 1
+ 644 003c BFF36F8F 		isb
+ 645              	@ 0 "" 2
+ 646              		.loc 1 199 49 discriminator 3 view .LVU166
+ARM GAS  /tmp/cct0Z9V1.s 			page 20
 
 
- 646              	@ 0 "" 2
- 647              		.loc 1 199 5 discriminator 1 view .LVU169
- 648              	@ 199 "Core/Src/uart_rx_task.c" 1
- 649 003c BFF36F8F 		isb
- 650              	@ 0 "" 2
- 651              		.loc 1 199 49 discriminator 1 view .LVU170
- 652              		.thumb
- 653              		.syntax unified
- 654              	.L56:
+ 647              		.thumb
+ 648              		.syntax unified
+ 649              	.L56:
  200:Core/Src/uart_rx_task.c ****   }
  201:Core/Src/uart_rx_task.c **** }
- 655              		.loc 1 201 1 is_stmt 0 view .LVU171
- 656 0040 03B0     		add	sp, sp, #12
- 657              	.LCFI13:
- 658              		.cfi_def_cfa_offset 4
- 659              		@ sp needed
- 660 0042 5DF804FB 		ldr	pc, [sp], #4
- 661              	.L62:
- 662 0046 00BF     		.align	2
- 663              	.L61:
- 664 0048 00000000 		.word	huart1
- 665 004c 00000000 		.word	.LANCHOR5
- 666 0050 00000000 		.word	.LANCHOR8
- 667              		.cfi_endproc
- 668              	.LFE75:
- 670              		.global	uart_queue_drop_count
- 671              		.global	uart_crc_error_count
- 672              		.global	uart_rx_queue
- 673              		.section	.bss.s_frame_buf,"aw",%nobits
- 674              		.align	2
- 675              		.set	.LANCHOR4,. + 0
- 678              	s_frame_buf:
- 679 0000 00000000 		.space	256
- 679      00000000 
- 679      00000000 
- 679      00000000 
- 679      00000000 
- 680              		.section	.bss.s_frame_len,"aw",%nobits
- 681              		.align	1
- 682              		.set	.LANCHOR0,. + 0
- 685              	s_frame_len:
- 686 0000 0000     		.space	2
- 687              		.section	.bss.s_uart_dma_buf,"aw",%nobits
- 688              		.align	2
- 689              		.set	.LANCHOR6,. + 0
- 692              	s_uart_dma_buf:
- 693 0000 00000000 		.space	256
- 693      00000000 
- 693      00000000 
- 693      00000000 
- 693      00000000 
- 694              		.section	.bss.s_uart_dma_read_pos,"aw",%nobits
- 695              		.align	1
- 696              		.set	.LANCHOR7,. + 0
- 699              	s_uart_dma_read_pos:
- 700 0000 0000     		.space	2
- 701              		.section	.bss.s_uart_dma_write_pos,"aw",%nobits
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 21
+ 650              		.loc 1 201 1 is_stmt 0 view .LVU167
+ 651 0040 03B0     		add	sp, sp, #12
+ 652              	.LCFI13:
+ 653              		.cfi_def_cfa_offset 4
+ 654              		@ sp needed
+ 655 0042 5DF804FB 		ldr	pc, [sp], #4
+ 656              	.L62:
+ 657 0046 00BF     		.align	2
+ 658              	.L61:
+ 659 0048 00000000 		.word	huart1
+ 660 004c 00000000 		.word	s_uart_dma_write_pos
+ 661 0050 00000000 		.word	s_uart_rx_task_handle
+ 662              		.cfi_endproc
+ 663              	.LFE75:
+ 665              		.section	.bss.s_frame_len,"aw",%nobits
+ 666              		.align	1
+ 669              	s_frame_len:
+ 670 0000 0000     		.space	2
+ 671              		.section	.bss.s_frame_buf,"aw",%nobits
+ 672              		.align	2
+ 675              	s_frame_buf:
+ 676 0000 00000000 		.space	256
+ 676      00000000 
+ 676      00000000 
+ 676      00000000 
+ 676      00000000 
+ 677              		.section	.bss.s_uart_dma_read_pos,"aw",%nobits
+ 678              		.align	1
+ 681              	s_uart_dma_read_pos:
+ 682 0000 0000     		.space	2
+ 683              		.section	.bss.s_uart_dma_write_pos,"aw",%nobits
+ 684              		.align	1
+ 687              	s_uart_dma_write_pos:
+ 688 0000 0000     		.space	2
+ 689              		.section	.bss.s_uart_dma_buf,"aw",%nobits
+ 690              		.align	2
+ 693              	s_uart_dma_buf:
+ 694 0000 00000000 		.space	256
+ 694      00000000 
+ 694      00000000 
+ 694      00000000 
+ 694      00000000 
+ 695              		.section	.bss.s_uart_rx_task_handle,"aw",%nobits
+ 696              		.align	2
+ 699              	s_uart_rx_task_handle:
+ 700 0000 00000000 		.space	4
+ 701              		.global	uart_queue_drop_count
+ 702              		.section	.bss.uart_queue_drop_count,"aw",%nobits
+ 703              		.align	2
+ 706              	uart_queue_drop_count:
+ 707 0000 00000000 		.space	4
+ 708              		.global	uart_crc_error_count
+ARM GAS  /tmp/cct0Z9V1.s 			page 21
 
 
- 702              		.align	1
- 703              		.set	.LANCHOR5,. + 0
- 706              	s_uart_dma_write_pos:
- 707 0000 0000     		.space	2
- 708              		.section	.bss.s_uart_rx_task_handle,"aw",%nobits
- 709              		.align	2
- 710              		.set	.LANCHOR8,. + 0
- 713              	s_uart_rx_task_handle:
+ 709              		.section	.bss.uart_crc_error_count,"aw",%nobits
+ 710              		.align	2
+ 713              	uart_crc_error_count:
  714 0000 00000000 		.space	4
- 715              		.section	.bss.uart_crc_error_count,"aw",%nobits
- 716              		.align	2
- 717              		.set	.LANCHOR1,. + 0
- 720              	uart_crc_error_count:
+ 715              		.global	uart_rx_queue
+ 716              		.section	.bss.uart_rx_queue,"aw",%nobits
+ 717              		.align	2
+ 720              	uart_rx_queue:
  721 0000 00000000 		.space	4
- 722              		.section	.bss.uart_queue_drop_count,"aw",%nobits
- 723              		.align	2
- 724              		.set	.LANCHOR3,. + 0
- 727              	uart_queue_drop_count:
- 728 0000 00000000 		.space	4
- 729              		.section	.bss.uart_rx_queue,"aw",%nobits
- 730              		.align	2
- 731              		.set	.LANCHOR2,. + 0
- 734              	uart_rx_queue:
- 735 0000 00000000 		.space	4
- 736              		.text
- 737              	.Letext0:
- 738              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\lib\\gcc\\arm-none-eabi\\10.3.1\\inc
- 739              		.file 4 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
- 740              		.file 5 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
- 741              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
- 742              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/include/queue.h"
- 743              		.file 8 "Core/Inc/uart_protocol.h"
- 744              		.file 9 "Core/Inc/uart_rx_task.h"
- 745              		.file 10 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 746              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 747              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 748              		.file 13 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
- 749              		.file 14 "Core/Inc/usart.h"
- 750              		.file 15 "Core/Inc/main.h"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s 			page 22
+ 722              		.text
+ 723              	.Letext0:
+ 724              		.file 3 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 725              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 726              		.file 5 "Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h"
+ 727              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 728              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/include/queue.h"
+ 729              		.file 8 "Core/Inc/uart_protocol.h"
+ 730              		.file 9 "Core/Inc/uart_rx_task.h"
+ 731              		.file 10 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 732              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 733              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 734              		.file 13 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 735              		.file 14 "Core/Inc/usart.h"
+ 736              		.file 15 "Core/Inc/main.h"
+ARM GAS  /tmp/cct0Z9V1.s 			page 22
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 uart_rx_task.c
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:18     .text.UartRx_ResetFrameParser:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:23     .text.UartRx_ResetFrameParser:00000000 UartRx_ResetFrameParser
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:41     .text.UartRx_ResetFrameParser:00000008 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:46     .text.UartRx_HandleFrame:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:51     .text.UartRx_HandleFrame:00000000 UartRx_HandleFrame
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:168    .text.UartRx_HandleFrame:00000060 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:175    .text.UartRx_ParseByte:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:180    .text.UartRx_ParseByte:00000000 UartRx_ParseByte
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:331    .text.UartRx_ParseByte:00000084 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:337    .text.UartRx_ProcessDmaData:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:342    .text.UartRx_ProcessDmaData:00000000 UartRx_ProcessDmaData
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:399    .text.UartRx_ProcessDmaData:00000030 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:406    .text.Task_UART_RX:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:411    .text.Task_UART_RX:00000000 Task_UART_RX
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:466    .text.Task_UART_RX:00000034 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:472    .rodata.UartRxTask_Create.str1.4:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:476    .text.UartRxTask_Create:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:482    .text.UartRxTask_Create:00000000 UartRxTask_Create
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:578    .text.UartRxTask_Create:00000054 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:586    .text.UartRxTask_NotifyFromIdleIrq:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:592    .text.UartRxTask_NotifyFromIdleIrq:00000000 UartRxTask_NotifyFromIdleIrq
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:664    .text.UartRxTask_NotifyFromIdleIrq:00000048 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:727    .bss.uart_queue_drop_count:00000000 uart_queue_drop_count
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:720    .bss.uart_crc_error_count:00000000 uart_crc_error_count
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:734    .bss.uart_rx_queue:00000000 uart_rx_queue
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:674    .bss.s_frame_buf:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:678    .bss.s_frame_buf:00000000 s_frame_buf
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:681    .bss.s_frame_len:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:685    .bss.s_frame_len:00000000 s_frame_len
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:688    .bss.s_uart_dma_buf:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:692    .bss.s_uart_dma_buf:00000000 s_uart_dma_buf
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:695    .bss.s_uart_dma_read_pos:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:699    .bss.s_uart_dma_read_pos:00000000 s_uart_dma_read_pos
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:702    .bss.s_uart_dma_write_pos:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:706    .bss.s_uart_dma_write_pos:00000000 s_uart_dma_write_pos
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:709    .bss.s_uart_rx_task_handle:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:713    .bss.s_uart_rx_task_handle:00000000 s_uart_rx_task_handle
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:716    .bss.uart_crc_error_count:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:723    .bss.uart_queue_drop_count:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccCMdz0E.s:730    .bss.uart_rx_queue:00000000 $d
+     /tmp/cct0Z9V1.s:19     .text.UartRx_ResetFrameParser:00000000 $t
+     /tmp/cct0Z9V1.s:24     .text.UartRx_ResetFrameParser:00000000 UartRx_ResetFrameParser
+     /tmp/cct0Z9V1.s:41     .text.UartRx_ResetFrameParser:00000008 $d
+     /tmp/cct0Z9V1.s:669    .bss.s_frame_len:00000000 s_frame_len
+     /tmp/cct0Z9V1.s:46     .text.UartRx_HandleFrame:00000000 $t
+     /tmp/cct0Z9V1.s:51     .text.UartRx_HandleFrame:00000000 UartRx_HandleFrame
+     /tmp/cct0Z9V1.s:168    .text.UartRx_HandleFrame:00000060 $d
+     /tmp/cct0Z9V1.s:713    .bss.uart_crc_error_count:00000000 uart_crc_error_count
+     /tmp/cct0Z9V1.s:720    .bss.uart_rx_queue:00000000 uart_rx_queue
+     /tmp/cct0Z9V1.s:706    .bss.uart_queue_drop_count:00000000 uart_queue_drop_count
+     /tmp/cct0Z9V1.s:175    .text.UartRx_ParseByte:00000000 $t
+     /tmp/cct0Z9V1.s:180    .text.UartRx_ParseByte:00000000 UartRx_ParseByte
+     /tmp/cct0Z9V1.s:331    .text.UartRx_ParseByte:00000084 $d
+     /tmp/cct0Z9V1.s:675    .bss.s_frame_buf:00000000 s_frame_buf
+     /tmp/cct0Z9V1.s:337    .text.UartRx_ProcessDmaData:00000000 $t
+     /tmp/cct0Z9V1.s:342    .text.UartRx_ProcessDmaData:00000000 UartRx_ProcessDmaData
+     /tmp/cct0Z9V1.s:397    .text.UartRx_ProcessDmaData:00000030 $d
+     /tmp/cct0Z9V1.s:687    .bss.s_uart_dma_write_pos:00000000 s_uart_dma_write_pos
+     /tmp/cct0Z9V1.s:681    .bss.s_uart_dma_read_pos:00000000 s_uart_dma_read_pos
+     /tmp/cct0Z9V1.s:693    .bss.s_uart_dma_buf:00000000 s_uart_dma_buf
+     /tmp/cct0Z9V1.s:404    .text.Task_UART_RX:00000000 $t
+     /tmp/cct0Z9V1.s:409    .text.Task_UART_RX:00000000 Task_UART_RX
+     /tmp/cct0Z9V1.s:464    .text.Task_UART_RX:00000034 $d
+     /tmp/cct0Z9V1.s:470    .rodata.UartRxTask_Create.str1.4:00000000 $d
+     /tmp/cct0Z9V1.s:474    .text.UartRxTask_Create:00000000 $t
+     /tmp/cct0Z9V1.s:480    .text.UartRxTask_Create:00000000 UartRxTask_Create
+     /tmp/cct0Z9V1.s:573    .text.UartRxTask_Create:00000054 $d
+     /tmp/cct0Z9V1.s:699    .bss.s_uart_rx_task_handle:00000000 s_uart_rx_task_handle
+     /tmp/cct0Z9V1.s:581    .text.UartRxTask_NotifyFromIdleIrq:00000000 $t
+     /tmp/cct0Z9V1.s:587    .text.UartRxTask_NotifyFromIdleIrq:00000000 UartRxTask_NotifyFromIdleIrq
+     /tmp/cct0Z9V1.s:659    .text.UartRxTask_NotifyFromIdleIrq:00000048 $d
+     /tmp/cct0Z9V1.s:666    .bss.s_frame_len:00000000 $d
+     /tmp/cct0Z9V1.s:672    .bss.s_frame_buf:00000000 $d
+     /tmp/cct0Z9V1.s:678    .bss.s_uart_dma_read_pos:00000000 $d
+     /tmp/cct0Z9V1.s:684    .bss.s_uart_dma_write_pos:00000000 $d
+     /tmp/cct0Z9V1.s:690    .bss.s_uart_dma_buf:00000000 $d
+     /tmp/cct0Z9V1.s:696    .bss.s_uart_rx_task_handle:00000000 $d
+     /tmp/cct0Z9V1.s:703    .bss.uart_queue_drop_count:00000000 $d
+     /tmp/cct0Z9V1.s:710    .bss.uart_crc_error_count:00000000 $d
+     /tmp/cct0Z9V1.s:717    .bss.uart_rx_queue:00000000 $d
 
 UNDEFINED SYMBOLS
 crc16_ccitt

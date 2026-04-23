@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 1
+ARM GAS  /tmp/ccfJmMxU.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -17,15 +17,15 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.MX_GPIO_Init,"ax",%progbits
-  18              		.align	1
-  19              		.global	MX_GPIO_Init
-  20              		.syntax unified
-  21              		.thumb
-  22              		.thumb_func
-  24              	MX_GPIO_Init:
-  25              	.LFB65:
-  26              		.file 1 "Core/Src/gpio.c"
+  17              		.file 1 "Core/Src/gpio.c"
+  18              		.section	.text.MX_GPIO_Init,"ax",%progbits
+  19              		.align	1
+  20              		.global	MX_GPIO_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	MX_GPIO_Init:
+  26              	.LFB65:
    1:Core/Src/gpio.c **** /* USER CODE BEGIN Header */
    2:Core/Src/gpio.c **** /**
    3:Core/Src/gpio.c ****   ******************************************************************************
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 1
   30:Core/Src/gpio.c **** /*----------------------------------------------------------------------------*/
   31:Core/Src/gpio.c **** /* USER CODE BEGIN 1 */
   32:Core/Src/gpio.c **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 2
+ARM GAS  /tmp/ccfJmMxU.s 			page 2
 
 
   33:Core/Src/gpio.c **** /* USER CODE END 1 */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 1
   48:Core/Src/gpio.c **** 
   49:Core/Src/gpio.c **** }
   66              		.loc 1 49 1 is_stmt 0 view .LVU13
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 3
+ARM GAS  /tmp/ccfJmMxU.s 			page 3
 
 
   67 0028 02B0     		add	sp, sp, #8
@@ -134,16 +134,15 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 1
   77              	.LFE65:
   79              		.text
   80              	.Letext0:
-  81              		.file 2 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
-  82              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
-  83              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s 			page 4
+  81              		.file 2 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+  82              		.file 3 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ARM GAS  /tmp/ccfJmMxU.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 gpio.c
-C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s:18     .text.MX_GPIO_Init:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s:24     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
-C:\Users\Pt\AppData\Local\Temp\ccGaTT6j.s:75     .text.MX_GPIO_Init:0000002c $d
+     /tmp/ccfJmMxU.s:19     .text.MX_GPIO_Init:00000000 $t
+     /tmp/ccfJmMxU.s:25     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+     /tmp/ccfJmMxU.s:75     .text.MX_GPIO_Init:0000002c $d
 
 NO UNDEFINED SYMBOLS

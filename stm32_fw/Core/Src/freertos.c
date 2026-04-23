@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "uart_rx_task.h"
+#include "traj_planner.h"
 
 /* USER CODE END Includes */
 
@@ -99,6 +100,7 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   UartRxTask_Create();
+  TrajPlannerTask_Create();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -117,10 +119,13 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
+  /* Test: sweep servo 0 between 0 deg and 180 deg over 2 seconds each way */
+  float target = 180.0f;
   for(;;)
   {
-    osDelay(1);
+    Traj_SetTarget(0, target, 2000);
+    target = (target > 90.0f) ? 0.0f : 180.0f;
+    osDelay(2500);
   }
   /* USER CODE END StartDefaultTask */
 }

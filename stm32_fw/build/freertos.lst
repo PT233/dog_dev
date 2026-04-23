@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 1
+ARM GAS  /tmp/cc1RNZ1z.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -17,15 +17,17 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.StartDefaultTask,"ax",%progbits
-  18              		.align	1
-  19              		.global	StartDefaultTask
-  20              		.syntax unified
-  21              		.thumb
-  22              		.thumb_func
-  24              	StartDefaultTask:
-  25              	.LFB70:
-  26              		.file 1 "Core/Src/freertos.c"
+  17              		.file 1 "Core/Src/freertos.c"
+  18              		.global	__aeabi_fcmpgt
+  19              		.section	.text.StartDefaultTask,"ax",%progbits
+  20              		.align	1
+  21              		.global	StartDefaultTask
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	StartDefaultTask:
+  27              	.LVL0:
+  28              	.LFB70:
    1:Core/Src/freertos.c **** /* USER CODE BEGIN Header */
    2:Core/Src/freertos.c **** /**
    3:Core/Src/freertos.c ****   ******************************************************************************
@@ -55,231 +57,282 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 1
   27:Core/Src/freertos.c **** /* USER CODE BEGIN Includes */
   28:Core/Src/freertos.c **** 
   29:Core/Src/freertos.c **** #include "uart_rx_task.h"
-  30:Core/Src/freertos.c **** 
-  31:Core/Src/freertos.c **** /* USER CODE END Includes */
-  32:Core/Src/freertos.c **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 2
+  30:Core/Src/freertos.c **** #include "traj_planner.h"
+ARM GAS  /tmp/cc1RNZ1z.s 			page 2
 
 
-  33:Core/Src/freertos.c **** /* Private typedef -----------------------------------------------------------*/
-  34:Core/Src/freertos.c **** /* USER CODE BEGIN PTD */
-  35:Core/Src/freertos.c **** 
-  36:Core/Src/freertos.c **** /* USER CODE END PTD */
-  37:Core/Src/freertos.c **** 
-  38:Core/Src/freertos.c **** /* Private define ------------------------------------------------------------*/
-  39:Core/Src/freertos.c **** /* USER CODE BEGIN PD */
-  40:Core/Src/freertos.c **** 
-  41:Core/Src/freertos.c **** /* USER CODE END PD */
-  42:Core/Src/freertos.c **** 
-  43:Core/Src/freertos.c **** /* Private macro -------------------------------------------------------------*/
-  44:Core/Src/freertos.c **** /* USER CODE BEGIN PM */
-  45:Core/Src/freertos.c **** 
-  46:Core/Src/freertos.c **** /* USER CODE END PM */
-  47:Core/Src/freertos.c **** 
-  48:Core/Src/freertos.c **** /* Private variables ---------------------------------------------------------*/
-  49:Core/Src/freertos.c **** /* USER CODE BEGIN Variables */
-  50:Core/Src/freertos.c **** 
-  51:Core/Src/freertos.c **** /* USER CODE END Variables */
-  52:Core/Src/freertos.c **** /* Definitions for defaultTask */
-  53:Core/Src/freertos.c **** osThreadId_t defaultTaskHandle;
-  54:Core/Src/freertos.c **** const osThreadAttr_t defaultTask_attributes = {
-  55:Core/Src/freertos.c ****   .name = "defaultTask",
-  56:Core/Src/freertos.c ****   .stack_size = 128 * 4,
-  57:Core/Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
-  58:Core/Src/freertos.c **** };
-  59:Core/Src/freertos.c **** 
-  60:Core/Src/freertos.c **** /* Private function prototypes -----------------------------------------------*/
-  61:Core/Src/freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
-  62:Core/Src/freertos.c **** 
-  63:Core/Src/freertos.c **** /* USER CODE END FunctionPrototypes */
-  64:Core/Src/freertos.c **** 
-  65:Core/Src/freertos.c **** void StartDefaultTask(void *argument);
-  66:Core/Src/freertos.c **** 
-  67:Core/Src/freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-  68:Core/Src/freertos.c **** 
-  69:Core/Src/freertos.c **** /**
-  70:Core/Src/freertos.c ****   * @brief  FreeRTOS initialization
-  71:Core/Src/freertos.c ****   * @param  None
-  72:Core/Src/freertos.c ****   * @retval None
-  73:Core/Src/freertos.c ****   */
-  74:Core/Src/freertos.c **** void MX_FREERTOS_Init(void) {
-  75:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
-  76:Core/Src/freertos.c **** 
-  77:Core/Src/freertos.c ****   /* USER CODE END Init */
-  78:Core/Src/freertos.c **** 
-  79:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
-  80:Core/Src/freertos.c ****   /* add mutexes, ... */
-  81:Core/Src/freertos.c ****   /* USER CODE END RTOS_MUTEX */
-  82:Core/Src/freertos.c **** 
-  83:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  84:Core/Src/freertos.c ****   /* add semaphores, ... */
-  85:Core/Src/freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
-  86:Core/Src/freertos.c **** 
-  87:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
-  88:Core/Src/freertos.c ****   /* start timers, add new ones, ... */
-  89:Core/Src/freertos.c ****   /* USER CODE END RTOS_TIMERS */
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 3
+  31:Core/Src/freertos.c **** 
+  32:Core/Src/freertos.c **** /* USER CODE END Includes */
+  33:Core/Src/freertos.c **** 
+  34:Core/Src/freertos.c **** /* Private typedef -----------------------------------------------------------*/
+  35:Core/Src/freertos.c **** /* USER CODE BEGIN PTD */
+  36:Core/Src/freertos.c **** 
+  37:Core/Src/freertos.c **** /* USER CODE END PTD */
+  38:Core/Src/freertos.c **** 
+  39:Core/Src/freertos.c **** /* Private define ------------------------------------------------------------*/
+  40:Core/Src/freertos.c **** /* USER CODE BEGIN PD */
+  41:Core/Src/freertos.c **** 
+  42:Core/Src/freertos.c **** /* USER CODE END PD */
+  43:Core/Src/freertos.c **** 
+  44:Core/Src/freertos.c **** /* Private macro -------------------------------------------------------------*/
+  45:Core/Src/freertos.c **** /* USER CODE BEGIN PM */
+  46:Core/Src/freertos.c **** 
+  47:Core/Src/freertos.c **** /* USER CODE END PM */
+  48:Core/Src/freertos.c **** 
+  49:Core/Src/freertos.c **** /* Private variables ---------------------------------------------------------*/
+  50:Core/Src/freertos.c **** /* USER CODE BEGIN Variables */
+  51:Core/Src/freertos.c **** 
+  52:Core/Src/freertos.c **** /* USER CODE END Variables */
+  53:Core/Src/freertos.c **** /* Definitions for defaultTask */
+  54:Core/Src/freertos.c **** osThreadId_t defaultTaskHandle;
+  55:Core/Src/freertos.c **** const osThreadAttr_t defaultTask_attributes = {
+  56:Core/Src/freertos.c ****   .name = "defaultTask",
+  57:Core/Src/freertos.c ****   .stack_size = 128 * 4,
+  58:Core/Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
+  59:Core/Src/freertos.c **** };
+  60:Core/Src/freertos.c **** 
+  61:Core/Src/freertos.c **** /* Private function prototypes -----------------------------------------------*/
+  62:Core/Src/freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
+  63:Core/Src/freertos.c **** 
+  64:Core/Src/freertos.c **** /* USER CODE END FunctionPrototypes */
+  65:Core/Src/freertos.c **** 
+  66:Core/Src/freertos.c **** void StartDefaultTask(void *argument);
+  67:Core/Src/freertos.c **** 
+  68:Core/Src/freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+  69:Core/Src/freertos.c **** 
+  70:Core/Src/freertos.c **** /**
+  71:Core/Src/freertos.c ****   * @brief  FreeRTOS initialization
+  72:Core/Src/freertos.c ****   * @param  None
+  73:Core/Src/freertos.c ****   * @retval None
+  74:Core/Src/freertos.c ****   */
+  75:Core/Src/freertos.c **** void MX_FREERTOS_Init(void) {
+  76:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
+  77:Core/Src/freertos.c **** 
+  78:Core/Src/freertos.c ****   /* USER CODE END Init */
+  79:Core/Src/freertos.c **** 
+  80:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
+  81:Core/Src/freertos.c ****   /* add mutexes, ... */
+  82:Core/Src/freertos.c ****   /* USER CODE END RTOS_MUTEX */
+  83:Core/Src/freertos.c **** 
+  84:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
+  85:Core/Src/freertos.c ****   /* add semaphores, ... */
+  86:Core/Src/freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
+  87:Core/Src/freertos.c **** 
+ARM GAS  /tmp/cc1RNZ1z.s 			page 3
 
 
-  90:Core/Src/freertos.c **** 
-  91:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
-  92:Core/Src/freertos.c ****   /* add queues, ... */
-  93:Core/Src/freertos.c ****   /* USER CODE END RTOS_QUEUES */
-  94:Core/Src/freertos.c **** 
-  95:Core/Src/freertos.c ****   /* Create the thread(s) */
-  96:Core/Src/freertos.c ****   /* creation of defaultTask */
-  97:Core/Src/freertos.c ****   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
-  98:Core/Src/freertos.c **** 
-  99:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
- 100:Core/Src/freertos.c ****   /* add threads, ... */
- 101:Core/Src/freertos.c ****   UartRxTask_Create();
- 102:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
- 103:Core/Src/freertos.c **** 
- 104:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
- 105:Core/Src/freertos.c ****   /* add events, ... */
- 106:Core/Src/freertos.c ****   /* USER CODE END RTOS_EVENTS */
- 107:Core/Src/freertos.c **** 
- 108:Core/Src/freertos.c **** }
+  88:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
+  89:Core/Src/freertos.c ****   /* start timers, add new ones, ... */
+  90:Core/Src/freertos.c ****   /* USER CODE END RTOS_TIMERS */
+  91:Core/Src/freertos.c **** 
+  92:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
+  93:Core/Src/freertos.c ****   /* add queues, ... */
+  94:Core/Src/freertos.c ****   /* USER CODE END RTOS_QUEUES */
+  95:Core/Src/freertos.c **** 
+  96:Core/Src/freertos.c ****   /* Create the thread(s) */
+  97:Core/Src/freertos.c ****   /* creation of defaultTask */
+  98:Core/Src/freertos.c ****   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  99:Core/Src/freertos.c **** 
+ 100:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
+ 101:Core/Src/freertos.c ****   /* add threads, ... */
+ 102:Core/Src/freertos.c ****   UartRxTask_Create();
+ 103:Core/Src/freertos.c ****   TrajPlannerTask_Create();
+ 104:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
+ 105:Core/Src/freertos.c **** 
+ 106:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
+ 107:Core/Src/freertos.c ****   /* add events, ... */
+ 108:Core/Src/freertos.c ****   /* USER CODE END RTOS_EVENTS */
  109:Core/Src/freertos.c **** 
- 110:Core/Src/freertos.c **** /* USER CODE BEGIN Header_StartDefaultTask */
- 111:Core/Src/freertos.c **** /**
- 112:Core/Src/freertos.c ****   * @brief  Function implementing the defaultTask thread.
- 113:Core/Src/freertos.c ****   * @param  argument: Not used
- 114:Core/Src/freertos.c ****   * @retval None
- 115:Core/Src/freertos.c ****   */
- 116:Core/Src/freertos.c **** /* USER CODE END Header_StartDefaultTask */
- 117:Core/Src/freertos.c **** void StartDefaultTask(void *argument)
- 118:Core/Src/freertos.c **** {
-  27              		.loc 1 118 1 view -0
-  28              		.cfi_startproc
-  29              		@ Volatile: function does not return.
-  30              		@ args = 0, pretend = 0, frame = 0
-  31              		@ frame_needed = 0, uses_anonymous_args = 0
-  32              	.LVL0:
-  33              		.loc 1 118 1 is_stmt 0 view .LVU1
-  34 0000 08B5     		push	{r3, lr}
+ 110:Core/Src/freertos.c **** }
+ 111:Core/Src/freertos.c **** 
+ 112:Core/Src/freertos.c **** /* USER CODE BEGIN Header_StartDefaultTask */
+ 113:Core/Src/freertos.c **** /**
+ 114:Core/Src/freertos.c ****   * @brief  Function implementing the defaultTask thread.
+ 115:Core/Src/freertos.c ****   * @param  argument: Not used
+ 116:Core/Src/freertos.c ****   * @retval None
+ 117:Core/Src/freertos.c ****   */
+ 118:Core/Src/freertos.c **** /* USER CODE END Header_StartDefaultTask */
+ 119:Core/Src/freertos.c **** void StartDefaultTask(void *argument)
+ 120:Core/Src/freertos.c **** {
+  29              		.loc 1 120 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 120 1 is_stmt 0 view .LVU1
+  34 0000 10B5     		push	{r4, lr}
   35              	.LCFI0:
   36              		.cfi_def_cfa_offset 8
-  37              		.cfi_offset 3, -8
+  37              		.cfi_offset 4, -8
   38              		.cfi_offset 14, -4
-  39              	.LVL1:
-  40              	.L2:
- 119:Core/Src/freertos.c ****   /* USER CODE BEGIN StartDefaultTask */
- 120:Core/Src/freertos.c ****   /* Infinite loop */
- 121:Core/Src/freertos.c ****   for(;;)
-  41              		.loc 1 121 3 is_stmt 1 discriminator 1 view .LVU2
- 122:Core/Src/freertos.c ****   {
- 123:Core/Src/freertos.c ****     osDelay(1);
-  42              		.loc 1 123 5 discriminator 1 view .LVU3
-  43 0002 0120     		movs	r0, #1
-  44 0004 FFF7FEFF 		bl	osDelay
-  45              	.LVL2:
- 121:Core/Src/freertos.c ****   {
-  46              		.loc 1 121 8 discriminator 1 view .LVU4
-  47 0008 FBE7     		b	.L2
-  48              		.cfi_endproc
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 4
+ 121:Core/Src/freertos.c ****   /* USER CODE BEGIN StartDefaultTask */
+ 122:Core/Src/freertos.c ****   /* Test: sweep servo 0 between 0 deg and 180 deg over 2 seconds each way */
+ 123:Core/Src/freertos.c ****   float target = 180.0f;
+  39              		.loc 1 123 3 is_stmt 1 view .LVU2
+  40              	.LVL1:
+  41              		.loc 1 123 9 is_stmt 0 view .LVU3
+  42 0002 0A4C     		ldr	r4, .L10
+  43 0004 04E0     		b	.L4
+  44              	.LVL2:
+  45              	.L9:
+ 124:Core/Src/freertos.c ****   for(;;)
+ 125:Core/Src/freertos.c ****   {
+ 126:Core/Src/freertos.c ****     Traj_SetTarget(0, target, 2000);
+ 127:Core/Src/freertos.c ****     target = (target > 90.0f) ? 0.0f : 180.0f;
+ARM GAS  /tmp/cc1RNZ1z.s 			page 4
 
 
-  49              	.LFE70:
-  51              		.section	.text.MX_FREERTOS_Init,"ax",%progbits
-  52              		.align	1
-  53              		.global	MX_FREERTOS_Init
-  54              		.syntax unified
-  55              		.thumb
-  56              		.thumb_func
-  58              	MX_FREERTOS_Init:
-  59              	.LFB69:
-  74:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
-  60              		.loc 1 74 29 view -0
-  61              		.cfi_startproc
-  62              		@ args = 0, pretend = 0, frame = 0
-  63              		@ frame_needed = 0, uses_anonymous_args = 0
-  64 0000 08B5     		push	{r3, lr}
-  65              	.LCFI1:
-  66              		.cfi_def_cfa_offset 8
-  67              		.cfi_offset 3, -8
-  68              		.cfi_offset 14, -4
-  97:Core/Src/freertos.c **** 
-  69              		.loc 1 97 3 view .LVU6
-  97:Core/Src/freertos.c **** 
-  70              		.loc 1 97 23 is_stmt 0 view .LVU7
-  71 0002 054A     		ldr	r2, .L6
-  72 0004 0021     		movs	r1, #0
-  73 0006 0548     		ldr	r0, .L6+4
-  74 0008 FFF7FEFF 		bl	osThreadNew
-  75              	.LVL3:
-  97:Core/Src/freertos.c **** 
-  76              		.loc 1 97 21 view .LVU8
-  77 000c 044B     		ldr	r3, .L6+8
-  78 000e 1860     		str	r0, [r3]
- 101:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
-  79              		.loc 1 101 3 is_stmt 1 view .LVU9
-  80 0010 FFF7FEFF 		bl	UartRxTask_Create
-  81              	.LVL4:
- 108:Core/Src/freertos.c **** 
-  82              		.loc 1 108 1 is_stmt 0 view .LVU10
-  83 0014 08BD     		pop	{r3, pc}
-  84              	.L7:
-  85 0016 00BF     		.align	2
-  86              	.L6:
-  87 0018 00000000 		.word	.LANCHOR0
-  88 001c 00000000 		.word	StartDefaultTask
-  89 0020 00000000 		.word	.LANCHOR1
-  90              		.cfi_endproc
-  91              	.LFE69:
-  93              		.global	defaultTask_attributes
-  94              		.section	.rodata.str1.4,"aMS",%progbits,1
-  95              		.align	2
-  96              	.LC0:
-  97 0000 64656661 		.ascii	"defaultTask\000"
-  97      756C7454 
-  97      61736B00 
-  98              		.global	defaultTaskHandle
-  99              		.section	.bss.defaultTaskHandle,"aw",%nobits
- 100              		.align	2
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 5
+  46              		.loc 1 127 38 discriminator 1 view .LVU4
+  47 0006 0024     		movs	r4, #0
+  48              	.LVL3:
+  49              	.L2:
+ 128:Core/Src/freertos.c ****     osDelay(2500);
+  50              		.loc 1 128 5 is_stmt 1 view .LVU5
+  51 0008 40F6C410 		movw	r0, #2500
+  52 000c FFF7FEFF 		bl	osDelay
+  53              	.LVL4:
+ 124:Core/Src/freertos.c ****   for(;;)
+  54              		.loc 1 124 3 view .LVU6
+  55              	.L4:
+ 124:Core/Src/freertos.c ****   for(;;)
+  56              		.loc 1 124 3 view .LVU7
+ 126:Core/Src/freertos.c ****     target = (target > 90.0f) ? 0.0f : 180.0f;
+  57              		.loc 1 126 5 view .LVU8
+  58 0010 4FF4FA62 		mov	r2, #2000
+  59 0014 2146     		mov	r1, r4
+  60 0016 0020     		movs	r0, #0
+  61 0018 FFF7FEFF 		bl	Traj_SetTarget
+  62              	.LVL5:
+ 127:Core/Src/freertos.c ****     osDelay(2500);
+  63              		.loc 1 127 5 view .LVU9
+ 127:Core/Src/freertos.c ****     osDelay(2500);
+  64              		.loc 1 127 38 is_stmt 0 view .LVU10
+  65 001c 0449     		ldr	r1, .L10+4
+  66 001e 2046     		mov	r0, r4
+  67 0020 FFF7FEFF 		bl	__aeabi_fcmpgt
+  68              	.LVL6:
+  69 0024 0028     		cmp	r0, #0
+  70 0026 EED1     		bne	.L9
+ 127:Core/Src/freertos.c ****     osDelay(2500);
+  71              		.loc 1 127 38 discriminator 2 view .LVU11
+  72 0028 004C     		ldr	r4, .L10
+  73              	.LVL7:
+ 127:Core/Src/freertos.c ****     osDelay(2500);
+  74              		.loc 1 127 38 discriminator 2 view .LVU12
+  75 002a EDE7     		b	.L2
+  76              	.L11:
+  77              		.align	2
+  78              	.L10:
+  79 002c 00003443 		.word	1127481344
+  80 0030 0000B442 		.word	1119092736
+  81              		.cfi_endproc
+  82              	.LFE70:
+  84              		.section	.text.MX_FREERTOS_Init,"ax",%progbits
+  85              		.align	1
+  86              		.global	MX_FREERTOS_Init
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  91              	MX_FREERTOS_Init:
+  92              	.LFB69:
+  75:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
+  93              		.loc 1 75 29 is_stmt 1 view -0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cc1RNZ1z.s 			page 5
 
 
- 101              		.set	.LANCHOR1,. + 0
- 104              	defaultTaskHandle:
- 105 0000 00000000 		.space	4
- 106              		.section	.rodata.defaultTask_attributes,"a"
- 107              		.align	2
- 108              		.set	.LANCHOR0,. + 0
- 111              	defaultTask_attributes:
- 112 0000 00000000 		.word	.LC0
- 113 0004 00000000 		.space	16
- 113      00000000 
- 113      00000000 
- 113      00000000 
- 114 0014 00020000 		.word	512
- 115 0018 18000000 		.word	24
- 116 001c 00000000 		.space	8
- 116      00000000 
- 117              		.text
- 118              	.Letext0:
- 119              		.file 2 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
- 120              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
- 121              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
- 122              		.file 5 "Core/Inc/uart_rx_task.h"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s 			page 6
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97 0000 08B5     		push	{r3, lr}
+  98              	.LCFI1:
+  99              		.cfi_def_cfa_offset 8
+ 100              		.cfi_offset 3, -8
+ 101              		.cfi_offset 14, -4
+  98:Core/Src/freertos.c **** 
+ 102              		.loc 1 98 3 view .LVU14
+  98:Core/Src/freertos.c **** 
+ 103              		.loc 1 98 23 is_stmt 0 view .LVU15
+ 104 0002 064A     		ldr	r2, .L14
+ 105 0004 0021     		movs	r1, #0
+ 106 0006 0648     		ldr	r0, .L14+4
+ 107 0008 FFF7FEFF 		bl	osThreadNew
+ 108              	.LVL8:
+  98:Core/Src/freertos.c **** 
+ 109              		.loc 1 98 21 discriminator 1 view .LVU16
+ 110 000c 054B     		ldr	r3, .L14+8
+ 111 000e 1860     		str	r0, [r3]
+ 102:Core/Src/freertos.c ****   TrajPlannerTask_Create();
+ 112              		.loc 1 102 3 is_stmt 1 view .LVU17
+ 113 0010 FFF7FEFF 		bl	UartRxTask_Create
+ 114              	.LVL9:
+ 103:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
+ 115              		.loc 1 103 3 view .LVU18
+ 116 0014 FFF7FEFF 		bl	TrajPlannerTask_Create
+ 117              	.LVL10:
+ 110:Core/Src/freertos.c **** 
+ 118              		.loc 1 110 1 is_stmt 0 view .LVU19
+ 119 0018 08BD     		pop	{r3, pc}
+ 120              	.L15:
+ 121 001a 00BF     		.align	2
+ 122              	.L14:
+ 123 001c 00000000 		.word	defaultTask_attributes
+ 124 0020 00000000 		.word	StartDefaultTask
+ 125 0024 00000000 		.word	defaultTaskHandle
+ 126              		.cfi_endproc
+ 127              	.LFE69:
+ 129              		.global	defaultTask_attributes
+ 130              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 131              		.align	2
+ 132              	.LC0:
+ 133 0000 64656661 		.ascii	"defaultTask\000"
+ 133      756C7454 
+ 133      61736B00 
+ 134              		.section	.rodata.defaultTask_attributes,"a"
+ 135              		.align	2
+ 138              	defaultTask_attributes:
+ 139 0000 00000000 		.word	.LC0
+ 140 0004 00000000 		.space	16
+ 140      00000000 
+ 140      00000000 
+ 140      00000000 
+ 141 0014 00020000 		.word	512
+ 142 0018 18000000 		.word	24
+ 143 001c 00000000 		.space	8
+ 143      00000000 
+ARM GAS  /tmp/cc1RNZ1z.s 			page 6
+
+
+ 144              		.global	defaultTaskHandle
+ 145              		.section	.bss.defaultTaskHandle,"aw",%nobits
+ 146              		.align	2
+ 149              	defaultTaskHandle:
+ 150 0000 00000000 		.space	4
+ 151              		.text
+ 152              	.Letext0:
+ 153              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 154              		.file 3 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 155              		.file 4 "Core/Inc/traj_planner.h"
+ 156              		.file 5 "Core/Inc/uart_rx_task.h"
+ARM GAS  /tmp/cc1RNZ1z.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 freertos.c
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:18     .text.StartDefaultTask:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:24     .text.StartDefaultTask:00000000 StartDefaultTask
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:52     .text.MX_FREERTOS_Init:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:58     .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:87     .text.MX_FREERTOS_Init:00000018 $d
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:111    .rodata.defaultTask_attributes:00000000 defaultTask_attributes
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:95     .rodata.str1.4:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:104    .bss.defaultTaskHandle:00000000 defaultTaskHandle
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:100    .bss.defaultTaskHandle:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccSqYz0m.s:107    .rodata.defaultTask_attributes:00000000 $d
+     /tmp/cc1RNZ1z.s:20     .text.StartDefaultTask:00000000 $t
+     /tmp/cc1RNZ1z.s:26     .text.StartDefaultTask:00000000 StartDefaultTask
+     /tmp/cc1RNZ1z.s:79     .text.StartDefaultTask:0000002c $d
+     /tmp/cc1RNZ1z.s:85     .text.MX_FREERTOS_Init:00000000 $t
+     /tmp/cc1RNZ1z.s:91     .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
+     /tmp/cc1RNZ1z.s:123    .text.MX_FREERTOS_Init:0000001c $d
+     /tmp/cc1RNZ1z.s:138    .rodata.defaultTask_attributes:00000000 defaultTask_attributes
+     /tmp/cc1RNZ1z.s:149    .bss.defaultTaskHandle:00000000 defaultTaskHandle
+     /tmp/cc1RNZ1z.s:131    .rodata.str1.4:00000000 $d
+     /tmp/cc1RNZ1z.s:135    .rodata.defaultTask_attributes:00000000 $d
+     /tmp/cc1RNZ1z.s:146    .bss.defaultTaskHandle:00000000 $d
 
 UNDEFINED SYMBOLS
+__aeabi_fcmpgt
 osDelay
+Traj_SetTarget
 osThreadNew
 UartRxTask_Create
+TrajPlannerTask_Create

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
+ARM GAS  /tmp/ccTcjbsa.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -17,17 +17,17 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.global	__aeabi_fcmplt
-  18              		.global	__aeabi_fcmpgt
-  19              		.section	.text.Servo_ClampAngle,"ax",%progbits
-  20              		.align	1
-  21              		.syntax unified
-  22              		.thumb
-  23              		.thumb_func
-  25              	Servo_ClampAngle:
-  26              	.LVL0:
-  27              	.LFB65:
-  28              		.file 1 "Core/Src/servo_driver.c"
+  17              		.file 1 "Core/Src/servo_driver.c"
+  18              		.global	__aeabi_fcmplt
+  19              		.global	__aeabi_fcmpgt
+  20              		.section	.text.Servo_ClampAngle,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	Servo_ClampAngle:
+  27              	.LVL0:
+  28              	.LFB65:
    1:Core/Src/servo_driver.c **** #include "servo_driver.h"
    2:Core/Src/servo_driver.c **** 
    3:Core/Src/servo_driver.c **** #include "tim.h"
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
   35              	.LCFI0:
   36              		.cfi_def_cfa_offset 8
   37              		.cfi_offset 4, -8
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 2
+ARM GAS  /tmp/ccTcjbsa.s 			page 2
 
 
   38              		.cfi_offset 14, -4
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
   79              		.align	1
   80              		.global	Servo_SetAngle
   81              		.syntax unified
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 3
+ARM GAS  /tmp/ccTcjbsa.s 			page 3
 
 
   82              		.thumb
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
   55:Core/Src/servo_driver.c ****   ccr = (uint32_t)(SERVO_CCR_BASE + (clamped_angle * SERVO_CCR_PER_DEG));
  116              		.loc 1 55 3 is_stmt 1 view .LVU20
  117              		.loc 1 55 52 is_stmt 0 view .LVU21
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 4
+ARM GAS  /tmp/ccTcjbsa.s 			page 4
 
 
  118 0010 1149     		ldr	r1, .L17
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
  164              	.L16:
   57:Core/Src/servo_driver.c ****   g_last_angle_deg[servo_id] = clamped_angle;
  165              		.loc 1 57 3 discriminator 6 view .LVU33
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 5
+ARM GAS  /tmp/ccTcjbsa.s 			page 5
 
 
  166 004e 054B     		ldr	r3, .L17+12
@@ -250,9 +250,9 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
  172              	.L17:
  173 0058 1CC73141 		.word	1093781276
  174 005c 0000FA43 		.word	1140457472
- 175 0060 00000000 		.word	.LANCHOR0
+ 175 0060 00000000 		.word	k_servo_channels
  176 0064 00000000 		.word	htim2
- 177 0068 00000000 		.word	.LANCHOR1
+ 177 0068 00000000 		.word	g_last_angle_deg
  178              		.cfi_endproc
  179              	.LFE67:
  181              		.section	.text.Servo_Init,"ax",%progbits
@@ -288,17 +288,17 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
  207              	.LVL14:
  208              	.L21:
   39:Core/Src/servo_driver.c ****     Servo_SetAngle(i, 0.0f);
- 209              		.loc 1 39 5 is_stmt 1 discriminator 3 view .LVU39
+ 209              		.loc 1 39 5 is_stmt 1 view .LVU39
  210 0006 074B     		ldr	r3, .L23
  211 0008 53F82410 		ldr	r1, [r3, r4, lsl #2]
  212 000c 0648     		ldr	r0, .L23+4
  213 000e FFF7FEFF 		bl	HAL_TIM_PWM_Start
  214              	.LVL15:
   40:Core/Src/servo_driver.c ****   }
- 215              		.loc 1 40 5 discriminator 3 view .LVU40
+ 215              		.loc 1 40 5 view .LVU40
  216 0012 0021     		movs	r1, #0
  217 0014 2046     		mov	r0, r4
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 6
+ARM GAS  /tmp/ccTcjbsa.s 			page 6
 
 
  218 0016 FFF7FEFF 		bl	Servo_SetAngle
@@ -313,123 +313,118 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 1
  225              	.LVL18:
  226              	.L20:
   37:Core/Src/servo_driver.c ****   {
- 227              		.loc 1 37 23 is_stmt 1 discriminator 1 view .LVU43
-  37:Core/Src/servo_driver.c ****   {
- 228              		.loc 1 37 3 is_stmt 0 discriminator 1 view .LVU44
- 229 001e 032C     		cmp	r4, #3
- 230 0020 F1D9     		bls	.L21
- 231              	.LBE2:
+ 227              		.loc 1 37 25 is_stmt 1 discriminator 1 view .LVU43
+ 228 001e 032C     		cmp	r4, #3
+ 229 0020 F1D9     		bls	.L21
+ 230              	.LBE2:
   42:Core/Src/servo_driver.c **** 
- 232              		.loc 1 42 1 view .LVU45
- 233 0022 10BD     		pop	{r4, pc}
- 234              	.LVL19:
- 235              	.L24:
+ 231              		.loc 1 42 1 is_stmt 0 view .LVU44
+ 232 0022 10BD     		pop	{r4, pc}
+ 233              	.LVL19:
+ 234              	.L24:
   42:Core/Src/servo_driver.c **** 
- 236              		.loc 1 42 1 view .LVU46
- 237              		.align	2
- 238              	.L23:
- 239 0024 00000000 		.word	.LANCHOR0
- 240 0028 00000000 		.word	htim2
- 241              		.cfi_endproc
- 242              	.LFE66:
- 244              		.section	.text.Servo_GetAngle,"ax",%progbits
- 245              		.align	1
- 246              		.global	Servo_GetAngle
- 247              		.syntax unified
- 248              		.thumb
- 249              		.thumb_func
- 251              	Servo_GetAngle:
- 252              	.LVL20:
- 253              	.LFB68:
+ 235              		.loc 1 42 1 view .LVU45
+ 236              		.align	2
+ 237              	.L23:
+ 238 0024 00000000 		.word	k_servo_channels
+ 239 0028 00000000 		.word	htim2
+ 240              		.cfi_endproc
+ 241              	.LFE66:
+ 243              		.section	.text.Servo_GetAngle,"ax",%progbits
+ 244              		.align	1
+ 245              		.global	Servo_GetAngle
+ 246              		.syntax unified
+ 247              		.thumb
+ 248              		.thumb_func
+ 250              	Servo_GetAngle:
+ 251              	.LVL20:
+ 252              	.LFB68:
   60:Core/Src/servo_driver.c **** 
   61:Core/Src/servo_driver.c **** float Servo_GetAngle(uint8_t servo_id)
   62:Core/Src/servo_driver.c **** {
- 254              		.loc 1 62 1 is_stmt 1 view -0
- 255              		.cfi_startproc
- 256              		@ args = 0, pretend = 0, frame = 0
- 257              		@ frame_needed = 0, uses_anonymous_args = 0
- 258              		@ link register save eliminated.
+ 253              		.loc 1 62 1 is_stmt 1 view -0
+ 254              		.cfi_startproc
+ 255              		@ args = 0, pretend = 0, frame = 0
+ 256              		@ frame_needed = 0, uses_anonymous_args = 0
+ 257              		@ link register save eliminated.
   63:Core/Src/servo_driver.c ****   if (servo_id >= SERVO_COUNT)
- 259              		.loc 1 63 3 view .LVU48
- 260              		.loc 1 63 6 is_stmt 0 view .LVU49
- 261 0000 0328     		cmp	r0, #3
- 262 0002 03D8     		bhi	.L27
+ 258              		.loc 1 63 3 view .LVU47
+ 259              		.loc 1 63 6 is_stmt 0 view .LVU48
+ 260 0000 0328     		cmp	r0, #3
+ 261 0002 03D8     		bhi	.L27
   64:Core/Src/servo_driver.c ****   {
   65:Core/Src/servo_driver.c ****     return 0.0f;
   66:Core/Src/servo_driver.c ****   }
   67:Core/Src/servo_driver.c **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 7
-
-
   68:Core/Src/servo_driver.c ****   return g_last_angle_deg[servo_id];
- 263              		.loc 1 68 3 is_stmt 1 view .LVU50
- 264              		.loc 1 68 26 is_stmt 0 view .LVU51
- 265 0004 024B     		ldr	r3, .L28
- 266 0006 53F82000 		ldr	r0, [r3, r0, lsl #2]	@ float
- 267              	.LVL21:
- 268              		.loc 1 68 26 view .LVU52
- 269 000a 7047     		bx	lr
- 270              	.LVL22:
- 271              	.L27:
+ 262              		.loc 1 68 3 is_stmt 1 view .LVU49
+ARM GAS  /tmp/ccTcjbsa.s 			page 7
+
+
+ 263              		.loc 1 68 26 is_stmt 0 view .LVU50
+ 264 0004 024B     		ldr	r3, .L28
+ 265 0006 53F82000 		ldr	r0, [r3, r0, lsl #2]	@ float
+ 266              	.LVL21:
+ 267              		.loc 1 68 26 view .LVU51
+ 268 000a 7047     		bx	lr
+ 269              	.LVL22:
+ 270              	.L27:
   65:Core/Src/servo_driver.c ****   }
- 272              		.loc 1 65 12 view .LVU53
- 273 000c 0020     		movs	r0, #0
- 274              	.LVL23:
+ 271              		.loc 1 65 12 view .LVU52
+ 272 000c 0020     		movs	r0, #0
+ 273              	.LVL23:
   69:Core/Src/servo_driver.c **** }
- 275              		.loc 1 69 1 view .LVU54
- 276 000e 7047     		bx	lr
- 277              	.L29:
- 278              		.align	2
- 279              	.L28:
- 280 0010 00000000 		.word	.LANCHOR1
- 281              		.cfi_endproc
- 282              	.LFE68:
- 284              		.section	.bss.g_last_angle_deg,"aw",%nobits
- 285              		.align	2
- 286              		.set	.LANCHOR1,. + 0
- 289              	g_last_angle_deg:
- 290 0000 00000000 		.space	16
- 290      00000000 
- 290      00000000 
- 290      00000000 
- 291              		.section	.rodata.k_servo_channels,"a"
- 292              		.align	2
- 293              		.set	.LANCHOR0,. + 0
- 296              	k_servo_channels:
- 297 0000 00000000 		.word	0
- 298 0004 04000000 		.word	4
- 299 0008 08000000 		.word	8
- 300 000c 0C000000 		.word	12
- 301              		.text
- 302              	.Letext0:
- 303              		.file 2 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
- 304              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
- 305              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 306              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 307              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 308              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
- 309              		.file 8 "Core/Inc/tim.h"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s 			page 8
+ 274              		.loc 1 69 1 view .LVU53
+ 275 000e 7047     		bx	lr
+ 276              	.L29:
+ 277              		.align	2
+ 278              	.L28:
+ 279 0010 00000000 		.word	g_last_angle_deg
+ 280              		.cfi_endproc
+ 281              	.LFE68:
+ 283              		.section	.bss.g_last_angle_deg,"aw",%nobits
+ 284              		.align	2
+ 287              	g_last_angle_deg:
+ 288 0000 00000000 		.space	16
+ 288      00000000 
+ 288      00000000 
+ 288      00000000 
+ 289              		.section	.rodata.k_servo_channels,"a"
+ 290              		.align	2
+ 293              	k_servo_channels:
+ 294 0000 00000000 		.word	0
+ 295 0004 04000000 		.word	4
+ 296 0008 08000000 		.word	8
+ 297 000c 0C000000 		.word	12
+ 298              		.text
+ 299              	.Letext0:
+ 300              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 301              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 302              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 303              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 304              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 305              		.file 7 "Core/Inc/tim.h"
+ARM GAS  /tmp/ccTcjbsa.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 servo_driver.c
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:20     .text.Servo_ClampAngle:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:25     .text.Servo_ClampAngle:00000000 Servo_ClampAngle
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:71     .text.Servo_ClampAngle:00000024 $d
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:79     .text.Servo_SetAngle:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:85     .text.Servo_SetAngle:00000000 Servo_SetAngle
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:173    .text.Servo_SetAngle:00000058 $d
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:182    .text.Servo_Init:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:188    .text.Servo_Init:00000000 Servo_Init
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:239    .text.Servo_Init:00000024 $d
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:245    .text.Servo_GetAngle:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:251    .text.Servo_GetAngle:00000000 Servo_GetAngle
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:280    .text.Servo_GetAngle:00000010 $d
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:285    .bss.g_last_angle_deg:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:289    .bss.g_last_angle_deg:00000000 g_last_angle_deg
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:292    .rodata.k_servo_channels:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\cc86sVdw.s:296    .rodata.k_servo_channels:00000000 k_servo_channels
+     /tmp/ccTcjbsa.s:21     .text.Servo_ClampAngle:00000000 $t
+     /tmp/ccTcjbsa.s:26     .text.Servo_ClampAngle:00000000 Servo_ClampAngle
+     /tmp/ccTcjbsa.s:71     .text.Servo_ClampAngle:00000024 $d
+     /tmp/ccTcjbsa.s:79     .text.Servo_SetAngle:00000000 $t
+     /tmp/ccTcjbsa.s:85     .text.Servo_SetAngle:00000000 Servo_SetAngle
+     /tmp/ccTcjbsa.s:173    .text.Servo_SetAngle:00000058 $d
+     /tmp/ccTcjbsa.s:293    .rodata.k_servo_channels:00000000 k_servo_channels
+     /tmp/ccTcjbsa.s:287    .bss.g_last_angle_deg:00000000 g_last_angle_deg
+     /tmp/ccTcjbsa.s:182    .text.Servo_Init:00000000 $t
+     /tmp/ccTcjbsa.s:188    .text.Servo_Init:00000000 Servo_Init
+     /tmp/ccTcjbsa.s:238    .text.Servo_Init:00000024 $d
+     /tmp/ccTcjbsa.s:244    .text.Servo_GetAngle:00000000 $t
+     /tmp/ccTcjbsa.s:250    .text.Servo_GetAngle:00000000 Servo_GetAngle
+     /tmp/ccTcjbsa.s:279    .text.Servo_GetAngle:00000010 $d
+     /tmp/ccTcjbsa.s:284    .bss.g_last_angle_deg:00000000 $d
+     /tmp/ccTcjbsa.s:290    .rodata.k_servo_channels:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_fcmplt

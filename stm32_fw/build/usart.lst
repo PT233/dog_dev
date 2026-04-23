@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
+ARM GAS  /tmp/ccm1l2DP.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -17,15 +17,15 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.MX_USART1_UART_Init,"ax",%progbits
-  18              		.align	1
-  19              		.global	MX_USART1_UART_Init
-  20              		.syntax unified
-  21              		.thumb
-  22              		.thumb_func
-  24              	MX_USART1_UART_Init:
-  25              	.LFB65:
-  26              		.file 1 "Core/Src/usart.c"
+  17              		.file 1 "Core/Src/usart.c"
+  18              		.section	.text.MX_USART1_UART_Init,"ax",%progbits
+  19              		.align	1
+  20              		.global	MX_USART1_UART_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	MX_USART1_UART_Init:
+  26              	.LFB65:
    1:Core/Src/usart.c **** /* USER CODE BEGIN Header */
    2:Core/Src/usart.c **** /**
    3:Core/Src/usart.c ****   ******************************************************************************
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
   30:Core/Src/usart.c **** 
   31:Core/Src/usart.c **** /* USART1 init function */
   32:Core/Src/usart.c **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 2
+ARM GAS  /tmp/ccm1l2DP.s 			page 2
 
 
   33:Core/Src/usart.c **** void MX_USART1_UART_Init(void)
@@ -118,14 +118,14 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
   63              		.loc 1 50 28 is_stmt 0 view .LVU16
   64 001c C361     		str	r3, [r0, #28]
   51:Core/Src/usart.c ****   if (HAL_UART_Init(&huart1) != HAL_OK)
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 3
+ARM GAS  /tmp/ccm1l2DP.s 			page 3
 
 
   65              		.loc 1 51 3 is_stmt 1 view .LVU17
   66              		.loc 1 51 7 is_stmt 0 view .LVU18
   67 001e FFF7FEFF 		bl	HAL_UART_Init
   68              	.LVL0:
-  69              		.loc 1 51 6 view .LVU19
+  69              		.loc 1 51 6 discriminator 1 view .LVU19
   70 0022 30B9     		cbnz	r0, .L4
   71              	.L2:
   52:Core/Src/usart.c ****   {
@@ -154,7 +154,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
   85              	.L6:
   86              		.align	2
   87              	.L5:
-  88 0038 00000000 		.word	.LANCHOR0
+  88 0038 00000000 		.word	huart1
   89 003c 00380140 		.word	1073821696
   90              		.cfi_endproc
   91              	.LFE65:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  108 0000 70B5     		push	{r4, r5, r6, lr}
  109              	.LCFI1:
  110              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 4
+ARM GAS  /tmp/ccm1l2DP.s 			page 4
 
 
  111              		.cfi_offset 4, -16
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
   95:Core/Src/usart.c ****     hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
   96:Core/Src/usart.c ****     hdma_usart1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
   97:Core/Src/usart.c ****     hdma_usart1_rx.Init.Mode = DMA_CIRCULAR;
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 5
+ARM GAS  /tmp/ccm1l2DP.s 			page 5
 
 
   98:Core/Src/usart.c ****     hdma_usart1_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  153 0022 42F48042 		orr	r2, r2, #16384
  154 0026 9A61     		str	r2, [r3, #24]
   72:Core/Src/usart.c **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 6
+ARM GAS  /tmp/ccm1l2DP.s 			page 6
 
 
  155              		.loc 1 72 5 view .LVU35
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  194              	.LVL5:
   82:Core/Src/usart.c **** 
  195              		.loc 1 82 5 is_stmt 0 view .LVU51
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 7
+ARM GAS  /tmp/ccm1l2DP.s 			page 7
 
 
  196 0058 FFF7FEFF 		bl	HAL_GPIO_Init
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  232              		.loc 1 96 5 is_stmt 1 view .LVU69
   96:Core/Src/usart.c ****     hdma_usart1_rx.Init.Mode = DMA_CIRCULAR;
  233              		.loc 1 96 42 is_stmt 0 view .LVU70
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 8
+ARM GAS  /tmp/ccm1l2DP.s 			page 8
 
 
  234 0080 4561     		str	r5, [r0, #20]
@@ -441,7 +441,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  245 008c FFF7FEFF 		bl	HAL_DMA_Init
  246              	.LVL8:
   99:Core/Src/usart.c ****     {
- 247              		.loc 1 99 8 view .LVU77
+ 247              		.loc 1 99 8 discriminator 1 view .LVU77
  248 0090 00BB     		cbnz	r0, .L13
  249              	.L9:
  104:Core/Src/usart.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  270              		.loc 1 110 5 is_stmt 1 view .LVU88
  110:Core/Src/usart.c ****     hdma_usart1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
  271              		.loc 1 110 32 is_stmt 0 view .LVU89
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 9
+ARM GAS  /tmp/ccm1l2DP.s 			page 9
 
 
  272 00a6 8022     		movs	r2, #128
@@ -511,7 +511,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  289 00b6 FFF7FEFF 		bl	HAL_DMA_Init
  290              	.LVL9:
  115:Core/Src/usart.c ****     {
- 291              		.loc 1 115 8 view .LVU100
+ 291              		.loc 1 115 8 discriminator 1 view .LVU100
  292 00ba 70B9     		cbnz	r0, .L14
  293              	.L10:
  120:Core/Src/usart.c **** 
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  309 00ce FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
  310              	.LVL11:
  311              		.loc 1 129 1 is_stmt 0 view .LVU107
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 10
+ARM GAS  /tmp/ccm1l2DP.s 			page 10
 
 
  312 00d2 A0E7     		b	.L7
@@ -559,9 +559,9 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  325              	.L15:
  326 00e0 00380140 		.word	1073821696
  327 00e4 00080140 		.word	1073809408
- 328 00e8 00000000 		.word	.LANCHOR1
+ 328 00e8 00000000 		.word	hdma_usart1_rx
  329 00ec 58000240 		.word	1073872984
- 330 00f0 00000000 		.word	.LANCHOR2
+ 330 00f0 00000000 		.word	hdma_usart1_tx
  331 00f4 44000240 		.word	1073872964
  332              		.cfi_endproc
  333              	.LFE66:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  360              	.LCFI5:
  361              		.cfi_def_cfa_offset 8
  362              		.cfi_offset 4, -8
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 11
+ARM GAS  /tmp/ccm1l2DP.s 			page 11
 
 
  363              		.cfi_offset 14, -4
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  393              		.loc 1 158 1 view .LVU122
  394 0036 00BF     		.align	2
  395              	.L24:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 12
+ARM GAS  /tmp/ccm1l2DP.s 			page 12
 
 
  396 0038 00380140 		.word	1073821696
@@ -667,67 +667,63 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 1
  399              		.cfi_endproc
  400              	.LFE67:
  402              		.global	hdma_usart1_tx
- 403              		.global	hdma_usart1_rx
- 404              		.global	huart1
- 405              		.section	.bss.hdma_usart1_rx,"aw",%nobits
- 406              		.align	2
- 407              		.set	.LANCHOR1,. + 0
- 410              	hdma_usart1_rx:
- 411 0000 00000000 		.space	68
- 411      00000000 
- 411      00000000 
- 411      00000000 
- 411      00000000 
- 412              		.section	.bss.hdma_usart1_tx,"aw",%nobits
- 413              		.align	2
- 414              		.set	.LANCHOR2,. + 0
- 417              	hdma_usart1_tx:
- 418 0000 00000000 		.space	68
- 418      00000000 
- 418      00000000 
- 418      00000000 
- 418      00000000 
- 419              		.section	.bss.huart1,"aw",%nobits
- 420              		.align	2
- 421              		.set	.LANCHOR0,. + 0
- 424              	huart1:
- 425 0000 00000000 		.space	72
- 425      00000000 
- 425      00000000 
- 425      00000000 
- 425      00000000 
- 426              		.text
- 427              	.Letext0:
- 428              		.file 2 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
- 429              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
- 430              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 431              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 432              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
- 433              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 434              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
- 435              		.file 9 "Core/Inc/usart.h"
- 436              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
- 437              		.file 11 "Core/Inc/main.h"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s 			page 13
+ 403              		.section	.bss.hdma_usart1_tx,"aw",%nobits
+ 404              		.align	2
+ 407              	hdma_usart1_tx:
+ 408 0000 00000000 		.space	68
+ 408      00000000 
+ 408      00000000 
+ 408      00000000 
+ 408      00000000 
+ 409              		.global	hdma_usart1_rx
+ 410              		.section	.bss.hdma_usart1_rx,"aw",%nobits
+ 411              		.align	2
+ 414              	hdma_usart1_rx:
+ 415 0000 00000000 		.space	68
+ 415      00000000 
+ 415      00000000 
+ 415      00000000 
+ 415      00000000 
+ 416              		.global	huart1
+ 417              		.section	.bss.huart1,"aw",%nobits
+ 418              		.align	2
+ 421              	huart1:
+ 422 0000 00000000 		.space	72
+ 422      00000000 
+ 422      00000000 
+ 422      00000000 
+ 422      00000000 
+ 423              		.text
+ 424              	.Letext0:
+ 425              		.file 2 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 426              		.file 3 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 427              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 428              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 429              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 430              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 431              		.file 8 "Core/Inc/usart.h"
+ 432              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
+ 433              		.file 10 "Core/Inc/main.h"
+ARM GAS  /tmp/ccm1l2DP.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:18     .text.MX_USART1_UART_Init:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:24     .text.MX_USART1_UART_Init:00000000 MX_USART1_UART_Init
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:88     .text.MX_USART1_UART_Init:00000038 $d
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:94     .text.HAL_UART_MspInit:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:100    .text.HAL_UART_MspInit:00000000 HAL_UART_MspInit
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:326    .text.HAL_UART_MspInit:000000e0 $d
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:336    .text.HAL_UART_MspDeInit:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:342    .text.HAL_UART_MspDeInit:00000000 HAL_UART_MspDeInit
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:396    .text.HAL_UART_MspDeInit:00000038 $d
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:417    .bss.hdma_usart1_tx:00000000 hdma_usart1_tx
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:410    .bss.hdma_usart1_rx:00000000 hdma_usart1_rx
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:424    .bss.huart1:00000000 huart1
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:406    .bss.hdma_usart1_rx:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:413    .bss.hdma_usart1_tx:00000000 $d
-C:\Users\Pt\AppData\Local\Temp\ccsxzC7y.s:420    .bss.huart1:00000000 $d
+     /tmp/ccm1l2DP.s:19     .text.MX_USART1_UART_Init:00000000 $t
+     /tmp/ccm1l2DP.s:25     .text.MX_USART1_UART_Init:00000000 MX_USART1_UART_Init
+     /tmp/ccm1l2DP.s:88     .text.MX_USART1_UART_Init:00000038 $d
+     /tmp/ccm1l2DP.s:421    .bss.huart1:00000000 huart1
+     /tmp/ccm1l2DP.s:94     .text.HAL_UART_MspInit:00000000 $t
+     /tmp/ccm1l2DP.s:100    .text.HAL_UART_MspInit:00000000 HAL_UART_MspInit
+     /tmp/ccm1l2DP.s:326    .text.HAL_UART_MspInit:000000e0 $d
+     /tmp/ccm1l2DP.s:414    .bss.hdma_usart1_rx:00000000 hdma_usart1_rx
+     /tmp/ccm1l2DP.s:407    .bss.hdma_usart1_tx:00000000 hdma_usart1_tx
+     /tmp/ccm1l2DP.s:336    .text.HAL_UART_MspDeInit:00000000 $t
+     /tmp/ccm1l2DP.s:342    .text.HAL_UART_MspDeInit:00000000 HAL_UART_MspDeInit
+     /tmp/ccm1l2DP.s:396    .text.HAL_UART_MspDeInit:00000038 $d
+     /tmp/ccm1l2DP.s:404    .bss.hdma_usart1_tx:00000000 $d
+     /tmp/ccm1l2DP.s:411    .bss.hdma_usart1_rx:00000000 $d
+     /tmp/ccm1l2DP.s:418    .bss.huart1:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_UART_Init

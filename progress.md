@@ -6,7 +6,7 @@
 ## 当前状态
 - 总体状态：进行中
 - 当前阶段：阶段 1
-- 下一任务：1.4（编写梯形速度插值任务）
+- 下一任务：1.5（连通 UART 接收到轨迹规划）
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -17,10 +17,11 @@
 | 1.1 | 已完成 | 最小修复并完成 STM32 工程基础配置：启用 IWDG、开启 USART1 IDLE 中断、修复 GCC10 链接脚本兼容 | 自动测试 PASS（mingw32-make 构建成功并生成 elf/hex/bin） |
 | 1.2 | 已完成 | 新增 servo_driver.c/h，提供 4 路舵机角度 API；main.c 加入 servo0 每秒 0°/180° 摆动测试；Makefile 纳入新源文件 | 自动测试 PASS（mingw32-make 构建成功并生成 elf/hex/bin） |
 | 1.3 | 已完成 | 新增 UART 协议接收任务：DMA 循环接收 + IDLE 中断通知 + 帧切分 + CRC 校验 + `uart_rx_queue` 投递 | 自动测试 PASS（mingw32-make 构建成功并生成 elf/hex/bin） |
+| 1.4 | 已完成 | 新增 traj_planner.c/h：TrajState 结构体 + 对称梯形速度曲线 + 5ms 周期 FreeRTOS 任务；freertos.c 注册任务并在 defaultTask 中做 0°↔180° 往复测试 | 自动测试 PASS（make clean && make 构建成功并生成 elf/hex/bin） |
 
 ## 阶段进度
 - 阶段 0：3/3
-- 阶段 1：3/5
+- 阶段 1：4/5
 - 阶段 2：0/7
 - 阶段 3：0/7
 - 阶段 4：0/6

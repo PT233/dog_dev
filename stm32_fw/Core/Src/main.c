@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "servo_driver.h"
+#include "traj_planner.h"
 
 /* USER CODE END Includes */
 
@@ -104,6 +105,8 @@ int main(void)
 
 #if SERVO_SWING_TEST
   Servo_Init();
+#else
+  TrajPlanner_Init();
 #endif
 
   /* USER CODE END 2 */
