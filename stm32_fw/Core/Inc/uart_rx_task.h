@@ -12,6 +12,7 @@ extern "C" {
 extern QueueHandle_t uart_rx_queue;
 extern volatile uint32_t uart_crc_error_count;
 extern volatile uint32_t uart_queue_drop_count;
+extern volatile uint32_t uart_last_cmd_tick; /* HAL_GetTick() of last dispatched servo cmd */
 
 void UartRxTask_Create(void);
 void UartRxTask_NotifyFromIdleIrq(void);

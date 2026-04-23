@@ -4,13 +4,15 @@
 
 #include "task.h"
 #include "usart.h"
+#include "traj_planner.h"
 
 #define UART_RX_DMA_BUF_LEN UART_MAX_FRAME_LEN
 #define UART_RX_QUEUE_LEN 8U
 
 QueueHandle_t uart_rx_queue = NULL;
-volatile uint32_t uart_crc_error_count = 0;
+volatile uint32_t uart_crc_error_count  = 0;
 volatile uint32_t uart_queue_drop_count = 0;
+volatile uint32_t uart_last_cmd_tick    = 0;
 
 static TaskHandle_t s_uart_rx_task_handle = NULL;
 
@@ -158,8 +160,17 @@ static void Task_UART_RX(void* argument)
 
   for (;;)
   {
+    ServoCmdItem item;
+
     (void)ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     UartRx_ProcessDmaData();
+
+    /* Dispatch all parsed servo commands to the trajectory planner */
+    while (xQueueReceive(uart_rx_queue, &item, 0) == pdPASS)
+    {
+      Traj_SetTarget(item.servo_id, (float)item.angle_x10 / 10.0f, item.duration_ms);
+      uart_last_cmd_tick = HAL_GetTick();
+    }
   }
 }
 

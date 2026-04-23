@@ -28,6 +28,7 @@
 
 #include "uart_rx_task.h"
 #include "traj_planner.h"
+#include "status_safety_task.h"
 
 /* USER CODE END Includes */
 
@@ -101,6 +102,7 @@ void MX_FREERTOS_Init(void) {
   /* add threads, ... */
   UartRxTask_Create();
   TrajPlannerTask_Create();
+  StatusSafetyTask_Create();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -119,13 +121,9 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  /* Test: sweep servo 0 between 0 deg and 180 deg over 2 seconds each way */
-  float target = 180.0f;
   for(;;)
   {
-    Traj_SetTarget(0, target, 2000);
-    target = (target > 90.0f) ? 0.0f : 180.0f;
-    osDelay(2500);
+    osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }
