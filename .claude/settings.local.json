@@ -16,7 +16,8 @@
       "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_send.sh)",
       "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_send.sh)",
       "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_publish.sh)",
-      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_publish.sh)"
+      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_publish.sh)",
+      "Bash(ssh *)"
     ]
   }
 }
