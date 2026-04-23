@@ -1,0 +1,229 @@
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc692ERG.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"uart_protocol.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.crc16_ccitt,"ax",%progbits
+  18              		.align	1
+  19              		.global	crc16_ccitt
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	crc16_ccitt:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "Core/Src/uart_protocol.c"
+   1:Core/Src/uart_protocol.c **** #include "uart_protocol.h"
+   2:Core/Src/uart_protocol.c **** 
+   3:Core/Src/uart_protocol.c **** uint16_t crc16_ccitt(const uint8_t* data, size_t len) {
+  28              		.loc 1 3 55 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+   4:Core/Src/uart_protocol.c ****     uint16_t crc = 0xFFFFu;
+  33              		.loc 1 4 5 view .LVU1
+   5:Core/Src/uart_protocol.c **** 
+   6:Core/Src/uart_protocol.c ****     if (len == 0u) {
+  34              		.loc 1 6 5 view .LVU2
+  35              		.loc 1 6 8 is_stmt 0 view .LVU3
+  36 0000 F9B1     		cbz	r1, .L9
+   3:Core/Src/uart_protocol.c ****     uint16_t crc = 0xFFFFu;
+  37              		.loc 1 3 55 view .LVU4
+  38 0002 10B4     		push	{r4}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 4
+  41              		.cfi_offset 4, -4
+  42 0004 0446     		mov	r4, r0
+  43 0006 8C46     		mov	ip, r1
+   7:Core/Src/uart_protocol.c ****         return crc;
+   8:Core/Src/uart_protocol.c ****     }
+   9:Core/Src/uart_protocol.c **** 
+  10:Core/Src/uart_protocol.c ****     if (data == NULL) {
+  44              		.loc 1 10 5 is_stmt 1 view .LVU5
+  45              		.loc 1 10 8 is_stmt 0 view .LVU6
+  46 0008 F0B1     		cbz	r0, .L10
+  47              	.LBB2:
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc692ERG.s 			page 2
+
+
+  11:Core/Src/uart_protocol.c ****         return 0u;
+  12:Core/Src/uart_protocol.c ****     }
+  13:Core/Src/uart_protocol.c **** 
+  14:Core/Src/uart_protocol.c ****     for (size_t i = 0; i < len; ++i) {
+  48              		.loc 1 14 17 view .LVU7
+  49 000a 0022     		movs	r2, #0
+  50              	.LBE2:
+   4:Core/Src/uart_protocol.c **** 
+  51              		.loc 1 4 14 view .LVU8
+  52 000c 4FF6FF70 		movw	r0, #65535
+  53              	.LVL1:
+   4:Core/Src/uart_protocol.c **** 
+  54              		.loc 1 4 14 view .LVU9
+  55 0010 10E0     		b	.L3
+  56              	.LVL2:
+  57              	.L5:
+  58              	.LBB5:
+  59              	.LBB3:
+  15:Core/Src/uart_protocol.c ****         crc ^= (uint16_t)((uint16_t)data[i] << 8);
+  16:Core/Src/uart_protocol.c ****         for (uint8_t bit = 0; bit < 8u; ++bit) {
+  17:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+  18:Core/Src/uart_protocol.c ****                 crc = (uint16_t)((crc << 1) ^ 0x1021u);
+  19:Core/Src/uart_protocol.c ****             } else {
+  20:Core/Src/uart_protocol.c ****                 crc = (uint16_t)(crc << 1);
+  60              		.loc 1 20 17 is_stmt 1 view .LVU10
+  61              		.loc 1 20 21 is_stmt 0 view .LVU11
+  62 0012 4000     		lsls	r0, r0, #1
+  63              	.LVL3:
+  64              		.loc 1 20 21 view .LVU12
+  65 0014 80B2     		uxth	r0, r0
+  66              	.LVL4:
+  67              	.L6:
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+  68              		.loc 1 16 41 is_stmt 1 discriminator 2 view .LVU13
+  69 0016 0133     		adds	r3, r3, #1
+  70              	.LVL5:
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+  71              		.loc 1 16 41 is_stmt 0 discriminator 2 view .LVU14
+  72 0018 DBB2     		uxtb	r3, r3
+  73              	.LVL6:
+  74              	.L4:
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+  75              		.loc 1 16 31 is_stmt 1 discriminator 1 view .LVU15
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+  76              		.loc 1 16 9 is_stmt 0 discriminator 1 view .LVU16
+  77 001a 072B     		cmp	r3, #7
+  78 001c 09D8     		bhi	.L15
+  17:Core/Src/uart_protocol.c ****                 crc = (uint16_t)((crc << 1) ^ 0x1021u);
+  79              		.loc 1 17 13 is_stmt 1 view .LVU17
+  17:Core/Src/uart_protocol.c ****                 crc = (uint16_t)((crc << 1) ^ 0x1021u);
+  80              		.loc 1 17 16 is_stmt 0 view .LVU18
+  81 001e 10F4004F 		tst	r0, #32768
+  82 0022 F6D0     		beq	.L5
+  18:Core/Src/uart_protocol.c ****             } else {
+  83              		.loc 1 18 17 is_stmt 1 view .LVU19
+  18:Core/Src/uart_protocol.c ****             } else {
+  84              		.loc 1 18 39 is_stmt 0 view .LVU20
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc692ERG.s 			page 3
+
+
+  85 0024 4000     		lsls	r0, r0, #1
+  86              	.LVL7:
+  18:Core/Src/uart_protocol.c ****             } else {
+  87              		.loc 1 18 39 view .LVU21
+  88 0026 80B2     		uxth	r0, r0
+  18:Core/Src/uart_protocol.c ****             } else {
+  89              		.loc 1 18 21 view .LVU22
+  90 0028 80F48150 		eor	r0, r0, #4128
+  91 002c 80F00100 		eor	r0, r0, #1
+  92              	.LVL8:
+  18:Core/Src/uart_protocol.c ****             } else {
+  93              		.loc 1 18 21 view .LVU23
+  94 0030 F1E7     		b	.L6
+  95              	.L15:
+  18:Core/Src/uart_protocol.c ****             } else {
+  96              		.loc 1 18 21 view .LVU24
+  97              	.LBE3:
+  14:Core/Src/uart_protocol.c ****         crc ^= (uint16_t)((uint16_t)data[i] << 8);
+  98              		.loc 1 14 33 is_stmt 1 discriminator 2 view .LVU25
+  99 0032 0132     		adds	r2, r2, #1
+ 100              	.LVL9:
+ 101              	.L3:
+  14:Core/Src/uart_protocol.c ****         crc ^= (uint16_t)((uint16_t)data[i] << 8);
+ 102              		.loc 1 14 24 discriminator 1 view .LVU26
+  14:Core/Src/uart_protocol.c ****         crc ^= (uint16_t)((uint16_t)data[i] << 8);
+ 103              		.loc 1 14 5 is_stmt 0 discriminator 1 view .LVU27
+ 104 0034 6245     		cmp	r2, ip
+ 105 0036 08D2     		bcs	.L2
+  15:Core/Src/uart_protocol.c ****         for (uint8_t bit = 0; bit < 8u; ++bit) {
+ 106              		.loc 1 15 9 is_stmt 1 view .LVU28
+  15:Core/Src/uart_protocol.c ****         for (uint8_t bit = 0; bit < 8u; ++bit) {
+ 107              		.loc 1 15 41 is_stmt 0 view .LVU29
+ 108 0038 A35C     		ldrb	r3, [r4, r2]	@ zero_extendqisi2
+  15:Core/Src/uart_protocol.c ****         for (uint8_t bit = 0; bit < 8u; ++bit) {
+ 109              		.loc 1 15 13 view .LVU30
+ 110 003a 80EA0320 		eor	r0, r0, r3, lsl #8
+ 111              	.LVL10:
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+ 112              		.loc 1 16 9 is_stmt 1 view .LVU31
+ 113              	.LBB4:
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+ 114              		.loc 1 16 14 view .LVU32
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+ 115              		.loc 1 16 22 is_stmt 0 view .LVU33
+ 116 003e 0023     		movs	r3, #0
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+ 117              		.loc 1 16 9 view .LVU34
+ 118 0040 EBE7     		b	.L4
+ 119              	.LVL11:
+ 120              	.L9:
+ 121              	.LCFI1:
+ 122              		.cfi_def_cfa_offset 0
+ 123              		.cfi_restore 4
+  16:Core/Src/uart_protocol.c ****             if ((crc & 0x8000u) != 0u) {
+ 124              		.loc 1 16 9 view .LVU35
+ 125              	.LBE4:
+ 126              	.LBE5:
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc692ERG.s 			page 4
+
+
+   7:Core/Src/uart_protocol.c ****     }
+ 127              		.loc 1 7 16 view .LVU36
+ 128 0042 4FF6FF70 		movw	r0, #65535
+ 129              	.LVL12:
+  21:Core/Src/uart_protocol.c ****             }
+  22:Core/Src/uart_protocol.c ****         }
+  23:Core/Src/uart_protocol.c ****     }
+  24:Core/Src/uart_protocol.c **** 
+  25:Core/Src/uart_protocol.c ****     return crc;
+  26:Core/Src/uart_protocol.c **** }
+ 130              		.loc 1 26 1 view .LVU37
+ 131 0046 7047     		bx	lr
+ 132              	.LVL13:
+ 133              	.L10:
+ 134              	.LCFI2:
+ 135              		.cfi_def_cfa_offset 4
+ 136              		.cfi_offset 4, -4
+  11:Core/Src/uart_protocol.c ****     }
+ 137              		.loc 1 11 16 view .LVU38
+ 138 0048 0020     		movs	r0, #0
+ 139              	.LVL14:
+ 140              	.L2:
+ 141              		.loc 1 26 1 view .LVU39
+ 142 004a 10BC     		pop	{r4}
+ 143              	.LCFI3:
+ 144              		.cfi_restore 4
+ 145              		.cfi_def_cfa_offset 0
+ 146              	.LVL15:
+ 147              		.loc 1 26 1 view .LVU40
+ 148 004c 7047     		bx	lr
+ 149              		.cfi_endproc
+ 150              	.LFE0:
+ 152              		.text
+ 153              	.Letext0:
+ 154              		.file 2 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\lib\\gcc\\arm-none-eabi\\10.3.1\\inc
+ 155              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
+ 156              		.file 4 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\cc692ERG.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uart_protocol.c
+C:\Users\Pt\AppData\Local\Temp\cc692ERG.s:18     .text.crc16_ccitt:00000000 $t
+C:\Users\Pt\AppData\Local\Temp\cc692ERG.s:24     .text.crc16_ccitt:00000000 crc16_ccitt
+
+NO UNDEFINED SYMBOLS

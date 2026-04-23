@@ -40,7 +40,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define SERVO_SWING_TEST 1
+#define SERVO_SWING_TEST 0
 
 /* USER CODE END PD */
 

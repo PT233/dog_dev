@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
   29:Core/Src/main.c **** /* USER CODE BEGIN Includes */
   30:Core/Src/main.c **** 
   31:Core/Src/main.c **** #include "servo_driver.h"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 2
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 2
 
 
   32:Core/Src/main.c **** 
@@ -72,7 +72,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
   40:Core/Src/main.c **** /* Private define ------------------------------------------------------------*/
   41:Core/Src/main.c **** /* USER CODE BEGIN PD */
   42:Core/Src/main.c **** 
-  43:Core/Src/main.c **** #define SERVO_SWING_TEST 1
+  43:Core/Src/main.c **** #define SERVO_SWING_TEST 0
   44:Core/Src/main.c **** 
   45:Core/Src/main.c **** /* USER CODE END PD */
   46:Core/Src/main.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
   86:Core/Src/main.c ****   /* USER CODE BEGIN Init */
   87:Core/Src/main.c **** 
   88:Core/Src/main.c ****   /* USER CODE END Init */
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 3
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 3
 
 
   89:Core/Src/main.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  143:Core/Src/main.c ****   * @brief System Clock Configuration
  144:Core/Src/main.c ****   * @retval None
  145:Core/Src/main.c ****   */
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 4
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 4
 
 
  146:Core/Src/main.c **** void SystemClock_Config(void)
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
   33 0000 08B5     		push	{r3, lr}
   34              	.LCFI0:
   35              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 5
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 5
 
 
   36              		.cfi_offset 3, -8
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
   73              		.cfi_startproc
   74              		@ Volatile: function does not return.
   75              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 6
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 6
 
 
   76              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
   46:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
   47:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE                        static inline
   48:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 7
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 7
 
 
   49:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE                 
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  103:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
  104:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
  105:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 8
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 8
 
 
  106:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  216:Core/Src/main.c ****   while (1)
   96              		.loc 1 216 9 discriminator 1 view .LVU14
   97 0002 FEE7     		b	.L8
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 9
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 9
 
 
   98              		.cfi_endproc
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  144              		.loc 1 156 3 is_stmt 1 view .LVU24
  157:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
  145              		.loc 1 157 3 view .LVU25
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 10
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 10
 
 
  157:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  173:Core/Src/main.c **** 
  182              		.loc 1 173 3 is_stmt 1 view .LVU44
  173:Core/Src/main.c **** 
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 11
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 11
 
 
  183              		.loc 1 173 36 is_stmt 0 view .LVU45
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  231              		.loc 1 84 3 view .LVU53
  232 0002 FFF7FEFF 		bl	HAL_Init
  233              	.LVL9:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 12
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 12
 
 
   91:Core/Src/main.c **** 
@@ -685,80 +685,63 @@ ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 1
  249              		.loc 1 102 3 view .LVU59
  250 001a FFF7FEFF 		bl	MX_IWDG_Init
  251              	.LVL15:
- 106:Core/Src/main.c **** #endif
- 252              		.loc 1 106 3 view .LVU60
- 253 001e FFF7FEFF 		bl	Servo_Init
+ 122:Core/Src/main.c ****   MX_FREERTOS_Init();
+ 252              		.loc 1 122 3 view .LVU60
+ 253 001e FFF7FEFF 		bl	osKernelInitialize
  254              	.LVL16:
- 255              	.L16:
- 112:Core/Src/main.c ****   {
- 256              		.loc 1 112 3 discriminator 1 view .LVU61
- 114:Core/Src/main.c ****     HAL_Delay(1000);
- 257              		.loc 1 114 5 discriminator 1 view .LVU62
- 258 0022 0021     		movs	r1, #0
- 259 0024 0020     		movs	r0, #0
- 260 0026 FFF7FEFF 		bl	Servo_SetAngle
- 261              	.LVL17:
- 115:Core/Src/main.c **** 
- 262              		.loc 1 115 5 discriminator 1 view .LVU63
- 263 002a 4FF47A70 		mov	r0, #1000
- 264 002e FFF7FEFF 		bl	HAL_Delay
- 265              	.LVL18:
- 117:Core/Src/main.c ****     HAL_Delay(1000);
- 266              		.loc 1 117 5 discriminator 1 view .LVU64
- 267 0032 0449     		ldr	r1, .L18
- 268 0034 0020     		movs	r0, #0
- 269 0036 FFF7FEFF 		bl	Servo_SetAngle
- 270              	.LVL19:
- 118:Core/Src/main.c ****   }
- 271              		.loc 1 118 5 discriminator 1 view .LVU65
- 272 003a 4FF47A70 		mov	r0, #1000
- 273 003e FFF7FEFF 		bl	HAL_Delay
- 274              	.LVL20:
- 112:Core/Src/main.c ****   {
- 275              		.loc 1 112 9 discriminator 1 view .LVU66
- 276 0042 EEE7     		b	.L16
- 277              	.L19:
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 13
+ 123:Core/Src/main.c **** 
+ 255              		.loc 1 123 3 view .LVU61
+ 256 0022 FFF7FEFF 		bl	MX_FREERTOS_Init
+ 257              	.LVL17:
+ 126:Core/Src/main.c **** 
+ 258              		.loc 1 126 3 view .LVU62
+ 259 0026 FFF7FEFF 		bl	osKernelStart
+ 260              	.LVL18:
+ 261              	.L16:
+ 132:Core/Src/main.c ****   {
+ 262              		.loc 1 132 3 discriminator 1 view .LVU63
+ 137:Core/Src/main.c **** #endif
+ 263              		.loc 1 137 3 discriminator 1 view .LVU64
+ 132:Core/Src/main.c ****   {
+ 264              		.loc 1 132 9 discriminator 1 view .LVU65
+ 265 002a FEE7     		b	.L16
+ 266              		.cfi_endproc
+ 267              	.LFE69:
+ 269              		.text
+ 270              	.Letext0:
+ 271              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
+ 272              		.file 4 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
+ 273              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 274              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 275              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h"
+ 276              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h"
+ 277              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 278              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 279              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 13
 
 
- 278              		.align	2
- 279              	.L18:
- 280 0044 00003443 		.word	1127481344
- 281              		.cfi_endproc
- 282              	.LFE69:
- 284              		.text
- 285              	.Letext0:
- 286              		.file 3 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
- 287              		.file 4 "e:\\keil_v5\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
- 288              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 289              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 290              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h"
- 291              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h"
- 292              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
- 293              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
- 294              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 295              		.file 12 "Core/Inc/gpio.h"
- 296              		.file 13 "Core/Inc/dma.h"
- 297              		.file 14 "Core/Inc/usart.h"
- 298              		.file 15 "Core/Inc/tim.h"
- 299              		.file 16 "Core/Inc/iwdg.h"
- 300              		.file 17 "Core/Inc/servo_driver.h"
- 301              		.file 18 "<built-in>"
-ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s 			page 14
+ 280              		.file 12 "Core/Inc/gpio.h"
+ 281              		.file 13 "Core/Inc/dma.h"
+ 282              		.file 14 "Core/Inc/usart.h"
+ 283              		.file 15 "Core/Inc/tim.h"
+ 284              		.file 16 "Core/Inc/iwdg.h"
+ 285              		.file 17 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 286              		.file 18 "<built-in>"
+ARM GAS  C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:18     .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:24     .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:59     .text.HAL_TIM_PeriodElapsedCallback:00000014 $d
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:64     .text.Error_Handler:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:70     .text.Error_Handler:00000000 Error_Handler
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:102    .text.SystemClock_Config:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:108    .text.SystemClock_Config:00000000 SystemClock_Config
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:213    .text.main:00000000 $t
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:219    .text.main:00000000 main
-C:\Users\Pt\AppData\Local\Temp\ccgtyi8B.s:280    .text.main:00000044 $d
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:18     .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:24     .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:59     .text.HAL_TIM_PeriodElapsedCallback:00000014 $d
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:64     .text.Error_Handler:00000000 $t
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:70     .text.Error_Handler:00000000 Error_Handler
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:102    .text.SystemClock_Config:00000000 $t
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:108    .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:213    .text.main:00000000 $t
+C:\Users\Pt\AppData\Local\Temp\ccSmA3ek.s:219    .text.main:00000000 main
 
 UNDEFINED SYMBOLS
 HAL_IncTick
@@ -771,6 +754,6 @@ MX_DMA_Init
 MX_USART1_UART_Init
 MX_TIM2_Init
 MX_IWDG_Init
-Servo_Init
-Servo_SetAngle
-HAL_Delay
+osKernelInitialize
+MX_FREERTOS_Init
+osKernelStart
