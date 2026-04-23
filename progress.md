@@ -5,8 +5,9 @@
 
 ## 当前状态
 - 总体状态：进行中
-- 当前阶段：阶段 2（STM32 固件完成，准备进入树莓派 UART 桥）
-- 下一任务：2.1（树莓派 UART 物理连通性测试）
+- 当前阶段：阶段 2（STM32 固件完成，进行树莓派 UART 桥）
+- 当前任务：2.1（树莓派 UART 物理连通性测试）
+- 状态：等待树莓派上执行测试脚本
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -21,7 +22,7 @@
 | 1.5 | 已完成 | uart_rx_task 从 queue 消费 ServoCmdItem 并调用 Traj_SetTarget + 更新 uart_last_cmd_tick；新增 status_safety_task.c/h，含 Task_Status_TX（50ms 发 0x81 帧）和 Task_Safety（100ms 喂 IWDG） | 自动测试 PASS（make clean && make 构建成功并生成 elf/hex/bin，text 21036 B） |
 
 ## 阶段进度
-- 阶段 0：3/3
+- 阶段 0：3/3 ✅
 - 阶段 1：5/5 ✅
 - 阶段 2：0/7
 - 阶段 3：0/7
