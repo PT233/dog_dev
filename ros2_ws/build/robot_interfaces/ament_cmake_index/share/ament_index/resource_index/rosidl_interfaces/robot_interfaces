@@ -1,0 +1,6 @@
+msg/TargetInfo.idl
+msg/TargetInfo.msg
+srv/CalibrateCenter.idl
+srv/CalibrateCenter.srv
+srv/SetTargetClass.idl
+srv/SetTargetClass.srv

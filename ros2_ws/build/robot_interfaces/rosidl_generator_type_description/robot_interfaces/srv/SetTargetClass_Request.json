@@ -1,0 +1,26 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "robot_interfaces/srv/SetTargetClass_Request",
+      "fields": [
+        {
+          "name": "class_name",
+          "type": {
+            "type_id": 17,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "robot_interfaces/srv/SetTargetClass_Request",
+      "hash_string": "RIHS01_788764d0ace204a0ec0933694ba60055296c3e37da791ac151ffcf14ea8dfaf4"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from robot_interfaces/srv/SetTargetClass.srv
+// generated code does not contain a copyright notice
+
+
+module robot_interfaces {
+  module srv {
+    struct SetTargetClass_Request {
+      string class_name;
+    };
+    struct SetTargetClass_Response {
+      boolean success;
+
+      string message;
+    };
+  };
+};
