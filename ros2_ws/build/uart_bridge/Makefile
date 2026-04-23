@@ -210,6 +210,30 @@ uart_bridge_node/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/build
 .PHONY : uart_bridge_node/fast
 
+src/frame_encoder.o: src/frame_encoder.cpp.o
+.PHONY : src/frame_encoder.o
+
+# target to build an object file
+src/frame_encoder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o
+.PHONY : src/frame_encoder.cpp.o
+
+src/frame_encoder.i: src/frame_encoder.cpp.i
+.PHONY : src/frame_encoder.i
+
+# target to preprocess a source file
+src/frame_encoder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.i
+.PHONY : src/frame_encoder.cpp.i
+
+src/frame_encoder.s: src/frame_encoder.cpp.s
+.PHONY : src/frame_encoder.s
+
+# target to generate assembly for a file
+src/frame_encoder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/uart_bridge_node.dir/build.make CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.s
+.PHONY : src/frame_encoder.cpp.s
+
 src/frame_parser.o: src/frame_parser.cpp.o
 .PHONY : src/frame_parser.o
 
@@ -298,6 +322,9 @@ help:
 	@echo "... uart_bridge_uninstall"
 	@echo "... uninstall"
 	@echo "... uart_bridge_node"
+	@echo "... src/frame_encoder.o"
+	@echo "... src/frame_encoder.i"
+	@echo "... src/frame_encoder.s"
 	@echo "... src/frame_parser.o"
 	@echo "... src/frame_parser.i"
 	@echo "... src/frame_parser.s"

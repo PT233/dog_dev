@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_protocol.c" "CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o" "gcc" "CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o.d"
+  "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_encoder.cpp" "CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o" "gcc" "CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o.d"
   "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp" "CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o" "gcc" "CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o.d"
   "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_bridge_node.cpp" "CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o" "gcc" "CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o.d"
   )

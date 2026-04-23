@@ -97,10 +97,24 @@ CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp -o CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.s
 
+CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o: CMakeFiles/uart_bridge_node.dir/flags.make
+CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_encoder.cpp
+CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o: CMakeFiles/uart_bridge_node.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o -MF CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o.d -o CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o -c /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_encoder.cpp
+
+CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_encoder.cpp > CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.i
+
+CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_encoder.cpp -o CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.s
+
 CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o: CMakeFiles/uart_bridge_node.dir/flags.make
 CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_protocol.c
 CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o: CMakeFiles/uart_bridge_node.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o -MF CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o.d -o CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o -c /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/uart_protocol.c
 
 CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.i: cmake_force
@@ -115,6 +129,7 @@ CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.s: cmake_force
 uart_bridge_node_OBJECTS = \
 "CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o" \
 "CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o" \
+"CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o" \
 "CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o"
 
 # External object files for target uart_bridge_node
@@ -122,6 +137,7 @@ uart_bridge_node_EXTERNAL_OBJECTS =
 
 uart_bridge_node: CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o
 uart_bridge_node: CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o
+uart_bridge_node: CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o
 uart_bridge_node: CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o
 uart_bridge_node: CMakeFiles/uart_bridge_node.dir/build.make
 uart_bridge_node: /opt/ros/jazzy/lib/librclcpp.so
@@ -213,7 +229,7 @@ uart_bridge_node: /opt/ros/jazzy/lib/librcpputils.so
 uart_bridge_node: /opt/ros/jazzy/lib/librosidl_runtime_c.so
 uart_bridge_node: /opt/ros/jazzy/lib/librcutils.so
 uart_bridge_node: CMakeFiles/uart_bridge_node.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable uart_bridge_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/uart_bridge/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable uart_bridge_node"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/uart_bridge_node.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

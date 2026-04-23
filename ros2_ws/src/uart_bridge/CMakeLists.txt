@@ -21,6 +21,7 @@ endif()
 add_executable(uart_bridge_node
   src/uart_bridge_node.cpp
   src/frame_parser.cpp
+  src/frame_encoder.cpp
   src/uart_protocol.c
 )
 target_include_directories(uart_bridge_node PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

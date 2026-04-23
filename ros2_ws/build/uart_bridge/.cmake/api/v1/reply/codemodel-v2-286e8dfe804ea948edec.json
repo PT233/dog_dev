@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-b803c38bd02e8ce96329.json",
+					"jsonFile" : "directory-.-3236296f6b2e8202a7af.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.15"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "uart_bridge_node::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-uart_bridge_node-2db60ba3c554f88ce6f7.json",
+					"jsonFile" : "target-uart_bridge_node-f0143782dba777a51d85.json",
 					"name" : "uart_bridge_node",
 					"projectIndex" : 0
 				},

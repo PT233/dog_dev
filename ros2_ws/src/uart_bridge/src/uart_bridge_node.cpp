@@ -1,10 +1,13 @@
 #include <rclcpp/rclcpp.hpp>
+#include <sensor_msgs/msg/joint_state.hpp>
 #include <thread>
 #include <fcntl.h>
 #include <termios.h>
 #include <unistd.h>
 #include <cstring>
+#include <cmath>
 #include "uart_bridge/frame_parser.hpp"
+#include "uart_bridge/frame_encoder.hpp"
 #include "uart_bridge/uart_protocol.h"
 
 class UartBridgeNode : public rclcpp::Node {
@@ -84,6 +87,23 @@ public:
       RCLCPP_WARN(this->get_logger(), "Parse error: %s", msg);
     });
 
+    // Initialize frame encoder
+    encoder_ = std::make_unique<FrameEncoder>();
+
+    // Subscribe to servo commands
+    servo_cmd_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
+        "/servo_cmd",
+        rclcpp::SensorDataQoS(),
+        [this](const sensor_msgs::msg::JointState::SharedPtr msg) {
+          OnServoCmdReceived(msg);
+        });
+
+    // Publish servo state
+    rclcpp::QoS qos = rclcpp::QoS(10);
+    qos.reliable();
+    servo_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(
+        "/servo_state", qos);
+
     // Start read thread
     read_thread_ = std::thread(&UartBridgeNode::ReadLoop, this);
   }
@@ -101,6 +121,9 @@ private:
   int uart_fd_;
   std::thread read_thread_;
   std::unique_ptr<FrameParser> parser_;
+  std::unique_ptr<FrameEncoder> encoder_;
+  rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr servo_cmd_sub_;
+  rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr servo_state_pub_;
 
   void ReadLoop() {
     unsigned char buf[256];
@@ -122,13 +145,90 @@ private:
         return;
       }
 
+      auto state_msg = std::make_shared<sensor_msgs::msg::JointState>();
+      state_msg->header.stamp = this->now();
+      state_msg->header.frame_id = "";
+
       size_t num_items = len / sizeof(ServoStateItem);
       for (size_t i = 0; i < num_items; ++i) {
-        const ServoStateItem* item = reinterpret_cast<const ServoStateItem*>(payload + i * sizeof(ServoStateItem));
+        const ServoStateItem* item = reinterpret_cast<const ServoStateItem*>(
+            payload + i * sizeof(ServoStateItem));
         float angle = item->current_angle_x10 / 10.0f;
-        RCLCPP_INFO(this->get_logger(), "Got servo_state: id=%u angle=%.1f status=%u",
-                    item->servo_id, angle, item->status);
+
+        // Map servo_id to joint name
+        std::string name;
+        if (item->servo_id == 0) name = "yaw";
+        else if (item->servo_id == 1) name = "pitch";
+        else if (item->servo_id == 2) name = "s2";
+        else if (item->servo_id == 3) name = "s3";
+        else continue;
+
+        state_msg->name.push_back(name);
+        // Convert degrees*10 back to radians
+        state_msg->position.push_back(angle * M_PI / 180.0);
       }
+
+      if (!state_msg->position.empty()) {
+        servo_state_pub_->publish(*state_msg);
+        RCLCPP_DEBUG(this->get_logger(), "Published servo state with %zu joints",
+                     state_msg->position.size());
+      }
+    }
+  }
+
+  void OnServoCmdReceived(const sensor_msgs::msg::JointState::SharedPtr msg) {
+    if (msg->name.empty() || msg->position.empty()) {
+      return;
+    }
+
+    // Build servo command items from JointState
+    std::vector<ServoCmdItem> items;
+    for (size_t i = 0; i < msg->name.size() && i < msg->position.size(); ++i) {
+      uint8_t servo_id = NameToServoId(msg->name[i]);
+      if (servo_id >= 4) {
+        RCLCPP_WARN(this->get_logger(), "Unknown servo name: %s", msg->name[i].c_str());
+        continue;
+      }
+
+      // Convert radians to degrees * 10
+      float angle_deg = msg->position[i] * 180.0f / M_PI;
+      int16_t angle_x10 = static_cast<int16_t>(angle_deg * 10.0f);
+
+      ServoCmdItem item;
+      item.servo_id = servo_id;
+      item.angle_x10 = angle_x10;
+      item.duration_ms = 100;  // Fixed duration for now
+
+      items.push_back(item);
+    }
+
+    if (!items.empty()) {
+      auto frame = encoder_->EncodeServoControl(items.data(), items.size());
+      WriteFrame(frame);
+    }
+  }
+
+  uint8_t NameToServoId(const std::string& name) {
+    if (name == "yaw") return 0;
+    if (name == "pitch") return 1;
+    if (name == "s2") return 2;
+    if (name == "s3") return 3;
+    return 0xFF;  // Invalid
+  }
+
+  void WriteFrame(const std::vector<uint8_t>& frame) {
+    if (uart_fd_ < 0) {
+      RCLCPP_WARN(this->get_logger(), "UART not open, cannot send frame");
+      return;
+    }
+
+    ssize_t n = write(uart_fd_, frame.data(), frame.size());
+    if (n < 0) {
+      RCLCPP_ERROR(this->get_logger(), "Failed to write to UART");
+    } else if (static_cast<size_t>(n) != frame.size()) {
+      RCLCPP_WARN(this->get_logger(), "Partial write: %zd/%zu bytes", n, frame.size());
+    } else {
+      RCLCPP_DEBUG(this->get_logger(), "Sent frame: %zu bytes", frame.size());
     }
   }
 };

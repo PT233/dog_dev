@@ -685,6 +685,14 @@ CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o: \
  /opt/ros/jazzy/include/rclcpp/rclcpp/parameter_map.hpp \
  /opt/ros/jazzy/include/rclcpp/rclcpp/parameter_event_handler.hpp \
  /opt/ros/jazzy/include/rclcpp/rclcpp/parameter_service.hpp \
+ /opt/ros/jazzy/include/sensor_msgs/sensor_msgs/msg/joint_state.hpp \
+ /opt/ros/jazzy/include/sensor_msgs/sensor_msgs/msg/detail/joint_state__struct.hpp \
+ /opt/ros/jazzy/include/std_msgs/std_msgs/msg/detail/header__struct.hpp \
+ /opt/ros/jazzy/include/sensor_msgs/sensor_msgs/msg/detail/joint_state__builder.hpp \
+ /opt/ros/jazzy/include/sensor_msgs/sensor_msgs/msg/detail/joint_state__traits.hpp \
+ /opt/ros/jazzy/include/std_msgs/std_msgs/msg/detail/header__traits.hpp \
+ /opt/ros/jazzy/include/sensor_msgs/sensor_msgs/msg/detail/joint_state__type_support.hpp \
+ /opt/ros/jazzy/include/sensor_msgs/sensor_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
  /usr/include/fcntl.h /usr/include/x86_64-linux-gnu/bits/fcntl.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
@@ -703,4 +711,5 @@ CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o: \
  /usr/include/x86_64-linux-gnu/sys/ttydefaults.h \
  /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/include/uart_bridge/frame_parser.hpp \
  /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/include/uart_bridge/uart_protocol.h \
+ /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/include/uart_bridge/frame_encoder.hpp \
  /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/include/uart_bridge/uart_protocol.h

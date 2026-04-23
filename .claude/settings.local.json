@@ -10,7 +10,13 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(g++ -Wall -Wextra tests/test_uart_frame_parser.cpp shared/uart_protocol.c -I. -o tests/test_frame_parser)",
-      "Bash(./tests/test_frame_parser)"
+      "Bash(./tests/test_frame_parser)",
+      "Bash(g++ -Wall -Wextra tests/test_uart_encode_send.cpp shared/uart_protocol.c -I. -o tests/test_encode)",
+      "Bash(./tests/test_encode)",
+      "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_send.sh)",
+      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_send.sh)",
+      "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_publish.sh)",
+      "Bash(/mnt/c/Users/Pt/Desktop/dog/agent_dev/tests/test_uart_bridge_publish.sh)"
     ]
   }
 }

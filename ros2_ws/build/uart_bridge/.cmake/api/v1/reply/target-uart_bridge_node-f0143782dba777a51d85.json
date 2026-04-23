@@ -70,13 +70,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 29,
+				"line" : 30,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 27,
+				"line" : 28,
 				"parent" : 0
 			},
 			{
@@ -476,7 +476,7 @@
 			{
 				"command" : 8,
 				"file" : 0,
-				"line" : 26,
+				"line" : 27,
 				"parent" : 0
 			},
 			{
@@ -672,7 +672,8 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1
+				1,
+				2
 			]
 		},
 		{
@@ -857,7 +858,7 @@
 			"language" : "C",
 			"sourceIndexes" : 
 			[
-				2
+				3
 			]
 		}
 	],
@@ -1380,7 +1381,8 @@
 			[
 				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -1396,6 +1398,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/frame_parser.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/frame_encoder.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
