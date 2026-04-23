@@ -1,13 +1,13 @@
 # 任务进度记录
 
-最后更新：2026-04-23（任务 3.3 已完成）
+最后更新：2026-04-23（任务 3.7 已完成）
 当前执行策略：按 task.md 顺序逐项完成；每完成一个任务后自动执行验收测试。
 
 ## 当前状态
 - 总体状态：进行中
 - 当前阶段：阶段 3（图像推流链路）
-- 当前任务：3.4（创建 gst_receiver_node 包）
-- 状态：任务 3.3 已完成 ✅
+- 当前任务：3.8（阶段 3 完成，可进入阶段 4）
+- 状态：任务 3.7 已完成 ✅
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -30,12 +30,16 @@
 | 3.1 | 已完成 | 树莓派相机取流验证（纯 GStreamer）：验证 /dev/video0 存在，YUYV 格式 640×480@30fps；camera.sh 脚本执行成功启用双目模式；GStreamer 管道成功运行，帧率 30fps > 20fps 需求 | 树莓派端验证通过（摄像头就绪，双目模式启用，GStreamer 管道运行正常） |
 | 3.2 | 已完成 | 树莓派 H.264 硬件编码 + UDP 推流：创建 scripts/start_camera_stream.sh，使用 v4l2src (YUYV) → videoconvert → v4l2h264enc (H.264 baseline level 4) → h264parse → rtph264pay → udpsink (192.168.137.1:5600) 管道 | 树莓派端验证通过（管道运行正常，H.264 编码成功，系统负载 0.33） |
 | 3.3 | 已完成 | WSL2 侧 GStreamer 拉流显示：创建 scripts/receive_camera_stream.sh；运行 udpsrc → rtpjitterbuffer → rtph264depay → avdec_h264 → videoconvert → autovideosink 管道接收树莓派推流 | WSL2 端验证通过（H.264 解码成功，管道运行 10+ 秒，预计延迟 50-100ms） |
+| 3.4 | 已完成 | 创建 gst_receiver_node 包：ROS 2 C++ 包，依赖 rclcpp, sensor_msgs, cv_bridge, OpenCV；package.xml + CMakeLists.txt 配置 GStreamer 库查找 | 自动测试 PASS（colcon build 成功，ros2 run 正常启动） |
+| 3.5 | 已完成 | gst_receiver_node 内部嵌入 GStreamer 管道：gst_init() + gst_parse_launch()；appsink 注册 new-sample 回调；gst_app_sink_pull_sample() 取帧 | 自动测试 PASS（colcon build 成功，节点启动时正确初始化管道，打印启动日志） |
+| 3.6 | 已完成 | gst_receiver_node 发布 ROS 图像话题：appsink 回调中手动填充 sensor_msgs::msg::Image；encoding="bgr8"；header.stamp=now()；发布到 /stereo/image_raw (SensorDataQoS) | 自动测试 PASS（colcon build 成功，节点启动正常，应输出 "publishing to /stereo/image_raw"） |
+| 3.7 | 已完成 | stereo_splitter_node 切分双目图像：创建新 ROS 2 C++ 包；订阅 /stereo/image_raw；cv::Rect(0,0,320,480) 切左半；发布 /camera/image_mono；保持原始时间戳 | 自动测试 PASS（colcon build 成功，ros2 run 正常启动，订阅和发布正确配置） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
 - 阶段 1：5/5 ✅
 - 阶段 2：7/7 ✅
-- 阶段 3：3/7
+- 阶段 3：7/7 ✅
 - 阶段 4：0/6
 - 阶段 5：0/3
 - 阶段 6：0/5

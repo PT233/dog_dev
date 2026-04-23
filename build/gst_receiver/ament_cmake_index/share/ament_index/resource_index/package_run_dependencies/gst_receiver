@@ -1,0 +1,1 @@
+rclcpp;sensor_msgs;cv_bridge;opencv;gstreamer-1.0;gstreamer-app-1.0;ament_lint_auto;ament_lint_common

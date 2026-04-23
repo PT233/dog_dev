@@ -1,0 +1,10 @@
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/uninstall.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/stereo_splitter_uninstall.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/stereo_splitter_node.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/test.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/list_install_components.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/install.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/install/local.dir
+/mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter/CMakeFiles/install/strip.dir

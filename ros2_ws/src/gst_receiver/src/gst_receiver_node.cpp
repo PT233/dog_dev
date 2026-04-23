@@ -5,6 +5,9 @@
 GstReceiverNode::GstReceiverNode() : Node("gst_receiver_node"), pipeline_(nullptr), bus_(nullptr) {
   RCLCPP_INFO(this->get_logger(), "gst_receiver_node started");
 
+  // Create image publisher
+  image_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/stereo/image_raw", rclcpp::SensorDataQoS());
+
   // Initialize GStreamer
   gst_init(nullptr, nullptr);
 
@@ -39,7 +42,7 @@ GstReceiverNode::GstReceiverNode() : Node("gst_receiver_node"), pipeline_(nullpt
 
   // Start pipeline
   gst_element_set_state(pipeline_, GST_STATE_PLAYING);
-  RCLCPP_INFO(this->get_logger(), "GStreamer pipeline started");
+  RCLCPP_INFO(this->get_logger(), "GStreamer pipeline started, publishing to /stereo/image_raw");
 }
 
 GstReceiverNode::~GstReceiverNode() {
@@ -53,7 +56,7 @@ GstReceiverNode::~GstReceiverNode() {
   gst_deinit();
 }
 
-gboolean GstReceiverNode::on_bus_message(GstBus *bus, GstMessage *msg, gpointer user_data) {
+gboolean GstReceiverNode::on_bus_message(GstBus * /* bus */, GstMessage *msg, gpointer user_data) {
   GstReceiverNode *node = static_cast<GstReceiverNode *>(user_data);
 
   switch (GST_MESSAGE_TYPE(msg)) {
@@ -81,15 +84,52 @@ void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data) {
   GstSample *sample = gst_app_sink_pull_sample(GST_APP_SINK(appsink));
   if (sample) {
     GstBuffer *buffer = gst_sample_get_buffer(sample);
-    gsize size = gst_buffer_get_size(buffer);
-
     GstCaps *caps = gst_sample_get_caps(sample);
     GstStructure *structure = gst_caps_get_structure(caps, 0);
+
     gint width, height;
+    const gchar *format_str;
     gst_structure_get_int(structure, "width", &width);
     gst_structure_get_int(structure, "height", &height);
+    format_str = gst_structure_get_string(structure, "format");
 
-    RCLCPP_DEBUG(node->get_logger(), "Got frame: %dx%d, size=%lu", width, height, size);
+    // Map buffer and create cv::Mat
+    GstMapInfo map;
+    if (gst_buffer_map(buffer, &map, GST_MAP_READ)) {
+      cv::Mat frame;
+
+      // Create frame based on format
+      if (format_str && std::string(format_str) == "I420") {
+        // I420 format (YUV planar)
+        frame = cv::Mat(height + height / 2, width, CV_8UC1, map.data);
+        cv::Mat bgr_frame;
+        cv::cvtColor(frame, bgr_frame, cv::COLOR_YUV2BGR_I420);
+        frame = bgr_frame;
+      } else {
+        // Default: treat as BGR
+        frame = cv::Mat(height, width, CV_8UC3, map.data);
+      }
+
+      // Convert to ROS Image message
+      std_msgs::msg::Header header;
+      header.stamp = node->now();
+      header.frame_id = "camera";
+
+      sensor_msgs::msg::Image image_msg;
+      image_msg.header = header;
+      image_msg.height = height;
+      image_msg.width = width;
+      image_msg.encoding = "bgr8";
+      image_msg.is_bigendian = false;
+      image_msg.step = width * 3;
+      image_msg.data.assign(frame.data, frame.data + (height * width * 3));
+
+      node->image_pub_->publish(image_msg);
+
+      RCLCPP_DEBUG(node->get_logger(), "Published frame: %dx%d (%s)", width, height, format_str ? format_str : "unknown");
+
+      gst_buffer_unmap(buffer, &map);
+    }
 
     gst_sample_unref(sample);
   }

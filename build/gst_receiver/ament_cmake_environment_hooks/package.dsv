@@ -1,0 +1,4 @@
+source;share/gst_receiver/local_setup.bash
+source;share/gst_receiver/local_setup.dsv
+source;share/gst_receiver/local_setup.sh
+source;share/gst_receiver/local_setup.zsh
