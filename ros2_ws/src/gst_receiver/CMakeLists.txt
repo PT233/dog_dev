@@ -10,8 +10,13 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(GST REQUIRED gstreamer-1.0 gstreamer-app-1.0)
 
 add_executable(gst_receiver_node src/gst_receiver_node.cpp)
+target_include_directories(gst_receiver_node PRIVATE include ${GST_INCLUDE_DIRS})
+target_link_libraries(gst_receiver_node ${GST_LIBRARIES})
 ament_target_dependencies(gst_receiver_node rclcpp sensor_msgs cv_bridge)
 
 install(TARGETS gst_receiver_node DESTINATION lib/${PROJECT_NAME})
