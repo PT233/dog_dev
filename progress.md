@@ -1,13 +1,13 @@
 # 任务进度记录
 
-最后更新：2026-04-23（任务 3.1 已完成）
+最后更新：2026-04-23（任务 3.2 已完成）
 当前执行策略：按 task.md 顺序逐项完成；每完成一个任务后自动执行验收测试。
 
 ## 当前状态
 - 总体状态：进行中
 - 当前阶段：阶段 3（图像推流链路）
-- 当前任务：3.2（树莓派 H.264 硬件编码 + UDP 推流）
-- 状态：任务 3.1 已完成 ✅
+- 当前任务：3.3（WSL2 侧 GStreamer 拉流显示）
+- 状态：任务 3.2 已完成 ✅
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -28,12 +28,13 @@
 | 2.6 | 已完成 | uart_bridge 订阅 /servo_cmd 并下发：创建 FrameEncoder 类编码 ServoCmdItem；订阅 /servo_cmd (JointState) 用 SensorDataQoS；JointState.name→servo_id 映射；位置(弧度)→角度×10 转换；duration_ms=100 硬编码 | 自动测试 PASS（colcon build 成功，编码单元测试 4/4 通过，集成测试 8/8 通过，包括角度转换和 servo ID 映射） |
 | 2.7 | 已完成 | uart_bridge 发布 /servo_state：创建 Publisher `/servo_state` (JointState) QoS=reliable,depth=10；收到 0x81 帧时解析 ServoStateItem[]；构造 JointState：name=["yaw","pitch","s2","s3"]，position[]为弧度，header.stamp=now() | 自动测试 PASS（colcon build 成功，发布集成测试 7/7 通过：QoS 配置、消息构造、名称映射、角度转换、发布调用） |
 | 3.1 | 已完成 | 树莓派相机取流验证（纯 GStreamer）：验证 /dev/video0 存在，YUYV 格式 640×480@30fps；camera.sh 脚本执行成功启用双目模式；GStreamer 管道成功运行，帧率 30fps > 20fps 需求 | 树莓派端验证通过（摄像头就绪，双目模式启用，GStreamer 管道运行正常） |
+| 3.2 | 已完成 | 树莓派 H.264 硬件编码 + UDP 推流：创建 scripts/start_camera_stream.sh，使用 v4l2src (YUYV) → videoconvert → v4l2h264enc (H.264 baseline level 4) → h264parse → rtph264pay → udpsink (192.168.137.1:5600) 管道 | 树莓派端验证通过（管道运行正常，H.264 编码成功，系统负载 0.33） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
 - 阶段 1：5/5 ✅
 - 阶段 2：7/7 ✅
-- 阶段 3：1/7
+- 阶段 3：2/7
 - 阶段 4：0/6
 - 阶段 5：0/3
 - 阶段 6：0/5
