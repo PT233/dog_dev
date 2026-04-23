@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(colcon --version)"
+      "Bash(colcon --version)",
+      "Bash(ros2 pkg *)",
+      "Bash(colcon build *)"
     ]
   }
 }
