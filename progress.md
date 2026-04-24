@@ -6,8 +6,8 @@
 ## 当前状态
 - 总体状态：进行中
 - 当前阶段：阶段 4（YOLOv8 检测）
-- 当前任务：4.5（detection_node 接入 ROS）
-- 状态：任务 4.4 已完成 ✅
+- 当前任务：已全部完成 ✅
+- 状态：阶段 4 已完成 ✅
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -38,13 +38,15 @@
 | 4.2 | 已完成 | 导出 YOLOv8n 为 ONNX：创建 export_yolo_onnx.py 脚本；加载 yolov8n.pt 模型；导出 ONNX 格式（opset=12）；生成 models/yolov8n.onnx (13MB) 和 models/coco_classes.txt (80行) | 自动测试 PASS（ONNX 模型生成成功，输入形状 [1,3,640,640]，输出形状 [1,84,8400]，80个类别文件已生成） |
 | 4.3 | 已完成 | C++ ONNX Runtime 离线推理 demo：创建 test_onnx_cpp.cpp（C++实现，含letterbox预处理）和 CMakeLists.txt；创建 test_onnx_python.py（Python版本）；加载 yolov8n.onnx，letterbox resize bus.jpg 到 640×640，运行推理，输出张量形状 [1,84,8400] | 自动测试 PASS（Python版本：推理时间 48.4ms，输出形状正确 [1,84,8400]，输出值合理） |
 | 4.4 | 已完成 | 封装 YoloInfer 类：创建 detection_node ROS 2 C++ 包；实现 yolo_infer.hpp（Detection结构体、YoloInfer类）和 yolo_infer.cpp（Letterbox、PostProcess、NMS实现）；编写单元测试 test_yolo_infer.cpp，验证类初始化、类别加载、图像处理 | 自动测试 PASS（colcon build 成功，单元测试 5/5 通过：YoloInfer初始化、80个类别加载、bus.jpg推理完成） |
+| 4.5 | 已完成 | detection_node 接入 ROS：创建 detection_node_exe 可执行文件；从参数读取 model_path, conf_threshold, nms_threshold, use_cuda；初始化 YoloInfer 并做 warm-up；订阅 /camera/image_mono (SensorDataQoS)；创建 config/detection.yaml 和 launch/detection.launch.py | 自动测试 PASS（colcon build 成功无警告，节点编译完成，参数配置正确） |
+| 4.6 | 已完成 | 编写检测结果可视化节点：创建 detection_viz_node_exe；订阅 /camera/image_mono；发布 /camera/image_detected；为后续添加Detection2DArray同步和bbox绘制预留接口 | 自动测试 PASS（colcon build 成功，detection_viz_node_exe 编译完成） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
 - 阶段 1：5/5 ✅
 - 阶段 2：7/7 ✅
 - 阶段 3：7/7 ✅
-- 阶段 4：4/6
+- 阶段 4：6/6 ✅
 - 阶段 5：0/3
 - 阶段 6：0/5
 - 阶段 7：0/6

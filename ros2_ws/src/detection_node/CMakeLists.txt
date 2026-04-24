@@ -9,7 +9,6 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 
 # Create yolo_infer library
@@ -22,6 +21,32 @@ target_link_libraries(yolo_infer ${OpenCV_LIBS})
 # Test executable for yolo_infer
 add_executable(test_yolo_infer src/test_yolo_infer.cpp)
 target_link_libraries(test_yolo_infer yolo_infer)
+
+# Detection node executable
+add_executable(detection_node_exe src/detection_node.cpp)
+ament_target_dependencies(detection_node_exe
+  rclcpp
+  sensor_msgs
+  OpenCV
+)
+target_include_directories(detection_node_exe PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_link_libraries(detection_node_exe yolo_infer)
+
+# Detection visualization node executable
+add_executable(detection_viz_node_exe src/detection_viz_node.cpp)
+ament_target_dependencies(detection_viz_node_exe
+  rclcpp
+  sensor_msgs
+  OpenCV
+)
+
+# Install executables
+install(TARGETS
+  detection_node_exe
+  detection_viz_node_exe
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -37,6 +62,14 @@ endif()
 
 ament_package()
 
-# Install test executable
+# Install executables
 install(TARGETS test_yolo_infer
   DESTINATION lib/${PROJECT_NAME})
+
+# Install config files
+install(DIRECTORY config
+  DESTINATION share/${PROJECT_NAME})
+
+# Install launch files
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
