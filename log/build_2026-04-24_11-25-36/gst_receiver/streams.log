@@ -1,0 +1,45 @@
+[0.014s] Invoking command in '/home/peter/dog/dog_dev/build/gst_receiver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/gst_receiver -- -j16 -l16
+[0.022s] CMake Error: The current CMakeCache.txt directory /home/peter/dog/dog_dev/build/gst_receiver/CMakeCache.txt is different than the directory /mnt/c/Users/Pt/Desktop/dog/agent_dev/build/gst_receiver where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+[0.220s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.615s] -- Found rclcpp: 28.1.18 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.867s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.909s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.963s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.032s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.255s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.278s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.698s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.574s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[2.816s] -- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+[2.921s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[4.013s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[4.013s] -- Configured cppcheck include dirs: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/gst_receiver/include
+[4.013s] -- Configured cppcheck exclude dirs and/or files: 
+[4.124s] -- Added test 'lint_cmake' to check CMake code style
+[4.441s] -- Added test 'uncrustify' to check C / C++ code style
+[4.441s] -- Configured uncrustify additional arguments: 
+[4.478s] -- Added test 'xmllint' to check XML markup files
+[4.594s] -- Configuring done (4.5s)
+[5.584s] -- Generating done (0.8s)
+[6.132s] -- Build files have been written to: /mnt/c/Users/Pt/Desktop/dog/agent_dev/build/gst_receiver
+[7.496s] [100%] Built target gst_receiver_node
+[7.527s] Invoked command in '/home/peter/dog/dog_dev/build/gst_receiver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/gst_receiver -- -j16 -l16
+[7.528s] Invoking command in '/home/peter/dog/dog_dev/build/gst_receiver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/gst_receiver
+[7.533s] -- Install configuration: ""
+[7.570s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/lib/gst_receiver/gst_receiver_node
+[7.629s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/ament_index/resource_index/package_run_dependencies/gst_receiver
+[7.678s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/ament_index/resource_index/parent_prefix_path/gst_receiver
+[7.692s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/environment/ament_prefix_path.sh
+[7.715s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/environment/ament_prefix_path.dsv
+[7.729s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/environment/path.sh
+[7.752s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/environment/path.dsv
+[7.788s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/local_setup.bash
+[7.804s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/local_setup.sh
+[7.822s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/local_setup.zsh
+[7.852s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/local_setup.dsv
+[7.901s] -- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/package.dsv
+[8.037s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/ament_index/resource_index/packages/gst_receiver
+[8.069s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/cmake/gst_receiverConfig.cmake
+[8.111s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/cmake/gst_receiverConfig-version.cmake
+[8.167s] -- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/gst_receiver/share/gst_receiver/package.xml
+[8.241s] Invoked command in '/home/peter/dog/dog_dev/build/gst_receiver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/gst_receiver

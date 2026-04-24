@@ -1,0 +1,4 @@
+Invoking command in '/home/peter/dog/dog_dev/build/test_onnx_cpp': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/tests/test_detection -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/test_onnx_cpp
+Invoked command in '/home/peter/dog/dog_dev/build/test_onnx_cpp' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/tests/test_detection -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/test_onnx_cpp
+Invoking command in '/home/peter/dog/dog_dev/build/test_onnx_cpp': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/test_onnx_cpp -- -j16 -l16
+Invoked command in '/home/peter/dog/dog_dev/build/test_onnx_cpp' returned '2': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/test_onnx_cpp -- -j16 -l16

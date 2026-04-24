@@ -17,7 +17,6 @@
       "Bash(chmod +x *)",
       "Bash(tar -xzf *)",
       "Bash(wget -q *)",
-
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git reset:*)",
@@ -26,17 +25,14 @@
       "Bash(git log:*)",
       "Bash(git checkout:*)",
       "Bash(git branch:*)",
-
       "Bash(python3 *)",
       "Bash(pip install *)",
       "Bash(conda *)",
       "Bash(dpkg -l)",
-
       "Bash(g++ *)",
       "Bash(./tests/*)",
       "Bash(./install/*)",
       "Bash(./ros2_ws/build/*)",
-
       "Bash(colcon --version)",
       "Bash(colcon build *)",
       "Bash(ros2 pkg *)",
@@ -44,19 +40,17 @@
       "Bash(source install/setup.bash *)",
       "Bash(timeout * bash -c *)",
       "Bash(gst-inspect-1.0 *)",
-
       "Bash(timeout * ros2 *)",
       "Bash(timeout * ros2 run *)",
-      
       "Bash(ssh *)",
       "Bash(scp *)",
       "Bash(ip addr *)",
-
       "Bash(/home/peter/dog/dog_dev/scripts/*)",
       "Bash(/home/peter/dog/dog_dev/ros2_ws/build/*)",
       "Bash(bash /tmp/*.sh)",
-
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(ping -c 1 192.168.137.100)",
+      "Bash(colcon clean *)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

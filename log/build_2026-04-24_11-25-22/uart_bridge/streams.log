@@ -1,0 +1,40 @@
+[0.016s] Invoking command in '/home/peter/dog/dog_dev/build/uart_bridge': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/ros2_ws/src/uart_bridge -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/uart_bridge
+[0.617s] -- The C compiler identification is GNU 13.3.0
+[3.036s] -- The CXX compiler identification is GNU 13.3.0
+[5.363s] -- Detecting C compiler ABI info
+[6.642s] -- Detecting C compiler ABI info - done
+[6.648s] -- Check for working C compiler: /usr/bin/cc - skipped
+[6.648s] -- Detecting C compile features
+[6.648s] -- Detecting C compile features - done
+[7.180s] -- Detecting CXX compiler ABI info
+[8.210s] -- Detecting CXX compiler ABI info - done
+[8.215s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[8.216s] -- Detecting CXX compile features
+[8.216s] -- Detecting CXX compile features - done
+[8.217s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[8.322s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[8.390s] -- Found rclcpp: 28.1.18 (/opt/ros/jazzy/share/rclcpp/cmake)
+[9.014s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[9.022s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[9.032s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[9.042s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[9.091s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[9.092s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[9.141s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[9.476s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[9.622s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[9.862s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[9.903s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[9.980s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[9.981s] -- Configured cppcheck include dirs: /home/peter/dog/dog_dev/ros2_ws/src/uart_bridge/include
+[9.981s] -- Configured cppcheck exclude dirs and/or files: 
+[9.981s] -- Added test 'flake8' to check Python code syntax and style conventions
+[9.981s] -- Configured 'flake8' exclude dirs and/or files: 
+[9.982s] -- Added test 'lint_cmake' to check CMake code style
+[9.982s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[9.983s] -- Added test 'uncrustify' to check C / C++ code style
+[9.983s] -- Configured uncrustify additional arguments: 
+[9.984s] -- Added test 'xmllint' to check XML markup files
+[9.985s] -- Configuring done (10.0s)
+[9.994s] -- Generating done (0.0s)
+[9.997s] -- Build files have been written to: /home/peter/dog/dog_dev/build/uart_bridge

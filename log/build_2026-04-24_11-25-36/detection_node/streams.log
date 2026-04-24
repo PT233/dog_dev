@@ -1,0 +1,32 @@
+[0.016s] Invoking command in '/home/peter/dog/dog_dev/build/detection_node': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/detection_node -- -j16 -l16
+[0.050s] [ 22%] Built target yolo_infer
+[0.059s] [ 55%] Built target detection_viz_node_exe
+[0.067s] [ 77%] Built target test_yolo_infer
+[0.075s] [100%] Built target detection_node_exe
+[0.076s] Invoked command in '/home/peter/dog/dog_dev/build/detection_node' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/detection_node -- -j16 -l16
+[0.077s] Invoking command in '/home/peter/dog/dog_dev/build/detection_node': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/detection_node
+[0.081s] -- Install configuration: ""
+[0.093s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/lib/detection_node/detection_node_exe
+[0.093s] -- Installing: /home/peter/dog/dog_dev/install/detection_node/lib/detection_node/detection_viz_node_exe
+[0.094s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/detection_node/lib/detection_node/detection_viz_node_exe" to ""
+[0.094s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/ament_index/resource_index/package_run_dependencies/detection_node
+[0.094s] -- Installing: /home/peter/dog/dog_dev/install/detection_node/share/ament_index/resource_index/parent_prefix_path/detection_node
+[0.094s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/environment/ament_prefix_path.sh
+[0.095s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/environment/ament_prefix_path.dsv
+[0.095s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/environment/path.sh
+[0.095s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/environment/path.dsv
+[0.095s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/local_setup.bash
+[0.095s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/local_setup.sh
+[0.096s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/local_setup.zsh
+[0.096s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/local_setup.dsv
+[0.096s] -- Installing: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/package.dsv
+[0.096s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/ament_index/resource_index/packages/detection_node
+[0.096s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/cmake/detection_nodeConfig.cmake
+[0.097s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/cmake/detection_nodeConfig-version.cmake
+[0.097s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/package.xml
+[0.097s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/lib/detection_node/test_yolo_infer
+[0.097s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/config
+[0.097s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/config/detection.yaml
+[0.097s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/launch
+[0.098s] -- Up-to-date: /home/peter/dog/dog_dev/install/detection_node/share/detection_node/launch/detection.launch.py
+[0.098s] Invoked command in '/home/peter/dog/dog_dev/build/detection_node' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/detection_node

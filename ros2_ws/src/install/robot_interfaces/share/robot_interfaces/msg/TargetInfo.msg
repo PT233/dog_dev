@@ -1,0 +1,9 @@
+std_msgs/Header header
+string class_name
+string track_id
+float32 confidence
+int32 bbox_cx
+int32 bbox_cy
+int32 bbox_w
+int32 bbox_h
+bool locked

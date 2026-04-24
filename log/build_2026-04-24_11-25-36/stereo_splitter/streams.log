@@ -1,0 +1,45 @@
+[0.014s] Invoking command in '/home/peter/dog/dog_dev/build/stereo_splitter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/stereo_splitter -- -j16 -l16
+[0.021s] CMake Error: The current CMakeCache.txt directory /home/peter/dog/dog_dev/build/stereo_splitter/CMakeCache.txt is different than the directory /mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+[0.219s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.612s] -- Found rclcpp: 28.1.18 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.865s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.907s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.961s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.030s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.253s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.276s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.696s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.573s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[2.815s] -- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+[2.912s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[4.007s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[4.008s] -- Configured cppcheck include dirs: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/stereo_splitter/include
+[4.008s] -- Configured cppcheck exclude dirs and/or files: 
+[4.118s] -- Added test 'lint_cmake' to check CMake code style
+[4.438s] -- Added test 'uncrustify' to check C / C++ code style
+[4.438s] -- Configured uncrustify additional arguments: 
+[4.476s] -- Added test 'xmllint' to check XML markup files
+[4.592s] -- Configuring done (4.5s)
+[5.586s] -- Generating done (0.8s)
+[6.137s] -- Build files have been written to: /mnt/c/Users/Pt/Desktop/dog/agent_dev/build/stereo_splitter
+[7.378s] [100%] Built target stereo_splitter_node
+[7.421s] Invoked command in '/home/peter/dog/dog_dev/build/stereo_splitter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/stereo_splitter -- -j16 -l16
+[7.422s] Invoking command in '/home/peter/dog/dog_dev/build/stereo_splitter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/stereo_splitter
+[7.427s] -- Install configuration: ""
+[7.485s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/lib/stereo_splitter/stereo_splitter_node
+[7.552s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/ament_index/resource_index/package_run_dependencies/stereo_splitter
+[7.584s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/ament_index/resource_index/parent_prefix_path/stereo_splitter
+[7.597s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/environment/ament_prefix_path.sh
+[7.616s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/environment/ament_prefix_path.dsv
+[7.629s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/environment/path.sh
+[7.668s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/environment/path.dsv
+[7.686s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/local_setup.bash
+[7.704s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/local_setup.sh
+[7.726s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/local_setup.zsh
+[7.745s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/local_setup.dsv
+[7.781s] -- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/package.dsv
+[7.875s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/ament_index/resource_index/packages/stereo_splitter
+[7.932s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/cmake/stereo_splitterConfig.cmake
+[7.975s] -- Up-to-date: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/cmake/stereo_splitterConfig-version.cmake
+[8.010s] -- Installing: /mnt/c/Users/Pt/Desktop/dog/agent_dev/install/stereo_splitter/share/stereo_splitter/package.xml
+[8.084s] Invoked command in '/home/peter/dog/dog_dev/build/stereo_splitter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/stereo_splitter

@@ -1,13 +1,13 @@
 # 任务进度记录
 
-最后更新：2026-04-24（任务 4.4 已完成）
+最后更新：2026-04-24（任务 6.5 已完成）
 当前执行策略：按 task.md 顺序逐项完成；每完成一个任务后自动执行验收测试。
 
 ## 当前状态
 - 总体状态：进行中
-- 当前阶段：阶段 5（跟踪器）
-- 当前任务：5.3 已完成 ✅
-- 状态：阶段 5 完成✅ (3/3)
+- 当前阶段：阶段 6（决策与视觉伺服）
+- 当前任务：6.5 已完成 ✅
+- 状态：阶段 6 完成✅ (5/5)
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -43,6 +43,11 @@
 | 5.1 | 已完成 | 集成 ByteTrack C++ 库：实现 ByteTracker 类（包含卡尔曼滤波、匹配和状态管理）；编写独立测试 test_byte_tracker.cpp；验证 5 个测试场景通过 | 自动测试 PASS（colcon build 成功，test_byte_tracker 输出符合预期：Frame1,2 ID保持；Frame3 新ID；Frame4 无检测；Frame5 恢复） |
 | 5.2 | 已完成 | tracker_node 接入 ROS：创建 TrackerNode 类订阅 /detections，发布 /tracked_objects；添加自定义消息 SimpleDetection/SimpleDetection2DArray 到 robot_interfaces；从 YAML 加载参数(track_buffer/track_thresh/match_thresh)；创建集成测试验证 4 个场景通过 | 自动测试 PASS（colcon build 成功，ros2 run tracker_node_exe 正常启动，集成测试 4/4 通过，ByteTracker 测试 5/5 通过） |
 | 5.3 | 已完成 | 扩展可视化节点显示 track ID：将 DetectionVizNode 修改为订阅 /tracked_objects；添加 track_id 显示功能；订阅 /camera/image_mono 和 /tracked_objects；发布 /camera/image_detected；节点启动正常 | 自动测试 PASS（colcon build 成功，detection_viz_node_exe 启动正常，成功订阅两个话题） |
+| 6.1 | 已完成 | behavior_node 基础版（打印目标）：创建 BehaviorNode 类；订阅 /tracked_objects；按 class_id 过滤（person=0）；选最大 bbox；打印目标坐标；参数化画面尺寸 | 自动测试 PASS（colcon build 成功，节点启动正常，SelectTarget 函数实现正确） |
+| 6.2 | 已完成 | behavior_node 发布 /pixel_error：添加 pixel_error_pub_；计算 error = target_center - image_center；发布 Vector3(x, y, 0)；配置文件 config/behavior.yaml 创建完成 | 自动测试 PASS（colcon build 成功，OnTrackedObjects 中正确计算和发布误差） |
+| 6.3 | 已完成 | 添加 /set_target_class 服务：注册 SetTargetClass 服务；service callback 解析 class_name；GetClassIdByName 映射；更新 target_class_id_；重置 track_id | 自动测试 PASS（colcon build 成功，service 注册正确，GetClassIdByName 实现完整） |
+| 6.4 | 已完成 | visual_servo_node 开环版：创建 VisualServoNode 包；订阅 /pixel_error 和 /servo_state；维护 current_yaw/pitch；30Hz 定时器；简单比例 Kp 控制；死区 5px；发布 /servo_cmd | 自动测试 PASS（colcon build 成功，节点启动正常，control timer 创建成功） |
+| 6.5 | 已完成 | visual_servo_node 完整 PID 版：实现 PIDController 类（P/I/D 项、积分饱和、死区、限幅）；为 yaw/pitch 各创建一个 PID；从 YAML 加载参数；control loop 调用 PID.Update()；计算 delta_angle 并发布 | 自动测试 PASS（colcon build 成功，PIDController 类实现完整，OnControlTimer 使用 PID 控制） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
@@ -51,7 +56,7 @@
 - 阶段 3：7/7 ✅
 - 阶段 4：6/6 ✅
 - 阶段 5：3/3 ✅
-- 阶段 6：0/5
+- 阶段 6：5/5 ✅
 - 阶段 7：0/6
 
 ## 维护规则
