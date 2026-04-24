@@ -22,6 +22,8 @@ ament_target_dependencies(gst_receiver_node rclcpp sensor_msgs cv_bridge)
 
 install(TARGETS gst_receiver_node DESTINATION lib/${PROJECT_NAME})
 
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

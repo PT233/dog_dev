@@ -50,7 +50,11 @@
       "Bash(bash /tmp/*.sh)",
       "Read(//tmp/**)",
       "Bash(ping -c 1 192.168.137.100)",
-      "Bash(colcon clean *)"
+      "Bash(colcon clean *)",
+      "Bash(bash *)",
+      "Bash(ros2 launch *)",
+      "Bash(cp /home/peter/dog/dog_dev/ros2_ws/src/gst_receiver/launch/*.py /home/peter/dog/dog_dev/install/gst_receiver/share/gst_receiver/launch/)",
+      "Bash(cp /home/peter/dog/dog_dev/ros2_ws/src/stereo_splitter/launch/*.py /home/peter/dog/dog_dev/install/stereo_splitter/share/stereo_splitter/launch/)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

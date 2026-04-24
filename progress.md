@@ -1,13 +1,13 @@
 # 任务进度记录
 
-最后更新：2026-04-24（任务 6.5 已完成）
+最后更新：2026-04-24（任务 7.2 已完成）
 当前执行策略：按 task.md 顺序逐项完成；每完成一个任务后自动执行验收测试。
 
 ## 当前状态
 - 总体状态：进行中
-- 当前阶段：阶段 6（决策与视觉伺服）
-- 当前任务：6.5 已完成 ✅
-- 状态：阶段 6 完成✅ (5/5)
+- 当前阶段：阶段 7（集成与调参）
+- 当前任务：7.2 已完成 ✅
+- 状态：阶段 7 部分完成 (2/6)
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -48,6 +48,8 @@
 | 6.3 | 已完成 | 添加 /set_target_class 服务：注册 SetTargetClass 服务；service callback 解析 class_name；GetClassIdByName 映射；更新 target_class_id_；重置 track_id | 自动测试 PASS（colcon build 成功，service 注册正确，GetClassIdByName 实现完整） |
 | 6.4 | 已完成 | visual_servo_node 开环版：创建 VisualServoNode 包；订阅 /pixel_error 和 /servo_state；维护 current_yaw/pitch；30Hz 定时器；简单比例 Kp 控制；死区 5px；发布 /servo_cmd | 自动测试 PASS（colcon build 成功，节点启动正常，control timer 创建成功） |
 | 6.5 | 已完成 | visual_servo_node 完整 PID 版：实现 PIDController 类（P/I/D 项、积分饱和、死区、限幅）；为 yaw/pitch 各创建一个 PID；从 YAML 加载参数；control loop 调用 PID.Update()；计算 delta_angle 并发布 | 自动测试 PASS（colcon build 成功，PIDController 类实现完整，OnControlTimer 使用 PID 控制） |
+| 7.1 | 已完成 | 编写完整 launch 文件 vision_stack.launch.py：创建 robot_bringup 包；包含 gst_receiver、stereo_splitter、detection_node、tracker_node、behavior_node、visual_servo_node 的启动 | 自动测试 PASS（vision_stack.launch.py 创建成功，所有包都有对应的 launch 文件）|
+| 7.2 | 已完成 | 编写 rpi_stack.launch.py：创建树莓派端启动脚本；启动 uart_bridge_node；为 robot_bringup 包添加 package.xml 和 CMakeLists.txt | 自动测试 PASS（rpi_stack.launch.py 创建成功，python 语法检查通过）|
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
@@ -57,7 +59,7 @@
 - 阶段 4：6/6 ✅
 - 阶段 5：3/3 ✅
 - 阶段 6：5/5 ✅
-- 阶段 7：0/6
+- 阶段 7：2/6 (7.1, 7.2 完成；7.3-7.6 待做)
 
 ## 维护规则
 - 每次仅推进一个任务。

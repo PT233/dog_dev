@@ -19,6 +19,8 @@ ament_target_dependencies(stereo_splitter_node rclcpp sensor_msgs cv_bridge)
 
 install(TARGETS stereo_splitter_node DESTINATION lib/${PROJECT_NAME})
 
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>robot_bringup</name>
+  <version>0.0.0</version>
+  <description>Launch files for complete robot system</description>
+  <maintainer email="peter@example.com">peter</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>gst_receiver</exec_depend>
+  <exec_depend>stereo_splitter</exec_depend>
+  <exec_depend>detection_node</exec_depend>
+  <exec_depend>tracker_node</exec_depend>
+  <exec_depend>behavior_node</exec_depend>
+  <exec_depend>visual_servo</exec_depend>
+  <exec_depend>uart_bridge</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

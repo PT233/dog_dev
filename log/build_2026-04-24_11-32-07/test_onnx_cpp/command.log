@@ -1,0 +1,1 @@
+Invoking command in '/home/peter/dog/dog_dev/build/test_onnx_cpp': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/test_onnx_cpp -- -j16 -l16

@@ -1,0 +1,1 @@
+Invoking command in '/home/peter/dog/dog_dev/build/detection_node': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/ros2_ws/src/detection_node -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/detection_node

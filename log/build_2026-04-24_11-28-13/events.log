@@ -1,0 +1,14 @@
+[0.000000] (-) TimerEvent: {}
+[0.000207] (-) JobUnselected: {'identifier': 'behavior_node'}
+[0.000240] (-) JobUnselected: {'identifier': 'detection_node'}
+[0.000265] (-) JobUnselected: {'identifier': 'gst_receiver'}
+[0.000287] (-) JobUnselected: {'identifier': 'robot_interfaces'}
+[0.000309] (-) JobUnselected: {'identifier': 'stereo_splitter'}
+[0.000331] (-) JobUnselected: {'identifier': 'test_onnx_cpp'}
+[0.000560] (-) JobUnselected: {'identifier': 'tracker_node'}
+[0.000584] (-) JobUnselected: {'identifier': 'uart_bridge'}
+[0.000719] (-) JobUnselected: {'identifier': 'visual_servo'}
+[0.000732] (robot_bringup) JobQueued: {'identifier': 'robot_bringup', 'dependencies': OrderedDict({'detection_node': '/home/peter/dog/dog_dev/install/detection_node', 'gst_receiver': '/home/peter/dog/dog_dev/install/gst_receiver', 'robot_interfaces': '/home/peter/dog/dog_dev/install/robot_interfaces', 'stereo_splitter': '/home/peter/dog/dog_dev/install/stereo_splitter', 'uart_bridge': '/home/peter/dog/dog_dev/install/uart_bridge', 'visual_servo': '/home/peter/dog/dog_dev/install/visual_servo', 'behavior_node': '/home/peter/dog/dog_dev/install/behavior_node', 'tracker_node': '/home/peter/dog/dog_dev/install/tracker_node'})}
+[0.000882] (robot_bringup) JobStarted: {'identifier': 'robot_bringup'}
+[0.008560] (robot_bringup) JobEnded: {'identifier': 'robot_bringup', 'rc': 1}
+[0.018939] (-) EventReactorShutdown: {}
