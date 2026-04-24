@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物体识别跟随机器人 - 硬件接线图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .diagram-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .diagram-group {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .diagram-group h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .pin-table th,
+        .pin-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.9em;
+        }
+
+        .pin-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .pin-table tr:hover {
+            background: #f0f0f0;
+        }
+
+        .pin-table .pin-name {
+            font-weight: 600;
+            color: #667eea;
+            font-family: monospace;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .power { background: #FF6B6B; }
+        .gnd { background: #000; }
+        .uart { background: #4ECDC4; }
+        .pwm { background: #FFE66D; }
+        .i2c { background: #95E1D3; }
+
+        .wiring-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .wiring-note.danger {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+
+        .wiring-note.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .wiring-note strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .controls {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #ddd;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 硬件接线图</h1>
+            <p>物体识别跟随机器人 - 完整接线指南</p>
+        </div>
+
+        <div class="content">
+            <!-- STM32 接线部分 -->
+            <div class="diagram-section">
+                <div class="diagram-group">
+                    <h2>STM32F103C8T6 接线</h2>
+                    <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                        <!-- STM32 芯片主体 -->
+                        <rect x="100" y="150" width="200" height="300" fill="#e8f4f8" stroke="#333" stroke-width="2"/>
+
+                        <!-- 左侧引脚 -->
+                        <g>
+                            <text x="50" y="180" font-size="12" font-weight="bold">左侧引脚</text>
+                            <!-- GND -->
+                            <circle cx="95" cy="210" r="4" fill="#000"/>
+                            <text x="60" y="215" font-size="11">GND</text>
+                            <text x="110" y="215" font-size="11" fill="#000" font-weight="bold">●</text>
+
+                            <!-- 3.3V -->
+                            <circle cx="95" cy="250" r="4" fill="#FF6B6B"/>
+                            <text x="40" y="255" font-size="11">3.3V</text>
+                            <text x="110" y="255" font-size="11" fill="#FF6B6B" font-weight="bold">●</text>
+
+                            <!-- PA0 PWM -->
+                            <circle cx="95" cy="290" r="4" fill="#FFE66D"/>
+                            <text x="35" y="295" font-size="11">PA0 (PWM)</text>
+                            <text x="110" y="295" font-size="11" fill="#FFE66D" font-weight="bold">●</text>
+
+                            <!-- PA1 PWM -->
+                            <circle cx="95" cy="330" r="4" fill="#FFE66D"/>
+                            <text x="35" y="335" font-size="11">PA1 (PWM)</text>
+                            <text x="110" y="335" font-size="11" fill="#FFE66D" font-weight="bold">●</text>
+
+                            <!-- PA2 PWM -->
+                            <circle cx="95" cy="370" r="4" fill="#FFE66D"/>
+                            <text x="35" y="375" font-size="11">PA2 (PWM)</text>
+                            <text x="110" y="375" font-size="11" fill="#FFE66D" font-weight="bold">●</text>
+
+                            <!-- PA3 PWM -->
+                            <circle cx="95" cy="410" r="4" fill="#FFE66D"/>
+                            <text x="35" y="415" font-size="11">PA3 (PWM)</text>
+                            <text x="110" y="415" font-size="11" fill="#FFE66D" font-weight="bold">●</text>
+                        </g>
+
+                        <!-- 右侧引脚 -->
+                        <g>
+                            <text x="270" y="180" font-size="12" font-weight="bold">右侧引脚</text>
+                            <!-- PA9 UART_TX -->
+                            <circle cx="305" cy="290" r="4" fill="#4ECDC4"/>
+                            <text x="250" y="295" font-size="11">PA9 (TX)</text>
+                            <text x="295" y="295" font-size="11" fill="#4ECDC4" font-weight="bold">●</text>
+
+                            <!-- PA10 UART_RX -->
+                            <circle cx="305" cy="330" r="4" fill="#4ECDC4"/>
+                            <text x="245" y="335" font-size="11">PA10 (RX)</text>
+                            <text x="295" y="335" font-size="11" fill="#4ECDC4" font-weight="bold">●</text>
+
+                            <!-- PB12 I2C -->
+                            <circle cx="305" cy="370" r="4" fill="#95E1D3"/>
+                            <text x="250" y="375" font-size="11">PB12 (SCL)</text>
+                            <text x="295" y="375" font-size="11" fill="#95E1D3" font-weight="bold">●</text>
+
+                            <!-- PB13 I2C -->
+                            <circle cx="305" cy="410" r="4" fill="#95E1D3"/>
+                            <text x="250" y="415" font-size="11">PB13 (SDA)</text>
+                            <text x="295" y="415" font-size="11" fill="#95E1D3" font-weight="bold">●</text>
+                        </g>
+
+                        <!-- 芯片标签 -->
+                        <text x="200" y="305" font-size="14" font-weight="bold" text-anchor="middle">STM32F103C8T6</text>
+                    </svg>
+
+                    <table class="pin-table">
+                        <tr>
+                            <th>STM32 引脚</th>
+                            <th>功能</th>
+                            <th>外设</th>
+                            <th>说明</th>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">PA0-PA3</td>
+                            <td>TIM2_CH1-4</td>
+                            <td>SG90 舵机</td>
+                            <td>PWM 50Hz, 0.5~2.5ms</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">PA9</td>
+                            <td>USART1_TX</td>
+                            <td>树莓派 RXD</td>
+                            <td>波特率 921600</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">PA10</td>
+                            <td>USART1_RX</td>
+                            <td>树莓派 TXD</td>
+                            <td>波特率 921600</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">PB12/PB13</td>
+                            <td>I2C2_SCL/SDA</td>
+                            <td>MPU6050</td>
+                            <td>可选，I2C 地址 0x68</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">GND</td>
+                            <td>地线</td>
+                            <td>所有设备</td>
+                            <td><strong>必须连接</strong></td>
+                        </tr>
+                    </table>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color power"></div>
+                            <span>电源 (3.3V / 5V)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color gnd"></div>
+                            <span>地线 (GND)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color uart"></div>
+                            <span>串口 (UART)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color pwm"></div>
+                            <span>PWM 输出</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color i2c"></div>
+                            <span>I2C 总线</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 树莓派接线部分 -->
+            <div class="diagram-section">
+                <div class="diagram-group">
+                    <h2>树莓派 4B GPIO 接线</h2>
+                    <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- GPIO 排针示意 -->
+                        <rect x="80" y="100" width="240" height="300" fill="#ffcccc" stroke="#333" stroke-width="2" rx="10"/>
+
+                        <!-- 左列 (奇数) -->
+                        <g>
+                            <text x="100" y="90" font-size="11" font-weight="bold">Pin1</text>
+                            <!-- Pin3 (GPIO2 - SDA) -->
+                            <circle cx="110" cy="140" r="4" fill="#95E1D3"/>
+                            <text x="50" y="145" font-size="10">Pin3</text>
+                            <text x="125" y="145" font-size="10">GPIO2(SDA)</text>
+
+                            <!-- Pin5 (GPIO3 - SCL) -->
+                            <circle cx="110" cy="180" r="4" fill="#95E1D3"/>
+                            <text x="50" y="185" font-size="10">Pin5</text>
+                            <text x="125" y="185" font-size="10">GPIO3(SCL)</text>
+                        </g>
+
+                        <!-- 右列 (偶数) -->
+                        <g>
+                            <text x="280" y="90" font-size="11" font-weight="bold">Pin2</text>
+                            <!-- Pin8 (GPIO14 - TXD) -->
+                            <circle cx="290" cy="260" r="4" fill="#4ECDC4"/>
+                            <text x="220" y="265" font-size="10">Pin8</text>
+                            <text x="305" y="265" font-size="10">GPIO14(TXD)</text>
+
+                            <!-- Pin10 (GPIO15 - RXD) -->
+                            <circle cx="290" cy="300" r="4" fill="#4ECDC4"/>
+                            <text x="220" y="305" font-size="10">Pin10</text>
+                            <text x="305" y="305" font-size="10">GPIO15(RXD)</text>
+                        </g>
+
+                        <!-- 标题 -->
+                        <text x="200" y="50" font-size="14" font-weight="bold" text-anchor="middle">Raspberry Pi 4B</text>
+                        <text x="200" y="430" font-size="12" text-anchor="middle">GPIO 40PIN 排针</text>
+                    </svg>
+
+                    <table class="pin-table">
+                        <tr>
+                            <th>树莓派引脚</th>
+                            <th>GPIO</th>
+                            <th>功能</th>
+                            <th>连接</th>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">Pin3</td>
+                            <td>GPIO2</td>
+                            <td>I2C SDA</td>
+                            <td>MPU6050 SDA（4.7kΩ上拉）</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">Pin5</td>
+                            <td>GPIO3</td>
+                            <td>I2C SCL</td>
+                            <td>MPU6050 SCL（4.7kΩ上拉）</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">Pin8</td>
+                            <td>GPIO14</td>
+                            <td>UART0 TX</td>
+                            <td>STM32 PA10 (RXD)</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">Pin10</td>
+                            <td>GPIO15</td>
+                            <td>UART0 RX</td>
+                            <td>STM32 PA9 (TXD)</td>
+                        </tr>
+                        <tr>
+                            <td class="pin-name">Pin6/9/14/20</td>
+                            <td>GND</td>
+                            <td>地线</td>
+                            <td>STM32 GND</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="diagram-group">
+                    <h2>SG90 舵机接线</h2>
+                    <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 舵机连接图 -->
+                        <g>
+                            <!-- 舵机1 -->
+                            <rect x="50" y="40" width="70" height="40" fill="#ffe66d" stroke="#333" stroke-width="2" rx="5"/>
+                            <text x="85" y="65" font-size="12" font-weight="bold" text-anchor="middle">SG90 Yaw</text>
+
+                            <circle cx="40" cy="70" r="4" fill="#FF6B6B"/>
+                            <line x1="40" y1="70" x2="30" y2="70" stroke="#FF6B6B" stroke-width="2"/>
+                            <text x="20" y="75" font-size="10">+5V</text>
+
+                            <circle cx="60" cy="90" r="4" fill="#000"/>
+                            <line x1="60" y1="90" x2="50" y2="90" stroke="#000" stroke-width="2"/>
+                            <text x="40" y="95" font-size="10">GND</text>
+
+                            <circle cx="130" cy="80" r="4" fill="#FFE66D"/>
+                            <line x1="130" y1="80" x2="145" y2="80" stroke="#FFE66D" stroke-width="2"/>
+                            <text x="148" y="85" font-size="10">PA0 (PWM)</text>
+
+                            <!-- 舵机2 -->
+                            <rect x="280" y="40" width="70" height="40" fill="#ffe66d" stroke="#333" stroke-width="2" rx="5"/>
+                            <text x="315" y="65" font-size="12" font-weight="bold" text-anchor="middle">SG90 Pitch</text>
+
+                            <circle cx="270" cy="70" r="4" fill="#FF6B6B"/>
+                            <line x1="270" y1="70" x2="260" y2="70" stroke="#FF6B6B" stroke-width="2"/>
+                            <text x="245" y="75" font-size="10">+5V</text>
+
+                            <circle cx="290" cy="90" r="4" fill="#000"/>
+                            <line x1="290" y1="90" x2="280" y2="90" stroke="#000" stroke-width="2"/>
+                            <text x="265" y="95" font-size="10">GND</text>
+
+                            <circle cx="360" cy="80" r="4" fill="#FFE66D"/>
+                            <line x1="360" y1="80" x2="375" y2="80" stroke="#FFE66D" stroke-width="2"/>
+                            <text x="378" y="85" font-size="10">PA1 (PWM)</text>
+                        </g>
+
+                        <!-- 引脚标签 -->
+                        <text x="200" y="160" font-size="12" text-anchor="middle">SG90 舵机引脚：红色(+5V) | 棕色(GND) | 黄色(信号PWM)</text>
+                    </svg>
+
+                    <div class="wiring-note danger">
+                        <strong>⚠️ 重要提醒</strong>
+                        4 个 SG90 舵机必须使用<strong>独立的 5V 电源</strong>，不能从树莓派的 USB 供电！
+                        否则会导致树莓派重启或舵机无法正常动作。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 通用接线说明 -->
+        <div style="padding: 30px 40px; background: #f8f9fa; border-top: 1px solid #ddd;">
+            <h2 style="color: #667eea; margin-bottom: 20px;">通用接线规则</h2>
+
+            <div class="wiring-note success">
+                <strong>✓ 必须检查项</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>所有地线必须连接</strong>：确保 PC、树莓派、STM32 的 GND 连接在同一网络</li>
+                    <li><strong>电源隔离</strong>：舵机 5V 电源独立，逻辑 3.3V 从树莓派提供</li>
+                    <li><strong>UART 逻辑电平</strong>：树莓派输出 3.3V，STM32 输入 3.3V 兼容，但 STM32 输出 3.3V 也能被树莓派识别</li>
+                    <li><strong>I2C 上拉电阻</strong>：GPIO2(SDA) 和 GPIO3(SCL) 各需要 4.7kΩ 上拉到 3.3V</li>
+                </ul>
+            </div>
+
+            <div class="wiring-note">
+                <strong>🔧 测试接线的方法</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>使用万用表检查各引脚之间是否有短路（电阻应 > 100Ω）</li>
+                    <li>通电前用示波器验证 PWM 信号（PA0~PA3）是否存在</li>
+                    <li>使用 Python 脚本 `scripts/test_uart_rpi.py` 验证 UART 通信</li>
+                    <li>使用 `i2cdetect` 验证 MPU6050 是否被识别（地址 0x68）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="window.print()">🖨️ 打印此页面</button>
+            <button onclick="window.location.href='#'">📄 返回到说明文档</button>
+        </div>
+    </div>
+</body>
+</html>
