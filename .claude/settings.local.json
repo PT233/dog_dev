@@ -30,7 +30,17 @@
       "Bash(chmod +x /mnt/c/Users/Pt/Desktop/dog/agent_dev/scripts/receive_camera_stream.sh)",
       "Bash(timeout 3 bash -c \"source install/setup.bash && ros2 run gst_receiver gst_receiver_node\")",
       "Bash(dpkg -l)",
-      "Bash(timeout 3 bash -c \"source install/setup.bash && ros2 run stereo_splitter stereo_splitter_node\")"
+      "Bash(timeout 3 bash -c \"source install/setup.bash && ros2 run stereo_splitter stereo_splitter_node\")",
+      "Bash(python3 *)",
+      "Bash(mkdir -p tests/test_detection)",
+      "Bash(pip install *)",
+      "Bash(conda *)",
+      "Bash(bash /home/peter/dog/dog_dev/scripts/run_test_4_1.sh)",
+      "Bash(chmod +x *)",
+      "Read(//tmp/**)",
+      "Bash(wget -q https://github.com/microsoft/onnxruntime/releases/download/v1.25.0/onnxruntime-linux-x64-gpu-1.25.0.tgz)",
+      "Bash(tar -xzf onnxruntime-linux-x64-gpu-1.25.0.tgz)",
+      "Bash(./install/detection_node/lib/detection_node/test_yolo_infer *)"
     ]
   }
 }

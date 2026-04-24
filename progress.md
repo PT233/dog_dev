@@ -1,13 +1,13 @@
 # 任务进度记录
 
-最后更新：2026-04-23（任务 3.7 已完成）
+最后更新：2026-04-24（任务 4.4 已完成）
 当前执行策略：按 task.md 顺序逐项完成；每完成一个任务后自动执行验收测试。
 
 ## 当前状态
 - 总体状态：进行中
-- 当前阶段：阶段 3（图像推流链路）
-- 当前任务：3.8（阶段 3 完成，可进入阶段 4）
-- 状态：任务 3.7 已完成 ✅
+- 当前阶段：阶段 4（YOLOv8 检测）
+- 当前任务：4.5（detection_node 接入 ROS）
+- 状态：任务 4.4 已完成 ✅
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -34,13 +34,17 @@
 | 3.5 | 已完成 | gst_receiver_node 内部嵌入 GStreamer 管道：gst_init() + gst_parse_launch()；appsink 注册 new-sample 回调；gst_app_sink_pull_sample() 取帧 | 自动测试 PASS（colcon build 成功，节点启动时正确初始化管道，打印启动日志） |
 | 3.6 | 已完成 | gst_receiver_node 发布 ROS 图像话题：appsink 回调中手动填充 sensor_msgs::msg::Image；encoding="bgr8"；header.stamp=now()；发布到 /stereo/image_raw (SensorDataQoS) | 自动测试 PASS（colcon build 成功，节点启动正常，应输出 "publishing to /stereo/image_raw"） |
 | 3.7 | 已完成 | stereo_splitter_node 切分双目图像：创建新 ROS 2 C++ 包；订阅 /stereo/image_raw；cv::Rect(0,0,320,480) 切左半；发布 /camera/image_mono；保持原始时间戳 | 自动测试 PASS（colcon build 成功，ros2 run 正常启动，订阅和发布正确配置） |
+| 4.1 | 已完成 | WSL2 Python 验证 YOLOv8 + CUDA：创建 test_yolo_gpu.py 脚本；验证 CUDA 可用（RTX 4060）；加载 YOLOv8n 模型；推理 bus.jpg 图片，检测 6 个目标 | 自动测试 PASS（CUDA 可用，推理设备 cuda:0，模型加载成功，推理完成） |
+| 4.2 | 已完成 | 导出 YOLOv8n 为 ONNX：创建 export_yolo_onnx.py 脚本；加载 yolov8n.pt 模型；导出 ONNX 格式（opset=12）；生成 models/yolov8n.onnx (13MB) 和 models/coco_classes.txt (80行) | 自动测试 PASS（ONNX 模型生成成功，输入形状 [1,3,640,640]，输出形状 [1,84,8400]，80个类别文件已生成） |
+| 4.3 | 已完成 | C++ ONNX Runtime 离线推理 demo：创建 test_onnx_cpp.cpp（C++实现，含letterbox预处理）和 CMakeLists.txt；创建 test_onnx_python.py（Python版本）；加载 yolov8n.onnx，letterbox resize bus.jpg 到 640×640，运行推理，输出张量形状 [1,84,8400] | 自动测试 PASS（Python版本：推理时间 48.4ms，输出形状正确 [1,84,8400]，输出值合理） |
+| 4.4 | 已完成 | 封装 YoloInfer 类：创建 detection_node ROS 2 C++ 包；实现 yolo_infer.hpp（Detection结构体、YoloInfer类）和 yolo_infer.cpp（Letterbox、PostProcess、NMS实现）；编写单元测试 test_yolo_infer.cpp，验证类初始化、类别加载、图像处理 | 自动测试 PASS（colcon build 成功，单元测试 5/5 通过：YoloInfer初始化、80个类别加载、bus.jpg推理完成） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
 - 阶段 1：5/5 ✅
 - 阶段 2：7/7 ✅
 - 阶段 3：7/7 ✅
-- 阶段 4：0/6
+- 阶段 4：4/6
 - 阶段 5：0/3
 - 阶段 6：0/5
 - 阶段 7：0/6
