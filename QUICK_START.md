@@ -4,6 +4,51 @@
 
 ---
 
+## 第 0 步：STM32 固件烧录（一次性）
+
+**前置**：J-Link 调试器已连接到 STM32F103CB
+
+### Windows 端 - 透传 J-Link
+
+在 PowerShell（管理员）中运行：
+
+```powershell
+usbipd list                               # 列出 USB 设备
+usbipd attach --wsl default --busid 5-4  # 透传 J-Link (BUSID 替换为实际值)
+```
+
+### WSL2 端 - 烧录固件
+
+```bash
+cd /home/peter/dog/dog_dev/stm32_fw
+./flash.sh
+```
+
+**预期输出**：
+```
+========== STM32F103CB 固件烧录 (SWD 模式) ==========
+[1/3] 编译固件...
+✓ 编译成功
+[2/3] 验证 J-Link 连接...
+✓ J-Link 已连接 (SWD 模式)
+[3/3] 烧录固件到 0x08000000 (SWD)...
+... erased sectors 0 through 63 ...
+... ** Verified OK ** ...
+========== 烧录完成 ==========
+✓ 固件已成功烧录
+```
+
+### 验证烧录成功
+
+```bash
+ssh ubuntu@192.168.137.100
+minicom -D /dev/ttyAMA0 -b 921600
+# 应每 50ms 看到：[STATUS] Servo0: 90°, Servo1: 90°, ...
+# 按 Ctrl+A 再 X 退出
+```
+
+---
+
 ## 环境变量（两端都需要）
 
 ```bash

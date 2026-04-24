@@ -216,27 +216,145 @@ colcon build --packages-select uart_bridge robot_interfaces
 
 ## 4. 固件烧录
 
-### 4.1 STM32 CubeIDE 编译与烧录
+### 4.1 准备工作
 
+**硬件要求**：
+- J-Link 调试器（或 ST-Link v2）
+- STM32F103CB 微控制器 + 电源
+- SWDIO、SWCLK、GND 接线完成（见第 2 章）
+
+**软件检查**：
 ```bash
-# 1. 打开 STM32CubeIDE
-# 2. 打开工程：desktop_tracking_robot/stm32_fw
-# 3. 编译：Project → Build All
-# 4. 烧录：Run → Run As → STM32 Application
+# WSL2
+which make arm-none-eabi-gcc openocd
 
-# 或命令行编译
-cd stm32_fw
-mingw32-make -j4
+# 输出应该显示：
+# /usr/bin/make
+# /usr/bin/arm-none-eabi-gcc
+# /usr/bin/openocd
 ```
 
-### 4.2 验证固件
+### 4.2 Windows 端 - USB 透传
+
+在 **PowerShell（管理员）** 中运行：
+
+```powershell
+# 列出所有 USB 设备
+usbipd list
+
+# 找到 J-Link (SEGGER, VID:PID 1366:xxxx)
+# 记下它的 BUSID (例如 5-4)
+
+# 透传给 WSL2
+usbipd attach --wsl default --busid 5-4
+# 将 5-4 替换为实际的 BUSID
+```
+
+**验证透传成功**：
+```powershell
+usbipd list
+# 应显示 J-Link 的 STATE 为 "Attached"
+```
+
+### 4.3 WSL2 端 - 编译与烧录
 
 ```bash
-# 使用串口监控工具（如 minicom）连接 STM32
-minicom -D /dev/ttyUSB0 -b 921600
+cd /home/peter/dog/dog_dev/stm32_fw
 
-# 应该看到以下日志（每 50ms）：
-# [STATUS] Servo0: 90°, Servo1: 90°, ...
+# 编译固件
+make -j4
+# 输出：build/STM32.elf, build/STM32.bin, build/STM32.hex
+
+# 验证 J-Link 可见
+lsusb | grep 1366
+# 输出：Bus 001 Device XX: ID 1366:0101 SEGGER J-Link PLUS
+
+# 一键烧录 (SWD 模式)
+./flash.sh
+```
+
+**预期输出**：
+```
+========== STM32F103CB 固件烧录 (SWD 模式) ==========
+
+[1/3] 编译固件...
+✓ 编译成功
+[2/3] 验证 J-Link 连接...
+✓ J-Link 已连接 (SWD 模式)
+[3/3] 烧录固件到 0x08000000 (SWD)...
+Info : SWD DPIDR 0x1ba01477
+Info : Cortex-M3 r1p1 processor detected
+erased sectors 0 through 63 on flash bank 0 in 0.031588s
+** Programming Finished **
+** Verified OK **
+
+========== 烧录完成 ==========
+✓ 固件已成功烧录
+```
+
+### 4.4 验证固件
+
+在树莓派上监听串口输出：
+
+```bash
+ssh ubuntu@192.168.137.100
+minicom -D /dev/ttyAMA0 -b 921600
+
+# 应每 50ms 看到：
+# [STATUS] Servo0: 90°, Servo1: 90°, Servo2: 90°, Servo3: 90°
+# [STATUS] Servo0: 90°, Servo1: 90°, Servo2: 90°, Servo3: 90°
+
+# 按 Ctrl+A 再 X 退出 minicom
+```
+
+### 4.5 故障排查
+
+**问题 1：J-Link 未连接或透传失败**
+
+```powershell
+# Windows 中重新透传
+usbipd detach --busid 5-4
+usbipd attach --wsl default --busid 5-4
+```
+
+**问题 2：编译失败**
+
+```bash
+# 检查工具链
+arm-none-eabi-gcc --version
+# 应输出：arm-none-eabi-gcc (Arm GNU Toolchain) ...
+
+# 清理并重新编译
+make clean
+make -j4
+```
+
+**问题 3：烧录失败 - DPIDR 为 0x00000000**
+
+```bash
+# 检查接线（SWD 模式）：
+# J-Link Pin 3  (GND)   → STM32 GND
+# J-Link Pin 7  (SWDIO) → STM32 PA13
+# J-Link Pin 9  (SWCLK) → STM32 PA14
+
+# 重新透传并尝试
+usbipd detach --busid 5-4
+usbipd attach --wsl default --busid 5-4
+./flash.sh
+```
+
+**问题 4：串口无输出**
+
+```bash
+# 检查树莓派端的 UART 接线
+# STM32 PA9  (TX) → RPI GPIO15 (RX)
+# STM32 PA10 (RX) → RPI GPIO14 (TX)
+# GND → GND
+
+# 检查树莓派串口权限
+ssh ubuntu@192.168.137.100
+sudo usermod -aG dialout ubuntu
+# 需要重新登录或重启树莫派
 ```
 
 ---
