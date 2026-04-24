@@ -4,10 +4,10 @@
 
 #include <string.h>
 
-#include "robot_interfaces/srv/detail/calibrate_center__struct.h"
-#include "robot_interfaces/srv/detail/calibrate_center__functions.h"
-#include "robot_interfaces/srv/detail/calibrate_center__type_support.h"
 #include "rosidl_typesupport_interface/macros.h"
+#include "robot_interfaces/srv/detail/calibrate_center__type_support.h"
+#include "robot_interfaces/srv/detail/calibrate_center__functions.h"
+#include "robot_interfaces/srv/detail/calibrate_center__struct.h"
 
 #ifdef __cplusplus
 extern "C"

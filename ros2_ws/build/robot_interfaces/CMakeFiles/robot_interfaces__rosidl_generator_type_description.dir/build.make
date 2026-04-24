@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces
+CMAKE_SOURCE_DIR = /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces
+CMAKE_BINARY_DIR = /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces
 
 # Utility rule file for robot_interfaces__rosidl_generator_type_description.
 
@@ -67,16 +67,26 @@ include CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/compi
 include CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/progress.make
 
 CMakeFiles/robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json
+CMakeFiles/robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection.json
+CMakeFiles/robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection2DArray.json
 CMakeFiles/robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/srv/SetTargetClass.json
 CMakeFiles/robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/srv/CalibrateCenter.json
 
 rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: /opt/ros/jazzy/lib/rosidl_generator_type_description/rosidl_generator_type_description
 rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: /opt/ros/jazzy/lib/python3.12/site-packages/rosidl_generator_type_description/__init__.py
 rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
+rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
+rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
 rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating type hashes for ROS interfaces"
-	/usr/bin/python3 /opt/ros/jazzy/lib/rosidl_generator_type_description/rosidl_generator_type_description --generator-arguments-file /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description__arguments.json
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating type hashes for ROS interfaces"
+	/usr/bin/python3 /opt/ros/jazzy/lib/rosidl_generator_type_description/rosidl_generator_type_description --generator-arguments-file /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description__arguments.json
+
+rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection.json: rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection.json
+
+rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection2DArray.json: rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection2DArray.json
 
 rosidl_generator_type_description/robot_interfaces/srv/SetTargetClass.json: rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_type_description/robot_interfaces/srv/SetTargetClass.json
@@ -85,6 +95,8 @@ rosidl_generator_type_description/robot_interfaces/srv/CalibrateCenter.json: ros
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_type_description/robot_interfaces/srv/CalibrateCenter.json
 
 robot_interfaces__rosidl_generator_type_description: CMakeFiles/robot_interfaces__rosidl_generator_type_description
+robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection.json
+robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection2DArray.json
 robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json
 robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/srv/CalibrateCenter.json
 robot_interfaces__rosidl_generator_type_description: rosidl_generator_type_description/robot_interfaces/srv/SetTargetClass.json
@@ -100,6 +112,6 @@ CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/clean:
 .PHONY : CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/clean
 
 CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/depend:
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/robot_interfaces__rosidl_generator_type_description.dir/depend
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces
+CMAKE_SOURCE_DIR = /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces
+CMAKE_BINARY_DIR = /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces
 
 # Utility rule file for robot_interfaces__cpp.
 
@@ -71,6 +71,16 @@ CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/deta
 CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__struct.hpp
 CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__traits.hpp
 CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__type_support.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/simple_detection.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__builder.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__struct.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__traits.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__type_support.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/simple_detection2_d_array.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__builder.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__struct.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__traits.hpp
+CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__type_support.hpp
 CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/srv/set_target_class.hpp
 CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/srv/detail/set_target_class__builder.hpp
 CMakeFiles/robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/srv/detail/set_target_class__struct.hpp
@@ -103,6 +113,8 @@ rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/rosidl_generator_cpp/resource/srv__traits.hpp.em
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/rosidl_generator_cpp/resource/srv__type_support.hpp.em
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
+rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
+rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
@@ -138,8 +150,8 @@ rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
 rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
-	/usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_cpp__arguments.json
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
+	/usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_cpp__arguments.json
 
 rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__builder.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__builder.hpp
@@ -152,6 +164,36 @@ rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__traits.hpp: rosidl
 
 rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__type_support.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__type_support.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/simple_detection.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/simple_detection.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__builder.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__builder.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__struct.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__struct.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__traits.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__traits.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__type_support.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__type_support.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/simple_detection2_d_array.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/simple_detection2_d_array.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__builder.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__builder.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__struct.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__struct.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__traits.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__traits.hpp
+
+rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__type_support.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__type_support.hpp
 
 rosidl_generator_cpp/robot_interfaces/srv/set_target_class.hpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/srv/set_target_class.hpp
@@ -187,11 +229,21 @@ rosidl_generator_cpp/robot_interfaces/msg/rosidl_generator_cpp__visibility_contr
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/robot_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
 
 robot_interfaces__cpp: CMakeFiles/robot_interfaces__cpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__builder.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__struct.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__traits.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection2_d_array__type_support.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__builder.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__struct.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__traits.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/simple_detection__type_support.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__builder.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__struct.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__traits.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/detail/target_info__type_support.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/simple_detection.hpp
+robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/simple_detection2_d_array.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/msg/target_info.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/srv/calibrate_center.hpp
 robot_interfaces__cpp: rosidl_generator_cpp/robot_interfaces/srv/detail/calibrate_center__builder.hpp
@@ -215,6 +267,6 @@ CMakeFiles/robot_interfaces__cpp.dir/clean:
 .PHONY : CMakeFiles/robot_interfaces__cpp.dir/clean
 
 CMakeFiles/robot_interfaces__cpp.dir/depend:
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/CMakeFiles/robot_interfaces__cpp.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/CMakeFiles/robot_interfaces__cpp.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/robot_interfaces__cpp.dir/depend
 

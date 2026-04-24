@@ -1,8 +1,8 @@
-# Install script for directory: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py
+# Install script for directory: /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/install/robot_interfaces")
+  set(CMAKE_INSTALL_PREFIX "/home/peter/dog/dog_dev/ros2_ws/install/robot_interfaces")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

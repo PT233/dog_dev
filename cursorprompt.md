@@ -63,3 +63,5 @@ CODING PROTOCOL开发守则:
   ubuntu@ubuntu:~$ ls
   camera.sh
   脚本需要在推流后启用才能实现双目效果。
+
+查看~/.bashrc 不要让我每次点yes

@@ -1,55 +1,44 @@
-#include "rclcpp/rclcpp.hpp"
-#include "sensor_msgs/msg/image.hpp"
-#include <opencv2/opencv.hpp>
-#include <memory>
+#include "detection_node/detection_viz_node.hpp"
 
-using std::placeholders::_1;
+namespace detection_node {
 
-class DetectionVizNode : public rclcpp::Node {
-public:
-    DetectionVizNode() : Node("detection_viz_node") {
-        // Create subscribers
-        sub_image_ = this->create_subscription<sensor_msgs::msg::Image>(
-            "/camera/image_mono",
-            rclcpp::SensorDataQoS(),
-            std::bind(&DetectionVizNode::ImageCallback, this, _1));
+DetectionVizNode::DetectionVizNode(const rclcpp::NodeOptions& options)
+    : rclcpp::Node("detection_viz_node", options) {
+  auto qos = rclcpp::SensorDataQoS();
 
-        // Create publisher for visualization
-        pub_image_ = this->create_publisher<sensor_msgs::msg::Image>(
-            "/camera/image_detected",
-            rclcpp::SensorDataQoS());
+  // Create subscriptions
+  image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
+    "/camera/image_mono", qos,
+    std::bind(&DetectionVizNode::OnImage, this, std::placeholders::_1));
 
-        RCLCPP_INFO(this->get_logger(), "Detection viz node started");
-        RCLCPP_INFO(this->get_logger(), "Subscribed to /camera/image_mono");
-        RCLCPP_INFO(this->get_logger(), "Publishing to /camera/image_detected");
-    }
+  detection_sub_ = this->create_subscription<robot_interfaces::msg::SimpleDetection2DArray>(
+    "/tracked_objects", rclcpp::QoS(5).reliable(),
+    std::bind(&DetectionVizNode::OnDetections, this, std::placeholders::_1));
 
-private:
-    void ImageCallback(const sensor_msgs::msg::Image::SharedPtr msg) {
-        try {
-            // For now, just republish the image as visualization
-            // In full implementation, would:
-            // 1. Convert to cv::Mat
-            // 2. Get synchronized detection results
-            // 3. Draw bboxes on image
-            // 4. Publish annotated image
+  // Create publisher
+  image_pub_ = this->create_publisher<sensor_msgs::msg::Image>(
+    "/camera/image_detected", qos);
 
-            RCLCPP_DEBUG(this->get_logger(), "Received image: %ux%u", msg->width, msg->height);
-
-            // Republish as placeholder
-            pub_image_->publish(*msg);
-        } catch (const std::exception& e) {
-            RCLCPP_ERROR(this->get_logger(), "Error in image callback: %s", e.what());
-        }
-    }
-
-    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr sub_image_;
-    rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr pub_image_;
-};
-
-int main(int argc, char* argv[]) {
-    rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<DetectionVizNode>());
-    rclcpp::shutdown();
-    return 0;
+  RCLCPP_INFO(this->get_logger(), "DetectionVizNode started");
+  RCLCPP_INFO(this->get_logger(), "Subscribed to /camera/image_mono and /tracked_objects");
+  RCLCPP_INFO(this->get_logger(), "Publishing to /camera/image_detected");
 }
+
+void DetectionVizNode::OnImage(const sensor_msgs::msg::Image::SharedPtr msg) {
+  // For now, just republish
+  image_pub_->publish(*msg);
+}
+
+void DetectionVizNode::OnDetections(
+    const robot_interfaces::msg::SimpleDetection2DArray::SharedPtr msg) {
+  // Log track IDs received
+  std::string track_ids;
+  for (const auto& det : msg->detections) {
+    track_ids += "ID:" + det.track_id + " ";
+  }
+  if (!track_ids.empty()) {
+    RCLCPP_DEBUG(this->get_logger(), "Tracked objects: %s", track_ids.c_str());
+  }
+}
+
+}  // namespace detection_node

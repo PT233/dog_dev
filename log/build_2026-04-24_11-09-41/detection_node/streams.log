@@ -1,0 +1,49 @@
+[0.008s] Invoking command in '/home/peter/dog/dog_dev/build/detection_node': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/detection_node -- -j16 -l16
+[0.027s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.179s] -- Found rclcpp: 28.1.18 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.640s] -- Found rosidl_generator_c: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.645s] -- Found rosidl_generator_cpp: 4.6.7 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.653s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.662s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.703s] -- Found rmw_implementation_cmake: 7.3.3 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.704s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.268s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.826s] -- Found sensor_msgs: 5.3.7 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[1.868s] -- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+[1.870s] -- Found message_filters: 4.11.12 (/opt/ros/jazzy/share/message_filters/cmake)
+[1.873s] -- Found robot_interfaces: 0.0.0 (/home/peter/dog/dog_dev/ros2_ws/install/robot_interfaces/share/robot_interfaces/cmake)
+[1.887s] -- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[1.950s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.950s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/peter/dog/dog_dev/ros2_ws/src/detection_node/include>
+[1.950s] -- Configured cppcheck exclude dirs and/or files: 
+[1.951s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.951s] -- Configured 'flake8' exclude dirs and/or files: 
+[1.951s] -- Added test 'lint_cmake' to check CMake code style
+[1.951s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.951s] -- Added test 'uncrustify' to check C / C++ code style
+[1.951s] -- Configured uncrustify additional arguments: 
+[1.951s] -- Added test 'xmllint' to check XML markup files
+[1.952s] -- Configuring done (1.9s)
+[1.971s] -- Generating done (0.0s)
+[1.977s] -- Build files have been written to: /home/peter/dog/dog_dev/build/detection_node
+[2.006s] [ 22%] Built target yolo_infer
+[2.011s] [ 44%] Building CXX object CMakeFiles/detection_viz_node_exe.dir/src/detection_viz_node.cpp.o
+[2.011s] [ 44%] Building CXX object CMakeFiles/detection_viz_node_exe.dir/src/detection_viz_main.cpp.o
+[2.024s] [ 66%] Built target test_yolo_infer
+[2.027s] [ 88%] Built target detection_node_exe
+[2.168s] In file included from /home/peter/dog/dog_dev/ros2_ws/src/detection_node/src/detection_viz_main.cpp:2:
+[2.168s] /home/peter/dog/dog_dev/ros2_ws/src/detection_node/include/detection_node/detection_viz_node.hpp:5:10: fatal error: robot_interfaces/msg/simple_detection2_d_array.hpp: No such file or directory
+[2.168s]     5 | #include "robot_interfaces/msg/simple_detection2_d_array.hpp"
+[2.169s]       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2.169s] compilation terminated.
+[2.170s] In file included from /home/peter/dog/dog_dev/ros2_ws/src/detection_node/src/detection_viz_node.cpp:1:
+[2.171s] /home/peter/dog/dog_dev/ros2_ws/src/detection_node/include/detection_node/detection_viz_node.hpp:5:10: fatal error: robot_interfaces/msg/simple_detection2_d_array.hpp: No such file or directory
+[2.171s]     5 | #include "robot_interfaces/msg/simple_detection2_d_array.hpp"
+[2.171s]       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2.171s] compilation terminated.
+[2.171s] gmake[2]: *** [CMakeFiles/detection_viz_node_exe.dir/build.make:90: CMakeFiles/detection_viz_node_exe.dir/src/detection_viz_main.cpp.o] Error 1
+[2.171s] gmake[2]: *** Waiting for unfinished jobs....
+[2.172s] gmake[2]: *** [CMakeFiles/detection_viz_node_exe.dir/build.make:76: CMakeFiles/detection_viz_node_exe.dir/src/detection_viz_node.cpp.o] Error 1
+[2.172s] gmake[1]: *** [CMakeFiles/Makefile2:221: CMakeFiles/detection_viz_node_exe.dir/all] Error 2
+[2.173s] gmake: *** [Makefile:146: all] Error 2
+[2.175s] Invoked command in '/home/peter/dog/dog_dev/build/detection_node' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/detection_node -- -j16 -l16

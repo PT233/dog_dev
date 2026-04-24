@@ -1,4 +1,0 @@
-uart_bridge_node:
-  ros__parameters:
-    uart_device: "/dev/ttyAMA0"
-    uart_baudrate: 921600

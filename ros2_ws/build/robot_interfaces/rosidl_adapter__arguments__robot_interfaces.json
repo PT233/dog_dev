@@ -1,8 +1,10 @@
 {
   "package_name": "robot_interfaces",
   "non_idl_tuples": [
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces:msg/TargetInfo.msg",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces:srv/SetTargetClass.srv",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces:srv/CalibrateCenter.srv"
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces:msg/TargetInfo.msg",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces:msg/SimpleDetection.msg",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces:msg/SimpleDetection2DArray.msg",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces:srv/SetTargetClass.srv",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces:srv/CalibrateCenter.srv"
   ]
 }

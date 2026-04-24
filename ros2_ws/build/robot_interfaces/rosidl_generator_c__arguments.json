@@ -1,16 +1,20 @@
 {
   "package_name": "robot_interfaces",
-  "output_dir": "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_c/robot_interfaces",
+  "output_dir": "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_c/robot_interfaces",
   "template_dir": "/opt/ros/jazzy/share/rosidl_generator_c/cmake/../resource",
   "idl_tuples": [
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/TargetInfo.idl",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:srv/SetTargetClass.idl",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:srv/CalibrateCenter.idl"
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/TargetInfo.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/SimpleDetection.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/SimpleDetection2DArray.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:srv/SetTargetClass.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:srv/CalibrateCenter.idl"
   ],
   "ros_interface_files": [
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces/msg/TargetInfo.msg",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces/srv/SetTargetClass.srv",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces/srv/CalibrateCenter.srv"
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/TargetInfo.msg",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/SimpleDetection.msg",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/SimpleDetection2DArray.msg",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/srv/SetTargetClass.srv",
+    "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/srv/CalibrateCenter.srv"
   ],
   "ros_interface_dependencies": [
     "std_msgs:/opt/ros/jazzy/share/std_msgs/msg/Bool.idl",
@@ -67,9 +71,11 @@
     "/opt/ros/jazzy/share/rosidl_generator_c/cmake/../resource/msg__type_support.h.em",
     "/opt/ros/jazzy/share/rosidl_generator_c/cmake/../resource/srv__type_support.c.em",
     "/opt/ros/jazzy/share/rosidl_generator_c/cmake/../resource/srv__type_support.h.em",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/TargetInfo.idl",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl",
-    "/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/TargetInfo.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/Bool.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/Byte.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/ByteMultiArray.idl",
@@ -105,8 +111,10 @@
     "/opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl"
   ],
   "type_description_tuples": [
-    "msg/TargetInfo.idl:/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json",
-    "srv/SetTargetClass.idl:/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/srv/SetTargetClass.json",
-    "srv/CalibrateCenter.idl:/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/srv/CalibrateCenter.json"
+    "msg/TargetInfo.idl:/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/TargetInfo.json",
+    "msg/SimpleDetection.idl:/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection.json",
+    "msg/SimpleDetection2DArray.idl:/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection2DArray.json",
+    "srv/SetTargetClass.idl:/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/srv/SetTargetClass.json",
+    "srv/CalibrateCenter.idl:/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/srv/CalibrateCenter.json"
   ]
 }

@@ -10,6 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(robot_interfaces REQUIRED)
 
 # Create yolo_infer library
 add_library(yolo_infer src/yolo_infer.cpp)
@@ -35,12 +36,15 @@ target_include_directories(detection_node_exe PUBLIC
 target_link_libraries(detection_node_exe yolo_infer)
 
 # Detection visualization node executable
-add_executable(detection_viz_node_exe src/detection_viz_node.cpp)
+add_executable(detection_viz_node_exe src/detection_viz_node.cpp src/detection_viz_main.cpp)
 ament_target_dependencies(detection_viz_node_exe
   rclcpp
   sensor_msgs
-  OpenCV
+  robot_interfaces
 )
+target_include_directories(detection_viz_node_exe PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
 
 # Install executables
 install(TARGETS

@@ -53,26 +53,26 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces
+CMAKE_SOURCE_DIR = /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces
+CMAKE_BINARY_DIR = /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces
 
 # Utility rule file for robot_interfaces__rs.
 
 # Include any custom commands dependencies for this target.
-include /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/compiler_depend.make
+include /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/compiler_depend.make
 
 # Include the progress variables for this target.
-include /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/progress.make
+include /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/progress.make
 
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/lib.rs
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/build.rs
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/Cargo.toml
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/msg.rs
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/msg/rmw.rs
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/srv.rs
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/srv/rmw.rs
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/lib.rs
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/build.rs
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/Cargo.toml
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/msg.rs
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/msg/rmw.rs
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/srv.rs
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/srv/rmw.rs
 
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/lib/rosidl_generator_rs/rosidl_generator_rs
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/lib/python3.12/site-packages/rosidl_generator_rs/__init__.py
@@ -87,9 +87,13 @@ rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/rosid
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/rosidl_generator_rs/resource/templates/srv_idiomatic.rs.em
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/rosidl_generator_rs/resource/templates/srv_rmw.rs.em
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
@@ -125,8 +129,8 @@ rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/std_m
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Rust code for ROS interfaces"
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs && /usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_rs/cmake/../../../lib/rosidl_generator_rs/rosidl_generator_rs --generator-arguments-file /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_rs__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Rust code for ROS interfaces"
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs && /usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_rs/cmake/../../../lib/rosidl_generator_rs/rosidl_generator_rs --generator-arguments-file /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_rs__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
 
 rosidl_generator_rs/robot_interfaces/rust/build.rs: rosidl_generator_rs/robot_interfaces/rust/src/lib.rs
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_rs/robot_interfaces/rust/build.rs
@@ -146,7 +150,7 @@ rosidl_generator_rs/robot_interfaces/rust/src/srv.rs: rosidl_generator_rs/robot_
 rosidl_generator_rs/robot_interfaces/rust/src/srv/rmw.rs: rosidl_generator_rs/robot_interfaces/rust/src/lib.rs
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_rs/robot_interfaces/rust/src/srv/rmw.rs
 
-robot_interfaces__rs: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs
+robot_interfaces__rs: /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs
 robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/Cargo.toml
 robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/build.rs
 robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/lib.rs
@@ -154,18 +158,18 @@ robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/msg.rs
 robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/msg/rmw.rs
 robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/srv.rs
 robot_interfaces__rs: rosidl_generator_rs/robot_interfaces/rust/src/srv/rmw.rs
-robot_interfaces__rs: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/build.make
+robot_interfaces__rs: /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/build.make
 .PHONY : robot_interfaces__rs
 
 # Rule to build all files generated by this target.
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/build: robot_interfaces__rs
-.PHONY : /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/build
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/build: robot_interfaces__rs
+.PHONY : /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/build
 
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/clean:
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs && $(CMAKE_COMMAND) -P CMakeFiles/robot_interfaces__rs.dir/cmake_clean.cmake
-.PHONY : /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/clean
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/clean:
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs && $(CMAKE_COMMAND) -P CMakeFiles/robot_interfaces__rs.dir/cmake_clean.cmake
+.PHONY : /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/clean
 
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/depend:
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/DependInfo.cmake "--color=$(COLOR)"
-.PHONY : /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/depend
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/depend:
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/DependInfo.cmake "--color=$(COLOR)"
+.PHONY : /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__rs/CMakeFiles/robot_interfaces__rs.dir/depend
 

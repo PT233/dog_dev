@@ -53,30 +53,34 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces
+CMAKE_SOURCE_DIR = /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces
+CMAKE_BINARY_DIR = /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces
 
 # Utility rule file for robot_interfaces__py.
 
 # Include any custom commands dependencies for this target.
-include /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/compiler_depend.make
+include /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/compiler_depend.make
 
 # Include the progress variables for this target.
-include /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/progress.make
+include /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/progress.make
 
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_c.c
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_target_info.py
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_set_target_class.py
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_calibrate_center.py
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/__init__.py
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/__init__.py
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_target_info_s.c
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_set_target_class_s.c
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_calibrate_center_s.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_c.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_target_info.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_set_target_class.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_calibrate_center.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/__init__.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/__init__.py
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_target_info_s.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection_s.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array_s.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_set_target_class_s.c
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_calibrate_center_s.c
 
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/lib/rosidl_generator_py/rosidl_generator_py
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/lib/python3.12/site-packages/rosidl_generator_py/__init__.py
@@ -92,6 +96,8 @@ rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_f
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/rosidl_generator_py/resource/_srv_pkg_typesupport_entry_point.c.em
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/rosidl_generator_py/resource/_srv.py.em
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
+rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
+rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl
@@ -127,8 +133,8 @@ rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_f
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/builtin_interfaces/msg/Time.idl
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c: /opt/ros/jazzy/share/service_msgs/msg/ServiceEventInfo.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code for ROS interfaces"
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py && /usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_py/cmake/../../../lib/rosidl_generator_py/rosidl_generator_py --generator-arguments-file /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/rosidl_generator_py__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code for ROS interfaces"
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py && /usr/bin/python3 /opt/ros/jazzy/share/rosidl_generator_py/cmake/../../../lib/rosidl_generator_py/rosidl_generator_py --generator-arguments-file /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_py__arguments.json --typesupport-impls "rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c;rosidl_typesupport_c"
 
 rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c
@@ -138,6 +144,12 @@ rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_c
 
 rosidl_generator_py/robot_interfaces/msg/_target_info.py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/msg/_target_info.py
+
+rosidl_generator_py/robot_interfaces/msg/_simple_detection.py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/msg/_simple_detection.py
+
+rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array.py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array.py
 
 rosidl_generator_py/robot_interfaces/srv/_set_target_class.py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/srv/_set_target_class.py
@@ -154,17 +166,27 @@ rosidl_generator_py/robot_interfaces/srv/__init__.py: rosidl_generator_py/robot_
 rosidl_generator_py/robot_interfaces/msg/_target_info_s.c: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/msg/_target_info_s.c
 
+rosidl_generator_py/robot_interfaces/msg/_simple_detection_s.c: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/msg/_simple_detection_s.c
+
+rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array_s.c: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array_s.c
+
 rosidl_generator_py/robot_interfaces/srv/_set_target_class_s.c: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/srv/_set_target_class_s.c
 
 rosidl_generator_py/robot_interfaces/srv/_calibrate_center_s.c: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_py/robot_interfaces/srv/_calibrate_center_s.c
 
-robot_interfaces__py: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py
+robot_interfaces__py: /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_c.c
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/__init__.py
+robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection.py
+robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array.py
+robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection2_d_array_s.c
+robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_simple_detection_s.c
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_target_info.py
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/msg/_target_info_s.c
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/__init__.py
@@ -172,18 +194,18 @@ robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_calibrate_center
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_calibrate_center_s.c
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_set_target_class.py
 robot_interfaces__py: rosidl_generator_py/robot_interfaces/srv/_set_target_class_s.c
-robot_interfaces__py: /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/build.make
+robot_interfaces__py: /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/build.make
 .PHONY : robot_interfaces__py
 
 # Rule to build all files generated by this target.
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/build: robot_interfaces__py
-.PHONY : /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/build
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/build: robot_interfaces__py
+.PHONY : /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/build
 
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/clean:
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py && $(CMAKE_COMMAND) -P CMakeFiles/robot_interfaces__py.dir/cmake_clean.cmake
-.PHONY : /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/clean
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/clean:
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py && $(CMAKE_COMMAND) -P CMakeFiles/robot_interfaces__py.dir/cmake_clean.cmake
+.PHONY : /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/clean
 
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/depend:
-	cd /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/DependInfo.cmake "--color=$(COLOR)"
-.PHONY : /mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/depend
+/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/depend:
+	cd /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/DependInfo.cmake "--color=$(COLOR)"
+.PHONY : /home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/robot_interfaces__py/CMakeFiles/robot_interfaces__py.dir/depend
 

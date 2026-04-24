@@ -1,3 +1,7 @@
+msg/SimpleDetection.idl
+msg/SimpleDetection.msg
+msg/SimpleDetection2DArray.idl
+msg/SimpleDetection2DArray.msg
 msg/TargetInfo.idl
 msg/TargetInfo.msg
 srv/CalibrateCenter.idl

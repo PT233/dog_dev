@@ -4,10 +4,10 @@
 
 #include <string.h>
 
+#include "rosidl_typesupport_interface/macros.h"
+#include "robot_interfaces/srv/detail/set_target_class__functions.h"
 #include "robot_interfaces/srv/detail/set_target_class__type_support.h"
 #include "robot_interfaces/srv/detail/set_target_class__struct.h"
-#include "robot_interfaces/srv/detail/set_target_class__functions.h"
-#include "rosidl_typesupport_interface/macros.h"
 
 #ifdef __cplusplus
 extern "C"

@@ -45,10 +45,13 @@
       "Bash(timeout * bash -c *)",
       "Bash(gst-inspect-1.0 *)",
 
+      "Bash(timeout * ros2 *)",
+      "Bash(timeout * ros2 run *)",
+      
       "Bash(ssh *)",
       "Bash(scp *)",
       "Bash(ip addr *)",
-      
+
       "Bash(/home/peter/dog/dog_dev/scripts/*)",
       "Bash(/home/peter/dog/dog_dev/ros2_ws/build/*)",
       "Bash(bash /tmp/*.sh)",
