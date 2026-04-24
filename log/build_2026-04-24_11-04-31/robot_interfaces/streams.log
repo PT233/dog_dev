@@ -1,0 +1,327 @@
+[0.006s] Invoking command in '/home/peter/dog/dog_dev/build/robot_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/robot_interfaces
+[0.830s] -- The C compiler identification is GNU 13.3.0
+[4.989s] -- The CXX compiler identification is GNU 13.3.0
+[8.975s] -- Detecting C compiler ABI info
+[10.742s] -- Detecting C compiler ABI info - done
+[10.748s] -- Check for working C compiler: /usr/bin/cc - skipped
+[10.749s] -- Detecting C compile features
+[10.749s] -- Detecting C compile features - done
+[11.163s] -- Detecting CXX compiler ABI info
+[11.861s] -- Detecting CXX compiler ABI info - done
+[11.867s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[11.867s] -- Detecting CXX compile features
+[11.868s] -- Detecting CXX compile features - done
+[11.869s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[11.968s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[12.034s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[12.038s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[12.574s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[12.606s] -- Found rosidl_adapter: 4.6.7 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[12.610s] -- Found std_msgs: 5.3.7 (/opt/ros/jazzy/share/std_msgs/cmake)
+[13.056s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[13.380s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[13.798s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[13.801s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[13.897s] -- Found PythonExtra: /usr/bin/python3  
+[14.197s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[14.256s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[14.265s] -- Configuring done (14.3s)
+[14.302s] -- Generating done (0.0s)
+[14.311s] -- Build files have been written to: /home/peter/dog/dog_dev/build/robot_interfaces
+[14.318s] Invoked command in '/home/peter/dog/dog_dev/build/robot_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/robot_interfaces
+[14.319s] Invoking command in '/home/peter/dog/dog_dev/build/robot_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/robot_interfaces -- -j16 -l16
+[14.354s] [  1%] Generating type hashes for ROS interfaces
+[14.355s] [  3%] Generating Rust code for ROS interfaces
+[14.360s] [  3%] Built target ament_cmake_python_copy_robot_interfaces
+[14.499s] running egg_info
+[14.500s] creating robot_interfaces.egg-info
+[14.509s] [  3%] Built target robot_interfaces__rosidl_generator_type_description
+[14.512s] writing robot_interfaces.egg-info/PKG-INFO
+[14.512s] writing dependency_links to robot_interfaces.egg-info/dependency_links.txt
+[14.512s] writing top-level names to robot_interfaces.egg-info/top_level.txt
+[14.512s] writing manifest file 'robot_interfaces.egg-info/SOURCES.txt'
+[14.517s] [  5%] Generating C code for ROS interfaces
+[14.530s] [  7%] Generating C++ code for ROS interfaces
+[14.534s] [  7%] Built target robot_interfaces__rs
+[14.557s] reading manifest file 'robot_interfaces.egg-info/SOURCES.txt'
+[14.557s] writing manifest file 'robot_interfaces.egg-info/SOURCES.txt'
+[14.580s] [  7%] Built target ament_cmake_python_build_robot_interfaces_egg
+[14.801s] [  7%] Built target robot_interfaces__cpp
+[14.829s] [  9%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/msg/detail/target_info__description.c.o
+[14.829s] [ 10%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/srv/detail/set_target_class__description.c.o
+[14.830s] [ 12%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/msg/detail/target_info__functions.c.o
+[14.830s] [ 14%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/msg/detail/target_info__type_support.c.o
+[14.830s] [ 16%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/srv/detail/set_target_class__type_support.c.o
+[14.832s] [ 18%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/srv/detail/calibrate_center__functions.c.o
+[14.834s] [ 23%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/srv/detail/set_target_class__functions.c.o
+[14.835s] [ 23%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/srv/detail/calibrate_center__description.c.o
+[14.835s] [ 23%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_c.dir/rosidl_generator_c/robot_interfaces/srv/detail/calibrate_center__type_support.c.o
+[14.891s] [ 25%] Linking C shared library librobot_interfaces__rosidl_generator_c.so
+[15.504s] [ 25%] Built target robot_interfaces__rosidl_generator_c
+[15.512s] [ 32%] Generating C++ type support for eProsima Fast-RTPS
+[15.513s] [ 32%] Generating C++ type support dispatch for ROS interfaces
+[15.513s] [ 32%] Generating C type support for eProsima Fast-RTPS
+[15.513s] [ 32%] Generating C++ introspection for ROS interfaces
+[15.513s] [ 34%] Generating C type support dispatch for ROS interfaces
+[15.513s] [ 36%] Generating C introspection for ROS interfaces
+[15.716s] [ 38%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robot_interfaces/srv/calibrate_center__type_support.cpp.o
+[15.716s] [ 40%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robot_interfaces/srv/calibrate_center__type_support.cpp.o
+[15.716s] [ 41%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robot_interfaces/srv/set_target_class__type_support.cpp.o
+[15.719s] [ 43%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/robot_interfaces/msg/target_info__type_support.cpp.o
+[15.719s] [ 45%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robot_interfaces/srv/set_target_class__type_support.cpp.o
+[15.719s] [ 47%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/robot_interfaces/msg/target_info__type_support.cpp.o
+[15.753s] [ 49%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robot_interfaces/srv/detail/set_target_class__type_support.cpp.o
+[15.754s] [ 50%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robot_interfaces/msg/detail/target_info__type_support.cpp.o
+[15.756s] [ 52%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robot_interfaces/srv/detail/calibrate_center__type_support.cpp.o
+[15.768s] [ 54%] Building C object CMakeFiles/robot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robot_interfaces/srv/detail/set_target_class__type_support.c.o
+[15.770s] [ 58%] Linking CXX shared library librobot_interfaces__rosidl_typesupport_c.so
+[15.770s] [ 58%] Building C object CMakeFiles/robot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robot_interfaces/msg/detail/target_info__type_support.c.o
+[15.770s] [ 60%] Building C object CMakeFiles/robot_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/robot_interfaces/srv/detail/calibrate_center__type_support.c.o
+[15.820s] [ 61%] Linking C shared library librobot_interfaces__rosidl_typesupport_introspection_c.so
+[15.840s] [ 63%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robot_interfaces/srv/detail/dds_fastrtps/set_target_class__type_support.cpp.o
+[15.841s] [ 65%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robot_interfaces/srv/detail/dds_fastrtps/calibrate_center__type_support.cpp.o
+[15.841s] [ 67%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/robot_interfaces/msg/detail/dds_fastrtps/target_info__type_support.cpp.o
+[15.850s] [ 69%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robot_interfaces/srv/detail/calibrate_center__type_support_c.cpp.o
+[15.850s] [ 70%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robot_interfaces/srv/detail/set_target_class__type_support_c.cpp.o
+[15.851s] [ 72%] Building CXX object CMakeFiles/robot_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/robot_interfaces/msg/detail/target_info__type_support_c.cpp.o
+[16.087s] [ 74%] Linking CXX shared library librobot_interfaces__rosidl_typesupport_cpp.so
+[16.156s] [ 76%] Linking CXX shared library librobot_interfaces__rosidl_typesupport_introspection_cpp.so
+[16.278s] [ 78%] Linking CXX shared library librobot_interfaces__rosidl_typesupport_fastrtps_c.so
+[16.358s] [ 80%] Linking CXX shared library librobot_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[16.397s] [ 80%] Built target robot_interfaces__rosidl_typesupport_c
+[16.408s] [ 80%] Built target robot_interfaces__rosidl_typesupport_introspection_c
+[16.825s] [ 80%] Built target robot_interfaces__rosidl_typesupport_cpp
+[16.859s] [ 80%] Built target robot_interfaces__rosidl_typesupport_introspection_cpp
+[16.921s] [ 80%] Built target robot_interfaces__rosidl_typesupport_fastrtps_c
+[16.958s] [ 80%] Built target robot_interfaces__rosidl_typesupport_fastrtps_cpp
+[16.971s] [ 80%] Built target robot_interfaces
+[16.985s] [ 81%] Generating Python code for ROS interfaces
+[17.328s] [ 81%] Built target robot_interfaces__py
+[17.341s] [ 83%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robot_interfaces/msg/_target_info_s.c.o
+[17.341s] [ 85%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robot_interfaces/srv/_set_target_class_s.c.o
+[17.341s] [ 87%] Building C object CMakeFiles/robot_interfaces__rosidl_generator_py.dir/rosidl_generator_py/robot_interfaces/srv/_calibrate_center_s.c.o
+[17.430s] [ 89%] Linking C shared library librobot_interfaces__rosidl_generator_py.so
+[18.158s] [ 89%] Built target robot_interfaces__rosidl_generator_py
+[18.171s] [ 92%] Building C object CMakeFiles/robot_interfaces_s__rosidl_typesupport_c.dir/rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_c.c.o
+[18.172s] [ 92%] Building C object CMakeFiles/robot_interfaces_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o
+[18.172s] [ 94%] Building C object CMakeFiles/robot_interfaces_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o
+[18.244s] [ 98%] Linking C shared module rosidl_generator_py/robot_interfaces/robot_interfaces_s__rosidl_typesupport_c.so
+[18.244s] [ 98%] Linking C shared module rosidl_generator_py/robot_interfaces/robot_interfaces_s__rosidl_typesupport_introspection_c.so
+[18.245s] [100%] Linking C shared module rosidl_generator_py/robot_interfaces/robot_interfaces_s__rosidl_typesupport_fastrtps_c.so
+[18.715s] [100%] Built target robot_interfaces_s__rosidl_typesupport_c
+[18.717s] [100%] Built target robot_interfaces_s__rosidl_typesupport_fastrtps_c
+[18.782s] [100%] Built target robot_interfaces_s__rosidl_typesupport_introspection_c
+[18.790s] Invoked command in '/home/peter/dog/dog_dev/build/robot_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/robot_interfaces -- -j16 -l16
+[18.796s] Invoking command in '/home/peter/dog/dog_dev/build/robot_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/robot_interfaces
+[18.802s] -- Install configuration: ""
+[18.802s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/ament_index/resource_index/rosidl_interfaces/robot_interfaces
+[18.803s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/msg/TargetInfo.json
+[18.803s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/srv/SetTargetClass.json
+[18.803s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/srv/CalibrateCenter.json
+[18.803s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces
+[18.803s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv
+[18.804s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail
+[18.804s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__type_support.h
+[18.804s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__struct.h
+[18.804s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__struct.h
+[18.804s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__functions.c
+[18.804s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__type_support.h
+[18.805s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__functions.h
+[18.805s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__description.c
+[18.805s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__functions.c
+[18.805s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__functions.h
+[18.805s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__description.c
+[18.805s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__type_support.c
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__type_support.c
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/calibrate_center.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/set_target_class.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__type_support.c
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__functions.c
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__struct.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__type_support.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__description.c
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__functions.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/rosidl_generator_c__visibility_control.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/target_info.h
+[18.806s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/library_path.sh
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/library_path.dsv
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_generator_c.so
+[18.807s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_generator_c.so" to ""
+[18.807s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces
+[18.807s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv
+[18.807s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__rosidl_typesupport_fastrtps_c.h
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__rosidl_typesupport_fastrtps_c.h
+[18.807s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg
+[18.807s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__rosidl_typesupport_fastrtps_c.h
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[18.807s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_fastrtps_c.so
+[18.807s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_fastrtps_c.so" to ""
+[18.807s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces
+[18.808s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv
+[18.808s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail
+[18.808s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__rosidl_typesupport_introspection_c.h
+[18.808s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__type_support.c
+[18.808s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__type_support.c
+[18.808s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__rosidl_typesupport_introspection_c.h
+[18.809s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg
+[18.809s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail
+[18.809s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__type_support.c
+[18.809s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__rosidl_typesupport_introspection_c.h
+[18.810s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[18.810s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_introspection_c.so
+[18.810s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_introspection_c.so" to ""
+[18.810s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_c.so
+[18.810s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_c.so" to ""
+[18.810s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces
+[18.810s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv
+[18.810s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/calibrate_center.hpp
+[18.810s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail
+[18.810s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__traits.hpp
+[18.810s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__struct.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__type_support.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__builder.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__builder.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__struct.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__type_support.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__traits.hpp
+[18.811s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/set_target_class.hpp
+[18.811s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg
+[18.812s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+[18.812s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail
+[18.812s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__traits.hpp
+[18.812s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__builder.hpp
+[18.812s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__struct.hpp
+[18.812s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__type_support.hpp
+[18.812s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/target_info.hpp
+[18.813s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces
+[18.813s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv
+[18.813s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail
+[18.813s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__rosidl_typesupport_fastrtps_cpp.hpp
+[18.813s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__rosidl_typesupport_fastrtps_cpp.hpp
+[18.813s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/dds_fastrtps
+[18.813s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg
+[18.813s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail
+[18.814s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__rosidl_typesupport_fastrtps_cpp.hpp
+[18.814s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/dds_fastrtps
+[18.814s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[18.815s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+[18.815s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces
+[18.815s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv
+[18.815s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__type_support.cpp
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/calibrate_center__rosidl_typesupport_introspection_cpp.hpp
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__rosidl_typesupport_introspection_cpp.hpp
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/srv/detail/set_target_class__type_support.cpp
+[18.815s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg
+[18.815s] -- Up-to-date: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__type_support.cpp
+[18.815s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/include/robot_interfaces/robot_interfaces/msg/detail/target_info__rosidl_typesupport_introspection_cpp.hpp
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_introspection_cpp.so
+[18.816s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_introspection_cpp.so" to ""
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_cpp.so
+[18.816s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_typesupport_cpp.so" to ""
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/pythonpath.sh
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/pythonpath.dsv
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces-0.0.0-py3.12.egg-info
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces-0.0.0-py3.12.egg-info/dependency_links.txt
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces-0.0.0-py3.12.egg-info/PKG-INFO
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces-0.0.0-py3.12.egg-info/SOURCES.txt
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces-0.0.0-py3.12.egg-info/top_level.txt
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_introspection_c.so
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_c.c
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_fastrtps_c.so
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/_calibrate_center.py
+[18.816s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/_set_target_class_s.c
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/_set_target_class.py
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/_calibrate_center_s.c
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/__init__.py
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/__init__.py
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_c.so
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/_robot_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg/_target_info_s.c
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg/_target_info.py
+[18.817s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg/__init__.py
+[18.848s] Listing '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces'...
+[18.849s] Compiling '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/__init__.py'...
+[18.849s] Listing '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg'...
+[18.849s] Compiling '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg/__init__.py'...
+[18.849s] Compiling '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/msg/_target_info.py'...
+[18.849s] Listing '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv'...
+[18.849s] Compiling '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/__init__.py'...
+[18.849s] Compiling '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/_calibrate_center.py'...
+[18.849s] Compiling '/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/srv/_set_target_class.py'...
+[18.852s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_fastrtps_c.so
+[18.852s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_fastrtps_c.so" to ""
+[18.853s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_introspection_c.so
+[18.853s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_introspection_c.so" to ""
+[18.854s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_c.so
+[18.854s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/python3.12/site-packages/robot_interfaces/robot_interfaces_s__rosidl_typesupport_c.so" to ""
+[18.854s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_generator_py.so
+[18.854s] -- Set non-toolchain portion of runtime path of "/home/peter/dog/dog_dev/install/robot_interfaces/lib/librobot_interfaces__rosidl_generator_py.so" to ""
+[18.854s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/ament_index/resource_index/rust_packages/robot_interfaces
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/Cargo.toml
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/build.rs
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/lib.rs
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/srv.rs
+[18.855s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/msg.rs
+[18.856s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/srv
+[18.856s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/srv/rmw.rs
+[18.856s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/msg
+[18.856s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/rust/src/msg/rmw.rs
+[18.856s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/msg/TargetInfo.idl
+[18.857s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/srv/SetTargetClass.idl
+[18.857s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/srv/CalibrateCenter.idl
+[18.857s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/msg/TargetInfo.msg
+[18.857s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/srv/SetTargetClass.srv
+[18.857s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/srv/CalibrateCenter.srv
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/ament_index/resource_index/package_run_dependencies/robot_interfaces
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/ament_index/resource_index/parent_prefix_path/robot_interfaces
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/ament_prefix_path.sh
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/ament_prefix_path.dsv
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/path.sh
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/environment/path.dsv
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/local_setup.bash
+[18.858s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/local_setup.sh
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/local_setup.zsh
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/local_setup.dsv
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/package.dsv
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/ament_index/resource_index/packages/robot_interfaces
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_generator_cExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_generator_cExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_cExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_generator_cppExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_cppExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_generator_pyExport.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/export_robot_interfaces__rosidl_generator_pyExport-noconfig.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/rosidl_cmake-extras.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[18.859s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[18.860s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[18.860s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[18.860s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfacesConfig.cmake
+[18.861s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/cmake/robot_interfacesConfig-version.cmake
+[18.861s] -- Installing: /home/peter/dog/dog_dev/install/robot_interfaces/share/robot_interfaces/package.xml
+[18.862s] Invoked command in '/home/peter/dog/dog_dev/build/robot_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/peter/dog/dog_dev/build/robot_interfaces

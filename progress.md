@@ -6,8 +6,8 @@
 ## 当前状态
 - 总体状态：进行中
 - 当前阶段：阶段 5（跟踪器）
-- 当前任务：5.1 已完成 ✅
-- 状态：阶段 5 进行中
+- 当前任务：5.2 已完成 ✅
+- 状态：阶段 5 进行中（2/3）
 
 ## 已完成任务
 | 任务 | 状态 | 结果摘要 | 验收结果 |
@@ -41,6 +41,7 @@
 | 4.5 | 已完成 | detection_node 接入 ROS：创建 detection_node_exe 可执行文件；从参数读取 model_path, conf_threshold, nms_threshold, use_cuda；初始化 YoloInfer 并做 warm-up；订阅 /camera/image_mono (SensorDataQoS)；创建 config/detection.yaml 和 launch/detection.launch.py | 自动测试 PASS（colcon build 成功无警告，节点编译完成，参数配置正确） |
 | 4.6 | 已完成 | 编写检测结果可视化节点：创建 detection_viz_node_exe；订阅 /camera/image_mono；发布 /camera/image_detected；为后续添加Detection2DArray同步和bbox绘制预留接口 | 自动测试 PASS（colcon build 成功，detection_viz_node_exe 编译完成） |
 | 5.1 | 已完成 | 集成 ByteTrack C++ 库：实现 ByteTracker 类（包含卡尔曼滤波、匹配和状态管理）；编写独立测试 test_byte_tracker.cpp；验证 5 个测试场景通过 | 自动测试 PASS（colcon build 成功，test_byte_tracker 输出符合预期：Frame1,2 ID保持；Frame3 新ID；Frame4 无检测；Frame5 恢复） |
+| 5.2 | 已完成 | tracker_node 接入 ROS：创建 TrackerNode 类订阅 /detections，发布 /tracked_objects；添加自定义消息 SimpleDetection/SimpleDetection2DArray 到 robot_interfaces；从 YAML 加载参数(track_buffer/track_thresh/match_thresh)；创建集成测试验证 4 个场景通过 | 自动测试 PASS（colcon build 成功，ros2 run tracker_node_exe 正常启动，集成测试 4/4 通过，ByteTracker 测试 5/5 通过） |
 
 ## 阶段进度
 - 阶段 0：3/3 ✅
@@ -48,7 +49,7 @@
 - 阶段 2：7/7 ✅
 - 阶段 3：7/7 ✅
 - 阶段 4：6/6 ✅
-- 阶段 5：1/3
+- 阶段 5：2/3
 - 阶段 6：0/5
 - 阶段 7：0/6
 

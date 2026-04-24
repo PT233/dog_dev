@@ -11,6 +11,8 @@ find_package(std_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TargetInfo.msg"
+  "msg/SimpleDetection.msg"
+  "msg/SimpleDetection2DArray.msg"
   "srv/SetTargetClass.srv"
   "srv/CalibrateCenter.srv"
   DEPENDENCIES std_msgs
