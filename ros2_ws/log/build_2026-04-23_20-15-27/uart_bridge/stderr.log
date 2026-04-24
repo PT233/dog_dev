@@ -1,7 +1,0 @@
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp: In member function ‘void FrameParser::OnFrameComplete(uint8_t, uint8_t)’:
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:94:43: warning: unused parameter ‘crc_h’ [-Wunused-parameter]
-   94 | void FrameParser::OnFrameComplete(uint8_t crc_h, uint8_t crc_l) {
-      |                                   ~~~~~~~~^~~~~
-/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws/src/uart_bridge/src/frame_parser.cpp:94:58: warning: unused parameter ‘crc_l’ [-Wunused-parameter]
-   94 | void FrameParser::OnFrameComplete(uint8_t crc_h, uint8_t crc_l) {
-      |                                                  ~~~~~~~~^~~~~
