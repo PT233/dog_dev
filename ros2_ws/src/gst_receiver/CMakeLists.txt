@@ -15,14 +15,32 @@ find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(GST REQUIRED gstreamer-1.0 gstreamer-app-1.0)
 
-add_executable(gst_receiver_node src/gst_receiver_node.cpp)
-target_include_directories(gst_receiver_node PRIVATE include ${GST_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(gst_receiver_node ${GST_LIBRARIES} ${OpenCV_LIBS})
+# Library target (for intra-process use and linking)
+add_library(gst_receiver_lib src/gst_receiver_node.cpp)
+target_include_directories(gst_receiver_lib PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  ${GST_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(gst_receiver_lib ${GST_LIBRARIES} ${OpenCV_LIBS})
+ament_target_dependencies(gst_receiver_lib rclcpp sensor_msgs cv_bridge)
+
+# Executable target
+add_executable(gst_receiver_node src/gst_receiver_main.cpp)
+target_link_libraries(gst_receiver_node gst_receiver_lib)
 ament_target_dependencies(gst_receiver_node rclcpp sensor_msgs cv_bridge)
 
-install(TARGETS gst_receiver_node DESTINATION lib/${PROJECT_NAME})
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
 
+# Install launch files
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
+# Install targets (executable and library)
+install(TARGETS gst_receiver_node
+  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS gst_receiver_lib
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -36,4 +54,6 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_libraries(gst_receiver_lib)
+ament_export_include_directories(include)
 ament_package()

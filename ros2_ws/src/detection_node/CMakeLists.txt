@@ -26,8 +26,21 @@ target_link_libraries(yolo_infer ${OpenCV_LIBS} ${ONNXRUNTIME_ROOT}/lib/libonnxr
 add_executable(test_yolo_infer src/test_yolo_infer.cpp)
 target_link_libraries(test_yolo_infer yolo_infer)
 
+# Detection node library (for intra-process use)
+add_library(detection_node_lib src/detection_node.cpp)
+target_include_directories(detection_node_lib PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(detection_node_lib
+  rclcpp
+  sensor_msgs
+  OpenCV
+  robot_interfaces
+)
+target_link_libraries(detection_node_lib yolo_infer)
+
 # Detection node executable
-add_executable(detection_node_exe src/detection_node.cpp)
+add_executable(detection_node_exe src/detection_node_main.cpp)
 ament_target_dependencies(detection_node_exe
   rclcpp
   sensor_msgs
@@ -37,7 +50,7 @@ ament_target_dependencies(detection_node_exe
 target_include_directories(detection_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(detection_node_exe yolo_infer)
+target_link_libraries(detection_node_exe detection_node_lib)
 
 # Detection visualization node executable
 add_executable(detection_viz_node_exe src/detection_viz_node.cpp src/detection_viz_main.cpp)
@@ -50,11 +63,19 @@ target_include_directories(detection_viz_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
+
 # Install executables
 install(TARGETS
   detection_node_exe
   detection_viz_node_exe
   DESTINATION lib/${PROJECT_NAME})
+
+# Install library
+install(TARGETS detection_node_lib
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -68,6 +89,8 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_libraries(detection_node_lib)
+ament_export_include_directories(include)
 ament_package()
 
 # Install executables

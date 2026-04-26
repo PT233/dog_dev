@@ -8,14 +8,16 @@
 
 class GstReceiverNode : public rclcpp::Node {
 public:
-  GstReceiverNode();
+  explicit GstReceiverNode(const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
   ~GstReceiverNode();
 
 private:
   GstElement *pipeline_;
   GstBus *bus_;
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr image_pub_;
+  bool hw_decode_enabled_ = false;
 
+  bool try_build_pipeline(bool use_hw);
   static gboolean on_bus_message(GstBus *bus, GstMessage *msg, gpointer user_data);
   static void on_new_sample(GstElement *appsink, gpointer user_data);
 };

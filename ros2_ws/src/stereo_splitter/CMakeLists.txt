@@ -12,14 +12,32 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 
-add_executable(stereo_splitter_node src/stereo_splitter_node.cpp)
-target_include_directories(stereo_splitter_node PRIVATE include ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(stereo_splitter_node ${OpenCV_LIBS})
+# Library target (for intra-process use and linking)
+add_library(stereo_splitter_lib src/stereo_splitter_node.cpp)
+target_include_directories(stereo_splitter_lib PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(stereo_splitter_lib ${OpenCV_LIBS})
+ament_target_dependencies(stereo_splitter_lib rclcpp sensor_msgs cv_bridge)
+
+# Executable target
+add_executable(stereo_splitter_node src/stereo_splitter_main.cpp)
+target_link_libraries(stereo_splitter_node stereo_splitter_lib)
 ament_target_dependencies(stereo_splitter_node rclcpp sensor_msgs cv_bridge)
 
-install(TARGETS stereo_splitter_node DESTINATION lib/${PROJECT_NAME})
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
 
+# Install launch files
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
+# Install targets (executable and library)
+install(TARGETS stereo_splitter_node
+  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS stereo_splitter_lib
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -33,4 +51,6 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_libraries(stereo_splitter_lib)
+ament_export_include_directories(include)
 ament_package()
