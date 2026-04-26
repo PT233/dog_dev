@@ -12,12 +12,15 @@ find_package(sensor_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(robot_interfaces REQUIRED)
 
+set(ONNXRUNTIME_ROOT "/home/peter/onnxruntime-gpu" CACHE PATH "ONNX Runtime root")
+
 # Create yolo_infer library
 add_library(yolo_infer src/yolo_infer.cpp)
 target_include_directories(yolo_infer PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_link_libraries(yolo_infer ${OpenCV_LIBS})
+  $<INSTALL_INTERFACE:include>
+  ${ONNXRUNTIME_ROOT}/include)
+target_link_libraries(yolo_infer ${OpenCV_LIBS} ${ONNXRUNTIME_ROOT}/lib/libonnxruntime.so)
 
 # Test executable for yolo_infer
 add_executable(test_yolo_infer src/test_yolo_infer.cpp)
@@ -29,6 +32,7 @@ ament_target_dependencies(detection_node_exe
   rclcpp
   sensor_msgs
   OpenCV
+  robot_interfaces
 )
 target_include_directories(detection_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
