@@ -1,2 +1,1 @@
-source;share/uart_bridge/environment/ament_prefix_path.sh
-source;share/uart_bridge/environment/path.sh
+/home/peter/dog/dog_dev/build/uart_bridge/ament_cmake_environment_hooks/local_setup.dsv

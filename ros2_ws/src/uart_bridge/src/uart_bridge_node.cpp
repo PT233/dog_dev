@@ -9,6 +9,7 @@
 #include <deque>
 #include <mutex>
 #include <chrono>
+#include <errno.h>
 #include "uart_bridge/frame_parser.hpp"
 #include "uart_bridge/frame_encoder.hpp"
 #include "uart_bridge/uart_protocol.h"
@@ -175,14 +176,14 @@ public:
 
     uart_fd_ = open(device.c_str(), O_RDWR | O_NOCTTY);
     if (uart_fd_ < 0) {
-      RCLCPP_ERROR(this->get_logger(), "Failed to open %s", device.c_str());
+      RCLCPP_ERROR(this->get_logger(), "Failed to open %s: %s", device.c_str(), strerror(errno));
       return;
     }
 
     struct termios tty;
     memset(&tty, 0, sizeof(tty));
     if (tcgetattr(uart_fd_, &tty) != 0) {
-      RCLCPP_ERROR(this->get_logger(), "tcgetattr failed");
+      RCLCPP_ERROR(this->get_logger(), "tcgetattr failed: %s", strerror(errno));
       close(uart_fd_);
       uart_fd_ = -1;
       return;
@@ -216,7 +217,7 @@ public:
     tty.c_cc[VMIN] = 0;
 
     if (tcsetattr(uart_fd_, TCSANOW, &tty) != 0) {
-      RCLCPP_ERROR(this->get_logger(), "tcsetattr failed");
+      RCLCPP_ERROR(this->get_logger(), "tcsetattr failed: %s", strerror(errno));
       close(uart_fd_);
       uart_fd_ = -1;
       return;
@@ -282,12 +283,20 @@ private:
 
   void ReadLoop() {
     unsigned char buf[256];
+    if (uart_fd_ < 0) {
+      RCLCPP_ERROR(this->get_logger(), "UART not initialized, cannot start read loop");
+      return;
+    }
+
     while (rclcpp::ok()) {
       int n = read(uart_fd_, buf, sizeof(buf));
       if (n > 0) {
         for (int i = 0; i < n; ++i) {
           parser_->ProcessByte(buf[i]);
         }
+      } else if (n < 0) {
+        RCLCPP_ERROR(this->get_logger(), "UART read error: %s", strerror(errno));
+        break;
       }
     }
   }
@@ -316,6 +325,11 @@ private:
       for (size_t i = 0; i < num_items; ++i) {
         const ServoStateItem_v2* item = reinterpret_cast<const ServoStateItem_v2*>(
             payload + i * sizeof(ServoStateItem_v2));
+
+        if (item->servo_id >= 4) {
+          RCLCPP_WARN(this->get_logger(), "Invalid servo_id: %u (expected 0-3)", item->servo_id);
+          continue;
+        }
 
         uint32_t dropped = 0;
         bool seq_ok = sequence_checker_.CheckSequence(item->servo_id, item->frame_seq, dropped);
@@ -379,8 +393,20 @@ private:
   }
 
   void OnServoCmdReceived(const sensor_msgs::msg::JointState::SharedPtr msg) {
-    if (msg->name.empty() || msg->position.empty()) {
+    if (!msg) {
+      RCLCPP_ERROR(this->get_logger(), "Received null servo command message");
       return;
+    }
+
+    if (msg->name.empty() || msg->position.empty()) {
+      RCLCPP_WARN(this->get_logger(), "Received empty servo command (names:%zu, positions:%zu)",
+                  msg->name.size(), msg->position.size());
+      return;
+    }
+
+    if (msg->name.size() != msg->position.size()) {
+      RCLCPP_WARN(this->get_logger(), "Servo command mismatch: %zu names vs %zu positions",
+                  msg->name.size(), msg->position.size());
     }
 
     std::vector<ServoCmdItem> items;
@@ -392,6 +418,11 @@ private:
       }
 
       float angle_deg = msg->position[i] * 180.0f / M_PI;
+      if (angle_deg < -180.0f || angle_deg > 180.0f) {
+        RCLCPP_WARN(this->get_logger(), "Servo %s angle out of range: %.1f degrees",
+                    msg->name[i].c_str(), angle_deg);
+      }
+
       int16_t angle_x10 = static_cast<int16_t>(angle_deg * 10.0f);
 
       ServoCmdItem item;
@@ -402,10 +433,13 @@ private:
       items.push_back(item);
     }
 
-    if (!items.empty()) {
-      auto frame = encoder_->EncodeServoControl(items.data(), items.size());
-      WriteFrame(frame);
+    if (items.empty()) {
+      RCLCPP_WARN(this->get_logger(), "No valid servo commands after filtering");
+      return;
     }
+
+    auto frame = encoder_->EncodeServoControl(items.data(), items.size());
+    WriteFrame(frame);
   }
 
   uint8_t NameToServoId(const std::string& name) {
@@ -418,15 +452,23 @@ private:
 
   void WriteFrame(const std::vector<uint8_t>& frame) {
     if (uart_fd_ < 0) {
-      RCLCPP_WARN(this->get_logger(), "UART not open, cannot send frame");
+      RCLCPP_ERROR(this->get_logger(), "UART not open, cannot send frame of %zu bytes", frame.size());
+      return;
+    }
+
+    if (frame.empty()) {
+      RCLCPP_WARN(this->get_logger(), "Attempt to write empty frame");
       return;
     }
 
     ssize_t n = write(uart_fd_, frame.data(), frame.size());
     if (n < 0) {
-      RCLCPP_ERROR(this->get_logger(), "Failed to write to UART");
+      RCLCPP_ERROR(this->get_logger(), "Failed to write %zu bytes to UART: %s",
+                   frame.size(), strerror(errno));
     } else if (static_cast<size_t>(n) != frame.size()) {
       RCLCPP_WARN(this->get_logger(), "Partial write: %zd/%zu bytes", n, frame.size());
+    } else {
+      RCLCPP_DEBUG(this->get_logger(), "Successfully wrote %zu bytes to UART", frame.size());
     }
   }
 

@@ -65,7 +65,8 @@
       "Bash(openocd *)",
       "Bash(./flash_openocd.sh)",
       "Bash(ros2 --version)",
-      "Bash(make clean *)"
+      "Bash(make clean *)",
+      "Bash(awk '{print $9, \"\\(\" $5 \"\\)\"}')"
     ],
     "deny": [
       "Bash(rm -rf /*)",
