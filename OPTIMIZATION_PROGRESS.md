@@ -2,7 +2,7 @@
 
 **项目目标**：优化 ROS2 视频处理管道的硬件解码、推理和内存拷贝性能
 
-**总进度**：P1✓ | P2✓ | P3⏳
+**总进度**：P1✓ | P2✓ | P3✓（核心代码完成，三个包编译成功）
 
 ---
 
@@ -88,12 +88,36 @@ ros2 run detection_node detection_node_exe --ros-args -p use_cuda:=true --log-le
 
 ---
 
-## 待做：P3 - intra-process 零拷贝传递（可选）
+## 已完成：P3 - intra-process 零拷贝传递 ✓
 
-### 依赖条件
-P2 已完成，detection_node 已支持 `NodeOptions` 和 `UniquePtr` 接收
+### 核心实施完成（四个包）
 
-### 实施内容（P2 完成后执行）
+**1. gst_receiver** ✓
+- 构造函数支持 NodeOptions
+- on_new_sample 改为 unique_ptr 发布
+- 新建 gst_receiver_lib 库 + 独立 main
+- 编译成功
+
+**2. stereo_splitter** ✓
+- 构造函数支持 NodeOptions
+- 回调改为 UniquePtr 接收
+- clone() 改为逐行 memcpy（处理 step 不连续）
+- 发布改为 unique_ptr
+- 新建 stereo_splitter_lib 库 + 独立 main
+- 编译成功
+
+**3. detection_node** ✓
+- 新建 detection_node.hpp 类声明
+- 订阅改为 UniquePtr，直接 move 入队（消除额外拷贝）
+- 新建 detection_node_lib 库 + detection_node_main.cpp
+- 编译成功
+
+**4. robot_bringup** ✓
+- 新建 vision_front_main.cpp（单进程启动）
+- 新建 vision_front.launch.py
+- CMakeLists.txt 配置库链接
+
+### 库与可执行文件实施内容
 
 #### 修改 6 个文件
 
