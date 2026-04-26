@@ -64,7 +64,8 @@
       "Bash(JLinkExe -version)",
       "Bash(openocd *)",
       "Bash(./flash_openocd.sh)",
-      "Bash(ros2 --version)"
+      "Bash(ros2 --version)",
+      "Bash(make clean *)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

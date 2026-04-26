@@ -64,3 +64,10 @@ CODING PROTOCOL开发守则:
   脚本需要在推流后启用才能实现双目效果。
 
 查看~/.bashrc 不要让我每次点yes，还有哪些配置一并告知我，配置好后再开始任务
+
+
+
+
+# 调试
+
+你需要阅读 @task.md @progress.md @architecture.md @CLAUDE.md @SETUP_GUIDE.md @QUICK_START.md 以及获取git状态，了解我都做了哪些工作。现在对uart的完整通信回路进行验收测试。
