@@ -1,5 +1,0 @@
-[ 22%] Built target yolo_infer
-[ 33%] Building CXX object CMakeFiles/detection_viz_node_exe.dir/src/detection_viz_node.cpp.o
-[ 44%] Building CXX object CMakeFiles/detection_viz_node_exe.dir/src/detection_viz_main.cpp.o
-[ 66%] Built target test_yolo_infer
-[ 88%] Built target detection_node_exe

@@ -1,7 +1,0 @@
-/home/peter/dog/dog_dev/ros2_ws/src/detection_node/src/detection_node.cpp:3:10: fatal error: cv_bridge/cv_bridge.h: No such file or directory
-    3 | #include "cv_bridge/cv_bridge.h"
-      |          ^~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-gmake[2]: *** [CMakeFiles/detection_node_exe.dir/build.make:76: CMakeFiles/detection_node_exe.dir/src/detection_node.cpp.o] Error 1
-gmake[1]: *** [CMakeFiles/Makefile2:193: CMakeFiles/detection_node_exe.dir/all] Error 2
-gmake: *** [Makefile:146: all] Error 2

@@ -1,7 +1,0 @@
-[0.015s] Invoking command in '/home/peter/dog/dog_dev/build/uart_bridge': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/peter/dog/dog_dev/build/uart_bridge -- -j16 -l16
-[0.057s] [ 20%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o
-[0.059s] [ 80%] Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o
-[0.060s] [ 80%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o
-[0.060s] [ 80%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o
-[5.428s] [100%] Linking CXX executable uart_bridge_node
-[6.437s] [100%] Built target uart_bridge_node

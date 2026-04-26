@@ -9,4 +9,11 @@ find_package(ament_cmake REQUIRED)
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
+# Install Python scripts as executables
+install(PROGRAMS
+  ../../../scripts/mock_uart_bridge.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME mock_uart_bridge
+)
+
 ament_package()

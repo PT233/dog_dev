@@ -70,20 +70,24 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   /* USER CODE END USART1_MspInit 0 */
     /* USART1 clock enable */
     __HAL_RCC_USART1_CLK_ENABLE();
-
     __HAL_RCC_GPIOA_CLK_ENABLE();
+
     /**USART1 GPIO Configuration
-    PA9     ------> USART1_TX
-    PA10     ------> USART1_RX
+    PA9 ------> USART1_TX
+    PA10 ------> USART1_RX
     */
+    // PA9 TX 正确
     GPIO_InitStruct.Pin = GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    // ======================
+    // 下面是 PA10 RX 正确配置
+    // ======================
     GPIO_InitStruct.Pin = GPIO_PIN_10;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_INPUT;   // ✅ 复用功能输入（UART RX）
+    GPIO_InitStruct.Pull = GPIO_PULLUP;          // ✅ 必须上拉（UART空闲高）
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* USART1 DMA Init */

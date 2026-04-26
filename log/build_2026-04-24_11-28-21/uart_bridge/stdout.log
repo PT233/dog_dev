@@ -1,6 +1,0 @@
-[ 20%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/uart_bridge_node.cpp.o
-[ 80%] Building C object CMakeFiles/uart_bridge_node.dir/src/uart_protocol.c.o
-[ 80%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_parser.cpp.o
-[ 80%] Building CXX object CMakeFiles/uart_bridge_node.dir/src/frame_encoder.cpp.o
-[100%] Linking CXX executable uart_bridge_node
-[100%] Built target uart_bridge_node

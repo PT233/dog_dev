@@ -1,1 +1,0 @@
-Invoking command in '/home/peter/dog/dog_dev/build/gst_receiver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/peter/dog/dog_dev/ros2_ws/src/gst_receiver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/peter/dog/dog_dev/install/gst_receiver

@@ -1,4 +1,6 @@
+log/
 ros2_ws/log/
 ros2_ws/src/log/
+
 build/
 stm32_fw/build/

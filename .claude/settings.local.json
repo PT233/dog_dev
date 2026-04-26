@@ -54,7 +54,17 @@
       "Bash(bash *)",
       "Bash(ros2 launch *)",
       "Bash(cp /home/peter/dog/dog_dev/ros2_ws/src/gst_receiver/launch/*.py /home/peter/dog/dog_dev/install/gst_receiver/share/gst_receiver/launch/)",
-      "Bash(cp /home/peter/dog/dog_dev/ros2_ws/src/stereo_splitter/launch/*.py /home/peter/dog/dog_dev/install/stereo_splitter/share/stereo_splitter/launch/)"
+      "Bash(cp /home/peter/dog/dog_dev/ros2_ws/src/stereo_splitter/launch/*.py /home/peter/dog/dog_dev/install/stereo_splitter/share/stereo_splitter/launch/)",
+      "Bash(jlink -version)",
+      "Bash(mingw32-make -j4)",
+      "Bash(make --version)",
+      "Bash(make -j4)",
+      "Bash(./flash.sh *)",
+      "Bash(lsusb)",
+      "Bash(JLinkExe -version)",
+      "Bash(openocd *)",
+      "Bash(./flash_openocd.sh)",
+      "Bash(ros2 --version)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

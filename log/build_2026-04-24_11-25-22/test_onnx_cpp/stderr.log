@@ -1,7 +1,0 @@
-/home/peter/dog/dog_dev/tests/test_detection/test_onnx_cpp.cpp:2:10: fatal error: opencv2/opencv.hpp: No such file or directory
-    2 | #include <opencv2/opencv.hpp>
-      |          ^~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-gmake[2]: *** [CMakeFiles/test_onnx_cpp.dir/build.make:76: CMakeFiles/test_onnx_cpp.dir/test_onnx_cpp.cpp.o] Error 1
-gmake[1]: *** [CMakeFiles/Makefile2:83: CMakeFiles/test_onnx_cpp.dir/all] Error 2
-gmake: *** [Makefile:91: all] Error 2
