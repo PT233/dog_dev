@@ -72,8 +72,8 @@ install(TARGETS
   detection_viz_node_exe
   DESTINATION lib/${PROJECT_NAME})
 
-# Install library
-install(TARGETS detection_node_lib
+# Install libraries
+install(TARGETS detection_node_lib yolo_infer
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
 
