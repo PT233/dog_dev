@@ -1,7 +1,1 @@
-/**:
-  ros__parameters:
-    detection_node:
-      model_path: "models/yolov8n.onnx"
-      conf_threshold: 0.25
-      nms_threshold: 0.45
-      use_cuda: false
+/home/peter/dog/dog_dev/ros2_ws/src/detection_node/config/detection.yaml

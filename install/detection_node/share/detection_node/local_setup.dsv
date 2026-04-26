@@ -1,2 +1,1 @@
-source;share/detection_node/environment/ament_prefix_path.sh
-source;share/detection_node/environment/path.sh
+/home/peter/dog/dog_dev/build/detection_node/ament_cmake_environment_hooks/local_setup.dsv

@@ -66,7 +66,19 @@
       "Bash(./flash_openocd.sh)",
       "Bash(ros2 --version)",
       "Bash(make clean *)",
-      "Bash(awk '{print $9, \"\\(\" $5 \"\\)\"}')"
+      "Bash(awk '{print $9, \"\\(\" $5 \"\\)\"}')",
+      "Bash(nvidia-smi)",
+      "Read(//dev/**)",
+      "Bash(/home/peter/anaconda3/envs/ai_dt/bin/python -c \"import onnxruntime as ort; print\\(ort.__version__\\); print\\(ort.get_device\\(\\)\\); print\\(ort.get_available_providers\\(\\)\\)\")",
+      "Bash(/home/peter/anaconda3/envs/ai_dt/bin/python *)",
+      "Bash(nvidia-smi -L)",
+      "Bash(mkdir -p /home/peter/onnxruntime-gpu)",
+      "Bash(cp -r onnxruntime-linux-x64-gpu-1.25.0/* /home/peter/onnxruntime-gpu/)",
+      "Bash(ldd /home/peter/dog/dog_dev/ros2_ws/install/detection_node/lib/detection_node/detection_node_exe)",
+      "Bash(nm /home/peter/dog/dog_dev/ros2_ws/install/detection_node/lib/detection_node/detection_node_exe)",
+      "Bash(ldd /home/peter/dog/dog_dev/ros2_ws/build/detection_node/libyolo_infer.a)",
+      "Bash(nm /home/peter/dog/dog_dev/ros2_ws/build/detection_node/libyolo_infer.a)",
+      "Bash(LD_LIBRARY_PATH=/home/peter/onnxruntime-gpu/lib ldd /home/peter/dog/dog_dev/ros2_ws/install/detection_node/lib/detection_node/detection_node_exe)"
     ],
     "deny": [
       "Bash(rm -rf /*)",
