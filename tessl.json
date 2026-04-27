@@ -1,0 +1,15 @@
+{
+  "name": "dog_dev",
+  "mode": "vendored",
+  "dependencies": {
+    "ArabelaTso/Skills-4-SE": {
+      "version": "0f00a4fc37905ec9d69a3413b51efefd57e9a997",
+      "source": "https://github.com/ArabelaTso/Skills-4-SE",
+      "include": {
+        "skills": [
+          "code-summarizer"
+        ]
+      }
+    }
+  }
+}

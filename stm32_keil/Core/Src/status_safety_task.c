@@ -10,6 +10,8 @@
 
 #define STATUS_TX_PERIOD_MS  50U
 #define SAFETY_PERIOD_MS     100U
+#define BOOT_CENTER_HOLD_MS  500U
+#define SYSTEM_STATE_TX_FLAG (1U << 0)
 
 /* Frame v1 = header(2) + cmd(1) + len(1) + payload(N) + crc(2) + tail(1) */
 #define STATUS_PAYLOAD_LEN_V1  ((uint8_t)(TRAJ_SERVO_COUNT * sizeof(ServoStateItem)))
@@ -21,7 +23,58 @@
 
 #define STATUS_FRAME_LEN STATUS_FRAME_LEN_V2
 
+/* System state frame = header(2) + cmd(1) + len(1) + payload + crc(2) + tail(1) */
+#define SYSTEM_STATE_PAYLOAD_LEN  ((uint8_t)sizeof(UartSystemStatePayload))
+#define SYSTEM_STATE_FRAME_LEN    ((uint8_t)(7U + SYSTEM_STATE_PAYLOAD_LEN))
+
 static volatile uint16_t s_frame_seq = 0U;
+static volatile uint8_t s_system_state = UART_SYSTEM_STATE_BOOT_CENTERING;
+static uint32_t s_center_start_tick = 0U;
+static osThreadId_t s_status_tx_handle = NULL;
+
+void StatusSafety_SystemStateInit(void)
+{
+    s_center_start_tick = HAL_GetTick();
+    s_system_state = UART_SYSTEM_STATE_BOOT_CENTERING;
+}
+
+static void SystemState_Update(void)
+{
+    if ((s_system_state == UART_SYSTEM_STATE_BOOT_CENTERING) &&
+        ((HAL_GetTick() - s_center_start_tick) >= BOOT_CENTER_HOLD_MS)) {
+        s_system_state = UART_SYSTEM_STATE_WAITING_CONNECTION;
+    }
+}
+
+uint8_t StatusSafety_GetSystemState(void)
+{
+    SystemState_Update();
+    return s_system_state;
+}
+
+uint8_t StatusSafety_HandleInitHandshake(const UartHandshakePayload *payload)
+{
+    SystemState_Update();
+
+    if ((payload != NULL) &&
+        (payload->protocol_version == UART_PROTOCOL_VERSION) &&
+        (payload->requested_state == UART_SYSTEM_STATE_ACTIVE)) {
+        if ((s_system_state == UART_SYSTEM_STATE_WAITING_CONNECTION) ||
+            (s_system_state == UART_SYSTEM_STATE_ACTIVE)) {
+            s_system_state = UART_SYSTEM_STATE_ACTIVE;
+        }
+    }
+
+    StatusSafety_RequestSystemStateTx();
+    return s_system_state;
+}
+
+void StatusSafety_RequestSystemStateTx(void)
+{
+    if (s_status_tx_handle != NULL) {
+        (void)osThreadFlagsSet(s_status_tx_handle, SYSTEM_STATE_TX_FLAG);
+    }
+}
 
 static uint32_t StatusTX_GetTimestampMs(void)
 {
@@ -64,12 +117,43 @@ static void StatusTX_SendFrame(void)
     HAL_UART_Transmit(&huart1, tx_buf, STATUS_FRAME_LEN_V2, 10U);
 }
 
-/* 20Hz status reporter: packs 4-servo state into 0x81 frame and sends via UART */
+static void StatusTX_SendSystemStateFrame(void)
+{
+    uint8_t tx_buf[SYSTEM_STATE_FRAME_LEN];
+    UartSystemStatePayload payload;
+    uint16_t crc;
+
+    payload.protocol_version = UART_PROTOCOL_VERSION;
+    payload.system_state = StatusSafety_GetSystemState();
+    payload.reserved = 0U;
+    payload.uptime_ms = HAL_GetTick();
+
+    tx_buf[0] = UART_FRAME_HEADER_0;
+    tx_buf[1] = UART_FRAME_HEADER_1;
+    tx_buf[2] = (uint8_t)UART_CMD_SYSTEM_STATE;
+    tx_buf[3] = SYSTEM_STATE_PAYLOAD_LEN;
+    memcpy(&tx_buf[4], &payload, sizeof(payload));
+
+    crc = crc16_ccitt(&tx_buf[2], (size_t)(2U + SYSTEM_STATE_PAYLOAD_LEN));
+    tx_buf[4U + SYSTEM_STATE_PAYLOAD_LEN] = (uint8_t)(crc & 0xFFU);
+    tx_buf[5U + SYSTEM_STATE_PAYLOAD_LEN] = (uint8_t)(crc >> 8);
+    tx_buf[6U + SYSTEM_STATE_PAYLOAD_LEN] = UART_FRAME_TAIL;
+
+    HAL_UART_Transmit(&huart1, tx_buf, SYSTEM_STATE_FRAME_LEN, 10U);
+}
+
+/* 20Hz status reporter: packs 4-servo state into 0x82 frame and sends via UART */
 static void Task_Status_TX(void *arg)
 {
     (void)arg;
     for (;;) {
-        osDelay(STATUS_TX_PERIOD_MS);
+        uint32_t flags = osThreadFlagsWait(SYSTEM_STATE_TX_FLAG,
+                                           osFlagsWaitAny,
+                                           STATUS_TX_PERIOD_MS);
+        SystemState_Update();
+        if (((flags & osFlagsError) == 0U) && ((flags & SYSTEM_STATE_TX_FLAG) != 0U)) {
+            StatusTX_SendSystemStateFrame();
+        }
         StatusTX_SendFrame();
     }
 }
@@ -97,6 +181,6 @@ void StatusSafetyTask_Create(void)
         .stack_size = 128U * 4U,
         .priority   = (osPriority_t)osPriorityAboveNormal,
     };
-    osThreadNew(Task_Status_TX, NULL, &tx_attr);
+    s_status_tx_handle = osThreadNew(Task_Status_TX, NULL, &tx_attr);
     osThreadNew(Task_Safety,    NULL, &safety_attr);
 }

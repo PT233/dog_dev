@@ -12,7 +12,18 @@ find_package(sensor_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(robot_interfaces REQUIRED)
 
-set(ONNXRUNTIME_ROOT "/home/peter/onnxruntime-gpu" CACHE PATH "ONNX Runtime root")
+set(ONNXRUNTIME_ROOT "$ENV{ONNXRUNTIME_ROOT}" CACHE PATH "ONNX Runtime root")
+if(NOT ONNXRUNTIME_ROOT)
+  message(FATAL_ERROR "Set ONNXRUNTIME_ROOT to the ONNX Runtime SDK root")
+endif()
+if(NOT EXISTS "${ONNXRUNTIME_ROOT}/include/onnxruntime_cxx_api.h")
+  message(FATAL_ERROR "ONNXRUNTIME_ROOT does not contain include/onnxruntime_cxx_api.h: ${ONNXRUNTIME_ROOT}")
+endif()
+if(NOT EXISTS "${ONNXRUNTIME_ROOT}/lib/libonnxruntime.so")
+  message(FATAL_ERROR "ONNXRUNTIME_ROOT does not contain lib/libonnxruntime.so: ${ONNXRUNTIME_ROOT}")
+endif()
+set(ONNXRUNTIME_LIB_DIR "${ONNXRUNTIME_ROOT}/lib")
+set(ONNXRUNTIME_LIB "${ONNXRUNTIME_LIB_DIR}/libonnxruntime.so")
 
 # Create yolo_infer library
 add_library(yolo_infer src/yolo_infer.cpp)
@@ -20,7 +31,7 @@ target_include_directories(yolo_infer PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
   ${ONNXRUNTIME_ROOT}/include)
-target_link_libraries(yolo_infer ${OpenCV_LIBS} ${ONNXRUNTIME_ROOT}/lib/libonnxruntime.so)
+target_link_libraries(yolo_infer ${OpenCV_LIBS} ${ONNXRUNTIME_LIB})
 
 # Test executable for yolo_infer
 add_executable(test_yolo_infer src/test_yolo_infer.cpp)
@@ -62,6 +73,17 @@ ament_target_dependencies(detection_viz_node_exe
 target_include_directories(detection_viz_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+
+set(_onnxruntime_targets
+  yolo_infer
+  detection_node_lib
+  detection_node_exe
+  test_yolo_infer)
+foreach(_target IN LISTS _onnxruntime_targets)
+  set_target_properties(${_target} PROPERTIES
+    BUILD_RPATH "${ONNXRUNTIME_LIB_DIR}"
+    INSTALL_RPATH "${ONNXRUNTIME_LIB_DIR}")
+endforeach()
 
 # Install headers
 install(DIRECTORY include/ DESTINATION include)

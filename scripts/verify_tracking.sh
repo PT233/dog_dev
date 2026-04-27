@@ -4,6 +4,13 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [ -f "$PROJECT_DIR/scripts/ros2_network_env.sh" ]; then
+    export ROBOT_DDS_ROLE="${ROBOT_DDS_ROLE:-wsl}"
+    source "$PROJECT_DIR/scripts/ros2_network_env.sh"
+fi
+
 RESET='\033[0m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'

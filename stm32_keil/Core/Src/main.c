@@ -30,6 +30,7 @@
 
 #include "servo_driver.h"
 #include "traj_planner.h"
+#include "status_safety_task.h"
 
 /* USER CODE END Includes */
 
@@ -117,6 +118,7 @@ int main(void)
   Servo_Init();
 #else
   TrajPlanner_Init();
+  StatusSafety_SystemStateInit();
 #endif
 
   /* USER CODE END 2 */

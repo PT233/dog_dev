@@ -18,13 +18,13 @@ void TrajPlanner_Init(void)
 {
     Servo_Init();
     for (uint8_t i = 0; i < TRAJ_SERVO_COUNT; i++) {
-        g_traj_state[i].current_angle = 0.0f;
-        g_traj_state[i].target_angle  = 0.0f;
+        g_traj_state[i].current_angle = SERVO_CENTER_ANGLE_DEG;
+        g_traj_state[i].target_angle  = SERVO_CENTER_ANGLE_DEG;
         g_traj_state[i].velocity      = 0.0f;
         g_traj_state[i].max_accel     = 0.0f;
         g_traj_state[i].start_tick    = 0U;
         g_traj_state[i].duration_ms   = 0U;
-        s_start_angle[i]              = 0.0f;
+        s_start_angle[i]              = SERVO_CENTER_ANGLE_DEG;
         s_v_max[i]                    = 0.0f;
     }
 }

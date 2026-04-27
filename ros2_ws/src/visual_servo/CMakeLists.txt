@@ -22,6 +22,8 @@ target_include_directories(visual_servo_node_exe PUBLIC
 ament_target_dependencies(visual_servo_node_exe rclcpp geometry_msgs sensor_msgs)
 
 install(TARGETS visual_servo_node_exe DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(FILES ../../../config/visual_servo.yaml DESTINATION share/${PROJECT_NAME}/config)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

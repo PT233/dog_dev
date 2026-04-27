@@ -1,1 +1,1 @@
-rclcpp;sensor_msgs;OpenCV;ament_lint_auto;ament_lint_common
+rclcpp;sensor_msgs;robot_interfaces;opencv;ament_lint_auto;ament_lint_common

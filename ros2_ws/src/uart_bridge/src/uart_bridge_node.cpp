@@ -1,5 +1,6 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
+#include <atomic>
 #include <thread>
 #include <fcntl.h>
 #include <termios.h>
@@ -33,16 +34,17 @@ public:
     }
   }
 
-  rclcpp::Time MapTimestamp(uint32_t stm32_time_ms) {
+  rclcpp::Time MapTimestamp(uint32_t stm32_time_ms, const rclcpp::Time& fallback_time) {
     std::lock_guard<std::mutex> lock(mutex_);
     if (mappings_.empty()) {
-      return rclcpp::Clock(RCL_SYSTEM_TIME).now();
+      return fallback_time;
     }
 
     if (mappings_.size() == 1) {
-      uint64_t time_diff_ns = (uint64_t)stm32_time_ms * 1000000UL;
-      uint64_t stm32_ref_ns = mappings_[0].stm32_time_ms * 1000000UL;
-      return mappings_[0].rpi_time + rclcpp::Duration(0, time_diff_ns - stm32_ref_ns);
+      int64_t delta_ms = static_cast<int64_t>(stm32_time_ms) -
+                         static_cast<int64_t>(mappings_[0].stm32_time_ms);
+      return mappings_[0].rpi_time +
+             rclcpp::Duration::from_nanoseconds(delta_ms * 1000000LL);
     }
 
     for (size_t i = 1; i < mappings_.size(); i++) {
@@ -165,7 +167,12 @@ public:
 
 class UartBridgeNode : public rclcpp::Node {
 public:
-  UartBridgeNode() : Node("uart_bridge_node"), uart_fd_(-1), parser_(nullptr) {
+  UartBridgeNode()
+      : Node("uart_bridge_node"),
+        uart_fd_(-1),
+        parser_(nullptr),
+        handshake_complete_(false),
+        stm32_system_state_(UART_SYSTEM_STATE_BOOT_CENTERING) {
     declare_parameter<std::string>("uart_device", "/dev/ttyAMA0");
     declare_parameter<int>("uart_baudrate", 921600);
     declare_parameter<double>("stats_report_interval_sec", 10.0);
@@ -222,9 +229,10 @@ public:
       uart_fd_ = -1;
       return;
     }
+    tcflush(uart_fd_, TCIOFLUSH);
 
-    RCLCPP_INFO(this->get_logger(), "UART device %s opened at %d bps (v2 with monitoring)",
-                device.c_str(), baudrate);
+    RCLCPP_INFO(this->get_logger(), "UART device %s opened at %d bps (protocol v%d with monitoring)",
+                device.c_str(), baudrate, UART_PROTOCOL_VERSION);
 
     parser_ = std::make_unique<FrameParser>();
     parser_->SetFrameCallback([this](uint8_t cmd_id, const uint8_t* payload, size_t len) {
@@ -253,7 +261,16 @@ public:
         std::chrono::duration<double>(stats_interval),
         [this]() { ReportStatistics(); });
 
+    handshake_timer_ = this->create_wall_timer(
+        std::chrono::milliseconds(500),
+        [this]() {
+          if (!handshake_complete_.load()) {
+            SendInitHandshake();
+          }
+        });
+
     read_thread_ = std::thread(&UartBridgeNode::ReadLoop, this);
+    SendInitHandshake();
   }
 
   ~UartBridgeNode() {
@@ -269,6 +286,7 @@ private:
   int uart_fd_;
   std::thread read_thread_;
   rclcpp::TimerBase::SharedPtr stats_timer_;
+  rclcpp::TimerBase::SharedPtr handshake_timer_;
   std::unique_ptr<FrameParser> parser_;
   std::unique_ptr<FrameEncoder> encoder_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr servo_cmd_sub_;
@@ -278,6 +296,9 @@ private:
   LatencyMonitor latency_monitor_;
   FrameSequenceChecker sequence_checker_;
 
+  std::atomic<bool> handshake_complete_;
+  std::atomic<uint8_t> stm32_system_state_;
+  uint32_t handshake_tx_count_ = 0;
   uint32_t frame_error_count_ = 0;
   uint32_t frame_received_count_ = 0;
 
@@ -301,10 +322,82 @@ private:
     }
   }
 
-  void OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, size_t len) {
-    rclcpp::Time t_receive = this->now();
+  const char* SystemStateToString(uint8_t state) const {
+    switch (state) {
+      case UART_SYSTEM_STATE_BOOT_CENTERING:
+        return "BOOT_CENTERING";
+      case UART_SYSTEM_STATE_WAITING_CONNECTION:
+        return "WAITING_CONNECTION";
+      case UART_SYSTEM_STATE_ACTIVE:
+        return "ACTIVE";
+      case UART_SYSTEM_STATE_ERROR:
+        return "ERROR";
+      default:
+        return "UNKNOWN";
+    }
+  }
 
-    if (cmd_id == UART_CMD_SERVO_STATE_V2) {
+  void SendInitHandshake() {
+    if (handshake_complete_.load()) {
+      return;
+    }
+
+    auto frame = encoder_->EncodeInitHandshake();
+    WriteFrame(frame);
+    handshake_tx_count_++;
+
+    if (handshake_tx_count_ == 1) {
+      RCLCPP_INFO(this->get_logger(), "Sent STM32 init handshake");
+    } else {
+      RCLCPP_DEBUG(this->get_logger(), "Retried STM32 init handshake (%u)",
+                   handshake_tx_count_);
+    }
+  }
+
+  void OnSystemStateReceived(const uint8_t* payload, size_t len) {
+    if (len != sizeof(UartSystemStatePayload)) {
+      RCLCPP_WARN(this->get_logger(), "Invalid STM32 system state payload size: %zu", len);
+      return;
+    }
+
+    UartSystemStatePayload state = {};
+    std::memcpy(&state, payload, sizeof(state));
+
+    if (state.protocol_version != UART_PROTOCOL_VERSION) {
+      RCLCPP_WARN(this->get_logger(),
+                  "STM32 protocol version mismatch: bridge=%u stm32=%u",
+                  UART_PROTOCOL_VERSION, state.protocol_version);
+      return;
+    }
+
+    uint8_t previous = stm32_system_state_.exchange(state.system_state);
+    if (state.system_state == UART_SYSTEM_STATE_ACTIVE) {
+      bool was_complete = handshake_complete_.exchange(true);
+      if (!was_complete) {
+        if (handshake_timer_) {
+          handshake_timer_->cancel();
+        }
+        RCLCPP_INFO(this->get_logger(),
+                    "STM32 handshake complete: state=%s uptime=%u ms",
+                    SystemStateToString(state.system_state), state.uptime_ms);
+      }
+      return;
+    }
+
+    if (previous != state.system_state) {
+      RCLCPP_INFO(this->get_logger(),
+                  "STM32 state=%s uptime=%u ms; waiting before enabling servo commands",
+                  SystemStateToString(state.system_state), state.uptime_ms);
+    }
+  }
+
+  void OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, size_t len) {
+    rclcpp::Time t_receive = this->get_clock()->now();
+
+    if (cmd_id == UART_CMD_SYSTEM_STATE) {
+      OnSystemStateReceived(payload, len);
+    }
+    else if (cmd_id == UART_CMD_SERVO_STATE_V2) {
       if (len % sizeof(ServoStateItem_v2) != 0) {
         RCLCPP_WARN(this->get_logger(), "Invalid servo state v2 payload size: %zu", len);
         return;
@@ -317,7 +410,8 @@ private:
       const ServoStateItem_v2* first_item =
           reinterpret_cast<const ServoStateItem_v2*>(payload);
 
-      rclcpp::Time t_stm32_send = timestamp_mapper_.MapTimestamp(first_item->timestamp_ms);
+      rclcpp::Time t_stm32_send =
+          timestamp_mapper_.MapTimestamp(first_item->timestamp_ms, t_receive);
       state_msg->header.stamp = t_stm32_send;
 
       latency_monitor_.RecordReceiveLatency(t_stm32_send, t_receive);
@@ -365,7 +459,7 @@ private:
       }
 
       auto state_msg = std::make_shared<sensor_msgs::msg::JointState>();
-      state_msg->header.stamp = this->now();
+      state_msg->header.stamp = this->get_clock()->now();
       state_msg->header.frame_id = "";
 
       size_t num_items = len / sizeof(ServoStateItem);
@@ -393,6 +487,13 @@ private:
   }
 
   void OnServoCmdReceived(const sensor_msgs::msg::JointState::SharedPtr msg) {
+    if (!handshake_complete_.load()) {
+      RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000,
+                           "Dropping /servo_cmd until STM32 handshake completes (state=%s)",
+                           SystemStateToString(stm32_system_state_.load()));
+      return;
+    }
+
     if (!msg) {
       RCLCPP_ERROR(this->get_logger(), "Received null servo command message");
       return;

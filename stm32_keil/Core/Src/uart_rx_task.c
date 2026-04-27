@@ -5,6 +5,7 @@
 #include "task.h"
 #include "usart.h"
 #include "traj_planner.h"
+#include "status_safety_task.h"
 
 #define UART_RX_DMA_BUF_LEN UART_MAX_FRAME_LEN
 #define UART_RX_QUEUE_LEN 8U
@@ -33,11 +34,11 @@ static void UartRx_HandleFrame(const uint8_t* frame, uint16_t frame_len)
   uint8_t payload_len;
   uint16_t crc_calc;
   uint16_t crc_recv;
-
-  ServoCmdItem item;
+  uint8_t cmd_id;
 
   (void)frame_len;
 
+  cmd_id = frame[2];
   payload_len = frame[3];
   crc_recv = (uint16_t)frame[4U + payload_len] | ((uint16_t)frame[5U + payload_len] << 8);
   crc_calc = crc16_ccitt(&frame[2], (size_t)(2U + payload_len));
@@ -48,21 +49,50 @@ static void UartRx_HandleFrame(const uint8_t* frame, uint16_t frame_len)
     return;
   }
 
-  if ((frame[2] != UART_CMD_SERVO_CONTROL) || (payload_len < (uint8_t)sizeof(ServoCmdItem)))
+  if (cmd_id == UART_CMD_INIT_HANDSHAKE) {
+    UartHandshakePayload handshake;
+
+    if (payload_len < (uint8_t)sizeof(UartHandshakePayload)) {
+      (void)StatusSafety_HandleInitHandshake(NULL);
+      return;
+    }
+
+    memcpy(&handshake, &frame[4], sizeof(UartHandshakePayload));
+    (void)StatusSafety_HandleInitHandshake(&handshake);
+    return;
+  }
+
+  if (cmd_id != UART_CMD_SERVO_CONTROL)
   {
     return;
   }
 
-  memcpy(&item, &frame[4], sizeof(ServoCmdItem));
+  if (StatusSafety_GetSystemState() != UART_SYSTEM_STATE_ACTIVE)
+  {
+    StatusSafety_RequestSystemStateTx();
+    return;
+  }
+
+  if ((payload_len < (uint8_t)sizeof(ServoCmdItem)) ||
+      ((payload_len % (uint8_t)sizeof(ServoCmdItem)) != 0U))
+  {
+    return;
+  }
 
   if (uart_rx_queue == NULL)
   {
     return;
   }
 
-  if (xQueueSend(uart_rx_queue, &item, 0) != pdPASS)
+  for (uint8_t offset = 0U; offset < payload_len; offset = (uint8_t)(offset + sizeof(ServoCmdItem)))
   {
-    uart_queue_drop_count++;
+    ServoCmdItem item;
+    memcpy(&item, &frame[4U + offset], sizeof(ServoCmdItem));
+
+    if (xQueueSend(uart_rx_queue, &item, 0) != pdPASS)
+    {
+      uart_queue_drop_count++;
+    }
   }
 }
 

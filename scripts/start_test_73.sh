@@ -27,13 +27,16 @@ cat << 'EOF'
 [第一步] 设置环境变量（两端都需要）
 
 在 WSL2 中：
-  export ROS_DOMAIN_ID=42
-  export ROS_LOCALHOST_ONLY=0
+  cd /home/peter/dog/dog_dev
+  export ROBOT_DDS_ROLE=wsl
+  source scripts/ros2_network_env.sh
 
 在树莓派中：
   ssh ubuntu@192.168.137.100
-  export ROS_DOMAIN_ID=42
-  export ROS_LOCALHOST_ONLY=0
+  cd ~/desktop_tracking_robot
+  export ROBOT_DDS_ROLE=rpi
+  export ROBOT_WSL_IP=<当前 WSL2 IP>
+  source scripts/ros2_network_env.sh
 
 ════════════════════════════════════════════════════════════════
 
@@ -42,7 +45,8 @@ cat << 'EOF'
 📱 Terminal 1 - 树莓派：启动相机推流
   ssh ubuntu@192.168.137.100
   cd ~/desktop_tracking_robot  # 或项目目录
-  export ROS_DOMAIN_ID=42
+  export ROBOT_DDS_ROLE=rpi
+  source scripts/ros2_network_env.sh
   ./scripts/start_camera_stream.sh
 
   预期输出：
@@ -52,7 +56,9 @@ cat << 'EOF'
 📱 Terminal 2 - 树莓派：启动树莓派 ROS 节点
   ssh ubuntu@192.168.137.100
   source ~/ros2_ws/install/setup.bash
-  export ROS_DOMAIN_ID=42
+  cd ~/desktop_tracking_robot
+  export ROBOT_DDS_ROLE=rpi
+  source scripts/ros2_network_env.sh
   ros2 launch robot_bringup rpi_stack.launch.py
 
   预期输出：
@@ -62,7 +68,8 @@ cat << 'EOF'
 📱 Terminal 3 - WSL2：启动视觉管道
   cd /home/peter/dog/dog_dev
   source install/setup.bash
-  export ROS_DOMAIN_ID=42
+  export ROBOT_DDS_ROLE=wsl
+  source scripts/ros2_network_env.sh
   ros2 launch robot_bringup vision_stack.launch.py
 
   预期输出：
@@ -77,7 +84,9 @@ cat << 'EOF'
 [第三步] 切换目标类别为杯子
 
 在 Terminal 4（新窗口）中运行：
-  export ROS_DOMAIN_ID=42
+  cd /home/peter/dog/dog_dev
+  export ROBOT_DDS_ROLE=wsl
+  source scripts/ros2_network_env.sh
   ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
 
 预期输出：

@@ -4,3 +4,10 @@ robot_interfaces.egg-info/PKG-INFO
 robot_interfaces.egg-info/SOURCES.txt
 robot_interfaces.egg-info/dependency_links.txt
 robot_interfaces.egg-info/top_level.txt
+robot_interfaces/msg/__init__.py
+robot_interfaces/msg/_simple_detection.py
+robot_interfaces/msg/_simple_detection2_d_array.py
+robot_interfaces/msg/_target_info.py
+robot_interfaces/srv/__init__.py
+robot_interfaces/srv/_calibrate_center.py
+robot_interfaces/srv/_set_target_class.py

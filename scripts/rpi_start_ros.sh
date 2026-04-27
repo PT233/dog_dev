@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 树莓派端：启动 ROS 2 节点 (uart_bridge_node)
 
-set -e
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "=========================================="
 echo "树莓派 ROS 2 节点启动脚本"
@@ -11,9 +13,16 @@ echo ""
 
 # 设置环境变量
 export ROS_DOMAIN_ID=42
-export ROS_LOCALHOST_ONLY=0
+export ROBOT_DDS_ROLE="${ROBOT_DDS_ROLE:-rpi}"
+if [ -f "$SCRIPT_DIR/ros2_network_env.sh" ]; then
+    source "$SCRIPT_DIR/ros2_network_env.sh"
+else
+    export ROS_LOCALHOST_ONLY=0
+fi
 
 echo "ROS_DOMAIN_ID = $ROS_DOMAIN_ID"
+echo "RMW_IMPLEMENTATION = ${RMW_IMPLEMENTATION:-}"
+echo "CYCLONEDDS_URI = ${CYCLONEDDS_URI:-}"
 echo ""
 
 # 查找 ros2_ws
@@ -32,9 +41,20 @@ echo "✓ ROS workspace：$ROS_WS_DIR"
 echo ""
 
 # Source ROS setup
+if [ -f /opt/ros/jazzy/setup.bash ]; then
+    set +u
+    source /opt/ros/jazzy/setup.bash
+    set -u
+else
+    echo "❌ 错误：未找到 /opt/ros/jazzy/setup.bash"
+    exit 1
+fi
+
 if [ -f "$ROS_WS_DIR/install/setup.bash" ]; then
     echo "加载 ROS 环境..."
+    set +u
     source "$ROS_WS_DIR/install/setup.bash"
+    set -u
 else
     echo "⚠️  警告：未找到 install/setup.bash"
     echo "尝试使用已编译的包..."

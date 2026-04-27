@@ -15,7 +15,12 @@ static const uint32_t k_servo_channels[SERVO_COUNT] = {
   TIM_CHANNEL_4
 };
 
-static float g_last_angle_deg[SERVO_COUNT] = {0.0f, 0.0f, 0.0f, 0.0f};
+static float g_last_angle_deg[SERVO_COUNT] = {
+  SERVO_CENTER_ANGLE_DEG,
+  SERVO_CENTER_ANGLE_DEG,
+  SERVO_CENTER_ANGLE_DEG,
+  SERVO_CENTER_ANGLE_DEG
+};
 
 static float Servo_ClampAngle(float angle_deg)
 {
@@ -37,7 +42,7 @@ void Servo_Init(void)
   for (uint8_t i = 0; i < SERVO_COUNT; ++i)
   {
     HAL_TIM_PWM_Start(&htim2, k_servo_channels[i]);
-    Servo_SetAngle(i, 0.0f);
+    Servo_SetAngle(i, SERVO_CENTER_ANGLE_DEG);
   }
 }
 

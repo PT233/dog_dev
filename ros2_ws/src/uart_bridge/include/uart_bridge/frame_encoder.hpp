@@ -17,6 +17,9 @@ public:
   std::vector<uint8_t> EncodeSingleServo(uint8_t servo_id, int16_t angle_x10,
                                           uint16_t duration_ms = 100);
 
+  // Encode bridge startup handshake frame.
+  std::vector<uint8_t> EncodeInitHandshake();
+
 private:
   std::vector<uint8_t> BuildFrame(uint8_t cmd_id, const uint8_t* payload,
                                    size_t payload_len);

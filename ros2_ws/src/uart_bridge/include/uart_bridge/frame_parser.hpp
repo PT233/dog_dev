@@ -37,12 +37,12 @@ private:
   uint8_t payload_[256];
   uint8_t payload_idx_;
   uint8_t crc_0_;
-  uint16_t crc_calculated_;
 
   FrameCallback frame_callback_;
   ErrorCallback error_callback_;
 
-  void OnFrameComplete(uint8_t crc_h, uint8_t crc_l);
+  uint16_t CalculateFrameCrc() const;
+  void OnFrameComplete();
   void Reset();
 };
 

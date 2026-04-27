@@ -1,1 +1,1 @@
-OpenCV:rclcpp:sensor_msgs
+opencv:rclcpp:robot_interfaces:sensor_msgs

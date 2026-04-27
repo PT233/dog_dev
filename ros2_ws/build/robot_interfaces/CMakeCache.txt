@@ -40,7 +40,7 @@ AMENT_TEST_RESULTS_DIR:PATH=/home/peter/dog/dog_dev/ros2_ws/build/robot_interfac
 BUILD_SHARED_LIBS:BOOL=ON
 
 //Build the testing tree.
-BUILD_TESTING:BOOL=ON
+BUILD_TESTING:BOOL=OFF
 
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line

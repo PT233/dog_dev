@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdint.h>
 
+#define SERVO_CENTER_ANGLE_DEG (90.0f)
+
 void Servo_Init(void);
 void Servo_SetAngle(uint8_t servo_id, float angle_deg);
 float Servo_GetAngle(uint8_t servo_id);

@@ -36,7 +36,7 @@ endif()
 set(detection_node_FOUND_AMENT_PACKAGE TRUE)
 
 # include all config extra files
-set(_extras "")
+set(_extras "ament_cmake_export_libraries-extras.cmake;ament_cmake_export_include_directories-extras.cmake")
 foreach(_extra ${_extras})
   include("${detection_node_DIR}/${_extra}")
 endforeach()

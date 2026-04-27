@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 树莓派端：启动相机推流
 # 该脚本会自动寻找正确的配置和脚本位置
 
-set -e
+set -euo pipefail
 
 echo "=========================================="
 echo "树莓派相机推流启动脚本"
@@ -37,23 +37,14 @@ export ROS_LOCALHOST_ONLY=0
 echo "ROS_DOMAIN_ID = $ROS_DOMAIN_ID"
 echo ""
 
-# 启动相机推流（使用 GStreamer）
-# 树莓派摄像头 → YUYV 640×480 @ 30fps → H.264 编码 → UDP 推送
+TARGET_IP=${1:-192.168.137.1}
+TARGET_PORT=${2:-5600}
 
 echo "启动相机推流..."
-echo "目标地址：192.168.137.1:5600"
+echo "目标地址：$TARGET_IP:$TARGET_PORT"
 echo ""
 
-gst-launch-1.0 -v \
-  v4l2src device=/dev/video0 ! \
-  "video/x-raw,format=YUYV,width=640,height=480,framerate=30/1" ! \
-  videoconvert ! \
-  v4l2h264enc extra-controls="controls,h264_level=11,h264_profile=0" ! \
-  "video/x-h264,profile=baseline" ! \
-  h264parse ! \
-  rtph264pay pt=96 ! \
-  "application/x-rtp,media=video,encoding-name=H264,payload=96" ! \
-  udpsink host=192.168.137.1 port=5600 sync=false async=false
+"$PROJECT_DIR/scripts/start_camera_stream.sh" "$TARGET_IP" "$TARGET_PORT"
 
 echo ""
 echo "❌ 相机推流已停止"

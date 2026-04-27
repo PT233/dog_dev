@@ -19,6 +19,8 @@ target_include_directories(behavior_node_exe PUBLIC
 ament_target_dependencies(behavior_node_exe rclcpp robot_interfaces geometry_msgs)
 
 install(TARGETS behavior_node_exe DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(FILES ../../../config/behavior.yaml DESTINATION share/${PROJECT_NAME}/config)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

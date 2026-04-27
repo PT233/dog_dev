@@ -46,14 +46,11 @@ public:
       case READ_LEN:
         payload_len_ = byte;
         payload_idx_ = 0;
-        crc_calculated_ = crc16_ccitt(&cmd_id_, 1);
-        crc_calculated_ = crc16_ccitt(&payload_len_, 1);
         state_ = (payload_len_ == 0) ? READ_CRC_0 : READ_PAYLOAD;
         break;
 
       case READ_PAYLOAD:
         payload_[payload_idx_++] = byte;
-        crc_calculated_ = crc16_ccitt(&byte, 1);
         if (payload_idx_ >= payload_len_) {
           state_ = READ_CRC_0;
         }
@@ -65,8 +62,8 @@ public:
         break;
 
       case READ_CRC_1: {
-        uint16_t crc_received = ((uint16_t)crc_0_ << 8) | byte;
-        if (crc_received != crc_calculated_) {
+        uint16_t crc_received = ((uint16_t)byte << 8) | crc_0_;
+        if (crc_received != calculate_crc()) {
           reset();
           return false;
         }
@@ -96,7 +93,16 @@ private:
   uint8_t payload_[256];
   uint8_t payload_idx_;
   uint8_t crc_0_;
-  uint16_t crc_calculated_;
+
+  uint16_t calculate_crc() const {
+    uint8_t crc_data[UART_MAX_FRAME_LEN];
+    crc_data[0] = cmd_id_;
+    crc_data[1] = payload_len_;
+    if (payload_len_ > 0) {
+      std::memcpy(&crc_data[2], payload_, payload_len_);
+    }
+    return crc16_ccitt(crc_data, payload_len_ + 2);
+  }
 
   void reset() { state_ = WAIT_HEADER_0; payload_idx_ = 0; }
 };
@@ -109,18 +115,15 @@ std::vector<uint8_t> BuildFrame(uint8_t cmd_id, const uint8_t* payload, size_t p
   frame.push_back(cmd_id);
   frame.push_back((uint8_t)payload_len);
 
-  uint16_t crc = crc16_ccitt(&cmd_id, 1);
-  crc = crc16_ccitt((const uint8_t*)&payload_len, 1);
-
   if (payload_len > 0) {
     for (size_t i = 0; i < payload_len; ++i) {
       frame.push_back(payload[i]);
-      crc = crc16_ccitt(&payload[i], 1);
     }
   }
 
-  frame.push_back((uint8_t)((crc >> 8) & 0xFF));
+  uint16_t crc = crc16_ccitt(&frame[2], payload_len + 2);
   frame.push_back((uint8_t)(crc & 0xFF));
+  frame.push_back((uint8_t)((crc >> 8) & 0xFF));
   frame.push_back(UART_FRAME_TAIL);
 
   return frame;

@@ -14,12 +14,15 @@ echo ""
 
 # 设置环境
 export ROS_DOMAIN_ID=42
-export ROS_LOCALHOST_ONLY=0
+export ROBOT_DDS_ROLE="${ROBOT_DDS_ROLE:-wsl}"
+source scripts/ros2_network_env.sh
 
 source install/setup.bash
 
 echo "✓ ROS 环境已加载"
 echo "✓ ROS_DOMAIN_ID = $ROS_DOMAIN_ID"
+echo "✓ RMW_IMPLEMENTATION = ${RMW_IMPLEMENTATION:-}"
+echo "✓ CYCLONEDDS_URI = ${CYCLONEDDS_URI:-}"
 echo ""
 
 echo "启动所有节点..."
