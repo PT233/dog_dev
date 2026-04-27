@@ -78,7 +78,12 @@
       "Bash(nm /home/peter/dog/dog_dev/ros2_ws/install/detection_node/lib/detection_node/detection_node_exe)",
       "Bash(ldd /home/peter/dog/dog_dev/ros2_ws/build/detection_node/libyolo_infer.a)",
       "Bash(nm /home/peter/dog/dog_dev/ros2_ws/build/detection_node/libyolo_infer.a)",
-      "Bash(LD_LIBRARY_PATH=/home/peter/onnxruntime-gpu/lib ldd /home/peter/dog/dog_dev/ros2_ws/install/detection_node/lib/detection_node/detection_node_exe)"
+      "Bash(LD_LIBRARY_PATH=/home/peter/onnxruntime-gpu/lib ldd /home/peter/dog/dog_dev/ros2_ws/install/detection_node/lib/detection_node/detection_node_exe)",
+      "Bash(cp /home/peter/dog/dog_dev/stm32_fw/Core/Inc/iwdg.h /home/peter/dog/dog_dev/stm32_keil/Core/Inc/iwdg.h)",
+      "Bash(cp /home/peter/dog/dog_dev/stm32_fw/Core/Inc/servo_driver.h /home/peter/dog/dog_dev/stm32_keil/Core/Inc/servo_driver.h)",
+      "Bash(cp /home/peter/dog/dog_dev/stm32_fw/Core/Inc/status_safety_task.h /home/peter/dog/dog_dev/stm32_keil/Core/Inc/status_safety_task.h)",
+      "Bash(cp /home/peter/dog/dog_dev/stm32_fw/Core/Inc/traj_planner.h /home/peter/dog/dog_dev/stm32_keil/Core/Inc/traj_planner.h)",
+      "Bash(cp /home/peter/dog/dog_dev/stm32_fw/Core/Inc/uart_protocol.h /home/peter/dog/dog_dev/stm32_keil/Core/Inc/uart_protocol.h)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

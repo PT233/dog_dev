@@ -1,8 +1,0 @@
-usb
-device STM32F103CB
-connect
-erase
-loadbin build/STM32.bin 0x08000000
-verifybin build/STM32.bin 0x08000000
-reset
-exit
