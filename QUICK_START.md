@@ -1,293 +1,91 @@
-# 🚀 快速开始指南
+# 快速开始
 
-**适用于**：硬件接线完成后快速启动系统
+适用前提：
 
----
+- `ros2_ws` 已构建完成
+- Raspberry Pi 已部署 `robot_interfaces`、`uart_bridge`、`robot_bringup`
+- STM32 固件已烧录
 
-## 第 0 步：STM32 固件烧录（一次性）
-
-**前置**：J-Link 调试器已连接到 STM32F103CB
-
-### Windows 端 - 透传 J-Link
-
-在 PowerShell（管理员）中运行：
-
-```powershell
-usbipd list                               # 列出 USB 设备
-usbipd attach --wsl default --busid 5-4  # 透传 J-Link (BUSID 替换为实际值)
-```
-
-### WSL2 端 - 烧录固件
+## 1. WSL2 准备
 
 ```bash
-cd /home/peter/dog/dog_dev/stm32_fw
-./flash.sh
+source /opt/ros/jazzy/setup.bash
+cd /home/peter/dog/dog_dev
+source ros2_ws/install/setup.bash
+export ROBOT_DDS_ROLE=wsl
+source scripts/ros2_network_env.sh
 ```
 
-**预期输出**：
-```
-========== STM32F103CB 固件烧录 (SWD 模式) ==========
-[1/3] 编译固件...
-✓ 编译成功
-[2/3] 验证 J-Link 连接...
-✓ J-Link 已连接 (SWD 模式)
-[3/3] 烧录固件到 0x08000000 (SWD)...
-... erased sectors 0 through 63 ...
-... ** Verified OK ** ...
-========== 烧录完成 ==========
-✓ 固件已成功烧录
-```
-
-### 验证烧录成功
+## 2. Raspberry Pi 启动相机推流
 
 ```bash
-ssh ubuntu@192.168.137.100
-minicom -D /dev/ttyAMA0 -b 921600
-# 应每 50ms 看到：[STATUS] Servo0: 90°, Servo1: 90°, ...
-# 按 Ctrl+A 再 X 退出
+cd /home/ubuntu/desktop_tracking_robot
+./scripts/rpi_start_camera.sh <WSL_IP> 5600
 ```
 
----
-
-## 环境变量（两端都需要）
+如果你的相机启用脚本不是默认的 `$HOME/camera.sh`，先设置：
 
 ```bash
-# 添加到 ~/.bashrc
-echo 'export ROS_DOMAIN_ID=42' >> ~/.bashrc
-echo 'export ROS_LOCALHOST_ONLY=0' >> ~/.bashrc
-source ~/.bashrc
+export CAMERA_ENABLE_SCRIPT=/path/to/camera.sh
 ```
 
----
-
-## 启动流程（4个终端，按顺序）
-
-### Terminal 1：树莓派 - 启动相机推流
+## 3. Raspberry Pi 启动 ROS 2
 
 ```bash
-ssh ubuntu@192.168.137.100
-cd ~/desktop_tracking_robot
-./scripts/start_camera_stream.sh
-
-# 预期输出：
-# [GStreamer] Pipeline running...
-# [V4L2] Reading from /dev/video0
+cd /home/ubuntu/desktop_tracking_robot
+./scripts/rpi_start_ros.sh
 ```
 
-### Terminal 2：树莓派 - 启动 uart_bridge
+这会启动：
+
+- `robot_bringup/rpi_stack.launch.py`
+- `uart_bridge_node`
+
+## 4. WSL2 启动视觉主链
 
 ```bash
-ssh ubuntu@192.168.137.100
-source ~/ros2_ws/install/setup.bash
-export ROS_DOMAIN_ID=42
-ros2 launch robot_bringup rpi_stack.launch.py
-
-# 预期输出：
-# [INFO] uart_bridge_node started
-# [INFO] Subscribed to /servo_cmd
-```
-
-### Terminal 3：WSL2 - 启动视觉管道
-
-```bash
-cd ~/dog/dog_dev
-source install/setup.bash
-export ROS_DOMAIN_ID=42
 ros2 launch robot_bringup vision_stack.launch.py
-
-# 预期输出：
-# [INFO] gst_receiver_node: publishing to /stereo/image_raw
-# [INFO] detection_node: model loaded
-# [INFO] tracker_node: initialized
-# [INFO] behavior_node: started
-# [INFO] leg_motion_node: started
 ```
 
-### Terminal 4：WSL2 - 验证系统（可选）
+默认会启动：
+
+- `gst_receiver_node`
+- `stereo_splitter_node`
+- `detection_node`
+- `tracker_node`
+- `behavior_node`
+- `leg_motion_node`
+
+## 5. 无硬件模式
+
+只想验证 ROS 2 主链和控制闭环时：
 
 ```bash
-# 监控实时话题
-ros2 topic echo /tracked_objects
+source /opt/ros/jazzy/setup.bash
+cd /home/peter/dog/dog_dev
+source ros2_ws/install/setup.bash
+ros2 launch robot_bringup test_73_complete.launch.py
+```
+
+这个入口会在 WSL2 上额外启动 `mock_uart_bridge_node`。
+
+## 6. 常用观察命令
+
+```bash
+ros2 node list
+ros2 topic list
+ros2 topic hz /stereo/image_raw
+ros2 topic hz /tracked_objects
 ros2 topic echo /pixel_error
 ros2 topic echo /servo_state
-
-# 切换目标类别
 ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
-
-# 实时显示误差曲线
-rqt_plot /pixel_error/x /pixel_error/y &
 ```
 
----
+## 7. 判断系统是否真正跑通
 
-## 常见命令速查
-
-### 话题监控
-```bash
-# 列出所有话题
-ros2 topic list
-
-# 显示话题频率
-ros2 topic hz /tracked_objects
-
-# 查看话题消息内容
-ros2 topic echo /servo_cmd
-```
-
-### 参数调整
-```bash
-# 查看当前参数
-ros2 param list /leg_motion_node
-
-# 动态修改参数（无需重启）
-ros2 param set /leg_motion_node turn.kp 0.06
-ros2 param set /leg_motion_node forward.ki 0.002
-```
-
-### 调试工具
-```bash
-# 启动图形化接口
-rqt
-
-# 启动图像查看器
-rqt_image_view
-
-# 启动参数动态调整面板
-rqt_reconfigure
-
-# 启动 ROS 2 实时绘图
-rqt_plot /pixel_error/x /pixel_error/y
-```
-
-### 问题诊断
-```bash
-# 检查 ROS 2 节点
-ros2 node list
-
-# 查看节点详细信息
-ros2 node info /behavior_node
-
-# 查看 UART 通信（树莓派）
-sudo cat /dev/ttyAMA0
-
-# 检查网络连接
-ping 192.168.137.100
-```
-
----
-
-## 性能指标
-
-| 指标 | 目标 | 验证命令 |
-|---|---|---|
-| 图像推流 | ~30 FPS | `ros2 topic hz /stereo/image_raw` |
-| 目标检测 | ~30 Hz | `ros2 topic hz /detections` |
-| 目标跟踪 | ~30 Hz | `ros2 topic hz /tracked_objects` |
-| 舵机控制 | 30 Hz | `ros2 topic hz /servo_cmd` |
-| 像素误差 | <5 px | `ros2 topic echo /pixel_error` |
-
----
-
-## 故障排查
-
-### 问题 1：舵机不动
-
-```bash
-# 检查 1：是否有 /servo_cmd 话题
-ros2 topic list | grep servo_cmd
-
-# 检查 2：是否有 UART 通信
-ros2 topic echo /servo_state
-
-# 检查 3：UART 连接
-ssh ubuntu@192.168.137.100 'ls -l /dev/ttyAMA0'
-
-# 解决方案：重启 uart_bridge
-# Terminal 2 中 Ctrl+C，然后重新启动
-```
-
-### 问题 2：网络不同步
-
-```bash
-# 确认 ROS_DOMAIN_ID
-echo $ROS_DOMAIN_ID
-
-# 在两端都应输出：42
-# 如果不同，重新设置：
-export ROS_DOMAIN_ID=42
-source /opt/ros/jazzy/setup.bash
-
-# 清除 ROS 缓存
-pkill rmw_fastrtps_cpp
-sleep 2
-ros2 topic list
-```
-
-### 问题 3：检测框不出现
-
-```bash
-# 检查检测节点是否运行
-ros2 node list | grep detection
-
-# 检查是否有输入图像
-ros2 topic echo /camera/image_mono --limit 1
-
-# 检查检测输出
-ros2 topic echo /detections --limit 5
-```
-
----
-
-## PID 快速调参
-
-### 症状 → 调整映射
-
-| 症状 | 调整 |
-|---|---|
-| 反应迟钝，跟踪滞后 | `Kp` ↑ (0.05 → 0.07) |
-| 振荡、超冲过大 | `Kp` ↓ 或 `Kd` ↑ |
-| 稳态有偏差 | `Ki` ↑ (0.001 → 0.002) |
-| 动作抖动 | `Kd` ↑ 或 `Ki` ↓ |
-
-### 动态调参示例
-
-```bash
-# Terminal 4 中实时绘制误差曲线
-rqt_plot /pixel_error/x /pixel_error/y
-
-# 另一个 Terminal 动态调整参数
-ros2 param set /leg_motion_node turn.kp 0.06
-ros2 param set /leg_motion_node turn.kd 0.03
-
-# 观察曲线变化，找到最优参数
-```
-
----
-
-## 关闭系统
-
-**顺序很重要（反向启动顺序）**
-
-```bash
-# Terminal 3: Ctrl+C 停止 WSL2 节点
-# Terminal 2: Ctrl+C 停止树莓派节点
-# Terminal 1: Ctrl+C 停止相机推流
-# Terminal 4: Ctrl+C 停止监控
-
-# 验证所有进程已停止
-pkill -f "ros2 launch"
-pkill -f "gst-launch"
-```
-
----
-
-## 下一步
-
-- **调参**：见 `docs/pid_tuning.md`
-- **硬件**：见 `hardware_wiring.html`
-- **完整指南**：见 `SETUP_GUIDE.md`
-- **架构设计**：见 `architecture.md`
-
----
-
-**Last Updated**: 2026-04-24
+- WSL2 能看到 `/stereo/image_raw`
+- `detection_node` 持续发布 `/detections`
+- `tracker_node` 持续发布带 `track_id` 的 `/tracked_objects`
+- `behavior_node` 在检测到目标类别时持续发布 `/pixel_error`
+- Pi 上 `uart_bridge_node` 不再打印握手未完成告警
+- `/servo_state` 持续更新

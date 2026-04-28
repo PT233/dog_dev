@@ -23,6 +23,8 @@ ament_target_dependencies(stereo_splitter_lib rclcpp sensor_msgs cv_bridge)
 
 # Executable target
 add_executable(stereo_splitter_node src/stereo_splitter_main.cpp)
+target_include_directories(stereo_splitter_node PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(stereo_splitter_node stereo_splitter_lib)
 ament_target_dependencies(stereo_splitter_node rclcpp sensor_msgs cv_bridge)
 

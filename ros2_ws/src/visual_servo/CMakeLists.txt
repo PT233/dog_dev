@@ -13,12 +13,14 @@ find_package(sensor_msgs REQUIRED)
 
 # Build visual_servo executable
 add_executable(visual_servo_node_exe
-  src/visual_servo_node.cpp
+  src/leg_motion_controller_node.cpp
   src/pid_controller.cpp
   src/main.cpp)
 target_include_directories(visual_servo_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+target_include_directories(visual_servo_node_exe PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 ament_target_dependencies(visual_servo_node_exe rclcpp geometry_msgs sensor_msgs)
 
 install(TARGETS visual_servo_node_exe DESTINATION lib/${PROJECT_NAME})

@@ -16,6 +16,7 @@ volatile uint32_t uart_queue_drop_count = 0;
 volatile uint32_t uart_last_cmd_tick    = 0;
 
 static TaskHandle_t s_uart_rx_task_handle = NULL;
+static volatile uint32_t s_uart_rx_stack_high_water_mark = 0U;
 
 static uint8_t s_uart_dma_buf[UART_RX_DMA_BUF_LEN];
 static volatile uint16_t s_uart_dma_write_pos = 0;
@@ -189,12 +190,14 @@ static void Task_UART_RX(void* argument)
   __HAL_DMA_DISABLE_IT(huart1.hdmarx, DMA_IT_HT);
   __HAL_UART_CLEAR_IDLEFLAG(&huart1);
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  s_uart_rx_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
 
   for (;;)
   {
     ServoCmdItem item;
 
     (void)ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    s_uart_rx_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
     UartRx_ProcessDmaData();
 
     /* Dispatch all parsed servo commands to the trajectory planner */
@@ -208,6 +211,8 @@ static void Task_UART_RX(void* argument)
 
 void UartRxTask_Create(void)
 {
+  BaseType_t status;
+
   if (uart_rx_queue == NULL)
   {
     uart_rx_queue = xQueueCreate(UART_RX_QUEUE_LEN, sizeof(ServoCmdItem));
@@ -216,13 +221,19 @@ void UartRxTask_Create(void)
 
   if (s_uart_rx_task_handle == NULL)
   {
-    (void)xTaskCreate(Task_UART_RX,
-                      "Task_UART_RX",
-                      256,
-                      NULL,
-                      (tskIDLE_PRIORITY + 2U),
-                      &s_uart_rx_task_handle);
+    status = xTaskCreate(Task_UART_RX,
+                         "Task_UART_RX",
+                         256,
+                         NULL,
+                         (tskIDLE_PRIORITY + 2U),
+                         &s_uart_rx_task_handle);
+    configASSERT(status == pdPASS);
   }
+}
+
+uint32_t UartRxTask_GetStackHighWaterMark(void)
+{
+  return s_uart_rx_stack_high_water_mark;
 }
 
 void UartRxTask_NotifyFromIdleIrq(void)

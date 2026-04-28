@@ -16,6 +16,8 @@ add_executable(behavior_node_exe src/behavior_node.cpp src/main.cpp)
 target_include_directories(behavior_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+target_include_directories(behavior_node_exe PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 ament_target_dependencies(behavior_node_exe rclcpp robot_interfaces geometry_msgs)
 
 install(TARGETS behavior_node_exe DESTINATION lib/${PROJECT_NAME})

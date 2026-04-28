@@ -23,6 +23,8 @@ extern TrajState g_traj_state[TRAJ_SERVO_COUNT];
 
 void TrajPlanner_Init(void);
 void Traj_SetTarget(uint8_t id, float target_deg, uint16_t duration_ms);
+void TrajPlanner_CopyStateSnapshot(TrajState out_states[TRAJ_SERVO_COUNT]);
+uint32_t TrajPlanner_GetStackHighWaterMark(void);
 void TrajPlannerTask_Create(void);
 
 #ifdef __cplusplus

@@ -16,6 +16,7 @@ extern volatile uint32_t uart_last_cmd_tick; /* HAL_GetTick() of last dispatched
 
 void UartRxTask_Create(void);
 void UartRxTask_NotifyFromIdleIrq(void);
+uint32_t UartRxTask_GetStackHighWaterMark(void);
 
 #ifdef __cplusplus
 }

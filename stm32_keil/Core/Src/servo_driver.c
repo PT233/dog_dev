@@ -47,7 +47,10 @@ void Servo_Init(void)
 {
   for (uint8_t i = 0; i < SERVO_COUNT; ++i)
   {
-    HAL_TIM_PWM_Start(&htim2, k_servo_channels[i]);
+    if (HAL_TIM_PWM_Start(&htim2, k_servo_channels[i]) != HAL_OK)
+    {
+      Error_Handler();
+    }
     Servo_SetAngle(i, SERVO_CENTER_ANGLE_DEG);
   }
 }

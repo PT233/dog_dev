@@ -14,7 +14,10 @@
 #include "servo_driver.h"
 #include "cmsis_os.h"
 #include "stm32f1xx_hal.h"
+#include "task.h"
+
 #include <math.h>
+#include <string.h>
 
 // 加速/减速各占总时间的比例（对称梯形，匀速段占 1 - 2×0.3 = 40%）
 #define TRAJ_ACCEL_RATIO  0.3f
@@ -26,6 +29,7 @@ TrajState g_traj_state[TRAJ_SERVO_COUNT];
 /* Per-servo trajectory start angle and peak velocity (private) */
 static float s_start_angle[TRAJ_SERVO_COUNT];
 static float s_v_max[TRAJ_SERVO_COUNT];
+static volatile uint32_t s_traj_stack_high_water_mark = 0U;
 
 void TrajPlanner_Init(void)
 {
@@ -71,6 +75,22 @@ void Traj_SetTarget(uint8_t id, float target_deg, uint16_t duration_ms)
         g_traj_state[id].duration_ms   = 0U;
         Servo_SetAngle(id, target_deg);
     }
+}
+
+void TrajPlanner_CopyStateSnapshot(TrajState out_states[TRAJ_SERVO_COUNT])
+{
+    if (out_states == NULL) {
+        return;
+    }
+
+    taskENTER_CRITICAL();
+    memcpy(out_states, g_traj_state, sizeof(g_traj_state));
+    taskEXIT_CRITICAL();
+}
+
+uint32_t TrajPlanner_GetStackHighWaterMark(void)
+{
+    return s_traj_stack_high_water_mark;
 }
 
 /* Compute and output the intermediate angle for one servo at current time */
@@ -127,7 +147,9 @@ static void Traj_Update(uint8_t id)
 static void Task_Traj_Planner(void *arg)
 {
     (void)arg;
+    s_traj_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
     for (;;) {
+        s_traj_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
         for (uint8_t i = 0; i < TRAJ_SERVO_COUNT; i++) {
             Traj_Update(i);
         }
@@ -137,10 +159,12 @@ static void Task_Traj_Planner(void *arg)
 
 void TrajPlannerTask_Create(void)
 {
+    osThreadId_t handle;
     static const osThreadAttr_t attr = {
         .name       = "TrajPlan",
         .stack_size = 256U * 4U,
         .priority   = (osPriority_t)osPriorityAboveNormal,
     };
-    osThreadNew(Task_Traj_Planner, NULL, &attr);
+    handle = osThreadNew(Task_Traj_Planner, NULL, &attr);
+    configASSERT(handle != NULL);
 }

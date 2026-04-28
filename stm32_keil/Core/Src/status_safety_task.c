@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "cmsis_os.h"
+#include "task.h"
 #include "usart.h"
 #include "iwdg.h"
 #include "uart_protocol.h"
@@ -31,6 +32,8 @@ static volatile uint16_t s_frame_seq = 0U;
 static volatile uint8_t s_system_state = UART_SYSTEM_STATE_BOOT_CENTERING;
 static uint32_t s_center_start_tick = 0U;
 static osThreadId_t s_status_tx_handle = NULL;
+static volatile uint32_t s_status_tx_stack_high_water_mark = 0U;
+static volatile uint32_t s_safety_stack_high_water_mark = 0U;
 
 void StatusSafety_SystemStateInit(void)
 {
@@ -85,6 +88,7 @@ static uint32_t StatusTX_GetTimestampMs(void)
 static void StatusTX_SendFrame(void)
 {
     uint8_t tx_buf[STATUS_FRAME_LEN_V2];
+    TrajState traj_snapshot[TRAJ_SERVO_COUNT];
     uint16_t crc;
     uint8_t i;
     uint32_t timestamp_ms;
@@ -97,12 +101,13 @@ static void StatusTX_SendFrame(void)
 
     timestamp_ms = StatusTX_GetTimestampMs();
     frame_seq = s_frame_seq++;
+    TrajPlanner_CopyStateSnapshot(traj_snapshot);
 
     for (i = 0U; i < TRAJ_SERVO_COUNT; i++) {
         ServoStateItem_v2 item;
         item.servo_id           = i;
-        item.current_angle_x10  = (int16_t)(g_traj_state[i].current_angle * 10.0f);
-        item.status             = (g_traj_state[i].duration_ms > 0U) ? 1U : 0U;
+        item.current_angle_x10  = (int16_t)(traj_snapshot[i].current_angle * 10.0f);
+        item.status             = (traj_snapshot[i].duration_ms > 0U) ? 1U : 0U;
         item.timestamp_ms       = (uint16_t)timestamp_ms;
         item.frame_seq          = frame_seq;
         memcpy(&tx_buf[4U + (uint8_t)(i * sizeof(ServoStateItem_v2))], &item, sizeof(ServoStateItem_v2));
@@ -114,7 +119,9 @@ static void StatusTX_SendFrame(void)
     tx_buf[6U + STATUS_PAYLOAD_LEN_V2] = UART_FRAME_TAIL;
 
     /* Blocking transmit: ~31 bytes @ 921600 bps ≈ 0.27ms */
-    HAL_UART_Transmit(&huart1, tx_buf, STATUS_FRAME_LEN_V2, 10U);
+    if (HAL_UART_Transmit(&huart1, tx_buf, STATUS_FRAME_LEN_V2, 10U) != HAL_OK) {
+        Error_Handler();
+    }
 }
 
 static void StatusTX_SendSystemStateFrame(void)
@@ -139,17 +146,21 @@ static void StatusTX_SendSystemStateFrame(void)
     tx_buf[5U + SYSTEM_STATE_PAYLOAD_LEN] = (uint8_t)(crc >> 8);
     tx_buf[6U + SYSTEM_STATE_PAYLOAD_LEN] = UART_FRAME_TAIL;
 
-    HAL_UART_Transmit(&huart1, tx_buf, SYSTEM_STATE_FRAME_LEN, 10U);
+    if (HAL_UART_Transmit(&huart1, tx_buf, SYSTEM_STATE_FRAME_LEN, 10U) != HAL_OK) {
+        Error_Handler();
+    }
 }
 
 /* 20Hz status reporter: packs 4-servo state into 0x82 frame and sends via UART */
 static void Task_Status_TX(void *arg)
 {
     (void)arg;
+    s_status_tx_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
     for (;;) {
         uint32_t flags = osThreadFlagsWait(SYSTEM_STATE_TX_FLAG,
                                            osFlagsWaitAny,
                                            STATUS_TX_PERIOD_MS);
+        s_status_tx_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
         SystemState_Update();
         if (((flags & osFlagsError) == 0U) && ((flags & SYSTEM_STATE_TX_FLAG) != 0U)) {
             StatusTX_SendSystemStateFrame();
@@ -163,14 +174,29 @@ static void Task_Status_TX(void *arg)
 static void Task_Safety(void *arg)
 {
     (void)arg;
+    s_safety_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
     for (;;) {
         osDelay(SAFETY_PERIOD_MS);
-        HAL_IWDG_Refresh(&hiwdg);
+        s_safety_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
+        if (HAL_IWDG_Refresh(&hiwdg) != HAL_OK) {
+            Error_Handler();
+        }
     }
+}
+
+uint32_t StatusSafety_GetStatusTxStackHighWaterMark(void)
+{
+    return s_status_tx_stack_high_water_mark;
+}
+
+uint32_t StatusSafety_GetSafetyStackHighWaterMark(void)
+{
+    return s_safety_stack_high_water_mark;
 }
 
 void StatusSafetyTask_Create(void)
 {
+    osThreadId_t safety_handle;
     static const osThreadAttr_t tx_attr = {
         .name       = "StatusTX",
         .stack_size = 256U * 4U,
@@ -182,5 +208,8 @@ void StatusSafetyTask_Create(void)
         .priority   = (osPriority_t)osPriorityAboveNormal,
     };
     s_status_tx_handle = osThreadNew(Task_Status_TX, NULL, &tx_attr);
-    osThreadNew(Task_Safety,    NULL, &safety_attr);
+    configASSERT(s_status_tx_handle != NULL);
+
+    safety_handle = osThreadNew(Task_Safety, NULL, &safety_attr);
+    configASSERT(safety_handle != NULL);
 }

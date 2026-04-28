@@ -19,12 +19,16 @@ endif()
 
 # Build executable
 add_executable(uart_bridge_node
-  src/uart_bridge_node.cpp
+  src/uart_bridge_time_sync.cpp
+  src/uart_bridge_transport.cpp
+  src/uart_bridge_protocol.cpp
+  src/uart_bridge_main.cpp
   src/frame_parser.cpp
   src/frame_encoder.cpp
   src/uart_protocol.c
 )
 target_include_directories(uart_bridge_node PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(uart_bridge_node PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 ament_target_dependencies(uart_bridge_node rclcpp sensor_msgs)
 
 install(TARGETS uart_bridge_node DESTINATION lib/${PROJECT_NAME})

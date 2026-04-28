@@ -1,9 +1,6 @@
-#include "rclcpp/rclcpp.hpp"
 #include "detection_node/detection_viz_node.hpp"
+#include "shared/ros2_single_node_main.hpp"
 
 int main(int argc, char* argv[]) {
-  rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<detection_node::DetectionVizNode>());
-  rclcpp::shutdown();
-  return 0;
+  return project_shared::spin_single_node_main<detection_node::DetectionVizNode>(argc, argv);
 }

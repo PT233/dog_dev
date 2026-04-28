@@ -26,6 +26,8 @@ ament_target_dependencies(gst_receiver_lib rclcpp sensor_msgs cv_bridge)
 
 # Executable target
 add_executable(gst_receiver_node src/gst_receiver_main.cpp)
+target_include_directories(gst_receiver_node PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(gst_receiver_node gst_receiver_lib)
 ament_target_dependencies(gst_receiver_node rclcpp sensor_msgs cv_bridge)
 

@@ -1,28 +1,15 @@
-#include "visual_servo/visual_servo_node.hpp"
+#include <algorithm>
 #include <array>
 #include <cmath>
-#include <algorithm>
+
+#include "shared/servo_names.hpp"
+#include "visual_servo/leg_motion_controller_node.hpp"
 
 namespace visual_servo {
 
 namespace {
 
-constexpr size_t kLegCount = 4;
-constexpr std::array<const char*, kLegCount> kLegJointNames = {
-  "front_left",
-  "front_right",
-  "rear_left",
-  "rear_right"
-};
-
-int JointNameToIndex(const std::string& name) {
-  for (size_t i = 0; i < kLegJointNames.size(); ++i) {
-    if (name == kLegJointNames[i]) {
-      return static_cast<int>(i);
-    }
-  }
-  return -1;
-}
+constexpr size_t kLegCount = project_shared::kServoCount;
 
 }  // namespace
 
@@ -119,7 +106,7 @@ void LegMotionControllerNode::OnPixelError(const geometry_msgs::msg::Vector3::Sh
 
 void LegMotionControllerNode::OnServoState(const sensor_msgs::msg::JointState::SharedPtr msg) {
   for (size_t i = 0; i < msg->name.size(); ++i) {
-    const int idx = JointNameToIndex(msg->name[i]);
+    const int idx = project_shared::servo_name_to_id(msg->name[i]);
     if (idx >= 0 && i < msg->position.size()) {
       current_leg_angles_deg_[static_cast<size_t>(idx)] =
         msg->position[i] * 180.0f / static_cast<float>(M_PI);
@@ -186,12 +173,7 @@ void LegMotionControllerNode::OnControlTimer() {
   // Publish servo command
   auto cmd = sensor_msgs::msg::JointState();
   cmd.header.stamp = now;
-  cmd.name = {
-    kLegJointNames[0],
-    kLegJointNames[1],
-    kLegJointNames[2],
-    kLegJointNames[3]
-  };
+  cmd.name.assign(project_shared::kServoNames.begin(), project_shared::kServoNames.end());
   cmd.position.reserve(kLegCount);
   for (float angle_deg : target_angles) {
     cmd.position.push_back(angle_deg * static_cast<float>(M_PI) / 180.0f);

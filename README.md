@@ -1,160 +1,120 @@
-# 物体识别跟随机器人 🤖
+# desktop_tracking_robot
 
-> 基于 YOLO + ByteTrack 的实时双目视觉目标跟踪系统
+基于 ROS 2 Jazzy、GStreamer、YOLOv8、ByteTrack、Raspberry Pi 和 STM32F103 的桌面目标跟随机器人。
 
-**Version**: 3.0 | **Status**: 功能完整，调试就绪 | **Last Updated**: 2026-04-24
+本文档集已按当前重构后的代码树重新整理，基线日期为 `2026-04-28`。默认运行链路是：
 
-Desktop tracking robot for real-time object detection and fixed-camera leg motion control with ROS 2, Raspberry Pi, and STM32.
+`gst_receiver -> stereo_splitter -> detection_node -> tracker_node -> behavior_node -> leg_motion_node -> uart_bridge -> STM32`
 
----
+## 从哪里开始
 
-## 📖 快速导航
+- [QUICK_START.md](QUICK_START.md): 已完成环境准备后的最短启动路径
+- [SETUP_GUIDE.md](SETUP_GUIDE.md): 按主机划分的构建、部署、接线和环境准备
+- [ARCHITECTURE.md](ARCHITECTURE.md): 当前代码结构、运行时拓扑、消息接口和协议摘要
+- [docs/README.md](docs/README.md): 专题文档索引
+- [hardware_wiring.html](hardware_wiring.html): 接线图
 
-| 文档 | 内容 | 适用人群 |
-|---|---|---|
-| **[SETUP_GUIDE.md](SETUP_GUIDE.md)** | 📚 完整设置指南（硬件→软件→调试→应用） | 首次接触该项目 |
-| **[QUICK_START.md](QUICK_START.md)** | 🚀 快速启动命令（硬件就绪后） | 硬件已接线 |
-| **[hardware_wiring.html](hardware_wiring.html)** | 🔌 交互式接线图（STM32、树莓派、舵机） | 进行硬件接线 |
-| **[architecture.md](architecture.md)** | 🏗️ 系统架构设计 | 理解整体设计 |
-| **[task.md](task.md)** | 📋 40 个开发任务清单 | 开发参考 |
-| **[progress.md](progress.md)** | 📊 项目进度和阻塞记录 | 跟踪进度 |
+## 当前代码主链
 
----
+### WSL2 / PC
 
-## ⚠️ 当前状态
+- `gst_receiver_node`: 接收树莓派发来的 `UDP/H.264` 视频并发布 `/stereo/image_raw`
+- `stereo_splitter_node`: 从 `640x480` 双目拼接图中裁出左目，发布 `/camera/image_mono`
+- `detection_node`: 运行 YOLOv8 ONNX 推理，发布 `/detections`
+- `tracker_node`: 给检测结果分配稳定轨迹 ID，发布 `/tracked_objects`
+- `behavior_node`: 按目标类别筛选目标并发布 `/pixel_error`
+- `leg_motion_node`: 把像素误差转换为四足舵机角命令，发布 `/servo_cmd`
 
-**🔴 阶段 7.3-7.6 阻塞**：硬件接线尚未完成
+### Raspberry Pi
 
-- ✅ 阶段 0-6：所有代码和配置已完成（35/40 任务）
-- ✅ 阶段 7.1-7.2：Launch 文件已创建
-- ⏸️ 阶段 7.3-7.6：等待硬件接线完成后才能进行端到端测试
+- `scripts/start_camera_stream.sh`: `/dev/video0 -> H.264 -> UDP:5600`
+- `uart_bridge_node`: `/servo_cmd -> UART`，`UART -> /servo_state`
 
-**立即开始**：👉 请查看 [SETUP_GUIDE.md](SETUP_GUIDE.md) 中的硬件接线部分
+### STM32
 
----
+- `Task_UART_RX`: DMA + IDLE 收帧、握手、分发舵机命令
+- `Task_Traj_Planner`: 5 ms 周期梯形轨迹插值
+- `Task_Status_TX`: 50 ms 周期上报 `SERVO_STATE_V2` 和 `SYSTEM_STATE`
+- `Task_Safety`: IWDG 喂狗
 
-## 📦 项目结构
+## 仓库结构
 
+```text
+dog_dev/
+├── README.md
+├── QUICK_START.md
+├── SETUP_GUIDE.md
+├── ARCHITECTURE.md
+├── hardware_wiring.html
+├── config/                    # 顶层共享参数文件
+├── docs/                      # 专题文档
+├── models/                    # YOLO 模型与 COCO 标签
+├── ros2_ws/
+│   └── src/
+│       ├── robot_bringup
+│       ├── robot_interfaces
+│       ├── gst_receiver
+│       ├── stereo_splitter
+│       ├── detection_node
+│       ├── tracker_node
+│       ├── behavior_node
+│       ├── visual_servo
+│       └── uart_bridge
+├── scripts/                   # 启动、部署和网络配置脚本
+├── shared/                    # ROS 侧与 STM32 侧共享头文件/小工具
+├── stm32_keil/                # STM32F103 工程
+└── tests/                     # 离线测试与验证脚本
 ```
-├── SETUP_GUIDE.md              ← 完整设置指南
-├── QUICK_START.md              ← 快速启动命令  
-├── hardware_wiring.html        ← 交互式接线图
-├── architecture.md             ← 系统架构
-├── task.md                     ← 任务清单
-├── progress.md                 ← 项目进度
-│
-├── ros2_ws/src/                ← ROS 2 源代码
-│   ├── robot_bringup/          ← 启动脚本
-│   ├── gst_receiver/           ← 视频接收
-│   ├── detection_node/         ← YOLO 检测
-│   ├── tracker_node/           ← 目标跟踪
-│   ├── behavior_node/          ← 决策层
-│   ├── visual_servo/           ← 视觉引导腿部控制
-│   └── uart_bridge/            ← 串口桥接
-│
-├── stm32_fw/                   ← STM32 固件
-├── config/                     ← 配置文件
-├── models/                     ← AI 模型
-├── scripts/                    ← 辅助脚本
-└── docs/                       ← 文档（待补充）
-```
 
----
+## 最常用命令
 
-## 🎯 核心功能
-
-✅ **视觉识别**：YOLOv8n 实时检测 COCO 80 类物体  
-✅ **目标跟踪**：ByteTrack 算法抗遮挡关联  
-✅ **腿部控制**：固定摄像头 + PID 生成 4 路 SG90 腿部动作  
-✅ **分布式系统**：PC(WSL2) + 树莓派 + STM32 协作  
-✅ **硬实时控制**：FreeRTOS 梯形速度规划  
-
----
-
-## 🚀 三步启动（硬件就绪后）
+### WSL2 构建
 
 ```bash
-# Terminal 1: 树莓派相机
-ssh ubuntu@192.168.137.100
-./scripts/start_camera_stream.sh
+source /opt/ros/jazzy/setup.bash
+export ONNXRUNTIME_ROOT=/path/to/onnxruntime
+cd /home/peter/dog/dog_dev/ros2_ws
+colcon build
+source install/setup.bash
+```
 
-# Terminal 2: 树莓派 ROS
-ros2 launch robot_bringup rpi_stack.launch.py
+### WSL2 启动视觉栈
 
-# Terminal 3: WSL2 视觉
+```bash
+source /opt/ros/jazzy/setup.bash
+cd /home/peter/dog/dog_dev
+source ros2_ws/install/setup.bash
+export ROBOT_DDS_ROLE=wsl
+source scripts/ros2_network_env.sh
 ros2 launch robot_bringup vision_stack.launch.py
 ```
 
-详见 [QUICK_START.md](QUICK_START.md)
+### 树莓派启动
 
----
+```bash
+cd /home/ubuntu/desktop_tracking_robot
+./scripts/rpi_start_camera.sh <WSL_IP> 5600
+./scripts/rpi_start_ros.sh
+```
 
-## 🔌 硬件接线
+### 无硬件联调
 
-⚠️ **当前状态**：需要完成
+```bash
+source /opt/ros/jazzy/setup.bash
+cd /home/peter/dog/dog_dev
+source ros2_ws/install/setup.bash
+ros2 launch robot_bringup test_73_complete.launch.py
+```
 
-**查看交互式接线图**：👉 [`hardware_wiring.html`](hardware_wiring.html)
+## 当前约束
 
-**主要接线任务**：
-1. STM32 ↔ 树莓派 UART (PA9/PA10 ↔ GPIO14/GPIO15)
-2. 舵机 PWM (PA0~PA3) + 独立 5V 电源
-3. 相机 USB (树莓派)
-4. MPU6050 I2C (可选)
+- `detection_node` 构建依赖 `ONNXRUNTIME_ROOT`
+- `vision_front` 是可选的进程内组合可执行文件，默认 `BUILD_VISION_FRONT=OFF`
+- `detection_viz_node` 仅用于调试，不在默认 launch 链路中
+- `robot_interfaces/srv/CalibrateCenter.srv` 目前只有接口定义，代码里还没有服务端实现
 
----
+## 文档维护规则
 
-## 📊 项目进度
-
-| 阶段 | 任务数 | 完成 | 状态 |
-|---|---|---|---|
-| 0 | 3 | 3 | ✅ |
-| 1 | 5 | 5 | ✅ |
-| 2 | 7 | 7 | ✅ |
-| 3 | 7 | 7 | ✅ |
-| 4 | 6 | 6 | ✅ |
-| 5 | 3 | 3 | ✅ |
-| 6 | 5 | 5 | ✅ |
-| 7 | 6 | 2 | 🔄 (等待硬件) |
-| **总计** | **40** | **35** | **87.5%** |
-
-详见 [progress.md](progress.md)
-
----
-
-## 🛠️ 技术栈
-
-- **硬件**: STM32F103C8T6 + 树莓派 4B + NVIDIA GPU
-- **框架**: ROS 2 Jazzy + FreeRTOS
-- **AI**: YOLOv8n + ByteTrack + ONNX Runtime
-- **通信**: ROS 2 DDS + UART + I2C
-
----
-
-## ❓ 常见问题
-
-**Q: 现在应该做什么？**  
-A: 查看 [SETUP_GUIDE.md](SETUP_GUIDE.md) → 第 2 章硬件接线
-
-**Q: 硬件接线完成后？**  
-A: 查看 [QUICK_START.md](QUICK_START.md) 的启动流程
-
-**Q: 如何调参 PID？**  
-A: 见 [QUICK_START.md](QUICK_START.md) 的「PID 快速调参」
-
-**Q: 系统架构是什么？**  
-A: 见 [architecture.md](architecture.md)
-
----
-
-## 📝 相关文档
-
-- **设置指南**: [SETUP_GUIDE.md](SETUP_GUIDE.md)
-- **快速开始**: [QUICK_START.md](QUICK_START.md)  
-- **硬件接线**: [hardware_wiring.html](hardware_wiring.html)
-- **系统架构**: [architecture.md](architecture.md)
-- **任务清单**: [task.md](task.md)
-- **项目进度**: [progress.md](progress.md)
-
----
-
-**准备好了吗？** 👉 从 [SETUP_GUIDE.md](SETUP_GUIDE.md) 开始！
+- 只要 launch、可执行文件名、topic/service、共享协议或部署脚本有变化，就同步更新顶层文档和 `docs/`
+- `progress.md` 保存当前状态快照，不再维护旧式逐任务流水账
+- `task.md` 保存当前待办，不再对应旧的阶段式生成任务模板

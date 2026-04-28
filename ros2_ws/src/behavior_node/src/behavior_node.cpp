@@ -1,6 +1,6 @@
 #include "behavior_node/behavior_node.hpp"
-#include <fstream>
-#include <sstream>
+
+#include "shared/load_trimmed_lines.hpp"
 
 namespace behavior_node {
 
@@ -108,26 +108,17 @@ bool BehaviorNode::SelectTarget(
 
 void BehaviorNode::LoadCocoClasses() {
   const std::string coco_classes_file = "models/coco_classes.txt";
-  std::ifstream file(coco_classes_file);
+  std::vector<std::string> class_names;
 
-  if (!file.is_open()) {
+  if (!project_shared::load_trimmed_lines(coco_classes_file, &class_names)) {
     RCLCPP_WARN(this->get_logger(), "Could not open COCO classes file: %s",
                 coco_classes_file.c_str());
     return;
   }
 
-  std::string line;
-  int class_id = 0;
-  while (std::getline(file, line)) {
-    // Trim whitespace
-    size_t start = line.find_first_not_of(" \t\r\n");
-    size_t end = line.find_last_not_of(" \t\r\n");
-    if (start != std::string::npos) {
-      coco_classes_[class_id] = line.substr(start, end - start + 1);
-    }
-    class_id++;
+  for (size_t i = 0; i < class_names.size(); ++i) {
+    coco_classes_[static_cast<int>(i)] = class_names[i];
   }
-  file.close();
 
   RCLCPP_DEBUG(this->get_logger(), "Loaded %zu COCO classes", coco_classes_.size());
 }

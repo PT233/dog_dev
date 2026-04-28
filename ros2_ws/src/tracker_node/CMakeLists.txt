@@ -21,7 +21,8 @@ target_include_directories(byte_tracker PUBLIC
 add_executable(tracker_node_exe src/tracker_node.cpp src/main.cpp)
 target_link_libraries(tracker_node_exe byte_tracker)
 target_include_directories(tracker_node_exe PRIVATE
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 ament_target_dependencies(tracker_node_exe rclcpp sensor_msgs robot_interfaces)
 
 install(TARGETS tracker_node_exe DESTINATION lib/${PROJECT_NAME})

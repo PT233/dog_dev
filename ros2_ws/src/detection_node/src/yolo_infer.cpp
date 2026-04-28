@@ -1,6 +1,7 @@
 #include "detection_node/yolo_infer.hpp"
-#include <fstream>
-#include <sstream>
+
+#include "shared/load_trimmed_lines.hpp"
+
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -11,16 +12,7 @@ namespace detection_node {
 YoloInfer::YoloInfer(const std::string& model_path, bool use_cuda,
                      int intra_op_threads, int inter_op_threads)
     : model_path_(model_path), cuda_enabled_(false) {
-    // Load class names
-    std::ifstream file("models/coco_classes.txt");
-    if (file.is_open()) {
-        std::string line;
-        while (std::getline(file, line)) {
-            if (!line.empty()) {
-                class_names_.push_back(line);
-            }
-        }
-        file.close();
+    if (project_shared::load_trimmed_lines("models/coco_classes.txt", &class_names_)) {
         num_classes_ = class_names_.size();
     }
 

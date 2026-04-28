@@ -31,6 +31,8 @@ target_include_directories(yolo_infer PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
   ${ONNXRUNTIME_ROOT}/include)
+target_include_directories(yolo_infer PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(yolo_infer ${OpenCV_LIBS} ${ONNXRUNTIME_LIB})
 
 # Test executable for yolo_infer
@@ -61,6 +63,8 @@ ament_target_dependencies(detection_node_exe
 target_include_directories(detection_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+target_include_directories(detection_node_exe PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(detection_node_exe detection_node_lib)
 
 # Detection visualization node executable
@@ -73,6 +77,8 @@ ament_target_dependencies(detection_viz_node_exe
 target_include_directories(detection_viz_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+target_include_directories(detection_viz_node_exe PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 
 set(_onnxruntime_targets
   yolo_infer
