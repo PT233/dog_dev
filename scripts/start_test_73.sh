@@ -77,7 +77,7 @@ cat << 'EOF'
     [detection_node] model loaded
     [tracker_node] initialized
     [behavior_node] started
-    [visual_servo_node] started
+    [leg_motion_node] started
 
 ════════════════════════════════════════════════════════════════
 

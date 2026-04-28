@@ -4,11 +4,11 @@
 模拟 uart_bridge 节点 - 用于测试环境
 
 功能：
-1. 订阅 /servo_cmd 话题（来自 visual_servo_node）
+1. 订阅 /servo_cmd 话题（来自 leg_motion_node）
 2. 发布 /servo_state 话题（模拟舵机反馈）
 3. 无需真实 UART 连接
 
-用途：快速进行端到端视觉追踪测试，而无需树莓派上的完整 ROS 代码
+用途：快速进行端到端视觉引导腿部控制测试，而无需树莓派上的完整 ROS 代码
 """
 
 import rclpy
@@ -43,8 +43,8 @@ class MockUARTBridge(Node):
             qos_profile
         )
 
-        # 模拟舵机状态
-        self.servo_angles = [90.0, 90.0, 90.0, 90.0]  # 4个舵机的当前角度
+        # 模拟 4 路腿舵机状态
+        self.servo_angles = [90.0, 90.0, 90.0, 90.0]
 
         # 定时发布状态（50Hz）
         self.timer = self.create_timer(0.02, self.publish_servo_state)
@@ -55,9 +55,9 @@ class MockUARTBridge(Node):
 
     def on_servo_cmd(self, msg: JointState):
         """
-        接收舵机命令并模拟执行
+        接收腿舵机命令并模拟执行
 
-        msg.name: ['yaw', 'pitch', 's2', 's3']
+        msg.name: ['front_left', 'front_right', 'rear_left', 'rear_right']
         msg.position: [角度(弧度), ...]
         msg.effort: [持续时间(ms), ...]
         """
@@ -74,10 +74,9 @@ class MockUARTBridge(Node):
                 step = (target - current) * 0.2  # 20% 步长
                 self.servo_angles[i] = current + step
 
-                if i < 2:  # 只打印前两个舵机（yaw, pitch）
-                    self.get_logger().debug(
-                        f'  Servo {msg.name[i]}: {current:.1f}° → {target:.1f}°'
-                    )
+                self.get_logger().debug(
+                    f'  Servo {msg.name[i]}: {current:.1f}° → {target:.1f}°'
+                )
         except Exception as e:
             self.get_logger().warn(f'Error processing servo command: {e}')
 
@@ -85,7 +84,7 @@ class MockUARTBridge(Node):
         """定期发布舵机状态"""
         msg = JointState()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.name = ['yaw', 'pitch', 's2', 's3']
+        msg.name = ['front_left', 'front_right', 'rear_left', 'rear_right']
 
         # 角度单位转换：度 → 弧度
         msg.position = [

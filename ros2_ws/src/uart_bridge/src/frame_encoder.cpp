@@ -45,27 +45,28 @@ std::vector<uint8_t> FrameEncoder::BuildFrame(uint8_t cmd_id,
     return {};
   }
 
-  // Header
+  // 帧头
   frame.push_back(UART_FRAME_HEADER_0);
   frame.push_back(UART_FRAME_HEADER_1);
 
-  // Command ID and Length
+  // 命令 ID 和 payload 长度
   frame.push_back(cmd_id);
   frame.push_back((uint8_t)payload_len);
 
-  // Payload
+  // payload 数据
   if (payload_len > 0 && payload != nullptr) {
     for (size_t i = 0; i < payload_len; ++i) {
       frame.push_back(payload[i]);
     }
   }
 
-  // CRC over CMD_ID + LEN + PAYLOAD, sent little-endian to match STM32 firmware.
+  // CRC16：覆盖 CMD_ID + LEN + PAYLOAD（即 frame[2] 起），小端序发送
+  // 与 STM32 端 FrameParser::CalculateFrameCrc() 计算范围一致
   uint16_t crc = crc16_ccitt(&frame[2], payload_len + 2);
-  frame.push_back((uint8_t)(crc & 0xFF));
-  frame.push_back((uint8_t)((crc >> 8) & 0xFF));
+  frame.push_back((uint8_t)(crc & 0xFF));        // 低字节先发
+  frame.push_back((uint8_t)((crc >> 8) & 0xFF)); // 高字节后发
 
-  // Tail
+  // 帧尾
   frame.push_back(UART_FRAME_TAIL);
 
   return frame;

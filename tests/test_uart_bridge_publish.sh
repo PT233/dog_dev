@@ -64,31 +64,31 @@ fi
 
 echo ""
 echo "========== Test 4: Verify servo_id to joint name mapping =========="
-if grep -q '"yaw"' src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ yaw joint name found"
+if grep -q '"front_left"' src/uart_bridge/src/uart_bridge_node.cpp; then
+  echo "✓ front_left joint name found"
 else
-  echo "✗ yaw joint name not found"
+  echo "✗ front_left joint name not found"
   exit 1
 fi
 
-if grep -q '"pitch"' src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ pitch joint name found"
+if grep -q '"front_right"' src/uart_bridge/src/uart_bridge_node.cpp; then
+  echo "✓ front_right joint name found"
 else
-  echo "✗ pitch joint name not found"
+  echo "✗ front_right joint name not found"
   exit 1
 fi
 
-if grep -q '"s2"' src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ s2 joint name found"
+if grep -q '"rear_left"' src/uart_bridge/src/uart_bridge_node.cpp; then
+  echo "✓ rear_left joint name found"
 else
-  echo "✗ s2 joint name not found"
+  echo "✗ rear_left joint name not found"
   exit 1
 fi
 
-if grep -q '"s3"' src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ s3 joint name found"
+if grep -q '"rear_right"' src/uart_bridge/src/uart_bridge_node.cpp; then
+  echo "✓ rear_right joint name found"
 else
-  echo "✗ s3 joint name not found"
+  echo "✗ rear_right joint name not found"
   exit 1
 fi
 

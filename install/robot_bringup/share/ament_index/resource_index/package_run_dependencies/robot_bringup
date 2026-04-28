@@ -1,1 +1,1 @@
-ros2launch;gst_receiver;stereo_splitter;detection_node;tracker_node;behavior_node;visual_servo;uart_bridge
+ros2launch;uart_bridge

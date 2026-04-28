@@ -220,7 +220,7 @@ pkill -f ros2
 2. **切换目标类别为杯子**
 3. **运行验证脚本** (verify_tracking.sh)
 
-详见 `docs/task_7_3_guide.md`
+详见 `docs/task-7-3.md`
 
 ---
 

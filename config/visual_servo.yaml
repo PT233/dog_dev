@@ -1,14 +1,19 @@
-visual_servo_node:
+leg_motion_node:
   ros__parameters:
     control_rate_hz: 30.0
     deadband_px: 5.0
     min_angle: 10.0
     max_angle: 170.0
-    yaw:
+    neutral_angle_deg: 90.0
+    stride_amplitude_max_deg: 20.0
+    turn_bias_max_deg: 12.0
+    gait_frequency_hz: 2.0
+    target_timeout_sec: 0.5
+    turn:
       kp: 0.05
       ki: 0.001
       kd: 0.02
-    pitch:
+    forward:
       kp: 0.04
       ki: 0.001
       kd: 0.02

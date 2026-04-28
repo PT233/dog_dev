@@ -66,7 +66,7 @@ echo ""
 
 # 启动 uart_bridge 节点
 # 此节点负责：
-# 1. 监听 /servo_cmd 话题（来自 visual_servo_node）
+# 1. 监听 /servo_cmd 话题（来自 leg_motion_node）
 # 2. 通过 UART 发送舵机控制命令给 STM32
 # 3. 发布 /servo_state 话题（STM32 的状态反馈）
 

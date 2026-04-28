@@ -49,7 +49,7 @@ REQUIRED_NODES=(
     "/detection_node"
     "/tracker_node"
     "/behavior_node"
-    "/visual_servo_node"
+    "/leg_motion_node"
     "/uart_bridge_node"
 )
 

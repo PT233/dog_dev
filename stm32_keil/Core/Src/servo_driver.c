@@ -1,3 +1,9 @@
+// STM32 SG90 舵机 PWM 驱动（TIM2，4 路）
+// PWM 频率：50Hz（周期 20ms），定时器时钟 1MHz（ARR=19999）
+// 脉宽与角度关系：PWM = 500 + angle × (2000/180) μs
+//   0°  → 500μs（CCR=500）
+//   90° → 1500μs（CCR=1500）
+//   180°→ 2500μs（CCR=2500）
 #include "servo_driver.h"
 
 #include "tim.h"
@@ -5,8 +11,8 @@
 #define SERVO_COUNT (4U)
 #define SERVO_MIN_ANGLE_DEG (0.0f)
 #define SERVO_MAX_ANGLE_DEG (180.0f)
-#define SERVO_CCR_BASE (500.0f)
-#define SERVO_CCR_PER_DEG (2000.0f / 180.0f)
+#define SERVO_CCR_BASE (500.0f)            // 对应 0°（0.5ms 脉宽）
+#define SERVO_CCR_PER_DEG (2000.0f / 180.0f)  // 每度对应 CCR 增量 ≈ 11.11
 
 static const uint32_t k_servo_channels[SERVO_COUNT] = {
   TIM_CHANNEL_1,

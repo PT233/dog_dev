@@ -9,7 +9,7 @@ std::vector<std::pair<int, Detection>> ByteTracker::Update(
     const std::vector<Detection>& detections) {
   std::vector<std::pair<int, Detection>> result;
 
-  // Filter high-confidence detections
+  // 阶段 1：过滤低置信度检测（低于 track_thresh_ 的检测不参与匹配）
   std::vector<Detection> high_conf;
   for (const auto& det : detections) {
     if (det.conf >= track_thresh_) {
@@ -17,7 +17,7 @@ std::vector<std::pair<int, Detection>> ByteTracker::Update(
     }
   }
 
-  // Get tracks for matching
+  // 阶段 2：获取当前所有活跃轨迹的快照，用于本帧匹配
   std::vector<TrackState> tracks;
   std::vector<int> track_ids;
   for (auto& [id, state] : active_tracks_) {
@@ -25,13 +25,14 @@ std::vector<std::pair<int, Detection>> ByteTracker::Update(
     track_ids.push_back(id);
   }
 
-  // Match with active tracks using greedy assignment
+  // 阶段 3：贪心匹配（对每个检测框，找代价最小的未匹配轨迹）
+  // 注：这是简化版，正式 ByteTrack 使用匈牙利算法；此处在目标数量少（<10）时效果相当
   std::vector<bool> matched_det(high_conf.size(), false);
   std::vector<bool> matched_track(tracks.size(), false);
 
   for (size_t i = 0; i < high_conf.size(); ++i) {
     int best_j = -1;
-    float best_cost = match_thresh_;
+    float best_cost = match_thresh_;  // 代价超过阈值则视为未匹配（1-IoU > match_thresh）
     for (size_t j = 0; j < tracks.size(); ++j) {
       if (!matched_track[j]) {
         float cost = ComputeCost(high_conf[i], tracks[j].last_detection);
@@ -53,7 +54,7 @@ std::vector<std::pair<int, Detection>> ByteTracker::Update(
     }
   }
 
-  // Create new tracks from unmatched detections
+  // 阶段 4：未匹配的检测 → 创建新轨迹（分配新 ID）
   for (size_t i = 0; i < high_conf.size(); ++i) {
     if (!matched_det[i]) {
       int new_id = next_id_++;
@@ -68,7 +69,8 @@ std::vector<std::pair<int, Detection>> ByteTracker::Update(
     }
   }
 
-  // Update unmatched tracks and remove dead ones
+  // 阶段 5：未匹配的轨迹 → miss_frames++，超过 track_buffer_ 则删除
+  // track_buffer_ 默认 30 帧（约 1 秒），允许目标短暂遮挡后恢复同一 ID
   auto it = active_tracks_.begin();
   while (it != active_tracks_.end()) {
     auto& [id, state] = *it;

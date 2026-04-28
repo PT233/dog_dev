@@ -1,11 +1,24 @@
+// 舵机梯形速度曲线轨迹规划器
+// 将目标角度和运动时长分解为每 5ms 的中间角度，驱动 servo_driver 平滑运动。
+//
+// 梯形速度曲线（Trapezoidal Velocity Profile）：
+//   总时间 T，位移 D = target - start
+//   加速段（0 ~ t1 = 0.3T）：angle = start + 0.5 × a × t²
+//   匀速段（t1 ~ t2 = 0.7T）：angle = start + 匀速段起始位移 + v_max × (t - t1)
+//   减速段（t2 ~ T）：       angle = 匀速段末 + v_max × τ - 0.5 × a × τ²（τ = t - t2）
+//
+//   v_max = D / (T × 0.7)  ←  匀速段占 40% 时间
+//   a = v_max / (T × 0.3)  ←  加速段占 30% 时间
+
 #include "traj_planner.h"
 #include "servo_driver.h"
 #include "cmsis_os.h"
 #include "stm32f1xx_hal.h"
 #include <math.h>
 
-/* Fraction of total time used for accel and decel phases each (symmetric) */
+// 加速/减速各占总时间的比例（对称梯形，匀速段占 1 - 2×0.3 = 40%）
 #define TRAJ_ACCEL_RATIO  0.3f
+// 轨迹更新周期（ms），由 FreeRTOS 定时器保证
 #define TRAJ_TICK_MS      5U
 
 TrajState g_traj_state[TRAJ_SERVO_COUNT];
@@ -45,11 +58,13 @@ void Traj_SetTarget(uint8_t id, float target_deg, uint16_t duration_ms)
     s_start_angle[id]             = g_traj_state[id].current_angle;
 
     if (T > 0.001f && fabsf(dist) > 0.01f) {
-        /* Symmetric trapezoid: V_max = D / (T * (1 - r)), a = V_max / (T * r) */
+        // 对称梯形：匀速段占 (1-2r)T，加速段占 rT
+        // v_max × (1-2r)T + v_max × rT = D  →  v_max = D / (T × (1-r))
+        // 注意：分母是 (1-r) 而非 (1-2r)，因为加速段也有位移贡献（面积=0.5×v×t）
         s_v_max[id]                  = dist / (T * (1.0f - TRAJ_ACCEL_RATIO));
         g_traj_state[id].max_accel   = s_v_max[id] / (T * TRAJ_ACCEL_RATIO);
     } else {
-        /* Negligible distance or zero duration: snap immediately */
+        // 位移极小或时长为 0：立即到位（避免除零和无意义的轨迹规划）
         s_v_max[id]                  = 0.0f;
         g_traj_state[id].max_accel   = 0.0f;
         g_traj_state[id].current_angle = target_deg;
@@ -88,15 +103,16 @@ static void Traj_Update(uint8_t id)
     float vel;
 
     if (t <= t1) {
-        /* Accel phase */
+        // 加速段：匀加速运动，v = a×t，x = 0.5×a×t²
         vel   = a * t;
         angle = s_start_angle[id] + 0.5f * a * t * t;
     } else if (t <= t2) {
-        /* Cruise phase */
+        // 匀速段：速度恒为 v_max，位移线性增长
         vel   = v;
         angle = s_start_angle[id] + 0.5f * v * t1 + v * (t - t1);
     } else {
-        /* Decel phase */
+        // 减速段：从 t2 开始减速，τ = t - t2 为段内时间
+        // 位移 = 加速段末位移 + 匀速段位移 + 减速段位移
         float tau        = t - t2;
         float dist_prior = 0.5f * v * t1 + v * (t2 - t1);
         vel   = v - a * tau;

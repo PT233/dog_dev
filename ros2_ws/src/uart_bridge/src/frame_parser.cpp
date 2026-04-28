@@ -40,6 +40,7 @@ void FrameParser::ProcessByte(uint8_t byte) {
 
     case READ_LEN:
       payload_len_ = byte;
+      // 最大合法 payload = 256 - 7（帧头2 + CMD_ID1 + LEN1 + CRC2 + 尾1）
       if (payload_len_ > UART_MAX_FRAME_LEN - 7) {
         if (error_callback_) {
           error_callback_("Payload length too large");
@@ -47,6 +48,7 @@ void FrameParser::ProcessByte(uint8_t byte) {
         Reset();
       } else {
         payload_idx_ = 0;
+        // payload 长度为 0 时直接跳到 CRC 阶段（如 QUERY 帧）
         state_ = (payload_len_ == 0) ? READ_CRC_0 : READ_PAYLOAD;
       }
       break;
@@ -64,6 +66,7 @@ void FrameParser::ProcessByte(uint8_t byte) {
       break;
 
     case READ_CRC_1: {
+      // 帧中 CRC 以小端序传输：低字节(crc_0_)先到，高字节后到
       uint16_t crc_received = ((uint16_t)byte << 8) | crc_0_;
       uint16_t crc_calculated = CalculateFrameCrc();
       if (crc_received != crc_calculated) {

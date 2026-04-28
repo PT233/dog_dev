@@ -15,6 +15,10 @@
 #include "uart_bridge/frame_encoder.hpp"
 #include "uart_bridge/uart_protocol.h"
 
+// STM32 时间戳 ↔ 树莓派 ROS 时间线性插值器
+// STM32 的 HAL_GetTick() 与树莓派系统时钟无法直接对齐，
+// 通过滑动窗口（20 个映射点）做分段线性插值，
+// 将 STM32 的毫秒时间戳转换为 ROS 时间（用于正确填写 JointState header.stamp）
 class TimestampMapper {
 private:
   struct Mapping {
@@ -23,7 +27,7 @@ private:
   };
   std::deque<Mapping> mappings_;
   std::mutex mutex_;
-  static const size_t MAX_MAPPINGS = 20;
+  static const size_t MAX_MAPPINGS = 20;  // 保留最近 20 个时间映射点
 
 public:
   void RecordMapping(uint32_t stm32_time_ms, rclcpp::Time rpi_now) {
@@ -64,6 +68,9 @@ public:
   }
 };
 
+// UART 传输延迟监控器
+// 记录从 STM32 发送时间戳到树莓派接收时间的差值，
+// 统计 min/max/avg 延迟，每 10 秒（可配置）通过 ReportStatistics() 打印
 class LatencyMonitor {
 private:
   struct LatencySample {
@@ -110,11 +117,14 @@ public:
   }
 };
 
+// 帧序列号连续性检测器
+// STM32 v2 状态帧每路舵机独立维护递增的 frame_seq，
+// 若收到的序列号与期望值不连续，计算并累计丢失帧数，用于诊断 UART 链路质量
 class FrameSequenceChecker {
 private:
   struct SequenceData {
-    uint16_t last_seq[4];
-    uint32_t drop_count;
+    uint16_t last_seq[4];   // 4 路舵机各自的上一帧序列号
+    uint32_t drop_count;    // 累计丢帧总数
     std::mutex mutex;
   };
   SequenceData seq_data_;
@@ -435,10 +445,10 @@ private:
         float angle = item->current_angle_x10 / 10.0f;
 
         std::string name;
-        if (item->servo_id == 0) name = "yaw";
-        else if (item->servo_id == 1) name = "pitch";
-        else if (item->servo_id == 2) name = "s2";
-        else if (item->servo_id == 3) name = "s3";
+        if (item->servo_id == 0) name = "front_left";
+        else if (item->servo_id == 1) name = "front_right";
+        else if (item->servo_id == 2) name = "rear_left";
+        else if (item->servo_id == 3) name = "rear_right";
         else continue;
 
         state_msg->name.push_back(name);
@@ -469,10 +479,10 @@ private:
         float angle = item->current_angle_x10 / 10.0f;
 
         std::string name;
-        if (item->servo_id == 0) name = "yaw";
-        else if (item->servo_id == 1) name = "pitch";
-        else if (item->servo_id == 2) name = "s2";
-        else if (item->servo_id == 3) name = "s3";
+        if (item->servo_id == 0) name = "front_left";
+        else if (item->servo_id == 1) name = "front_right";
+        else if (item->servo_id == 2) name = "rear_left";
+        else if (item->servo_id == 3) name = "rear_right";
         else continue;
 
         state_msg->name.push_back(name);
@@ -544,10 +554,10 @@ private:
   }
 
   uint8_t NameToServoId(const std::string& name) {
-    if (name == "yaw") return 0;
-    if (name == "pitch") return 1;
-    if (name == "s2") return 2;
-    if (name == "s3") return 3;
+    if (name == "front_left") return 0;
+    if (name == "front_right") return 1;
+    if (name == "rear_left") return 2;
+    if (name == "rear_right") return 3;
     return 0xFF;
   }
 

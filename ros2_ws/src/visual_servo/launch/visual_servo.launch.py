@@ -11,7 +11,7 @@ def generate_launch_description():
     visual_servo_node = Node(
         package='visual_servo',
         executable='visual_servo_node_exe',
-        name='visual_servo_node',
+        name='leg_motion_node',
         output='screen',
         parameters=[config_file]
     )

@@ -2,7 +2,7 @@
 
 **最后更新**：2026-04-24  
 **项目代号**：`desktop_tracking_robot` v3.0  
-**目标**：桌面玩具机器人基于双目摄像头识别 COCO 80 类物体并用舵机持续跟随
+**目标**：桌面玩具机器人基于固定双目摄像头识别 COCO 80 类物体，并驱动 4 路 SG90 腿部舵机完成朝向目标的移动
 
 ---
 
@@ -29,7 +29,7 @@
 | 树莓派 4B | 1 | 2GB RAM + 4GB Swap | 相机接入和协议桥接 |
 | STM32F103C8T6 | 1 | 64KB Flash / 20KB RAM | 实时舵机控制 |
 | USB 双目摄像头 | 1 | 640×480 @30fps | 视觉输入 |
-| SG90 舵机 | 4 | 5V, 0.5~2.5ms 脉宽 | Yaw(1) + Pitch(1) + 预留(2) |
+| SG90 舵机 | 4 | 5V, 0.5~2.5ms 脉宽 | front_left + front_right + rear_left + rear_right |
 | MPU6050 | 1 | I2C 接口 | 姿态传感器（可选） |
 | USB-TTL 模块 | 1 | 3.3V 逻辑 | 调试串口 |
 | 网线 | 1 | RJ45 | PC ↔ 树莓派 |
@@ -82,15 +82,15 @@
                        │
         ┌──────────────▼───────────────┐
         │   STM32F103C8T6               │
-        │  FreeRTOS 舵机控制器          │
+        │  FreeRTOS 四腿舵机控制器      │
         │  PWM 50Hz + UART 通信         │
         └──────────────┬───────────────┘
                        │ PWM (PA0~PA3)
             ┌──────────┼──────────┐
             │          │          │
       ┌─────▼─┐  ┌──────▼──┐  ┌─▼────────┐
-      │ SG90  │  │  SG90   │  │预留(2路) │
-      │ Yaw   │  │ Pitch   │  │          │
+      │ SG90  │  │  SG90   │  │ SG90×2   │
+      │ 前左腿 │  │ 前右腿   │  │ 后左/后右 │
       └───────┘  └─────────┘  └──────────┘
 ```
 
@@ -104,10 +104,10 @@
 
 | STM32 引脚 | 功能 | 外设 | 备注 |
 |---|---|---|---|
-| PA0 | TIM2_CH1 | SG90 Yaw | PWM 输出 |
-| PA1 | TIM2_CH2 | SG90 Pitch | PWM 输出 |
-| PA2 | TIM2_CH3 | 预留 | PWM 输出 |
-| PA3 | TIM2_CH4 | 预留 | PWM 输出 |
+| PA0 | TIM2_CH1 | SG90 front_left | PWM 输出 |
+| PA1 | TIM2_CH2 | SG90 front_right | PWM 输出 |
+| PA2 | TIM2_CH3 | SG90 rear_left | PWM 输出 |
+| PA3 | TIM2_CH4 | SG90 rear_right | PWM 输出 |
 | PA9 | USART1_TX | 树莓派 RXD | 波特率 921600 |
 | PA10 | USART1_RX | 树莓派 TXD | 波特率 921600 |
 | PB12/PB13 | I2C2 | MPU6050 (可选) | I2C 地址 0x68 |
@@ -455,13 +455,13 @@ ros2 topic echo /servo_cmd         # 应显示舵机命令
 文件：`config/visual_servo.yaml`
 
 ```yaml
-visual_servo_node:
+leg_motion_node:
   ros__parameters:
-    yaw:
+    turn:
       kp: 0.05    # 比例增益
       ki: 0.001   # 积分增益
       kd: 0.02    # 微分增益
-    pitch:
+    forward:
       kp: 0.04
       ki: 0.001
       kd: 0.02
@@ -484,7 +484,7 @@ visual_servo_node:
 
 3. **动态加载参数**
    ```bash
-   ros2 param set /visual_servo_node yaw.kp 0.06
+   ros2 param set /leg_motion_node turn.kp 0.06
    ```
 
 ### 7.3 调参结果记录

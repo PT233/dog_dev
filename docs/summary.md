@@ -231,11 +231,11 @@ ros2 topic echo /servo_state
 
 | 文档 | 内容 | 用途 |
 |-----|------|------|
-| `IMPLEMENTATION_REPORT.md` | 完整实现报告 | 技术深入了解 |
-| `TIME_SYNC_AND_TRANSPORT.md` | 时间同步方案分析 | 架构理解 |
-| `UART_PACKET_LOSS_ANALYSIS.md` | 丢包风险分析 | 可靠性评估 |
-| `ROS2_TOPOLOGY.md` | 节点拓扑 | 系统架构 |
-| `UART_FILES_OVERVIEW.md` | 文件清单 | 代码导航 |
+| `implementation.md` | 完整实现报告 | 技术深入了解 |
+| `time-sync.md` | 时间同步方案分析 | 架构理解 |
+| `uart-packet-loss.md` | 丢包风险分析 | 可靠性评估 |
+| `ros2-topology.md` | 节点拓扑 | 系统架构 |
+| `uart-files.md` | 文件清单 | 代码导航 |
 
 ---
 
@@ -335,8 +335,8 @@ ros2 topic echo /servo_state
 ## 📞 问题排查
 
 如遇到问题，参考：
-- `IMPLEMENTATION_REPORT.md` 的"故障诊断指南"章节
-- `TIME_SYNC_AND_TRANSPORT.md` 的"已知问题"部分
+- `implementation.md` 的"故障诊断指南"章节
+- `time-sync.md` 的"已知问题"部分
 
 ---
 

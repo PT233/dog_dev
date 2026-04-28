@@ -50,17 +50,17 @@ else
   exit 1
 fi
 
-if grep -q '"yaw".*0' src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ yaw→0 mapping found"
+if grep -q '"front_left".*0' src/uart_bridge/src/uart_bridge_node.cpp; then
+  echo "✓ front_left→0 mapping found"
 else
-  echo "✗ yaw→0 mapping not found"
+  echo "✗ front_left→0 mapping not found"
   exit 1
 fi
 
-if grep -q '"pitch".*1' src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ pitch→1 mapping found"
+if grep -q '"front_right".*1' src/uart_bridge/src/uart_bridge_node.cpp; then
+  echo "✓ front_right→1 mapping found"
 else
-  echo "✗ pitch→1 mapping not found"
+  echo "✗ front_right→1 mapping not found"
   exit 1
 fi
 

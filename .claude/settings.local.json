@@ -94,5 +94,9 @@
       "Read(**/*.key)",
       "Read(**/*.pem)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "tessl"
+  ],
+  "enableAllProjectMcpServers": true
 }

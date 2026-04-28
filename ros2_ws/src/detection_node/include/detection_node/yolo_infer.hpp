@@ -1,5 +1,9 @@
 #pragma once
 
+// YOLOv8 ONNX Runtime 推理封装
+// 负责图像预处理（letterbox）、模型推理和后处理（NMS、坐标还原）。
+// 支持 CUDAExecutionProvider（GPU）和 CPU 推理，优先尝试 CUDA。
+
 #include <string>
 #include <vector>
 #include <memory>
@@ -8,24 +12,34 @@
 
 namespace detection_node {
 
+// 单个检测结果（包含 OpenCV 矩形框、类别 ID 和置信度）
 struct Detection {
     cv::Rect bbox;
     int class_id;
-    float confidence;
+    float confidence;  // objectness × max_class_prob
 };
 
+// Letterbox 预处理参数（保持宽高比缩放时的缩放比例和 padding 量）
+// 后处理还原坐标时使用：real_x = (pred_x - pad_x) / scale
 struct LetterboxParams {
-    float scale;
-    int pad_x;
-    int pad_y;
+    float scale;  // 缩放比例（原始尺寸 × scale = 模型输入尺寸）
+    int pad_x;    // 水平 padding（像素）
+    int pad_y;    // 垂直 padding（像素）
 };
 
+// YOLOv8n 推理器（ONNX Runtime）
+// 模型输入：640×640×3 (CHW, float32, 归一化至 [0,1])
+// 模型输出：[1, 84, 8400]（84 = 4 坐标 + 80 类别分数）
 class YoloInfer {
 public:
+    // model_path: ONNX 模型文件路径（如 "models/yolov8n.onnx"）
+    // use_cuda: 是否尝试启用 CUDAExecutionProvider
+    // intra/inter_op_threads: ONNX Runtime 线程数配置
     YoloInfer(const std::string& model_path, bool use_cuda = false,
               int intra_op_threads = 1, int inter_op_threads = 1);
     ~YoloInfer();
 
+    // 对输入 BGR 图像执行推理，返回过滤后的检测列表（已做 NMS）
     std::vector<Detection> Infer(const cv::Mat& image);
     bool IsCudaEnabled() const { return cuda_enabled_; }
     int GetNumClasses() const { return num_classes_; }

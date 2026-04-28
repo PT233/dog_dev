@@ -4,7 +4,7 @@
 
 **Version**: 3.0 | **Status**: 功能完整，调试就绪 | **Last Updated**: 2026-04-24
 
-Desktop tracking robot for real-time object detection and servo following with ROS 2, Raspberry Pi, and STM32.
+Desktop tracking robot for real-time object detection and fixed-camera leg motion control with ROS 2, Raspberry Pi, and STM32.
 
 ---
 
@@ -49,7 +49,7 @@ Desktop tracking robot for real-time object detection and servo following with R
 │   ├── detection_node/         ← YOLO 检测
 │   ├── tracker_node/           ← 目标跟踪
 │   ├── behavior_node/          ← 决策层
-│   ├── visual_servo/           ← PID 控制
+│   ├── visual_servo/           ← 视觉引导腿部控制
 │   └── uart_bridge/            ← 串口桥接
 │
 ├── stm32_fw/                   ← STM32 固件
@@ -65,7 +65,7 @@ Desktop tracking robot for real-time object detection and servo following with R
 
 ✅ **视觉识别**：YOLOv8n 实时检测 COCO 80 类物体  
 ✅ **目标跟踪**：ByteTrack 算法抗遮挡关联  
-✅ **视觉伺服**：PID 控制舵机平滑跟随  
+✅ **腿部控制**：固定摄像头 + PID 生成 4 路 SG90 腿部动作  
 ✅ **分布式系统**：PC(WSL2) + 树莓派 + STM32 协作  
 ✅ **硬实时控制**：FreeRTOS 梯形速度规划  
 

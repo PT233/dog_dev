@@ -73,12 +73,12 @@ python3 scripts/test_uart_rpi.py
 ## 文档和测试同步
 
 - [ ] 更新旧文档中仍写 `0x81` 为主要状态帧的说明，改为 `0x82`。
-- [ ] 更新 `docs/task_2_1_uart_test.md` 的预期输出，加入握手步骤。
+- [ ] 更新 `docs/task-2-1-uart.md` 的预期输出，加入握手步骤。
 - [ ] 确认三份协议头保持一致：
   - `shared/uart_protocol.h`
   - `stm32_keil/Core/Inc/uart_protocol.h`
   - `ros2_ws/src/uart_bridge/include/uart_bridge/uart_protocol.h`
-- [ ] 把本次握手流程补充进 `docs/UART_FILES_OVERVIEW.md`。
+- [ ] 把本次握手流程补充进 `docs/uart-files.md`。
 
 ## 可选增强
 

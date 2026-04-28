@@ -78,11 +78,11 @@ bool BehaviorNode::SelectTarget(
   int best_idx = -1;
   float max_area = 0.0f;
 
-  // Find largest detection matching target class_id
+  // 策略：从同类别目标中选面积最大的（即最近/最显著的目标）
+  // 面积大通常意味着目标距摄像头更近，是最优跟踪候选
   for (size_t i = 0; i < detections.detections.size(); ++i) {
     const auto& det = detections.detections[i];
 
-    // Filter by class_id
     if (det.class_id != target_class_id_) {
       continue;
     }

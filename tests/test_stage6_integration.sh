@@ -1,6 +1,6 @@
 #!/bin/bash
 # Stage 6 Integration Test
-# Tests: behavior_node + visual_servo_node communication
+# Tests: behavior_node + leg motion controller communication
 
 set -e
 
@@ -13,7 +13,7 @@ echo "Test 1: behavior_node initialization"
 timeout 3 ros2 run behavior_node behavior_node_exe 2>&1 | head -5 && echo "✓ PASS" || echo "✗ FAIL"
 
 echo ""
-echo "Test 2: visual_servo_node initialization"
+echo "Test 2: leg_motion_node initialization"
 timeout 3 ros2 run visual_servo visual_servo_node_exe 2>&1 | head -5 && echo "✓ PASS" || echo "✗ FAIL"
 
 echo ""

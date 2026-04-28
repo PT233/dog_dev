@@ -100,7 +100,7 @@ ros2 launch robot_bringup vision_stack.launch.py
 # [INFO] detection_node: model loaded
 # [INFO] tracker_node: initialized
 # [INFO] behavior_node: started
-# [INFO] visual_servo_node: started
+# [INFO] leg_motion_node: started
 ```
 
 ### Terminal 4：WSL2 - 验证系统（可选）
@@ -137,11 +137,11 @@ ros2 topic echo /servo_cmd
 ### 参数调整
 ```bash
 # 查看当前参数
-ros2 param list /visual_servo_node
+ros2 param list /leg_motion_node
 
 # 动态修改参数（无需重启）
-ros2 param set /visual_servo_node yaw.kp 0.06
-ros2 param set /visual_servo_node pitch.ki 0.002
+ros2 param set /leg_motion_node turn.kp 0.06
+ros2 param set /leg_motion_node forward.ki 0.002
 ```
 
 ### 调试工具
@@ -256,8 +256,8 @@ ros2 topic echo /detections --limit 5
 rqt_plot /pixel_error/x /pixel_error/y
 
 # 另一个 Terminal 动态调整参数
-ros2 param set /visual_servo_node yaw.kp 0.06
-ros2 param set /visual_servo_node yaw.kd 0.03
+ros2 param set /leg_motion_node turn.kp 0.06
+ros2 param set /leg_motion_node turn.kd 0.03
 
 # 观察曲线变化，找到最优参数
 ```

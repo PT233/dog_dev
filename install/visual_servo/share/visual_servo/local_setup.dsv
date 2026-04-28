@@ -1,2 +1,1 @@
-source;share/visual_servo/environment/ament_prefix_path.sh
-source;share/visual_servo/environment/path.sh
+/home/peter/dog/dog_dev/build/visual_servo/ament_cmake_environment_hooks/local_setup.dsv

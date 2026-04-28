@@ -103,7 +103,8 @@ std::vector<Detection> YoloInfer::Infer(const cv::Mat& image) {
     std::vector<float> model_input;
     model_input.reserve(1 * 3 * 640 * 640);
 
-    // HWC to CHW
+    // HWC → CHW 格式转换：OpenCV 内存布局是 HWC（H×W×C），
+    // ONNX Runtime 期望 NCHW（批次×通道×高×宽），需要转置
     const int height = 640, width = 640, channels = 3;
     for (int c = 0; c < channels; ++c) {
         for (int h = 0; h < height; ++h) {
@@ -127,7 +128,8 @@ std::vector<Detection> YoloInfer::Infer(const cv::Mat& image) {
     const float* output_data = output_tensors[0].GetTensorMutableData<float>();
     std::vector<int64_t> output_shape = output_tensors[0].GetTensorTypeAndShapeInfo().GetShape();
 
-    // Output shape: [1, 84, 8400] -> transpose to [8400, 84]
+    // 模型输出 shape: [1, 84, 8400]，转置为 [8400, 84]
+    // 原始格式（列优先）不便于逐检测框遍历，转置后每行对应一个候选框
     std::vector<float> outputs(output_shape[1] * output_shape[2]);
     for (int i = 0; i < output_shape[1]; ++i) {
         for (int j = 0; j < output_shape[2]; ++j) {
@@ -168,7 +170,8 @@ std::vector<Detection> YoloInfer::PostProcess(const std::vector<float>& outputs,
         float confidence = conf * max_prob;
         if (confidence < 0.5f) continue;
 
-        // De-letterbox: remove padding
+        // de-letterbox：还原 padding 偏移再除以缩放比例，
+        // 将模型坐标系（640×640）映射回原始图像坐标系
         float real_cx = (cx - params.pad_x) / params.scale;
         float real_cy = (cy - params.pad_y) / params.scale;
         float real_w = w / params.scale;

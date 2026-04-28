@@ -34,7 +34,7 @@ typedef enum {
 } UartSystemState;
 
 typedef struct __attribute__((packed)) {
-    uint8_t servo_id;
+    uint8_t servo_id;      /* 0=front_left, 1=front_right, 2=rear_left, 3=rear_right */
     int16_t angle_x10;
     uint16_t duration_ms;
 } ServoCmdItem;

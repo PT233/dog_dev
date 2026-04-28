@@ -63,6 +63,8 @@ void DetectionNode::ImageCallback(sensor_msgs::msg::Image::UniquePtr msg) {
 
     {
         std::lock_guard<std::mutex> lock(queue_mutex_);
+        // 队列限深 2：避免推理线程跟不上时内存无限增长（直接丢弃较旧的帧）
+        // 采用 UniquePtr 减少拷贝，图像数据在所有权转移后不再被复制
         if (image_queue_.size() < 2) {
             image_queue_.push(std::move(msg));
             cv_.notify_one();
