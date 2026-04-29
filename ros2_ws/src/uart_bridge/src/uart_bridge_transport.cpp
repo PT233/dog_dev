@@ -15,6 +15,7 @@ UartBridgeNode::UartBridgeNode()
       parser_(nullptr),
       handshake_complete_(false),
       stm32_system_state_(UART_SYSTEM_STATE_BOOT_CENTERING) {
+  // 参数默认面向树莓派 UART1。WSL/USB 转串口调试时可在 YAML 中改成 /dev/ttyUSB*。
   declare_parameter<std::string>("uart_device", "/dev/ttyAMA0");
   declare_parameter<int>("uart_baudrate", 921600);
   declare_parameter<double>("stats_report_interval_sec", 10.0);
@@ -56,12 +57,14 @@ UartBridgeNode::UartBridgeNode()
   cfsetospeed(&tty, baud);
   cfsetispeed(&tty, baud);
 
+  // 原始 8N1 串口配置：8 位数据、无校验、1 位停止位、允许本地读写。
   tty.c_cflag &= ~PARENB;
   tty.c_cflag &= ~CSTOPB;
   tty.c_cflag &= ~CSIZE;
   tty.c_cflag |= CS8;
   tty.c_cflag |= (CREAD | CLOCAL);
 
+  // 非阻塞式短超时读取，读线程可以及时响应 rclcpp::ok() 退出。
   tty.c_cc[VTIME] = 1;
   tty.c_cc[VMIN] = 0;
 
@@ -77,6 +80,7 @@ UartBridgeNode::UartBridgeNode()
               device.c_str(), baudrate, UART_PROTOCOL_VERSION);
 
   parser_ = std::make_unique<FrameParser>();
+  // 解析器只负责字节流组帧；业务语义在 OnFrameReceived 中处理。
   parser_->SetFrameCallback([this](uint8_t cmd_id, const uint8_t* payload, size_t len) {
     OnFrameReceived(cmd_id, payload, len);
   });
@@ -87,6 +91,7 @@ UartBridgeNode::UartBridgeNode()
 
   encoder_ = std::make_unique<FrameEncoder>();
 
+  // 使用 SensorDataQoS 接收控制命令，优先保持低延迟，过期帧可被新帧覆盖。
   servo_cmd_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
       "/servo_cmd",
       rclcpp::SensorDataQoS(),
@@ -96,6 +101,7 @@ UartBridgeNode::UartBridgeNode()
 
   rclcpp::QoS qos(10);
   qos.reliable();
+  // 舵机状态是控制闭环的反馈，使用 reliable 避免本机进程间传输丢消息。
   servo_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(
       "/servo_state", qos);
 
@@ -111,6 +117,7 @@ UartBridgeNode::UartBridgeNode()
         }
       });
 
+  // 串口读取是阻塞 I/O，放到独立线程，避免占用 ROS executor。
   read_thread_ = std::thread(&UartBridgeNode::ReadLoop, this);
   SendInitHandshake();
 }
@@ -134,6 +141,7 @@ void UartBridgeNode::ReadLoop() {
   while (rclcpp::ok()) {
     int n = read(uart_fd_, buf, sizeof(buf));
     if (n > 0) {
+      // UART 是无边界字节流，必须逐字节推进协议状态机。
       for (int i = 0; i < n; ++i) {
         parser_->ProcessByte(buf[i]);
       }
@@ -145,6 +153,7 @@ void UartBridgeNode::ReadLoop() {
 }
 
 uint8_t UartBridgeNode::NameToServoId(const std::string& name) {
+  // 关节名映射集中放在 shared/servo_names.hpp，避免 ROS 和 STM32 顺序漂移。
   int servo_id = project_shared::servo_name_to_id(name);
   if (servo_id < 0) {
     return 0xFF;

@@ -16,10 +16,12 @@ constexpr size_t kImageBufferSize = 15;
 constexpr uint64_t kFallbackToleranceNs = 250000000ULL;  // 250 ms
 
 uint64_t StampToNs(const builtin_interfaces::msg::Time& stamp) {
+  // ROS 时间戳转成纳秒整数，便于比较和求差。
   return static_cast<uint64_t>(stamp.sec) * 1000000000ULL + stamp.nanosec;
 }
 
 cv::Scalar ColorForDetection(const robot_interfaces::msg::SimpleDetection& det) {
+  // 有 track_id 时按轨迹着色，否则按 class_id 着色，便于观察 ID 是否稳定。
   const std::string key = det.track_id.empty()
                               ? std::to_string(det.class_id)
                               : det.track_id;
@@ -31,6 +33,7 @@ cv::Scalar ColorForDetection(const robot_interfaces::msg::SimpleDetection& det) 
 }
 
 std::string BuildLabel(const robot_interfaces::msg::SimpleDetection& det) {
+  // 标签格式尽量短，避免遮挡图像主体：ID、类别、置信度。
   std::ostringstream oss;
   if (!det.track_id.empty()) {
     oss << "ID:" << det.track_id << " ";
@@ -48,7 +51,7 @@ DetectionVizNode::DetectionVizNode(const rclcpp::NodeOptions& options)
     : rclcpp::Node("detection_viz_node", options) {
   auto qos = rclcpp::SensorDataQoS();
 
-  // Create subscriptions
+  // 原始图像用于叠加绘制，跟踪结果用于确定框位置和 ID。
   image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
     "/camera/image_mono", qos,
     std::bind(&DetectionVizNode::OnImage, this, std::placeholders::_1));
@@ -57,7 +60,7 @@ DetectionVizNode::DetectionVizNode(const rclcpp::NodeOptions& options)
     "/tracked_objects", rclcpp::QoS(5).reliable(),
     std::bind(&DetectionVizNode::OnDetections, this, std::placeholders::_1));
 
-  // Create publisher
+  // 发布叠加后的图像，供 rqt_image_view 或录包检查视觉链路。
   image_pub_ = this->create_publisher<sensor_msgs::msg::Image>(
     "/camera/image_detected", qos);
 
@@ -73,6 +76,7 @@ void DetectionVizNode::OnImage(const sensor_msgs::msg::Image::SharedPtr msg) {
 
   std::lock_guard<std::mutex> lock(image_buffer_mutex_);
   image_buffer_.push_back(msg);
+  // 固定缓存长度，防止可视化节点长时间运行时积累图像内存。
   while (image_buffer_.size() > kImageBufferSize) {
     image_buffer_.pop_front();
   }
@@ -104,6 +108,7 @@ sensor_msgs::msg::Image::SharedPtr DetectionVizNode::FindImageForStamp(
 
   const uint64_t target_ns = StampToNs(stamp);
   for (auto it = image_buffer_.rbegin(); it != image_buffer_.rend(); ++it) {
+    // 先从最新图像往回找精确时间戳匹配。
     if (StampToNs((*it)->header.stamp) == target_ns) {
       return *it;
     }
@@ -111,6 +116,7 @@ sensor_msgs::msg::Image::SharedPtr DetectionVizNode::FindImageForStamp(
 
   sensor_msgs::msg::Image::SharedPtr fallback = nullptr;
   uint64_t best_diff = UINT64_MAX;
+  // 检测和图像时间戳偶尔不完全一致时，允许一个小容差内最近帧兜底。
   for (auto it = image_buffer_.rbegin(); it != image_buffer_.rend(); ++it) {
     const uint64_t image_ns = StampToNs((*it)->header.stamp);
     const uint64_t diff = (image_ns > target_ns) ? (image_ns - target_ns) : (target_ns - image_ns);
@@ -131,6 +137,7 @@ void DetectionVizNode::PublishOverlay(
     const robot_interfaces::msg::SimpleDetection2DArray::SharedPtr& detections_msg) {
   auto overlay_msg = std::make_unique<sensor_msgs::msg::Image>(*image_msg);
   if (overlay_msg->encoding != "bgr8") {
+    // 当前绘制逻辑按 BGR 三通道写像素，非 bgr8 时直接透传，避免错误解释内存。
     RCLCPP_WARN_THROTTLE(
         this->get_logger(), *this->get_clock(), 2000,
         "Expected bgr8 image for overlay, got '%s'; forwarding raw image",
@@ -147,6 +154,7 @@ void DetectionVizNode::PublishOverlay(
       overlay_msg->step);
 
   for (const auto& det : detections_msg->detections) {
+    // 中心点宽高格式转为左上/右下角，并限制在图像边界内。
     const int x1 = std::max(0, static_cast<int>(std::lround(det.center_x - det.width * 0.5f)));
     const int y1 = std::max(0, static_cast<int>(std::lround(det.center_y - det.height * 0.5f)));
     const int x2 = std::min(

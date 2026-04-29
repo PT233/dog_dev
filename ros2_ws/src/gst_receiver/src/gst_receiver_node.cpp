@@ -6,13 +6,13 @@ GstReceiverNode::GstReceiverNode(const rclcpp::NodeOptions& options)
     : Node("gst_receiver_node", options), pipeline_(nullptr), bus_(nullptr) {
   RCLCPP_INFO(this->get_logger(), "gst_receiver_node started");
 
-  // Create image publisher
+  // 发布完整左右拼接图像，后续 stereo_splitter 会取左半幅。
   image_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/stereo/image_raw", rclcpp::SensorDataQoS());
 
-  // Initialize GStreamer
+  // 初始化 GStreamer，全进程只需要一次，但重复调用是安全的。
   gst_init(nullptr, nullptr);
 
-  // Try hardware decoding (nvh264dec), fall back to software if failed
+  // 优先硬解码以降低 CPU 占用；没有 NVIDIA 插件时自动回退软件解码。
   if (!try_build_pipeline(true)) {
     RCLCPP_WARN(this->get_logger(), "nvh264dec unavailable, falling back to software decoding");
     if (!try_build_pipeline(false)) {
@@ -23,18 +23,18 @@ GstReceiverNode::GstReceiverNode(const rclcpp::NodeOptions& options)
 
   RCLCPP_INFO(this->get_logger(), "Using %s decoding (H.264)", hw_decode_enabled_ ? "hardware" : "software");
 
-  // Get appsink element
+  // appsink 以回调方式把解码后的 BGR 帧交给 ROS 节点。
   GstElement *appsink = gst_bin_get_by_name(GST_BIN(pipeline_), "sink");
   if (appsink) {
     g_signal_connect(appsink, "new-sample", G_CALLBACK(on_new_sample), this);
     gst_object_unref(appsink);
   }
 
-  // Add bus watch
+  // bus watch 负责捕获 pipeline 错误，避免解码失败时无日志。
   bus_ = gst_pipeline_get_bus(GST_PIPELINE(pipeline_));
   gst_bus_add_watch(bus_, on_bus_message, this);
 
-  // Start pipeline
+  // pipeline 进入 PLAYING 后开始接收 UDP 5600 端口数据。
   gst_element_set_state(pipeline_, GST_STATE_PLAYING);
   RCLCPP_INFO(this->get_logger(), "GStreamer pipeline started, publishing to /stereo/image_raw");
 }
@@ -53,6 +53,7 @@ GstReceiverNode::~GstReceiverNode() {
 bool GstReceiverNode::try_build_pipeline(bool use_hw) {
   std::string pipeline_str;
   if (use_hw) {
+    // 硬解路径：RTP 抖动缓冲 -> H264 解包/解析 -> NVIDIA 解码 -> 下载到 CPU BGR。
     pipeline_str =
       "udpsrc port=5600 caps=\"application/x-rtp, media=video, "
       "encoding-name=H264, payload=96\" ! "
@@ -63,6 +64,7 @@ bool GstReceiverNode::try_build_pipeline(bool use_hw) {
       "videoconvert ! video/x-raw,format=BGR ! "
       "appsink name=sink emit-signals=true sync=false max-buffers=2 drop=true";
   } else {
+    // 软件解码路径：avdec_h264 使用 CPU 解码，兼容无 NVIDIA GPU 的开发环境。
     pipeline_str =
       "udpsrc port=5600 caps=\"application/x-rtp, media=video, "
       "encoding-name=H264, payload=96\" ! "
@@ -89,6 +91,7 @@ bool GstReceiverNode::try_build_pipeline(bool use_hw) {
 
   GstStateChangeReturn ret = gst_element_set_state(p, GST_STATE_PAUSED);
   if (ret == GST_STATE_CHANGE_FAILURE) {
+    // 能解析不代表能运行，先切到 PAUSED 验证插件和 caps 能否协商。
     RCLCPP_DEBUG(this->get_logger(), "Failed to set pipeline to PAUSED state");
     gst_element_set_state(p, GST_STATE_NULL);
     gst_object_unref(p);
@@ -135,13 +138,13 @@ void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data) {
     gst_structure_get_int(structure, "width", &width);
     gst_structure_get_int(structure, "height", &height);
 
-    // Map buffer and create cv::Mat (pipeline output is fixed to BGR)
+    // 映射 buffer 并创建 cv::Mat 视图，pipeline 输出已固定为 BGR。
     GstMapInfo map;
     if (gst_buffer_map(buffer, &map, GST_MAP_READ)) {
-      // Pipeline output is fixed to BGR format via videoconvert
+      // Mat 只引用 GStreamer buffer 数据，发布前需要复制到 ROS Image。
       cv::Mat frame = cv::Mat(height, width, CV_8UC3, map.data);
 
-      // Convert to ROS Image message
+      // 转为 ROS Image，frame_id 统一写 camera，供下游视觉节点沿用。
       auto image_msg = std::make_unique<sensor_msgs::msg::Image>();
       image_msg->header.stamp = node->now();
       image_msg->header.frame_id = "camera";
@@ -162,4 +165,3 @@ void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data) {
     gst_sample_unref(sample);
   }
 }
-

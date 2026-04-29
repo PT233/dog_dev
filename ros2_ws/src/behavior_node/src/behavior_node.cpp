@@ -6,7 +6,7 @@ namespace behavior_node {
 
 BehaviorNode::BehaviorNode(const rclcpp::NodeOptions& options)
     : rclcpp::Node("behavior_node", options) {
-  // Load parameters
+  // 图像尺寸和中心点来自 YAML；像素误差以该中心点为零点。
   this->declare_parameter<int>("image_width", 320);
   this->declare_parameter<int>("image_height", 480);
   this->declare_parameter<int>("center_x", 160);
@@ -17,21 +17,21 @@ BehaviorNode::BehaviorNode(const rclcpp::NodeOptions& options)
   center_x_ = this->get_parameter("center_x").as_int();
   center_y_ = this->get_parameter("center_y").as_int();
 
-  // Load COCO class names
+  // 载入 COCO 类别名，服务切换目标类别时用名称查 ID。
   LoadCocoClasses();
 
-  // Create subscription to tracked objects
+  // 订阅跟踪后的检测结果，输入已经带 track_id。
   auto qos = rclcpp::SensorDataQoS();
   tracked_objects_sub_ =
     this->create_subscription<robot_interfaces::msg::SimpleDetection2DArray>(
       "/tracked_objects", qos,
       std::bind(&BehaviorNode::OnTrackedObjects, this, std::placeholders::_1));
 
-  // Create publisher for pixel error
+  // 输出给视觉伺服节点的像素误差：(目标中心 - 画面中心)。
   pixel_error_pub_ =
     this->create_publisher<geometry_msgs::msg::Vector3>("/pixel_error", rclcpp::QoS(5));
 
-  // Create service for setting target class
+  // 运行中可通过服务把目标从 person 切换到其他 COCO 类别。
   set_target_class_srv_ =
     this->create_service<robot_interfaces::srv::SetTargetClass>(
       "/set_target_class",
@@ -48,11 +48,12 @@ BehaviorNode::BehaviorNode(const rclcpp::NodeOptions& options)
 void BehaviorNode::OnTrackedObjects(
     const robot_interfaces::msg::SimpleDetection2DArray::SharedPtr msg) {
   if (!msg || msg->detections.empty()) {
+    // 没有跟踪结果时不发布误差，控制节点会按超时逻辑停止步态输出。
     RCLCPP_INFO(this->get_logger(), "No target");
     return;
   }
 
-  // Select target from detections
+  // 从本帧所有检测中选出当前类别的最佳目标。
   if (SelectTarget(*msg)) {
     std::string class_name = "unknown";
     if (coco_classes_.count(target_class_id_)) {
@@ -62,7 +63,7 @@ void BehaviorNode::OnTrackedObjects(
                 "Target: id=%d, center=(%d, %d), class=%s",
                 current_track_id_, target_cx_, target_cy_, class_name.c_str());
 
-    // Compute and publish pixel error
+    // 像素误差保持像素单位，控制节点再用 PID 转成角度命令。
     auto error = geometry_msgs::msg::Vector3();
     error.x = target_cx_ - center_x_;
     error.y = target_cy_ - center_y_;
@@ -101,6 +102,7 @@ bool BehaviorNode::SelectTarget(
   const auto& target = detections.detections[best_idx];
   target_cx_ = static_cast<int>(target.center_x);
   target_cy_ = static_cast<int>(target.center_y);
+  // track_id 是消息字段中的字符串，行为节点只保存为整数用于日志显示。
   current_track_id_ = std::stoi(target.track_id);
 
   return true;
@@ -117,6 +119,7 @@ void BehaviorNode::LoadCocoClasses() {
   }
 
   for (size_t i = 0; i < class_names.size(); ++i) {
+    // COCO 文件行号即 class_id，保持与 YOLO 模型输出一致。
     coco_classes_[static_cast<int>(i)] = class_names[i];
   }
 
@@ -136,7 +139,7 @@ void BehaviorNode::OnSetTargetClass(
   }
 
   target_class_id_ = class_id;
-  current_track_id_ = -1;  // Reset current tracking
+  current_track_id_ = -1;  // 切换类别后丢弃旧目标 ID，等待下一帧重新选择。
   response->success = true;
   response->message = "Target class changed to: " + request->class_name;
   RCLCPP_INFO(this->get_logger(), "Target class changed to: %s (class_id=%d)",

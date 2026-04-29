@@ -8,22 +8,25 @@
 
 namespace tracker_node {
 
+// 目标跟踪节点
+// 输入：/detections，来自 YOLO 检测节点；
+// 输出：/tracked_objects，保留原检测框并填入稳定 track_id。
 class TrackerNode : public rclcpp::Node {
 public:
   TrackerNode(const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
 
 private:
-  // ROS 2 subscriptions and publishers
+  // ROS 2 订阅和发布句柄。
   rclcpp::Subscription<robot_interfaces::msg::SimpleDetection2DArray>::SharedPtr detections_sub_;
   rclcpp::Publisher<robot_interfaces::msg::SimpleDetection2DArray>::SharedPtr tracked_objects_pub_;
 
-  // ByteTracker instance
+  // 简化版 ByteTracker 实例，保存跨帧轨迹状态。
   std::unique_ptr<ByteTracker> tracker_;
 
-  // Callback for detections
+  // 检测回调：每帧做格式转换、跟踪、再转回自定义消息。
   void OnDetections(const robot_interfaces::msg::SimpleDetection2DArray::SharedPtr msg);
 
-  // Convert to ByteTrack format
+  // 将 ROS 接口消息转换为 ByteTracker 使用的内部 Detection。
   Detection SimpleDetectionToByteTrack(const robot_interfaces::msg::SimpleDetection& det);
 };
 

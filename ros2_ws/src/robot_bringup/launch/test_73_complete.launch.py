@@ -14,7 +14,7 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
-    # Get package share directories
+    # 集成测试启动：视觉链路真实运行，UART 桥用 mock 节点替代硬件。
     gst_receiver_dir = get_package_share_directory('gst_receiver')
     stereo_splitter_dir = get_package_share_directory('stereo_splitter')
     detection_node_dir = get_package_share_directory('detection_node')
@@ -22,7 +22,7 @@ def generate_launch_description():
     behavior_node_dir = get_package_share_directory('behavior_node')
     visual_servo_dir = get_package_share_directory('visual_servo')
 
-    # Vision pipeline nodes
+    # 视觉流水线节点，顺序对应图像流和控制流的处理阶段。
     gst_receiver_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(gst_receiver_dir, 'launch', 'gst_receiver.launch.py')))
@@ -47,7 +47,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(visual_servo_dir, 'launch', 'visual_servo.launch.py')))
 
-    # Mock UART bridge node (simulates Raspberry Pi uart_bridge)
+    # mock UART bridge 模拟树莓派 uart_bridge，便于无 STM32 硬件时验证 ROS 侧闭环。
     mock_uart_bridge = Node(
         package='robot_bringup',
         executable='mock_uart_bridge',
@@ -62,5 +62,5 @@ def generate_launch_description():
         tracker_launch,
         behavior_launch,
         visual_servo_launch,
-        mock_uart_bridge,  # Add mock uart bridge
+        mock_uart_bridge,  # 加入模拟 UART 桥接节点
     ])

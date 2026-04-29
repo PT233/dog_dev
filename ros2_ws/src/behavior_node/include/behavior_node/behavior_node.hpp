@@ -1,4 +1,5 @@
 #pragma once
+// 头文件保护：确保本声明在单个编译单元中只被包含一次。
 
 // 行为决策节点
 // 从跟踪结果中按类别筛选目标，选择面积最大的候选，
@@ -43,13 +44,13 @@ private:
   // COCO 类别 ID → 名称映射（从 coco_classes.txt 加载）
   std::map<int, std::string> coco_classes_;
 
-  // Callbacks
+  // ROS 回调：处理跟踪结果和动态切换目标类别服务。
   void OnTrackedObjects(const robot_interfaces::msg::SimpleDetection2DArray::SharedPtr msg);
   void OnSetTargetClass(
       const std::shared_ptr<robot_interfaces::srv::SetTargetClass::Request> request,
       std::shared_ptr<robot_interfaces::srv::SetTargetClass::Response> response);
 
-  // Helper functions
+  // 内部辅助函数：目标筛选、COCO 类别表加载和类别名反查。
   bool SelectTarget(const robot_interfaces::msg::SimpleDetection2DArray& detections);
   void LoadCocoClasses();
   int GetClassIdByName(const std::string& class_name) const;

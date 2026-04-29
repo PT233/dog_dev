@@ -1,9 +1,18 @@
 detection_node:
   ros__parameters:
+    # ONNX 模型路径，相对当前工作目录或 launch 启动目录解析。
     model_path: "models/yolov8n.onnx"
+
+    # 检测置信度和 NMS 阈值配置项；当前节点会读取并打印，推理内部默认值需同步接入后才完全生效。
     conf_threshold: 0.25
     nms_threshold: 0.45
+
+    # true 时优先尝试 CUDAExecutionProvider，不可用时代码会自动回退 CPU。
     use_cuda: true
+
+    # 推理队列深度配置项；当前 ImageCallback 内部固定限深为 2，后续可接入该参数。
     infer_queue_size: 2
+
+    # ONNX Runtime 线程数，按运行平台 CPU/GPU 负载调节。
     ort_intra_threads: 2
     ort_inter_threads: 1

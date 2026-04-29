@@ -60,7 +60,7 @@ typedef struct __attribute__((packed)) {
     int16_t  current_angle_x10;
     uint8_t  status;
     uint16_t timestamp_ms;   // STM32 HAL_GetTick() 时间戳（用于时间戳映射）
-    uint16_t frame_seq;      // 帧序列号（每路舵机独立递增，用于丢帧统计）
+    uint16_t frame_seq;      // 状态帧序列号（同一帧各舵机相同，用于丢帧统计）
 } ServoStateItem_v2;        // sizeof = 8 字节
 
 // 握手 payload（CMD_ID = 0x10，树莓派 → STM32）

@@ -5,7 +5,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# 依赖：OpenCV 做图像预处理/NMS，ONNX Runtime 由 ONNXRUNTIME_ROOT 显式指定。
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -25,7 +25,7 @@ endif()
 set(ONNXRUNTIME_LIB_DIR "${ONNXRUNTIME_ROOT}/lib")
 set(ONNXRUNTIME_LIB "${ONNXRUNTIME_LIB_DIR}/libonnxruntime.so")
 
-# Create yolo_infer library
+# yolo_infer 封装模型加载、推理、预处理和后处理，供节点和测试复用。
 add_library(yolo_infer src/yolo_infer.cpp)
 target_include_directories(yolo_infer PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -35,11 +35,11 @@ target_include_directories(yolo_infer PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(yolo_infer ${OpenCV_LIBS} ${ONNXRUNTIME_LIB})
 
-# Test executable for yolo_infer
+# YOLO 推理测试程序，用于单独验证模型文件和 ONNX Runtime 环境。
 add_executable(test_yolo_infer src/test_yolo_infer.cpp)
 target_link_libraries(test_yolo_infer yolo_infer)
 
-# Detection node library (for intra-process use)
+# 检测节点主体编成库，robot_bringup 的 vision_front 可直接同进程链接。
 add_library(detection_node_lib src/detection_node.cpp)
 target_include_directories(detection_node_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -52,7 +52,7 @@ ament_target_dependencies(detection_node_lib
 )
 target_link_libraries(detection_node_lib yolo_infer)
 
-# Detection node executable
+# 单独运行的检测节点可执行文件。
 add_executable(detection_node_exe src/detection_node_main.cpp)
 ament_target_dependencies(detection_node_exe
   rclcpp
@@ -67,7 +67,7 @@ target_include_directories(detection_node_exe PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(detection_node_exe detection_node_lib)
 
-# Detection visualization node executable
+# 检测可视化节点，用于把 tracked_objects 叠加到原始图像。
 add_executable(detection_viz_node_exe src/detection_viz_node.cpp src/detection_viz_main.cpp)
 ament_target_dependencies(detection_viz_node_exe
   rclcpp
@@ -88,21 +88,22 @@ set(_onnxruntime_targets
   detection_node_exe
   test_yolo_infer)
 foreach(_target IN LISTS _onnxruntime_targets)
+  # 写入 RPATH，使运行时能找到 ONNX Runtime 动态库。
   set_target_properties(${_target} PROPERTIES
     BUILD_RPATH "${ONNXRUNTIME_LIB_DIR}"
     INSTALL_RPATH "${ONNXRUNTIME_LIB_DIR}")
 endforeach()
 
-# Install headers
+# 安装头文件，供 robot_bringup 同进程可执行文件链接。
 install(DIRECTORY include/ DESTINATION include)
 
-# Install executables
+# 安装节点可执行文件。
 install(TARGETS
   detection_node_exe
   detection_viz_node_exe
   DESTINATION lib/${PROJECT_NAME})
 
-# Install libraries
+# 安装可复用库目标。
 install(TARGETS detection_node_lib yolo_infer
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
@@ -123,14 +124,14 @@ ament_export_libraries(detection_node_lib)
 ament_export_include_directories(include)
 ament_package()
 
-# Install executables
+# 安装测试可执行文件，便于部署后验证推理环境。
 install(TARGETS test_yolo_infer
   DESTINATION lib/${PROJECT_NAME})
 
-# Install config files
+# 安装参数文件。
 install(DIRECTORY config
   DESTINATION share/${PROJECT_NAME})
 
-# Install launch files
+# 安装启动文件。
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})

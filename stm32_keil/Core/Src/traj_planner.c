@@ -26,7 +26,7 @@
 
 TrajState g_traj_state[TRAJ_SERVO_COUNT];
 
-/* Per-servo trajectory start angle and peak velocity (private) */
+/* 每路舵机轨迹的起点角和峰值速度，仅在规划器内部使用。 */
 static float s_start_angle[TRAJ_SERVO_COUNT];
 static float s_v_max[TRAJ_SERVO_COUNT];
 static volatile uint32_t s_traj_stack_high_water_mark = 0U;
@@ -34,6 +34,7 @@ static volatile uint32_t s_traj_stack_high_water_mark = 0U;
 void TrajPlanner_Init(void)
 {
     Servo_Init();
+    /* 初始化状态与物理输出同步，确保状态上报中的 current_angle 与真实 PWM 一致。 */
     for (uint8_t i = 0; i < TRAJ_SERVO_COUNT; i++) {
         g_traj_state[i].current_angle = SERVO_CENTER_ANGLE_DEG;
         g_traj_state[i].target_angle  = SERVO_CENTER_ANGLE_DEG;
@@ -52,6 +53,7 @@ void Traj_SetTarget(uint8_t id, float target_deg, uint16_t duration_ms)
         return;
     }
 
+    /* 以当前输出角作为轨迹起点，允许运动过程中实时改目标。 */
     float dist = target_deg - g_traj_state[id].current_angle;
     float T    = (float)duration_ms / 1000.0f;
 
@@ -83,6 +85,7 @@ void TrajPlanner_CopyStateSnapshot(TrajState out_states[TRAJ_SERVO_COUNT])
         return;
     }
 
+    /* g_traj_state 会被轨迹任务周期更新，复制时短暂关中断保证快照字段自洽。 */
     taskENTER_CRITICAL();
     memcpy(out_states, g_traj_state, sizeof(g_traj_state));
     taskEXIT_CRITICAL();
@@ -93,7 +96,7 @@ uint32_t TrajPlanner_GetStackHighWaterMark(void)
     return s_traj_stack_high_water_mark;
 }
 
-/* Compute and output the intermediate angle for one servo at current time */
+/* 根据当前时间计算单路舵机的中间角度并写入 PWM。 */
 static void Traj_Update(uint8_t id)
 {
     TrajState *s = &g_traj_state[id];
@@ -104,7 +107,7 @@ static void Traj_Update(uint8_t id)
 
     uint32_t elapsed_ms = HAL_GetTick() - s->start_tick;
 
-    /* Trajectory finished */
+    /* 已到达规划时长：强制写最终角，避免浮点累计误差留下尾差。 */
     if (elapsed_ms >= s->duration_ms) {
         s->current_angle = s->target_angle;
         s->velocity      = 0.0f;
@@ -150,6 +153,7 @@ static void Task_Traj_Planner(void *arg)
     s_traj_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
     for (;;) {
         s_traj_stack_high_water_mark = (uint32_t)uxTaskGetStackHighWaterMark(NULL);
+        /* 5ms 周期遍历所有舵机，使状态上报和实际 PWM 都保持平滑连续。 */
         for (uint8_t i = 0; i < TRAJ_SERVO_COUNT; i++) {
             Traj_Update(i);
         }

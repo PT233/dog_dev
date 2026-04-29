@@ -4,6 +4,7 @@
 
 void TimestampMapper::RecordMapping(uint32_t stm32_time_ms, rclcpp::Time rpi_now) {
   std::lock_guard<std::mutex> lock(mutex_);
+  // 用最近状态帧建立 MCU 毫秒时间与 ROS 时间的粗略对应关系。
   mappings_.push_back({stm32_time_ms, rpi_now});
   if (mappings_.size() > MAX_MAPPINGS) {
     mappings_.pop_front();
@@ -14,10 +15,12 @@ rclcpp::Time TimestampMapper::MapTimestamp(
     uint32_t stm32_time_ms, const rclcpp::Time& fallback_time) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (mappings_.empty()) {
+    // 启动初期还没有映射，保守使用接收时间作为消息时间。
     return fallback_time;
   }
 
   if (mappings_.size() == 1) {
+    // 只有一个锚点时按毫秒差线性平移，适合短时间内的状态帧。
     int64_t delta_ms = static_cast<int64_t>(stm32_time_ms) -
                        static_cast<int64_t>(mappings_[0].stm32_time_ms);
     return mappings_[0].rpi_time +
@@ -27,6 +30,7 @@ rclcpp::Time TimestampMapper::MapTimestamp(
   for (size_t i = 1; i < mappings_.size(); i++) {
     if (stm32_time_ms >= mappings_[i - 1].stm32_time_ms &&
         stm32_time_ms <= mappings_[i].stm32_time_ms) {
+      // 在两个锚点之间做线性插值，减小 UART 抖动对 header.stamp 的影响。
       uint32_t dt = mappings_[i].stm32_time_ms - mappings_[i - 1].stm32_time_ms;
       if (dt == 0) {
         return mappings_[i].rpi_time;
@@ -39,11 +43,13 @@ rclcpp::Time TimestampMapper::MapTimestamp(
     }
   }
 
+  // 超出已知范围时使用最近锚点，避免生成明显未来时间。
   return mappings_.back().rpi_time;
 }
 
 void LatencyMonitor::RecordReceiveLatency(rclcpp::Time stm32_send, rclcpp::Time rpi_receive) {
   std::lock_guard<std::mutex> lock(mutex_);
+  // 这里统计的是状态帧从 STM32 打包到 ROS 接收的近似延迟。
   rclcpp::Duration latency = rpi_receive - stm32_send;
   double latency_ms = latency.nanoseconds() / 1e6;
 
@@ -72,6 +78,7 @@ void LatencyMonitor::ResetStats() {
 
 FrameSequenceChecker::FrameSequenceChecker() {
   for (int i = 0; i < 4; i++) {
+    // 0xFFFF 作为未初始化哨兵，首帧不参与丢帧统计。
     seq_data_.last_seq[i] = 0xFFFF;
   }
   seq_data_.drop_count = 0;
@@ -92,6 +99,7 @@ bool FrameSequenceChecker::CheckSequence(uint8_t servo_id, uint16_t current_seq,
 
   uint16_t expected = seq_data_.last_seq[servo_id] + 1;
   if (current_seq != expected) {
+    // 16 位序号回绕时仍能正确估算 gap。
     uint32_t gap = (current_seq - expected + 65536) % 65536;
     seq_data_.drop_count += gap;
     dropped = gap;

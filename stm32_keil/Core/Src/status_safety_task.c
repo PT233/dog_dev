@@ -9,10 +9,10 @@
 #include "uart_protocol.h"
 #include "traj_planner.h"
 
-#define STATUS_TX_PERIOD_MS  50U
-#define SAFETY_PERIOD_MS     100U
-#define BOOT_CENTER_HOLD_MS  500U
-#define SYSTEM_STATE_TX_FLAG (1U << 0)
+#define STATUS_TX_PERIOD_MS  50U      /* 20Hz 状态回传频率，兼顾实时性和串口带宽 */
+#define SAFETY_PERIOD_MS     100U     /* IWDG 喂狗周期，必须短于 iwdg.c 中配置的超时时间 */
+#define BOOT_CENTER_HOLD_MS  500U     /* 上电后舵机保持中位的最短时间，防止机械突然动作 */
+#define SYSTEM_STATE_TX_FLAG (1U << 0) /* 事件标志：请求立即发送系统状态帧 */
 
 /* Frame v1 = header(2) + cmd(1) + len(1) + payload(N) + crc(2) + tail(1) */
 #define STATUS_PAYLOAD_LEN_V1  ((uint8_t)(TRAJ_SERVO_COUNT * sizeof(ServoStateItem)))
@@ -37,12 +37,14 @@ static volatile uint32_t s_safety_stack_high_water_mark = 0U;
 
 void StatusSafety_SystemStateInit(void)
 {
+    /* main.c 在启动调度器前调用，记录舵机归中开始时间。 */
     s_center_start_tick = HAL_GetTick();
     s_system_state = UART_SYSTEM_STATE_BOOT_CENTERING;
 }
 
 static void SystemState_Update(void)
 {
+    /* 归中保持时间到后才进入等待连接，期间 UART 控制帧会被拒绝。 */
     if ((s_system_state == UART_SYSTEM_STATE_BOOT_CENTERING) &&
         ((HAL_GetTick() - s_center_start_tick) >= BOOT_CENTER_HOLD_MS)) {
         s_system_state = UART_SYSTEM_STATE_WAITING_CONNECTION;
@@ -59,6 +61,9 @@ uint8_t StatusSafety_HandleInitHandshake(const UartHandshakePayload *payload)
 {
     SystemState_Update();
 
+    /* 只接受协议版本一致且请求 ACTIVE 的握手。
+     * 若 STM32 还处于 BOOT_CENTERING，则不会提前激活，只回报当前状态。
+     */
     if ((payload != NULL) &&
         (payload->protocol_version == UART_PROTOCOL_VERSION) &&
         (payload->requested_state == UART_SYSTEM_STATE_ACTIVE)) {
@@ -81,10 +86,13 @@ void StatusSafety_RequestSystemStateTx(void)
 
 static uint32_t StatusTX_GetTimestampMs(void)
 {
+    /* 状态 payload 里只有 16-bit timestamp_ms，先在这里取模保持与字段宽度一致。 */
     return (HAL_GetTick() % 65536U);
 }
 
-/* Pack and transmit a CMD_ID=0x82 status frame (v2) with timestamp and sequence */
+/* 打包并发送 CMD_ID=0x82 舵机状态帧。
+ * 每路舵机携带同一个 timestamp 和 frame_seq，ROS 端据此估算延迟与丢帧。
+ */
 static void StatusTX_SendFrame(void)
 {
     uint8_t tx_buf[STATUS_FRAME_LEN_V2];
@@ -101,6 +109,7 @@ static void StatusTX_SendFrame(void)
 
     timestamp_ms = StatusTX_GetTimestampMs();
     frame_seq = s_frame_seq++;
+    /* 复制轨迹快照，避免打包过程中轨迹任务改写一半字段。 */
     TrajPlanner_CopyStateSnapshot(traj_snapshot);
 
     for (i = 0U; i < TRAJ_SERVO_COUNT; i++) {
@@ -118,7 +127,7 @@ static void StatusTX_SendFrame(void)
     tx_buf[5U + STATUS_PAYLOAD_LEN_V2] = (uint8_t)(crc >> 8);
     tx_buf[6U + STATUS_PAYLOAD_LEN_V2] = UART_FRAME_TAIL;
 
-    /* Blocking transmit: ~31 bytes @ 921600 bps ≈ 0.27ms */
+    /* 阻塞发送：约 31 字节 @ 921600 bps ≈ 0.27ms，远小于 50ms 周期。 */
     if (HAL_UART_Transmit(&huart1, tx_buf, STATUS_FRAME_LEN_V2, 10U) != HAL_OK) {
         Error_Handler();
     }
@@ -131,6 +140,7 @@ static void StatusTX_SendSystemStateFrame(void)
     uint16_t crc;
 
     payload.protocol_version = UART_PROTOCOL_VERSION;
+    /* 系统状态帧用于握手闭环：上位机只有看到 ACTIVE 才开始下发控制。 */
     payload.system_state = StatusSafety_GetSystemState();
     payload.reserved = 0U;
     payload.uptime_ms = HAL_GetTick();
@@ -151,7 +161,7 @@ static void StatusTX_SendSystemStateFrame(void)
     }
 }
 
-/* 20Hz status reporter: packs 4-servo state into 0x82 frame and sends via UART */
+/* 20Hz 状态上报任务：周期发送舵机状态；收到事件标志时插入一帧系统状态。 */
 static void Task_Status_TX(void *arg)
 {
     (void)arg;
@@ -169,8 +179,10 @@ static void Task_Status_TX(void *arg)
     }
 }
 
-/* Safety watchdog feeder: feeds IWDG every 100ms.
- * Servo position is held automatically when no new Traj_SetTarget is called. */
+/* 安全任务：100ms 喂一次 IWDG。
+ * 若调度器、该任务或关键中断卡死，独立看门狗会复位 MCU。
+ * 无新 Traj_SetTarget 时舵机会保持最后输出角，不在这里主动回中。
+ */
 static void Task_Safety(void *arg)
 {
     (void)arg;
@@ -207,6 +219,7 @@ void StatusSafetyTask_Create(void)
         .stack_size = 128U * 4U,
         .priority   = (osPriority_t)osPriorityAboveNormal,
     };
+    /* 保存状态任务句柄，用于其他模块通过 osThreadFlagsSet 触发立即上报。 */
     s_status_tx_handle = osThreadNew(Task_Status_TX, NULL, &tx_attr);
     configASSERT(s_status_tx_handle != NULL);
 

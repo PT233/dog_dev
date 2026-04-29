@@ -7,8 +7,10 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
+# 安装组合启动文件，bringup 包本身主要负责把各功能包拼起来。
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
+# vision_front 是可选的同进程视觉前端，默认关闭以降低普通构建依赖。
 option(BUILD_VISION_FRONT "Build the WSL2 intra-process vision_front executable" OFF)
 
 if(BUILD_VISION_FRONT)
@@ -23,11 +25,13 @@ if(BUILD_VISION_FRONT)
 
   pkg_check_modules(GST REQUIRED gstreamer-1.0 gstreamer-app-1.0)
 
+  # ONNX Runtime 没有通过 ament 包提供，构建该可执行文件时需要显式指定根目录。
   set(ONNXRUNTIME_ROOT "" CACHE PATH "ONNX Runtime root")
   if(NOT ONNXRUNTIME_ROOT)
     message(FATAL_ERROR "Set ONNXRUNTIME_ROOT to build vision_front")
   endif()
 
+  # 将接收、裁剪、检测三个节点链接进同一进程，减少图像消息拷贝。
   add_executable(vision_front src/vision_front_main.cpp)
   target_include_directories(vision_front PRIVATE
     ${GST_INCLUDE_DIRS}
@@ -53,6 +57,7 @@ endif()
 
 set(MOCK_UART_BRIDGE "${CMAKE_CURRENT_SOURCE_DIR}/../../../scripts/mock_uart_bridge.py")
 if(EXISTS "${MOCK_UART_BRIDGE}")
+  # 有 mock 脚本时安装为可执行目标，供无 STM32 硬件的集成测试 launch 使用。
   install(PROGRAMS
     "${MOCK_UART_BRIDGE}"
     DESTINATION lib/${PROJECT_NAME}

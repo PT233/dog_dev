@@ -85,7 +85,11 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+  /* 创建本项目的三个核心任务：
+   * - UART RX：DMA + IDLE 接收并解析上位机控制帧；
+   * - TrajPlan：按 5ms 周期生成舵机中间角；
+   * - Status/Safety：回传状态并喂独立看门狗。
+   */
   UartRxTask_Create();
   TrajPlannerTask_Create();
   StatusSafetyTask_Create();

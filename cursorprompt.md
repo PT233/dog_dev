@@ -348,15 +348,110 @@
 > - 是否在 ISR 或高频路径中 → 替换为 ring buffer + 后台任务输出
 > - 调试日志统一收口到一个 logger 模块，支持编译期裁剪等级
 
----
 
-## 用之前可以再补充的细节
 
-如果你告诉我：
 
-1. **具体芯片家族**（STM32 / ESP32 / Nordic / NXP / 国产 GD / 兆易等）
-2. **是否用 RTOS**（FreeRTOS / Zephyr / 裸机 / RT-Thread）
-3. **C 还是 C++**（C++ 的话用到什么程度，C++17/20？）
-4. **典型项目类型**（电机控制 / IoT 通信 / 传感器采集 / 工业控制 / 消费电子）
+# 任务：按照 micro-ROS / ROS2 官方规范重构当前项目的命名
 
-我可以把模板里的占位符再替换成你常用的栈，并加几条针对性的守则（比如电机控制场景一定要加"PWM 死区时间确认"的检查项；IoT 场景要加"MQTT 重连退避策略"等）。要不要再细化一层？
+请扫描整个项目，按以下规范对所有命名进行重构。重构时**保持功能不变**，只修改命名、文件名、以及必要的引用更新。
+
+## 一、命名规范（强制）
+
+### C++ 代码
+| 元素 | 规范 | 示例 |
+|------|------|------|
+| 类 / 结构体 | CamelCase | `LaserProcessor`、`PoseEstimator` |
+| 函数 / 方法 | snake_case | `compute_velocity()`、`publish_odometry()` |
+| 局部变量 | snake_case | `current_pose`、`max_speed` |
+| 类成员变量 (private/protected) | snake_case + 后缀下划线 `_` | `velocity_`、`node_handle_`、`tf_buffer_` |
+| 函数参数 | snake_case，**不加**下划线后缀 | `void set_speed(double max_speed)` |
+| 常量 / constexpr | kCamelCase | `kMaxIterations`、`kDefaultTimeout` |
+| 枚举值 | kCamelCase | `enum class State { kIdle, kRunning, kStopped }` |
+| 宏 | UPPER_SNAKE_CASE | `RCLCPP_INFO`、`MY_PROJECT_DEBUG` |
+| 命名空间 | snake_case | `namespace my_robot::sensors` |
+| 模板参数 | CamelCase | `template <typename MessageT>` |
+| 文件名 (.cpp/.hpp) | snake_case | `laser_processor.cpp`、`laser_processor.hpp` |
+| 头文件保护宏 | `<PACKAGE>__<PATH>__<FILE>_HPP_` | `MY_PKG__SENSORS__LASER_PROCESSOR_HPP_` |
+
+### Python 代码（PEP 8）
+- 类：`CamelCase`
+- 函数 / 变量 / 模块文件名：`snake_case`
+- 常量：`UPPER_SNAKE_CASE`
+- 私有成员：前缀单下划线 `_member`
+
+### ROS2 资源命名
+| 资源 | 规范 | 示例 |
+|------|------|------|
+| 包名 | snake_case，字母开头 | `my_robot_navigation` |
+| 节点名 | snake_case | `laser_filter_node` |
+| Topic / Service / Action 名 | snake_case，描述性 | `filtered_scan`、`reset_odometry` |
+| 消息 / 服务 / 动作类型文件 | CamelCase.msg/.srv/.action | `LaserScan.msg`、`SetPose.srv` |
+| 消息字段 | snake_case | `range_min`、`frame_id` |
+| 参数名 | snake_case，分层用 `.` | `controller.max_velocity` |
+| Frame ID（遵循 REP-105） | snake_case | `base_link`、`odom`、`map`、`laser_link` |
+
+### CMake
+- 命令小写：`find_package`、`add_executable`
+- 变量 snake_case
+- 2 空格缩进，禁用 tab
+
+## 二、Topic 组织约定（采用 Autoware / micro-ROS 风格）
+
+所有节点的 topic 必须放在私有命名空间下，并按用途分组：
+
+```
+node_name/
+  ├── ~/input/<name>     # 订阅的输入
+  ├── ~/output/<name>    # 发布的输出
+  └── ~/debug/<name>     # 调试用
+```
+
+任何使用全局 topic（以 `/` 开头）的地方，必须在代码注释中说明理由。
+
+## 三、命名内容要求
+
+1. **描述性**：`state` → `planner_state`，`data` → `filtered_pointcloud`
+2. **不要缩写**，除非是公认缩写（`tf`、`odom`、`imu`、`gps`、`url`、`id`）
+3. **单复数**：消息类型用单数（`Pose` 而不是 `Poses`），topic 根据语义（多元素用复数：`detected_objects`）
+4. **布尔变量 / 函数**用 `is_`、`has_`、`should_` 前缀：`is_initialized_`、`has_received_scan_`
+5. **回调函数**统一用 `_callback` 后缀：`scan_callback()`、`timer_callback()`
+6. **getter 不加 `get_` 前缀**（Google Style）：`velocity()` 而不是 `get_velocity()`；setter 保留 `set_`：`set_velocity()`
+
+## 四、执行步骤
+
+1. **先扫描**：列出当前项目中所有不符合规范的命名，按文件分组输出一份清单
+2. **分类**：把改动分为
+   - A. 仅内部改动（局部变量、私有成员）—— 低风险，直接改
+   - B. 涉及对外接口（topic、参数、消息字段、公共 API）—— 高风险，需要确认
+3. **等我确认 B 类改动后再统一执行**
+4. 执行时使用安全的重命名方式（IDE 重构 / 全局替换 + 编译验证），每改完一个包跑一次 `colcon build` 确认不破坏构建
+5. 修改完同步更新：launch 文件、yaml 参数文件、README、注释中的引用
+
+## 五、自动化检查（重构完成后配置）
+
+在项目根目录添加 / 更新以下配置，让规范自动强制执行：
+
+1. `.clang-format`（基于 ROS2 官方版本，可从 `https://github.com/ament/ament_lint` 获取）
+2. `.pre-commit-config.yaml`（参考 MoveIt2 / Nav2 的配置）
+3. 在每个包的 `CMakeLists.txt` 中启用 `ament_lint_auto`：
+```cmake
+   if(BUILD_TESTING)
+     find_package(ament_lint_auto REQUIRED)
+     ament_lint_auto_find_test_dependencies()
+   endif()
+```
+4. 在 `package.xml` 中添加 `<test_depend>ament_lint_common</test_depend>`
+
+## 六、参考来源
+
+- ROS2 官方代码风格：https://docs.ros.org/en/rolling/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html
+- REP-144（包名）：https://www.ros.org/reps/rep-0144.html
+- REP-105（坐标系）：https://www.ros.org/reps/rep-0105.html
+- Topic/Service 命名设计：https://design.ros2.org/articles/topic_and_service_names.html
+- Nav2 源码作为代码组织参考：https://github.com/ros-navigation/navigation2
+
+## 输出要求
+
+- 第一步先输出扫描清单和重构计划，**不要直接动代码**
+- 等我审核计划后再开始执行
+- 每完成一个包，输出该包的改动摘要和构建测试结果

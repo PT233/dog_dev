@@ -98,6 +98,7 @@ std::vector<std::pair<int, Detection>> ByteTracker::Update(
 }
 
 float ByteTracker::ComputeIoU(const Detection& det1, const Detection& det2) const {
+  // 输入检测框是中心点格式，先转换成左上/右下角坐标再计算交并比。
   float x1_min = det1.x - det1.w / 2;
   float y1_min = det1.y - det1.h / 2;
   float x1_max = det1.x + det1.w / 2;
@@ -125,7 +126,7 @@ float ByteTracker::ComputeIoU(const Detection& det1, const Detection& det2) cons
 
 float ByteTracker::ComputeCost(const Detection& det, const Detection& track_det) const {
   float iou = ComputeIoU(det, track_det);
-  return 1.0f - iou;  // 1 - IoU as cost
+  return 1.0f - iou;  // 代价越小代表越可能是同一个目标。
 }
 
 void ByteTracker::Reset() {

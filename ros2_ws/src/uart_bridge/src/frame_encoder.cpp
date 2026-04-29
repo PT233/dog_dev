@@ -9,6 +9,7 @@ std::vector<uint8_t> FrameEncoder::EncodeServoControl(const ServoCmdItem* items,
     return {};
   }
 
+  // ServoCmdItem 已是 packed 协议结构，可直接作为 payload 字节序列发送。
   size_t payload_len = count * sizeof(ServoCmdItem);
   const uint8_t* payload = reinterpret_cast<const uint8_t*>(items);
 
@@ -28,6 +29,7 @@ std::vector<uint8_t> FrameEncoder::EncodeSingleServo(uint8_t servo_id,
 
 std::vector<uint8_t> FrameEncoder::EncodeInitHandshake() {
   UartHandshakePayload payload;
+  // 握手 payload 声明协议版本并请求 STM32 进入 ACTIVE；STM32 会按状态机决定是否接受。
   payload.protocol_version = UART_PROTOCOL_VERSION;
   payload.requested_state = UART_SYSTEM_STATE_ACTIVE;
   payload.reserved = 0;
@@ -42,6 +44,7 @@ std::vector<uint8_t> FrameEncoder::BuildFrame(uint8_t cmd_id,
                                                size_t payload_len) {
   std::vector<uint8_t> frame;
   if (payload_len > UART_MAX_FRAME_LEN - 7) {
+    // 7 字节固定开销：帧头2 + CMD1 + LEN1 + CRC2 + 帧尾1。
     return {};
   }
 

@@ -14,6 +14,9 @@
 #define SERVO_CCR_BASE (500.0f)            // 对应 0°（0.5ms 脉宽）
 #define SERVO_CCR_PER_DEG (2000.0f / 180.0f)  // 每度对应 CCR 增量 ≈ 11.11
 
+/* TIM2 的 4 个通道分别接 4 路腿舵机。
+ * 通道顺序必须与协议中的 servo_id 顺序一致，否则 ROS 2 下发的关节名会驱错腿。
+ */
 static const uint32_t k_servo_channels[SERVO_COUNT] = {
   TIM_CHANNEL_1,
   TIM_CHANNEL_2,
@@ -28,6 +31,7 @@ static float g_last_angle_deg[SERVO_COUNT] = {
   SERVO_CENTER_ANGLE_DEG
 };
 
+/* 将外部输入夹紧到舵机可接受范围，避免错误指令撞机械限位。 */
 static float Servo_ClampAngle(float angle_deg)
 {
   if (angle_deg < SERVO_MIN_ANGLE_DEG)
@@ -45,6 +49,7 @@ static float Servo_ClampAngle(float angle_deg)
 
 void Servo_Init(void)
 {
+  /* PWM 启动后立即写中位角，避免上电阶段保留未知 CCR 导致舵机突然摆动。 */
   for (uint8_t i = 0; i < SERVO_COUNT; ++i)
   {
     if (HAL_TIM_PWM_Start(&htim2, k_servo_channels[i]) != HAL_OK)
@@ -66,6 +71,7 @@ void Servo_SetAngle(uint8_t servo_id, float angle_deg)
   }
 
   clamped_angle = Servo_ClampAngle(angle_deg);
+  /* 定时器计数频率为 1 MHz，因此 CCR 数值等价于高电平微秒数。 */
   ccr = (uint32_t)(SERVO_CCR_BASE + (clamped_angle * SERVO_CCR_PER_DEG));
 
   __HAL_TIM_SET_COMPARE(&htim2, k_servo_channels[servo_id], ccr);

@@ -9,6 +9,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 
+# 统一生成视觉检测、目标选择和标定服务的 ROS 接口代码。
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TargetInfo.msg"
   "msg/SimpleDetection.msg"

@@ -5,13 +5,13 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# 依赖：geometry_msgs 接收像素误差，sensor_msgs 发布/订阅 JointState。
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-# Build visual_servo executable
+# 视觉伺服节点：PID + 简化步态控制，输出 /servo_cmd。
 add_executable(visual_servo_node_exe
   src/leg_motion_controller_node.cpp
   src/pid_controller.cpp
@@ -20,11 +20,13 @@ target_include_directories(visual_servo_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_include_directories(visual_servo_node_exe PRIVATE
+  # 访问仓库根 shared/servo_names.hpp，保证舵机名顺序全项目一致。
   ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 ament_target_dependencies(visual_servo_node_exe rclcpp geometry_msgs sensor_msgs)
 
 install(TARGETS visual_servo_node_exe DESTINATION lib/${PROJECT_NAME})
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+# visual_servo.yaml 位于仓库根 config/，安装后由 launch 加载。
 install(FILES ../../../config/visual_servo.yaml DESTINATION share/${PROJECT_NAME}/config)
 
 if(BUILD_TESTING)

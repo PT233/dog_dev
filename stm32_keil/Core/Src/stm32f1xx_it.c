@@ -214,11 +214,13 @@ void USART1_IRQHandler(void)
 
   if (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_ORE) != RESET)
   {
+    /* ORE 表示硬件接收寄存器溢出。先清标志，避免 UART 中断被错误状态卡住。 */
     __HAL_UART_CLEAR_OREFLAG(&huart1);
   }
 
   if (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) != RESET)
   {
+    /* IDLE 表示一批 DMA 数据已经到达，通知任务从环形缓冲中解析增量字节。 */
     __HAL_UART_CLEAR_IDLEFLAG(&huart1);
     UartRxTask_NotifyFromIdleIrq();
   }

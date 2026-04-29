@@ -5,14 +5,14 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# 依赖：接收 sensor_msgs/Image，OpenCV 目前主要用于图像处理扩展。
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 
-# Library target (for intra-process use and linking)
+# 裁剪节点主体编成库，供 vision_front 同进程链接。
 add_library(stereo_splitter_lib src/stereo_splitter_node.cpp)
 target_include_directories(stereo_splitter_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -21,20 +21,20 @@ target_include_directories(stereo_splitter_lib PUBLIC
 target_link_libraries(stereo_splitter_lib ${OpenCV_LIBS})
 ament_target_dependencies(stereo_splitter_lib rclcpp sensor_msgs cv_bridge)
 
-# Executable target
+# 单独运行的裁剪节点。
 add_executable(stereo_splitter_node src/stereo_splitter_main.cpp)
 target_include_directories(stereo_splitter_node PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 target_link_libraries(stereo_splitter_node stereo_splitter_lib)
 ament_target_dependencies(stereo_splitter_node rclcpp sensor_msgs cv_bridge)
 
-# Install headers
+# 安装头文件，供其他包链接库目标。
 install(DIRECTORY include/ DESTINATION include)
 
-# Install launch files
+# 安装启动文件。
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 
-# Install targets (executable and library)
+# 安装可执行文件和库。
 install(TARGETS stereo_splitter_node
   DESTINATION lib/${PROJECT_NAME})
 install(TARGETS stereo_splitter_lib

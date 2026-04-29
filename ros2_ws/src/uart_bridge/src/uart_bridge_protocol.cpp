@@ -25,6 +25,7 @@ void UartBridgeNode::SendInitHandshake() {
     return;
   }
 
+  // STM32 只有在上电归中结束并收到版本匹配握手后才进入 ACTIVE。
   auto frame = encoder_->EncodeInitHandshake();
   WriteFrame(frame);
   handshake_tx_count_++;
@@ -47,6 +48,7 @@ void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
   std::memcpy(&state, payload, sizeof(state));
 
   if (state.protocol_version != UART_PROTOCOL_VERSION) {
+    // 版本不一致时拒绝认为握手完成，避免按错误 payload 格式解释控制帧。
     RCLCPP_WARN(this->get_logger(),
                 "STM32 protocol version mismatch: bridge=%u stm32=%u",
                 UART_PROTOCOL_VERSION, state.protocol_version);
@@ -55,6 +57,7 @@ void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
 
   uint8_t previous = stm32_system_state_.exchange(state.system_state);
   if (state.system_state == UART_SYSTEM_STATE_ACTIVE) {
+    // 第一次看到 ACTIVE 时停止握手重试，后续 /servo_cmd 才会真正下发。
     bool was_complete = handshake_complete_.exchange(true);
     if (!was_complete) {
       if (handshake_timer_) {
@@ -68,6 +71,7 @@ void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
   }
 
   if (previous != state.system_state) {
+    // 非 ACTIVE 状态只在变化时打印，避免 20Hz 状态帧刷屏。
     RCLCPP_INFO(this->get_logger(),
                 "STM32 state=%s uptime=%u ms; waiting before enabling servo commands",
                 SystemStateToString(state.system_state), state.uptime_ms);
@@ -78,6 +82,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
   rclcpp::Time t_receive = this->get_clock()->now();
 
   if (cmd_id == UART_CMD_SYSTEM_STATE) {
+    // 系统状态帧用于握手闭环和启动阶段可观测性。
     OnSystemStateReceived(payload, len);
   } else if (cmd_id == UART_CMD_SERVO_STATE_V2) {
     if (len % sizeof(ServoStateItem_v2) != 0) {
@@ -85,6 +90,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
       return;
     }
 
+    // v2 状态帧携带 STM32 时间戳和帧序号，可用于延迟和丢帧诊断。
     auto state_msg = std::make_shared<sensor_msgs::msg::JointState>();
     state_msg->header.frame_id = "";
 
@@ -92,6 +98,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
     const ServoStateItem_v2* first_item =
         reinterpret_cast<const ServoStateItem_v2*>(payload);
 
+    // 把 STM32 毫秒时间映射到 ROS 时间，尽量让 /servo_state 时间戳反映采样时刻。
     rclcpp::Time t_stm32_send =
         timestamp_mapper_.MapTimestamp(first_item->timestamp_ms, t_receive);
     state_msg->header.stamp = t_stm32_send;
@@ -114,6 +121,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
                     item->servo_id, dropped);
       }
 
+      // 协议中角度以“度 ×10”传输；ROS JointState 要求弧度。
       float angle = item->current_angle_x10 / 10.0f;
 
       const char* name = project_shared::servo_id_to_name(item->servo_id);
@@ -130,6 +138,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
       frame_received_count_++;
     }
 
+    // 本帧接收完成后记录新的时间映射锚点，供下一帧插值使用。
     timestamp_mapper_.RecordMapping(first_item->timestamp_ms, t_receive);
   } else if (cmd_id == UART_CMD_SERVO_STATE) {
     if (len % sizeof(ServoStateItem) != 0) {
@@ -145,6 +154,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
     for (size_t i = 0; i < num_items; ++i) {
       const ServoStateItem* item = reinterpret_cast<const ServoStateItem*>(
           payload + i * sizeof(ServoStateItem));
+      // v1 兼容帧无时间戳，只能使用本机当前时间。
       float angle = item->current_angle_x10 / 10.0f;
 
       const char* name = project_shared::servo_id_to_name(item->servo_id);
@@ -189,6 +199,7 @@ void UartBridgeNode::OnServoCmdReceived(const sensor_msgs::msg::JointState::Shar
 
   std::vector<ServoCmdItem> items;
   for (size_t i = 0; i < msg->name.size() && i < msg->position.size(); ++i) {
+    // JointState 的 name 决定舵机编号，position 单位是弧度。
     uint8_t servo_id = NameToServoId(msg->name[i]);
     if (servo_id >= 4) {
       RCLCPP_WARN(this->get_logger(), "Unknown servo name: %s", msg->name[i].c_str());
@@ -201,12 +212,13 @@ void UartBridgeNode::OnServoCmdReceived(const sensor_msgs::msg::JointState::Shar
                   msg->name[i].c_str(), angle_deg);
     }
 
+    // STM32 协议用 int16 传 “度 ×10”，减少 payload 长度并避免跨语言浮点差异。
     int16_t angle_x10 = static_cast<int16_t>(angle_deg * 10.0f);
 
     ServoCmdItem item;
     item.servo_id = servo_id;
     item.angle_x10 = angle_x10;
-    item.duration_ms = 100;
+    item.duration_ms = 100;  // 当前 ROS 控制周期默认给 100ms 轨迹过渡。
 
     items.push_back(item);
   }

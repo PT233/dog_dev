@@ -9,13 +9,14 @@ namespace visual_servo {
 
 namespace {
 
+// 当前机器人使用 4 路腿舵机，名称顺序由 shared/servo_names.hpp 统一定义。
 constexpr size_t kLegCount = project_shared::kServoCount;
 
 }  // namespace
 
 LegMotionControllerNode::LegMotionControllerNode(const rclcpp::NodeOptions& options)
     : rclcpp::Node("leg_motion_node", options) {
-  // Declare and get parameters
+  // 运动控制参数：YAML 中可调，默认值保证舵机先在保守范围内运动。
   this->declare_parameter<float>("control_rate_hz", 30.0f);
   this->declare_parameter<float>("deadband_px", 5.0f);
   this->declare_parameter<float>("min_angle", 10.0f);
@@ -26,12 +27,12 @@ LegMotionControllerNode::LegMotionControllerNode(const rclcpp::NodeOptions& opti
   this->declare_parameter<float>("gait_frequency_hz", 2.0f);
   this->declare_parameter<float>("target_timeout_sec", 0.5f);
 
-  // Turn PID parameters
+  // 转向 PID：主要使用水平像素误差，输出左右腿的角度偏置。
   this->declare_parameter<float>("turn.kp", 0.05f);
   this->declare_parameter<float>("turn.ki", 0.001f);
   this->declare_parameter<float>("turn.kd", 0.02f);
 
-  // Forward PID parameters
+  // 前进 PID：主要使用垂直像素误差，输出步态摆幅。
   this->declare_parameter<float>("forward.kp", 0.04f);
   this->declare_parameter<float>("forward.ki", 0.001f);
   this->declare_parameter<float>("forward.kd", 0.02f);
@@ -54,14 +55,14 @@ LegMotionControllerNode::LegMotionControllerNode(const rclcpp::NodeOptions& opti
   float forward_ki = this->get_parameter("forward.ki").as_double();
   float forward_kd = this->get_parameter("forward.kd").as_double();
 
-  // Create PID controllers
+  // 两个 PID 输出直接限幅到允许的角度增量，避免后续步态叠加过大。
   pid_turn_ = std::make_unique<PIDController>(turn_kp, turn_ki, turn_kd, deadband_px_,
                                               -turn_bias_max_deg_, turn_bias_max_deg_);
   pid_forward_ = std::make_unique<PIDController>(forward_kp, forward_ki, forward_kd, deadband_px_,
                                                  -stride_amplitude_max_deg_,
                                                  stride_amplitude_max_deg_);
 
-  // Create subscriptions
+  // /pixel_error 来自 behavior_node，代表目标相对画面中心的偏移。
   pixel_error_sub_ =
     this->create_subscription<geometry_msgs::msg::Vector3>(
       "/pixel_error",
@@ -74,11 +75,11 @@ LegMotionControllerNode::LegMotionControllerNode(const rclcpp::NodeOptions& opti
       rclcpp::QoS(10),
       std::bind(&LegMotionControllerNode::OnServoState, this, std::placeholders::_1));
 
-  // Create publisher
+  // 输出给 uart_bridge 的关节目标，position 单位必须是弧度。
   servo_cmd_pub_ =
     this->create_publisher<sensor_msgs::msg::JointState>("/servo_cmd", rclcpp::QoS(5));
 
-  // Create control timer
+  // 固定周期控制环，dt 仍使用 ROS 时间实测，降低定时器抖动影响。
   int period_ms = static_cast<int>(1000.0f / control_rate_hz_);
   control_timer_ =
     this->create_wall_timer(
@@ -98,6 +99,7 @@ LegMotionControllerNode::LegMotionControllerNode(const rclcpp::NodeOptions& opti
 }
 
 void LegMotionControllerNode::OnPixelError(const geometry_msgs::msg::Vector3::SharedPtr msg) {
+  // 只缓存最新像素误差，控制环定时读取；z 轴当前未使用。
   pixel_error_x_ = msg->x;
   pixel_error_y_ = msg->y;
   have_pixel_error_ = true;
@@ -105,6 +107,7 @@ void LegMotionControllerNode::OnPixelError(const geometry_msgs::msg::Vector3::Sh
 }
 
 void LegMotionControllerNode::OnServoState(const sensor_msgs::msg::JointState::SharedPtr msg) {
+  // 将反馈角从 ROS JointState 的弧度转换为内部使用的度。
   for (size_t i = 0; i < msg->name.size(); ++i) {
     const int idx = project_shared::servo_name_to_id(msg->name[i]);
     if (idx >= 0 && i < msg->position.size()) {
@@ -126,6 +129,7 @@ void LegMotionControllerNode::OnControlTimer() {
   const bool target_fresh =
     have_pixel_error_ && ((now - last_pixel_error_time_).seconds() <= target_timeout_sec_);
 
+  // 目标超时后输出回到中位，避免旧视觉误差继续驱动机器人运动。
   float turn_bias = 0.0f;
   float stride_command = 0.0f;
 
@@ -159,6 +163,7 @@ void LegMotionControllerNode::OnControlTimer() {
   const float phase_a = stride_direction * stride_amplitude * std::sin(gait_phase_rad_);
   const float phase_b = -phase_a;
 
+  // 简化对角步态：前左/后右同相，前右/后左反相；turn_bias 叠加左右差速效果。
   std::array<float, kLegCount> target_angles = {
     neutral_angle_deg_ + phase_a + turn_bias,  // front_left
     neutral_angle_deg_ + phase_b - turn_bias,  // front_right
@@ -170,7 +175,7 @@ void LegMotionControllerNode::OnControlTimer() {
     angle = std::clamp(angle, min_angle_, max_angle_);
   }
 
-  // Publish servo command
+  // 发布舵机目标；下游 uart_bridge 会把弧度转成 STM32 协议的度 ×10。
   auto cmd = sensor_msgs::msg::JointState();
   cmd.header.stamp = now;
   cmd.name.assign(project_shared::kServoNames.begin(), project_shared::kServoNames.end());

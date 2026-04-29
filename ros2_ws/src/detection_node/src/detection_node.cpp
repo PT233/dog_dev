@@ -3,6 +3,7 @@
 
 DetectionNode::DetectionNode(const rclcpp::NodeOptions& options)
     : Node("detection_node", options), running_(true) {
+    // 参数从 YAML 读取，默认使用 YOLOv8n ONNX 模型和 CUDA 推理。
     declare_parameter<std::string>("model_path", "models/yolov8n.onnx");
     declare_parameter<float>("conf_threshold", 0.25f);
     declare_parameter<float>("nms_threshold", 0.45f);
@@ -27,6 +28,7 @@ DetectionNode::DetectionNode(const rclcpp::NodeOptions& options)
     RCLCPP_INFO(this->get_logger(), "  ort_inter_threads: %d", inter_threads);
 
     try {
+        // YoloInfer 封装 ONNX Runtime session、预处理和后处理。
         infer_ = std::make_unique<detection_node::YoloInfer>(
             model_path, use_cuda, intra_threads, inter_threads);
         RCLCPP_INFO(this->get_logger(), "YoloInfer initialized successfully");
@@ -37,20 +39,24 @@ DetectionNode::DetectionNode(const rclcpp::NodeOptions& options)
         throw;
     }
 
+    // 输入图像来自 stereo_splitter，编码应为 bgr8。
     sub_image_ = create_subscription<sensor_msgs::msg::Image>(
         "/camera/image_mono",
         rclcpp::SensorDataQoS(),
         std::bind(&DetectionNode::ImageCallback, this, std::placeholders::_1));
 
+    // 输出只包含检测框和类别，track_id 由 tracker_node 后续补充。
     pub_detections_ = create_publisher<robot_interfaces::msg::SimpleDetection2DArray>(
         "/detections", 10);
 
+    // 推理放在线程中，避免相机订阅回调被模型执行时间阻塞。
     inference_thread_ = std::thread(&DetectionNode::InferenceWorker, this);
 
     RCLCPP_INFO(this->get_logger(), "Detection node started successfully");
 }
 
 DetectionNode::~DetectionNode() {
+    // 唤醒等待中的推理线程，确保析构时能正常 join。
     running_ = false;
     cv_.notify_all();
     if (inference_thread_.joinable()) {
@@ -93,6 +99,7 @@ void DetectionNode::InferenceWorker() {
         try {
             auto infer_start = std::chrono::high_resolution_clock::now();
 
+            // 这里复用 ROS Image 内部数据创建 Mat 视图，不额外拷贝像素。
             cv::Mat img(image_msg->height, image_msg->width, CV_8UC3,
                        image_msg->data.data(), image_msg->step);
 
@@ -108,6 +115,7 @@ void DetectionNode::InferenceWorker() {
             detection_array->detections.reserve(detections.size());
 
             for (const auto& det : detections) {
+                // OpenCV Rect 是左上角格式，项目消息统一使用中心点 + 宽高格式。
                 robot_interfaces::msg::SimpleDetection d;
                 d.center_x = det.bbox.x + det.bbox.width / 2.0;
                 d.center_y = det.bbox.y + det.bbox.height / 2.0;

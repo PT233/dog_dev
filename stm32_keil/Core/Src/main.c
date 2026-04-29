@@ -45,6 +45,12 @@
 #define SERVO_SWING_TEST 0
 #define UART_QUICK_TEST  0
 
+/* 调试开关说明：
+ * - UART_QUICK_TEST: 不启动 RTOS，只循环发送 TEST，用于验证串口线和波特率；
+ * - SERVO_SWING_TEST: 不启动 RTOS，只让 0 号舵机往返摆动，用于验证 PWM 输出。
+ * 正常固件两个宏都保持 0，走轨迹规划 + UART 协议 + 状态安全任务。
+ */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -117,6 +123,7 @@ int main(void)
 #if SERVO_SWING_TEST
   Servo_Init();
 #else
+  /* RTOS 启动前先把舵机归中，并初始化系统状态机为 BOOT_CENTERING。 */
   TrajPlanner_Init();
   StatusSafety_SystemStateInit();
 #endif
@@ -226,7 +233,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+  /* 进入这里说明 HAL 初始化或外设调用失败。关闭中断后停机，等待 IWDG 或调试器介入。 */
   __disable_irq();
   while (1)
   {

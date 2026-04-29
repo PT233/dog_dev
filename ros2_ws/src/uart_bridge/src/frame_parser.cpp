@@ -18,6 +18,7 @@ void FrameParser::SetErrorCallback(ErrorCallback cb) {
 void FrameParser::ProcessByte(uint8_t byte) {
   switch (state_) {
     case WAIT_HEADER_0:
+      // 未同步状态只寻找 0xAA，丢弃所有其他噪声字节。
       if (byte == UART_FRAME_HEADER_0) {
         state_ = WAIT_HEADER_1;
       }
@@ -27,6 +28,7 @@ void FrameParser::ProcessByte(uint8_t byte) {
       if (byte == UART_FRAME_HEADER_1) {
         state_ = READ_CMD_ID;
       } else if (byte == UART_FRAME_HEADER_0) {
+        // 连续 0xAA 时保留第二个作为潜在新帧头，提高重同步速度。
         state_ = WAIT_HEADER_1;
       } else {
         state_ = WAIT_HEADER_0;
@@ -95,6 +97,7 @@ void FrameParser::ProcessByte(uint8_t byte) {
 
 uint16_t FrameParser::CalculateFrameCrc() const {
   uint8_t crc_data[UART_MAX_FRAME_LEN - 5];
+  // CRC 覆盖范围与 STM32 端完全一致：CMD_ID + LEN + PAYLOAD。
   crc_data[0] = cmd_id_;
   crc_data[1] = payload_len_;
   if (payload_len_ > 0) {

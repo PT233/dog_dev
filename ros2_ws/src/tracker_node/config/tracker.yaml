@@ -1,5 +1,10 @@
 tracker_node:
   ros__parameters:
+    # 检测置信度低于该值的目标不会进入跟踪器。
     track_thresh: 0.5
+
+    # 匹配代价阈值，当前代价为 1-IoU；越小越不容易把两个目标合并。
     match_thresh: 0.5
+
+    # 目标短暂消失后保留 ID 的帧数，30 帧约等于 1 秒（按 30fps 估算）。
     track_buffer: 30

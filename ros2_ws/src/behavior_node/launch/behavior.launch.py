@@ -4,6 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
+    # 行为节点参数包含图像中心点，后续像素误差以该中心为零点。
     behavior_node_dir = get_package_share_directory('behavior_node')
     config_dir = os.path.join(behavior_node_dir, 'config')
     config_file = os.path.join(config_dir, 'behavior.yaml')

@@ -12,6 +12,7 @@ namespace detection_node {
 YoloInfer::YoloInfer(const std::string& model_path, bool use_cuda,
                      int intra_op_threads, int inter_op_threads)
     : model_path_(model_path), cuda_enabled_(false) {
+    // COCO 类别文件用于确定类别数和后续调试显示；读取失败时按 80 类默认值运行。
     if (project_shared::load_trimmed_lines("models/coco_classes.txt", &class_names_)) {
         num_classes_ = class_names_.size();
     }
@@ -22,6 +23,7 @@ YoloInfer::YoloInfer(const std::string& model_path, bool use_cuda,
             Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault));
 
         Ort::SessionOptions session_opts;
+        // 推理线程数显式配置，方便在树莓派/WSL/GPU 主机间调性能。
         session_opts.SetIntraOpNumThreads(intra_op_threads);
         session_opts.SetInterOpNumThreads(inter_op_threads);
         session_opts.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_ALL);
@@ -32,13 +34,14 @@ YoloInfer::YoloInfer(const std::string& model_path, bool use_cuda,
                 session_opts.AppendExecutionProvider_CUDA(cuda_options);
                 cuda_enabled_ = true;
             } catch (const std::exception& e) {
+                // CUDA provider 不可用时降级 CPU，避免缺 GPU 的环境直接启动失败。
                 cuda_enabled_ = false;
             }
         }
 
         session_ = std::make_unique<Ort::Session>(*env_, model_path_.c_str(), session_opts);
 
-        // Get input/output info
+        // 取出模型输入输出名称，并保存字符串所有权，保证 Run() 时 char* 仍有效。
         size_t num_input_nodes = session_->GetInputCount();
         size_t num_output_nodes = session_->GetOutputCount();
 
@@ -66,6 +69,7 @@ YoloInfer::YoloInfer(const std::string& model_path, bool use_cuda,
 YoloInfer::~YoloInfer() = default;
 
 LetterboxParams YoloInfer::Letterbox(const cv::Mat& img, cv::Mat& letterboxed, int target_size) {
+    // 保持原图宽高比缩放到 target_size 方形画布，剩余区域填 114 灰色。
     int h = img.rows, w = img.cols;
     float scale = std::min((float)target_size / h, (float)target_size / w);
     int new_h = h * scale, new_w = w * scale;
@@ -83,6 +87,7 @@ LetterboxParams YoloInfer::Letterbox(const cv::Mat& img, cv::Mat& letterboxed, i
 }
 
 std::vector<Detection> YoloInfer::Infer(const cv::Mat& image) {
+    // YOLOv8n 期望 640x640 RGB、float32、NCHW、数值范围 [0,1]。
     cv::Mat letterboxed;
     LetterboxParams params = Letterbox(image, letterboxed, 640);
 
@@ -149,7 +154,7 @@ std::vector<Detection> YoloInfer::PostProcess(const std::vector<float>& outputs,
 
         if (conf < conf_threshold) continue;
 
-        // Find max class probability
+        // 找到类别概率最大的类别，再与 objectness 相乘得到最终置信度。
         float max_prob = 0.0f;
         int class_id = 0;
         for (int j = 5; j < output_dim; ++j) {
@@ -188,6 +193,7 @@ std::vector<Detection> YoloInfer::NMS(const std::vector<Detection>& detections,
                                      float iou_threshold) {
     if (detections.empty()) return {};
 
+    // 按置信度从高到低保留框，和已保留框 IoU 过高的候选会被抑制。
     std::vector<Detection> sorted_dets = detections;
     std::sort(sorted_dets.begin(), sorted_dets.end(),
               [](const Detection& a, const Detection& b) {
