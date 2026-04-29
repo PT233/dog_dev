@@ -1,5 +1,12 @@
 # 从视觉到运动的数据流
 
+## 0. 运行时链路图
+
+![项目数据链路图](assets/project_dataflow_diagram.svg)
+
+图源文件：`docs/assets/project_dataflow_diagram.dot`  
+覆盖默认主链：`vision_stack.launch.py + rpi_stack.launch.py`，不含 `detection_viz_node` 与 `vision_front`。
+
 ## 1. 输入阶段
 
 ### Raspberry Pi 摄像头推流

@@ -72,6 +72,7 @@ add_executable(detection_viz_node_exe src/detection_viz_node.cpp src/detection_v
 ament_target_dependencies(detection_viz_node_exe
   rclcpp
   sensor_msgs
+  OpenCV
   robot_interfaces
 )
 target_include_directories(detection_viz_node_exe PUBLIC
@@ -79,6 +80,7 @@ target_include_directories(detection_viz_node_exe PUBLIC
   $<INSTALL_INTERFACE:include>)
 target_include_directories(detection_viz_node_exe PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+target_link_libraries(detection_viz_node_exe ${OpenCV_LIBS})
 
 set(_onnxruntime_targets
   yolo_infer

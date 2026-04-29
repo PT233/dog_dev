@@ -1,0 +1,43 @@
+digraph ros2_runtime_rqt_graph {
+  graph [rankdir=LR, splines=true, nodesep=0.5, ranksep=0.7, bgcolor=white];
+  node [fontname="Helvetica", fontsize=11];
+  edge [fontname="Helvetica", fontsize=10, color="#475569"];
+
+  n__behavior_node [label="/behavior_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+  n__detection_node [label="/detection_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+  n__gst_receiver_node [label="/gst_receiver_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+  n__leg_motion_node [label="/leg_motion_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+  n__mock_uart_bridge_node [label="/mock_uart_bridge_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+  n__stereo_splitter_node [label="/stereo_splitter_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+  n__tracker_node [label="/tracker_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
+
+  t__camera_image_mono [label="/camera/image_mono
+sensor_msgs/msg/Image", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__detections [label="/detections
+robot_interfaces/msg/SimpleDetection2DArray", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__pixel_error [label="/pixel_error
+geometry_msgs/msg/Vector3", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__servo_cmd [label="/servo_cmd
+sensor_msgs/msg/JointState", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__servo_state [label="/servo_state
+sensor_msgs/msg/JointState", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__stereo_image_raw [label="/stereo/image_raw
+sensor_msgs/msg/Image", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__tracked_objects [label="/tracked_objects
+robot_interfaces/msg/SimpleDetection2DArray", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+
+  n__stereo_splitter_node -> t__camera_image_mono [color="#2563EB"];
+  t__camera_image_mono -> n__detection_node [color="#EA580C"];
+  n__detection_node -> t__detections [color="#2563EB"];
+  t__detections -> n__tracker_node [color="#EA580C"];
+  n__behavior_node -> t__pixel_error [color="#2563EB"];
+  t__pixel_error -> n__leg_motion_node [color="#EA580C"];
+  n__leg_motion_node -> t__servo_cmd [color="#2563EB"];
+  t__servo_cmd -> n__mock_uart_bridge_node [color="#EA580C"];
+  n__mock_uart_bridge_node -> t__servo_state [color="#2563EB"];
+  t__servo_state -> n__leg_motion_node [color="#EA580C"];
+  n__gst_receiver_node -> t__stereo_image_raw [color="#2563EB"];
+  t__stereo_image_raw -> n__stereo_splitter_node [color="#EA580C"];
+  n__tracker_node -> t__tracked_objects [color="#2563EB"];
+  t__tracked_objects -> n__behavior_node [color="#EA580C"];
+}

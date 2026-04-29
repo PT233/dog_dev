@@ -1,0 +1,143 @@
+digraph project_dataflow {
+  graph [
+    rankdir=LR
+    bgcolor="white"
+    fontname="Helvetica"
+    fontsize=12
+    label="desktop_tracking_robot - Runtime Dataflow (baseline 2026-04-28)"
+    labelloc=t
+    labeljust=l
+    nodesep=0.55
+    ranksep=1.0
+    pad=0.35
+    splines=polyline
+  ];
+
+  node [
+    shape=box
+    style="rounded,filled"
+    fontname="Helvetica"
+    fontsize=10
+    margin="0.14,0.10"
+    color="#1f2937"
+    fillcolor="#f8fafc"
+    penwidth=1.15
+  ];
+
+  edge [
+    fontname="Helvetica"
+    fontsize=9
+    color="#475569"
+    fontcolor="#334155"
+    penwidth=1.25
+    arrowsize=0.8
+  ];
+
+  subgraph cluster_rpi_video {
+    label="Raspberry Pi / Video";
+    color="#60a5fa";
+    penwidth=1.4;
+    style="rounded";
+
+    camera [label="/dev/video0\nUSB stereo camera", fillcolor="#dbeafe"];
+    camera_stream [label="start_camera_stream.sh\nYUY2 640x480@30\nH.264 -> UDP:5600", fillcolor="#bfdbfe"];
+  }
+
+  subgraph cluster_wsl {
+    label="WSL2 / PC";
+    color="#4ade80";
+    penwidth=1.4;
+    style="rounded";
+
+    gst_receiver [label="gst_receiver_node\nUDP:5600 -> /stereo/image_raw", fillcolor="#dcfce7"];
+    stereo_splitter [label="stereo_splitter_node\nleft crop -> /camera/image_mono", fillcolor="#bbf7d0"];
+    detection [label="detection_node\nYOLOv8 ONNX -> /detections", fillcolor="#bbf7d0"];
+    tracker [label="tracker_node\nByteTrack-style -> /tracked_objects", fillcolor="#bbf7d0"];
+    behavior [label="behavior_node\nselect target -> /pixel_error", fillcolor="#bbf7d0"];
+    leg_motion [label="leg_motion_node\nPID + gait -> /servo_cmd\nsub: /servo_state", fillcolor="#bbf7d0"];
+    service_client [label="CLI / service client\n/set_target_class", shape=note, fillcolor="#fef3c7", color="#f59e0b"];
+  }
+
+  subgraph cluster_rpi_bridge {
+    label="Raspberry Pi / UART";
+    color="#60a5fa";
+    penwidth=1.4;
+    style="rounded";
+
+    uart_bridge [label="uart_bridge_node\n/servo_cmd <-> UART <-> /servo_state\nhandshake gate until ACTIVE", fillcolor="#bfdbfe"];
+  }
+
+  subgraph cluster_stm32 {
+    label="STM32F103";
+    color="#f87171";
+    penwidth=1.4;
+    style="rounded";
+
+    uart_rx [label="Task_UART_RX\nframe parse + handshake", fillcolor="#fee2e2"];
+    traj [label="Task_Traj_Planner\n5 ms interpolation", fillcolor="#fecaca"];
+    status_tx [label="Task_Status_TX\n50 ms state report", fillcolor="#fecaca"];
+    safety [label="Task_Safety\nIWDG + state trigger", fillcolor="#ffe4e6"];
+    pwm [label="TIM2 PWM", fillcolor="#fee2e2"];
+    servos [label="SG90 x4", shape=component, fillcolor="#fee2e2"];
+  }
+
+  camera -> camera_stream [label="V4L2 raw frames"];
+  camera_stream -> gst_receiver [
+    label="UDP / RTP H.264 :5600"
+    color="#2563eb"
+    fontcolor="#1d4ed8"
+    penwidth=1.8
+  ];
+
+  gst_receiver -> stereo_splitter [label="/stereo/image_raw"];
+  stereo_splitter -> detection [label="/camera/image_mono"];
+  detection -> tracker [label="/detections"];
+  tracker -> behavior [label="/tracked_objects"];
+  behavior -> leg_motion [label="/pixel_error"];
+
+  service_client -> behavior [
+    label="/set_target_class"
+    style=dashed
+    color="#d97706"
+    fontcolor="#b45309"
+  ];
+
+  leg_motion -> uart_bridge [
+    label="/servo_cmd\nsensor_msgs/JointState"
+    color="#059669"
+    fontcolor="#047857"
+    penwidth=1.6
+  ];
+
+  uart_bridge -> leg_motion [
+    label="/servo_state\nsensor_msgs/JointState"
+    color="#7c3aed"
+    fontcolor="#6d28d9"
+    penwidth=1.6
+  ];
+
+  uart_bridge -> uart_rx [
+    label="UART 0x01 servo cmd\nUART 0x10 handshake\n/dev/ttyAMA0 @ 921600"
+    color="#dc2626"
+    fontcolor="#b91c1c"
+    penwidth=1.8
+  ];
+
+  uart_rx -> traj [label="decoded servo targets"];
+  traj -> pwm [label="pulse widths"];
+  pwm -> servos [label="4 channels, 50 Hz"];
+
+  safety -> status_tx [
+    label="state trigger"
+    style=dashed
+    color="#fb7185"
+    fontcolor="#e11d48"
+  ];
+
+  status_tx -> uart_bridge [
+    label="UART 0x82 SERVO_STATE_V2\nUART 0x83 SYSTEM_STATE"
+    color="#7c3aed"
+    fontcolor="#6d28d9"
+    penwidth=1.8
+  ];
+}

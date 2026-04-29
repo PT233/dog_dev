@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-04-28 21:20:15",
+  "nodes": [
+    "/behavior_node",
+    "/detection_node",
+    "/gst_receiver_node",
+    "/leg_motion_node",
+    "/mock_uart_bridge_node",
+    "/stereo_splitter_node",
+    "/tracker_node"
+  ],
+  "topics": {
+    "/pixel_error": {
+      "types": [
+        "geometry_msgs/msg/Vector3"
+      ],
+      "publishers": [
+        "/behavior_node"
+      ],
+      "subscribers": [
+        "/leg_motion_node"
+      ]
+    },
+    "/tracked_objects": {
+      "types": [
+        "robot_interfaces/msg/SimpleDetection2DArray"
+      ],
+      "publishers": [
+        "/tracker_node"
+      ],
+      "subscribers": [
+        "/behavior_node"
+      ]
+    },
+    "/detections": {
+      "types": [
+        "robot_interfaces/msg/SimpleDetection2DArray"
+      ],
+      "publishers": [
+        "/detection_node"
+      ],
+      "subscribers": [
+        "/tracker_node"
+      ]
+    },
+    "/camera/image_mono": {
+      "types": [
+        "sensor_msgs/msg/Image"
+      ],
+      "publishers": [
+        "/stereo_splitter_node"
+      ],
+      "subscribers": [
+        "/detection_node"
+      ]
+    },
+    "/stereo/image_raw": {
+      "types": [
+        "sensor_msgs/msg/Image"
+      ],
+      "publishers": [
+        "/gst_receiver_node"
+      ],
+      "subscribers": [
+        "/stereo_splitter_node"
+      ]
+    },
+    "/servo_cmd": {
+      "types": [
+        "sensor_msgs/msg/JointState"
+      ],
+      "publishers": [
+        "/leg_motion_node"
+      ],
+      "subscribers": [
+        "/mock_uart_bridge_node"
+      ]
+    },
+    "/servo_state": {
+      "types": [
+        "sensor_msgs/msg/JointState"
+      ],
+      "publishers": [
+        "/mock_uart_bridge_node"
+      ],
+      "subscribers": [
+        "/leg_motion_node"
+      ]
+    }
+  }
+}

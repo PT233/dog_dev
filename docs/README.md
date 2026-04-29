@@ -8,6 +8,10 @@
 - [ros2-topology.md](ros2-topology.md): ROS 2 包、节点、topic 和 service 关系
 - [module-interactions.md](module-interactions.md): 代码模块之间的依赖边界
 - [vision-to-motion-dataflow.md](vision-to-motion-dataflow.md): 从视频输入到舵机输出的数据流
+- [stm32-firmware-code-doc.md](stm32-firmware-code-doc.md): STM32F103 固件的时钟、外设、任务、协议与调试说明
+- [gst_receiver-node-code.md](gst_receiver-node-code.md): `gst_receiver_node` 的逐段代码说明、接口表和排错建议
+- [stereo_splitter-node-code.md](stereo_splitter-node-code.md): `stereo_splitter_node` 的裁切逻辑、接口表和调试说明
+- [uart_bridge-node-code.md](uart_bridge-node-code.md): `uart_bridge_node` 的串口桥接、握手状态机和线程模型说明
 
 ## 部署与启动
 
