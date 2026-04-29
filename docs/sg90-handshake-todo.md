@@ -5,14 +5,14 @@
 ## 已完成
 
 - STM32 定义了 `BOOT_CENTERING -> WAITING_CONNECTION -> ACTIVE` 状态机
-- Pi 侧 `uart_bridge_node` 会在握手完成前丢弃 `/servo_cmd`
+- Pi 侧 `uart_bridge_node` 会在握手完成前丢弃 `/leg_motion_node/output/servo_command`
 - STM32 会通过 `SYSTEM_STATE` 回报当前状态
 
 ## 仍建议补齐
 
 1. 实机确认四个 SG90 的机械中位与 `90 deg` 是否一致
 2. 上电居中动作完成后记录实际等待时间，确认 `500 ms` 是否足够
-3. 在硬件联调中验证握手完成后第一批 `/servo_cmd` 是否稳定执行
+3. 在硬件联调中验证握手完成后第一批 `/leg_motion_node/output/servo_command` 是否稳定执行
 4. 补充异常状态下的恢复策略，例如：
    - 串口重连后是否重新握手
    - 舵机电源抖动时是否进入 `ERROR`

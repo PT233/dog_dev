@@ -75,8 +75,8 @@
 
 所以跨机器真正通的是：
 
-- `WSL leg_motion_node -> Pi uart_bridge_node` 的 `/servo_cmd`
-- `Pi uart_bridge_node -> WSL leg_motion_node` 的 `/servo_state`
+- `WSL leg_motion_node -> Pi uart_bridge_node` 的 `/leg_motion_node/output/servo_command`
+- `Pi uart_bridge_node -> WSL leg_motion_node` 的 `/uart_bridge_node/output/servo_state`
 
 ## 4. 这套系统里有两种“跨机器通信”
 
@@ -84,8 +84,8 @@
 
 用于：
 
-- `/servo_cmd`
-- `/servo_state`
+- `/leg_motion_node/output/servo_command`
+- `/uart_bridge_node/output/servo_state`
 
 特点：
 

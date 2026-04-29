@@ -114,7 +114,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     NULL  // resize(index) function pointer
   },
   {
-    "bbox_cx",  // name
+    "bounding_box_center_x",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
@@ -122,7 +122,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(robot_interfaces__msg__TargetInfo, bbox_cx),  // bytes offset in struct
+    offsetof(robot_interfaces__msg__TargetInfo, bounding_box_center_x),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -132,7 +132,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     NULL  // resize(index) function pointer
   },
   {
-    "bbox_cy",  // name
+    "bounding_box_center_y",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
@@ -140,7 +140,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(robot_interfaces__msg__TargetInfo, bbox_cy),  // bytes offset in struct
+    offsetof(robot_interfaces__msg__TargetInfo, bounding_box_center_y),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -150,7 +150,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     NULL  // resize(index) function pointer
   },
   {
-    "bbox_w",  // name
+    "bounding_box_width",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
@@ -158,7 +158,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(robot_interfaces__msg__TargetInfo, bbox_w),  // bytes offset in struct
+    offsetof(robot_interfaces__msg__TargetInfo, bounding_box_width),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -168,7 +168,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     NULL  // resize(index) function pointer
   },
   {
-    "bbox_h",  // name
+    "bounding_box_height",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
@@ -176,7 +176,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(robot_interfaces__msg__TargetInfo, bbox_h),  // bytes offset in struct
+    offsetof(robot_interfaces__msg__TargetInfo, bounding_box_height),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -186,7 +186,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     NULL  // resize(index) function pointer
   },
   {
-    "locked",  // name
+    "is_locked",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_BOOLEAN,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
@@ -194,7 +194,7 @@ static rosidl_typesupport_introspection_c__MessageMember robot_interfaces__msg__
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(robot_interfaces__msg__TargetInfo, locked),  // bytes offset in struct
+    offsetof(robot_interfaces__msg__TargetInfo, is_locked),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer

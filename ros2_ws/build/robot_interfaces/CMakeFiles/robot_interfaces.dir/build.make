@@ -67,8 +67,8 @@ include CMakeFiles/robot_interfaces.dir/compiler_depend.make
 include CMakeFiles/robot_interfaces.dir/progress.make
 
 CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/TargetInfo.msg
-CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/SimpleDetection.msg
-CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/SimpleDetection2DArray.msg
+CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/Detection2D.msg
+CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/Detection2DArray.msg
 CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/srv/SetTargetClass.srv
 CMakeFiles/robot_interfaces: /home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/srv/CalibrateCenter.srv
 CMakeFiles/robot_interfaces: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl

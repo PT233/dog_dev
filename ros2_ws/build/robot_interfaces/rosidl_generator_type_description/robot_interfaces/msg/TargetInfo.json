@@ -44,7 +44,7 @@
           "default_value": ""
         },
         {
-          "name": "bbox_cx",
+          "name": "bounding_box_center_x",
           "type": {
             "type_id": 6,
             "capacity": 0,
@@ -54,7 +54,7 @@
           "default_value": ""
         },
         {
-          "name": "bbox_cy",
+          "name": "bounding_box_center_y",
           "type": {
             "type_id": 6,
             "capacity": 0,
@@ -64,7 +64,7 @@
           "default_value": ""
         },
         {
-          "name": "bbox_w",
+          "name": "bounding_box_width",
           "type": {
             "type_id": 6,
             "capacity": 0,
@@ -74,7 +74,7 @@
           "default_value": ""
         },
         {
-          "name": "bbox_h",
+          "name": "bounding_box_height",
           "type": {
             "type_id": 6,
             "capacity": 0,
@@ -84,7 +84,7 @@
           "default_value": ""
         },
         {
-          "name": "locked",
+          "name": "is_locked",
           "type": {
             "type_id": 15,
             "capacity": 0,
@@ -151,7 +151,7 @@
   "type_hashes": [
     {
       "type_name": "robot_interfaces/msg/TargetInfo",
-      "hash_string": "RIHS01_70d50a4219921b0f88bdc92a6c1dce4ed2c4cb121d4db19f549a9bac0d3f131a"
+      "hash_string": "RIHS01_61490250de0f15efde017dc2f9dfebb206f6fb23eb89ba5978df212a45deabce"
     },
     {
       "type_name": "builtin_interfaces/msg/Time",

@@ -12,11 +12,16 @@ find_package(std_msgs REQUIRED)
 # 统一生成视觉检测、目标选择和标定服务的 ROS 接口代码。
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TargetInfo.msg"
-  "msg/SimpleDetection.msg"
-  "msg/SimpleDetection2DArray.msg"
+  "msg/Detection2D.msg"
+  "msg/Detection2DArray.msg"
   "srv/SetTargetClass.srv"
   "srv/CalibrateCenter.srv"
   DEPENDENCIES std_msgs
 )
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
 ament_package()

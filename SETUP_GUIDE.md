@@ -154,11 +154,11 @@ ROS 侧与 STM32 侧共用协议定义：
 3. 用 `rpi_one_click_deploy.sh` 把 Pi 侧 ROS 包部署好
 4. 单独验证 Pi 视频推流
 5. 单独验证 Pi `uart_bridge` 能打开 `/dev/ttyAMA0`
-6. 最后联调 STM32 握手和 `/servo_state`
+6. 最后联调 STM32 握手和 `/uart_bridge_node/output/uart_bridge_node/output/servo_state`
 
 ## 8. 常见坑
 
 - `detection_node` 没有 `ONNXRUNTIME_ROOT` 时无法构建
 - WSL2 和树莓派如果没有统一执行 `ros2_network_env.sh`，DDS 常常表现为可 ping 通但互相看不到节点
-- `uart_bridge_node` 在握手完成前会主动丢弃 `/servo_cmd`
+- `uart_bridge_node` 在握手完成前会主动丢弃 `/leg_motion_node/output/servo_command`
 - `CalibrateCenter.srv` 目前没有服务端，不要把它当成现成功能

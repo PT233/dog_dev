@@ -63,7 +63,7 @@ cat << 'EOF'
 
   预期输出：
     [uart_bridge_node] Initialized
-    [uart_bridge_node] Subscribed to /servo_cmd
+    [uart_bridge_node] Subscribed to /leg_motion_node/output/servo_command
 
 📱 Terminal 3 - WSL2：启动视觉管道
   cd /home/peter/dog/dog_dev
@@ -87,7 +87,7 @@ cat << 'EOF'
   cd /home/peter/dog/dog_dev
   export ROBOT_DDS_ROLE=wsl
   source scripts/ros2_network_env.sh
-  ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
+  ros2 service call /behavior_node/input/set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
 
 预期输出：
   requester: making request #1: robot_interfaces.srv.SetTargetClass_Request(class_name='cup')
@@ -111,8 +111,8 @@ cat << 'EOF'
 
 [验收标准]
 
-✓ 能够检测到杯子（/detections 有输出）
-✓ 能够追踪杯子（/tracked_objects 的 track_id 保持一致）
+✓ 能够检测到杯子（/detection_node/output/detections 有输出）
+✓ 能够追踪杯子（/tracker_node/output/tracked_objects 的 track_id 保持一致）
 ✓ 像素误差收敛到死区内（<5 像素）
 ✓ 舵机响应平滑，无持续振荡
 
@@ -127,14 +127,14 @@ A: 检查：
 
 Q: 舵机不动？
 A: 检查：
-  1. /servo_cmd 话题是否有输出
+  1. /leg_motion_node/output/servo_command 话题是否有输出
   2. STM32 UART 是否连接
   3. 树莓派的 /dev/ttyAMA0 是否有权限
-  4. 运行 ros2 topic echo /servo_cmd 查看命令
+  4. 运行 ros2 topic echo /leg_motion_node/output/servo_command 查看命令
 
 Q: 误差不收敛？
 A: 检查：
-  1. 目标类别是否正确（运行 ros2 topic echo /pixel_error）
+  1. 目标类别是否正确（运行 ros2 topic echo /behavior_node/output/pixel_error）
   2. PID 参数是否合适（见 config/visual_servo.yaml）
   3. 舵机机械是否有死区（SG90 通常有 ±5px 死区）
 
@@ -143,13 +143,13 @@ A: 检查：
 [调试命令]
 
 监控像素误差：
-  ros2 topic echo /pixel_error
+  ros2 topic echo /behavior_node/output/pixel_error
 
 监控追踪对象：
-  ros2 topic echo /tracked_objects
+  ros2 topic echo /tracker_node/output/tracked_objects
 
 实时绘制误差曲线：
-  rqt_plot /pixel_error/x /pixel_error/y
+  rqt_plot /behavior_node/output/pixel_error/x /behavior_node/output/pixel_error/y
 
 查看摄像机输出：
   rqt_image_view

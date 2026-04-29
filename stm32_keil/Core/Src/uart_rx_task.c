@@ -54,7 +54,7 @@ static void UartRx_HandleFrame(const uint8_t* frame, uint16_t frame_len)
     return;
   }
 
-  if (cmd_id == UART_CMD_INIT_HANDSHAKE) {
+  if (cmd_id == kUartCmdInitHandshake) {
     UartHandshakePayload handshake;
 
     /* payload 太短时仍触发系统状态回包，让上位机能看到当前 STM32 状态。 */
@@ -68,13 +68,13 @@ static void UartRx_HandleFrame(const uint8_t* frame, uint16_t frame_len)
     return;
   }
 
-  if (cmd_id != UART_CMD_SERVO_CONTROL)
+  if (cmd_id != kUartCmdServoControl)
   {
     /* 未实现的命令先静默丢弃，避免未知 payload 影响实时控制链路。 */
     return;
   }
 
-  if (StatusSafety_GetSystemState() != UART_SYSTEM_STATE_ACTIVE)
+  if (StatusSafety_GetSystemState() != kUartSystemStateActive)
   {
     /* 只有握手完成后才允许执行舵机指令，防止上电归中阶段被上位机抢控制权。 */
     StatusSafety_RequestSystemStateTx();

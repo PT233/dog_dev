@@ -3,7 +3,7 @@
 
 set -e
 
-WORKSPACE_DIR="/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws"
+WORKSPACE_DIR="${WORKSPACE_DIR:-/home/peter/dog/dog_dev/ros2_ws}"
 cd "$WORKSPACE_DIR"
 
 source install/setup.bash
@@ -17,11 +17,11 @@ else
 fi
 
 echo ""
-echo "========== Test 2: Verify /servo_cmd subscription =========="
-if grep -q "/servo_cmd" src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ /servo_cmd subscription present"
+echo "========== Test 2: Verify private servo_command subscription =========="
+if grep -q "~/input/servo_command" src/uart_bridge/src/uart_bridge_transport.cpp; then
+  echo "✓ private servo_command subscription present"
 else
-  echo "✗ /servo_cmd subscription not found"
+  echo "✗ private servo_command subscription not found"
   exit 1
 fi
 
@@ -43,21 +43,21 @@ fi
 
 echo ""
 echo "========== Test 4: Verify JointState to servo_id mapping =========="
-if grep -q "NameToServoId" src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ NameToServoId mapping function present"
+if grep -q "servo_id_by_name" src/uart_bridge/src/uart_bridge_node_internal.hpp; then
+  echo "✓ servo_id_by_name mapping function present"
 else
-  echo "✗ NameToServoId mapping not found"
+  echo "✗ servo_id_by_name mapping not found"
   exit 1
 fi
 
-if grep -q '"front_left".*0' src/uart_bridge/src/uart_bridge_node.cpp; then
+if grep -q '"front_left".*0' ../shared/servo_names.hpp; then
   echo "✓ front_left→0 mapping found"
 else
   echo "✗ front_left→0 mapping not found"
   exit 1
 fi
 
-if grep -q '"front_right".*1' src/uart_bridge/src/uart_bridge_node.cpp; then
+if grep -q '"front_right".*1' ../shared/servo_names.hpp; then
   echo "✓ front_right→1 mapping found"
 else
   echo "✗ front_right→1 mapping not found"
@@ -66,7 +66,7 @@ fi
 
 echo ""
 echo "========== Test 5: Verify angle conversion =========="
-if grep -q "M_PI" src/uart_bridge/src/uart_bridge_node.cpp; then
+if grep -q "M_PI" src/uart_bridge/src/uart_bridge_transport.cpp; then
   echo "✓ Radian to degree conversion present"
 else
   echo "✗ Radian to degree conversion not found"
@@ -75,7 +75,7 @@ fi
 
 echo ""
 echo "========== Test 6: Verify UART write implementation =========="
-if grep -q "write(uart_fd_" src/uart_bridge/src/uart_bridge_node.cpp; then
+if grep -q "write(uart_fd_" src/uart_bridge/src/uart_bridge_transport.cpp; then
   echo "✓ UART write implementation found"
 else
   echo "✗ UART write implementation not found"
@@ -84,8 +84,8 @@ fi
 
 echo ""
 echo "========== Test 7: Verify SensorDataQoS usage =========="
-if grep -q "SensorDataQoS()" src/uart_bridge/src/uart_bridge_node.cpp; then
-  echo "✓ SensorDataQoS policy applied to /servo_cmd subscription"
+if grep -q "SensorDataQoS()" src/uart_bridge/src/uart_bridge_transport.cpp; then
+  echo "✓ SensorDataQoS policy applied to private servo_command subscription"
 else
   echo "✗ SensorDataQoS not found"
   exit 1

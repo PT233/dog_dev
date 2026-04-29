@@ -11,10 +11,10 @@ robot_interfaces__msg__TargetInfo__get_type_hash(
 {
   (void)type_support;
   static rosidl_type_hash_t hash = {1, {
-      0x70, 0xd5, 0x0a, 0x42, 0x19, 0x92, 0x1b, 0x0f,
-      0x88, 0xbd, 0xc9, 0x2a, 0x6c, 0x1d, 0xce, 0x4e,
-      0xd2, 0xc4, 0xcb, 0x12, 0x1d, 0x4d, 0xb1, 0x9f,
-      0x54, 0x9a, 0x9b, 0xac, 0x0d, 0x3f, 0x13, 0x1a,
+      0x61, 0x49, 0x02, 0x50, 0xde, 0x0f, 0x15, 0xef,
+      0xde, 0x01, 0x7d, 0xc2, 0xf9, 0xdf, 0xeb, 0xb2,
+      0x06, 0xf6, 0xfb, 0x23, 0xeb, 0x89, 0xba, 0x59,
+      0x78, 0xdf, 0x21, 0x2a, 0x45, 0xde, 0xab, 0xce,
     }};
   return &hash;
 }
@@ -51,11 +51,11 @@ static char robot_interfaces__msg__TargetInfo__FIELD_NAME__header[] = "header";
 static char robot_interfaces__msg__TargetInfo__FIELD_NAME__class_name[] = "class_name";
 static char robot_interfaces__msg__TargetInfo__FIELD_NAME__track_id[] = "track_id";
 static char robot_interfaces__msg__TargetInfo__FIELD_NAME__confidence[] = "confidence";
-static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_cx[] = "bbox_cx";
-static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_cy[] = "bbox_cy";
-static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_w[] = "bbox_w";
-static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_h[] = "bbox_h";
-static char robot_interfaces__msg__TargetInfo__FIELD_NAME__locked[] = "locked";
+static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_center_x[] = "bounding_box_center_x";
+static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_center_y[] = "bounding_box_center_y";
+static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_width[] = "bounding_box_width";
+static char robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_height[] = "bounding_box_height";
+static char robot_interfaces__msg__TargetInfo__FIELD_NAME__is_locked[] = "is_locked";
 
 static rosidl_runtime_c__type_description__Field robot_interfaces__msg__TargetInfo__FIELDS[] = {
   {
@@ -99,7 +99,7 @@ static rosidl_runtime_c__type_description__Field robot_interfaces__msg__TargetIn
     {NULL, 0, 0},
   },
   {
-    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_cx, 7, 7},
+    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_center_x, 21, 21},
     {
       rosidl_runtime_c__type_description__FieldType__FIELD_TYPE_INT32,
       0,
@@ -109,7 +109,7 @@ static rosidl_runtime_c__type_description__Field robot_interfaces__msg__TargetIn
     {NULL, 0, 0},
   },
   {
-    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_cy, 7, 7},
+    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_center_y, 21, 21},
     {
       rosidl_runtime_c__type_description__FieldType__FIELD_TYPE_INT32,
       0,
@@ -119,7 +119,7 @@ static rosidl_runtime_c__type_description__Field robot_interfaces__msg__TargetIn
     {NULL, 0, 0},
   },
   {
-    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_w, 6, 6},
+    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_width, 18, 18},
     {
       rosidl_runtime_c__type_description__FieldType__FIELD_TYPE_INT32,
       0,
@@ -129,7 +129,7 @@ static rosidl_runtime_c__type_description__Field robot_interfaces__msg__TargetIn
     {NULL, 0, 0},
   },
   {
-    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bbox_h, 6, 6},
+    {robot_interfaces__msg__TargetInfo__FIELD_NAME__bounding_box_height, 19, 19},
     {
       rosidl_runtime_c__type_description__FieldType__FIELD_TYPE_INT32,
       0,
@@ -139,7 +139,7 @@ static rosidl_runtime_c__type_description__Field robot_interfaces__msg__TargetIn
     {NULL, 0, 0},
   },
   {
-    {robot_interfaces__msg__TargetInfo__FIELD_NAME__locked, 6, 6},
+    {robot_interfaces__msg__TargetInfo__FIELD_NAME__is_locked, 9, 9},
     {
       rosidl_runtime_c__type_description__FieldType__FIELD_TYPE_BOOLEAN,
       0,
@@ -185,15 +185,22 @@ robot_interfaces__msg__TargetInfo__get_type_description(
 }
 
 static char toplevel_type_raw_source[] =
+  "# \\xe5\\xbd\\x93\\xe5\\x89\\x8d\\xe7\\x9b\\xae\\xe6\\xa0\\x87\\xe9\\x80\\x89\\xe6\\x8b\\xa9\\xe7\\xbb\\x93\\xe6\\x9e\\x9c\\xef\\xbc\\x8c\\xe9\\xa2\\x84\\xe7\\x95\\x99\\xe7\\xbb\\x99\\xe6\\x9b\\xb4\\xe5\\xae\\x8c\\xe6\\x95\\xb4\\xe7\\x9a\\x84\\xe8\\xa1\\x8c\\xe4\\xb8\\xba/\\xe7\\x8a\\xb6\\xe6\\x80\\x81\\xe6\\x98\\xbe\\xe7\\xa4\\xba\\xe3\\x80\\x82\n"
   "std_msgs/Header header\n"
+  "\n"
+  "# \\xe7\\x9b\\xae\\xe6\\xa0\\x87\\xe7\\xb1\\xbb\\xe5\\x88\\xab\\xe5\\x90\\x8d\\xe5\\x92\\x8c\\xe8\\xb7\\x9f\\xe8\\xb8\\xaa ID\\xe3\\x80\\x82\n"
   "string class_name\n"
   "string track_id\n"
+  "\n"
+  "# \\xe5\\xbd\\x93\\xe5\\x89\\x8d\\xe7\\x9b\\xae\\xe6\\xa0\\x87\\xe7\\xbd\\xae\\xe4\\xbf\\xa1\\xe5\\xba\\xa6\\xe5\\x92\\x8c\\xe6\\xa3\\x80\\xe6\\xb5\\x8b\\xe6\\xa1\\x86\\xe5\\x83\\x8f\\xe7\\xb4\\xa0\\xe4\\xbd\\x8d\\xe7\\xbd\\xae\\xe3\\x80\\x82\n"
   "float32 confidence\n"
-  "int32 bbox_cx\n"
-  "int32 bbox_cy\n"
-  "int32 bbox_w\n"
-  "int32 bbox_h\n"
-  "bool locked";
+  "int32 bounding_box_center_x\n"
+  "int32 bounding_box_center_y\n"
+  "int32 bounding_box_width\n"
+  "int32 bounding_box_height\n"
+  "\n"
+  "# true \\xe8\\xa1\\xa8\\xe7\\xa4\\xba\\xe5\\xbd\\x93\\xe5\\x89\\x8d\\xe8\\xa1\\x8c\\xe4\\xb8\\xba\\xe8\\x8a\\x82\\xe7\\x82\\xb9\\xe5\\xb7\\xb2\\xe7\\xbb\\x8f\\xe9\\x94\\x81\\xe5\\xae\\x9a\\xe4\\xb8\\x80\\xe4\\xb8\\xaa\\xe6\\x9c\\x89\\xe6\\x95\\x88\\xe7\\x9b\\xae\\xe6\\xa0\\x87\\xe3\\x80\\x82\n"
+  "bool is_locked";
 
 static char msg_encoding[] = "msg";
 
@@ -207,7 +214,7 @@ robot_interfaces__msg__TargetInfo__get_individual_type_description_source(
   static const rosidl_runtime_c__type_description__TypeSource source = {
     {robot_interfaces__msg__TargetInfo__TYPE_NAME, 31, 31},
     {msg_encoding, 3, 3},
-    {toplevel_type_raw_source, 142, 142},
+    {toplevel_type_raw_source, 289, 289},
   };
   return &source;
 }

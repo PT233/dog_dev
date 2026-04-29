@@ -6,24 +6,32 @@
 
 module robot_interfaces {
   module msg {
+    @verbatim (language="comment", text=
+      "当前目标选择结果，预留给更完整的行为/状态显示。")
     struct TargetInfo {
       std_msgs::msg::Header header;
 
+      @verbatim (language="comment", text=
+        "目标类别名和跟踪 ID。")
       string class_name;
 
       string track_id;
 
+      @verbatim (language="comment", text=
+        "当前目标置信度和检测框像素位置。")
       float confidence;
 
-      int32 bbox_cx;
+      int32 bounding_box_center_x;
 
-      int32 bbox_cy;
+      int32 bounding_box_center_y;
 
-      int32 bbox_w;
+      int32 bounding_box_width;
 
-      int32 bbox_h;
+      int32 bounding_box_height;
 
-      boolean locked;
+      @verbatim (language="comment", text=
+        "true 表示当前行为节点已经锁定一个有效目标。")
+      boolean is_locked;
     };
   };
 };

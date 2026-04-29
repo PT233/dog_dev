@@ -51,11 +51,11 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection.json")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/Detection2D.json")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/SimpleDetection2DArray.json")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_generator_type_description/robot_interfaces/msg/Detection2DArray.json")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -391,11 +391,11 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/Detection2D.idl")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/Detection2DArray.idl")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -411,11 +411,11 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/SimpleDetection.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/Detection2D.msg")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/SimpleDetection2DArray.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robot_interfaces/msg" TYPE FILE FILES "/home/peter/dog/dog_dev/ros2_ws/src/robot_interfaces/msg/Detection2DArray.msg")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)

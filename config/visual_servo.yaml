@@ -1,32 +1,30 @@
 leg_motion_node:
   ros__parameters:
     # 控制环频率，过高会增加串口和舵机负担，过低会让跟踪动作滞后。
-    control_rate_hz: 30.0
+    controller.control_rate_hz: 30.0
 
     # 像素误差死区：目标接近画面中心时不再微调，减少舵机抖动。
-    deadband_px: 5.0
+    controller.deadband_pixels: 5.0
 
     # 舵机机械安全限位，最终角度会被夹紧到该范围。
-    min_angle: 10.0
-    max_angle: 170.0
+    servo.min_angle_deg: 10.0
+    servo.max_angle_deg: 170.0
 
     # 中位角和步态参数。摆幅控制前进强度，转向偏置控制左右差速。
-    neutral_angle_deg: 90.0
-    stride_amplitude_max_deg: 20.0
-    turn_bias_max_deg: 12.0
-    gait_frequency_hz: 2.0
+    servo.neutral_angle_deg: 90.0
+    gait.stride_amplitude_max_deg: 20.0
+    gait.turn_bias_max_deg: 12.0
+    gait.frequency_hz: 2.0
 
-    # 超过该时间没有新的 /pixel_error，则认为目标丢失并复位 PID/步态相位。
-    target_timeout_sec: 0.5
+    # 超过该时间没有新的 pixel_error 输入，则认为目标丢失并复位 PID/步态相位。
+    target.timeout_sec: 0.5
 
     # 水平误差 PID：输出转向偏置。
-    turn:
-      kp: 0.05
-      ki: 0.001
-      kd: 0.02
+    turn_controller.proportional_gain: 0.05
+    turn_controller.integral_gain: 0.001
+    turn_controller.derivative_gain: 0.02
 
     # 垂直误差 PID：输出步态摆幅。
-    forward:
-      kp: 0.04
-      ki: 0.001
-      kd: 0.02
+    forward_controller.proportional_gain: 0.04
+    forward_controller.integral_gain: 0.001
+    forward_controller.derivative_gain: 0.02

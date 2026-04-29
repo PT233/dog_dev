@@ -1,5 +1,5 @@
-#ifndef UART_BRIDGE_FRAME_PARSER_HPP
-#define UART_BRIDGE_FRAME_PARSER_HPP
+#ifndef UART_BRIDGE__FRAME_PARSER_HPP_
+#define UART_BRIDGE__FRAME_PARSER_HPP_
 
 // UART 帧解析器（字节流 → 完整帧）
 // 采用 8 状态状态机，逐字节处理 UART 输入流，无需缓冲区管理。
@@ -9,37 +9,42 @@
 #include <cstring>
 #include <vector>
 #include <functional>
-#include "uart_protocol.h"
+
+#include "uart_bridge/uart_protocol.h"
+
+namespace uart_bridge
+{
 
 class FrameParser {
 public:
   // 完整帧解析成功时的回调：(cmd_id, payload 指针, payload 长度)
-  using FrameCallback = std::function<void(uint8_t cmd_id, const uint8_t* payload, size_t len)>;
+  using FrameCallback = std::function<void(uint8_t cmd_id, const uint8_t * payload, size_t len)>;
   // 解析错误时的回调：(错误描述字符串)
-  using ErrorCallback = std::function<void(const char* msg)>;
+  using ErrorCallback = std::function<void(const char * msg)>;
 
   FrameParser();
   ~FrameParser() = default;
 
-  void SetFrameCallback(FrameCallback cb);
-  void SetErrorCallback(ErrorCallback cb);
+  void set_frame_callback(FrameCallback callback);
+  void set_error_callback(ErrorCallback callback);
   // 主入口：每收到一个字节调用一次，内部状态机自动推进
-  void ProcessByte(uint8_t byte);
+  void process_byte(uint8_t byte);
 
 private:
   // 解析状态机状态
-  // 状态转移：WAIT_HEADER_0 → WAIT_HEADER_1 → READ_CMD_ID → READ_LEN
-  //        → READ_PAYLOAD（循环）→ READ_CRC_0 → READ_CRC_1 → READ_TAIL
-  //        → （回调）→ WAIT_HEADER_0
-  enum State {
-    WAIT_HEADER_0,  // 等待帧头第 1 字节 0xAA
-    WAIT_HEADER_1,  // 等待帧头第 2 字节 0x55
-    READ_CMD_ID,    // 读取命令 ID
-    READ_LEN,       // 读取 payload 长度
-    READ_PAYLOAD,   // 逐字节读取 payload
-    READ_CRC_0,     // 读取 CRC 低字节
-    READ_CRC_1,     // 读取 CRC 高字节并校验
-    READ_TAIL       // 读取帧尾 0x0D
+  // 状态转移：kWaitHeader0 → kWaitHeader1 → kReadCommandId → kReadLength
+  //        → kReadPayload（循环）→ kReadCrcLow → kReadCrcHigh → kReadTail
+  //        → （回调）→ kWaitHeader0
+  enum class State
+  {
+    kWaitHeader0,   // 等待帧头第 1 字节 0xAA
+    kWaitHeader1,   // 等待帧头第 2 字节 0x55
+    kReadCommandId, // 读取命令 ID
+    kReadLength,    // 读取 payload 长度
+    kReadPayload,   // 逐字节读取 payload
+    kReadCrcLow,    // 读取 CRC 低字节
+    kReadCrcHigh,   // 读取 CRC 高字节并校验
+    kReadTail       // 读取帧尾 0x0D
   };
 
   State state_;
@@ -52,9 +57,11 @@ private:
   FrameCallback frame_callback_;
   ErrorCallback error_callback_;
 
-  uint16_t CalculateFrameCrc() const;
-  void OnFrameComplete();
-  void Reset();
+  uint16_t calculate_frame_crc() const;
+  void handle_frame_complete();
+  void reset();
 };
 
-#endif
+}  // namespace uart_bridge
+
+#endif  // UART_BRIDGE__FRAME_PARSER_HPP_

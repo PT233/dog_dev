@@ -5,29 +5,34 @@
 
 #include "shared/servo_names.hpp"
 
-const char* UartBridgeNode::SystemStateToString(uint8_t state) const {
+namespace uart_bridge
+{
+
+const char * UartBridgeNode::system_state_to_string(uint8_t state) const
+{
   switch (state) {
-    case UART_SYSTEM_STATE_BOOT_CENTERING:
+    case kUartSystemStateBootCentering:
       return "BOOT_CENTERING";
-    case UART_SYSTEM_STATE_WAITING_CONNECTION:
+    case kUartSystemStateWaitingConnection:
       return "WAITING_CONNECTION";
-    case UART_SYSTEM_STATE_ACTIVE:
+    case kUartSystemStateActive:
       return "ACTIVE";
-    case UART_SYSTEM_STATE_ERROR:
+    case kUartSystemStateError:
       return "ERROR";
     default:
       return "UNKNOWN";
   }
 }
 
-void UartBridgeNode::SendInitHandshake() {
+void UartBridgeNode::send_init_handshake()
+{
   if (handshake_complete_.load()) {
     return;
   }
 
   // STM32 只有在上电归中结束并收到版本匹配握手后才进入 ACTIVE。
-  auto frame = encoder_->EncodeInitHandshake();
-  WriteFrame(frame);
+  auto frame = encoder_->encode_init_handshake();
+  write_frame(frame);
   handshake_tx_count_++;
 
   if (handshake_tx_count_ == 1) {
@@ -38,7 +43,8 @@ void UartBridgeNode::SendInitHandshake() {
   }
 }
 
-void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
+void UartBridgeNode::system_state_callback(const uint8_t * payload, size_t len)
+{
   if (len != sizeof(UartSystemStatePayload)) {
     RCLCPP_WARN(this->get_logger(), "Invalid STM32 system state payload size: %zu", len);
     return;
@@ -56,8 +62,8 @@ void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
   }
 
   uint8_t previous = stm32_system_state_.exchange(state.system_state);
-  if (state.system_state == UART_SYSTEM_STATE_ACTIVE) {
-    // 第一次看到 ACTIVE 时停止握手重试，后续 /servo_cmd 才会真正下发。
+  if (state.system_state == kUartSystemStateActive) {
+    // 第一次看到 ACTIVE 时停止握手重试，后续舵机命令才会真正下发。
     bool was_complete = handshake_complete_.exchange(true);
     if (!was_complete) {
       if (handshake_timer_) {
@@ -65,7 +71,7 @@ void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
       }
       RCLCPP_INFO(this->get_logger(),
                   "STM32 handshake complete: state=%s uptime=%u ms",
-                  SystemStateToString(state.system_state), state.uptime_ms);
+                  system_state_to_string(state.system_state), state.uptime_ms);
     }
     return;
   }
@@ -74,18 +80,19 @@ void UartBridgeNode::OnSystemStateReceived(const uint8_t* payload, size_t len) {
     // 非 ACTIVE 状态只在变化时打印，避免 20Hz 状态帧刷屏。
     RCLCPP_INFO(this->get_logger(),
                 "STM32 state=%s uptime=%u ms; waiting before enabling servo commands",
-                SystemStateToString(state.system_state), state.uptime_ms);
+                system_state_to_string(state.system_state), state.uptime_ms);
   }
 }
 
-void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, size_t len) {
+void UartBridgeNode::frame_callback(uint8_t cmd_id, const uint8_t * payload, size_t len)
+{
   rclcpp::Time t_receive = this->get_clock()->now();
 
-  if (cmd_id == UART_CMD_SYSTEM_STATE) {
+  if (cmd_id == kUartCmdSystemState) {
     // 系统状态帧用于握手闭环和启动阶段可观测性。
-    OnSystemStateReceived(payload, len);
-  } else if (cmd_id == UART_CMD_SERVO_STATE_V2) {
-    if (len % sizeof(ServoStateItem_v2) != 0) {
+    system_state_callback(payload, len);
+  } else if (cmd_id == kUartCmdServoStateV2) {
+    if (len % sizeof(ServoStateItemV2) != 0) {
       RCLCPP_WARN(this->get_logger(), "Invalid servo state v2 payload size: %zu", len);
       return;
     }
@@ -94,20 +101,20 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
     auto state_msg = std::make_shared<sensor_msgs::msg::JointState>();
     state_msg->header.frame_id = "";
 
-    size_t num_items = len / sizeof(ServoStateItem_v2);
-    const ServoStateItem_v2* first_item =
-        reinterpret_cast<const ServoStateItem_v2*>(payload);
+    size_t num_items = len / sizeof(ServoStateItemV2);
+    const ServoStateItemV2 * first_item =
+      reinterpret_cast<const ServoStateItemV2 *>(payload);
 
-    // 把 STM32 毫秒时间映射到 ROS 时间，尽量让 /servo_state 时间戳反映采样时刻。
+    // 把 STM32 毫秒时间映射到 ROS 时间，尽量让 servo_state 时间戳反映采样时刻。
     rclcpp::Time t_stm32_send =
-        timestamp_mapper_.MapTimestamp(first_item->timestamp_ms, t_receive);
+      timestamp_mapper_.map_timestamp(first_item->timestamp_ms, t_receive);
     state_msg->header.stamp = t_stm32_send;
 
-    latency_monitor_.RecordReceiveLatency(t_stm32_send, t_receive);
+    latency_monitor_.record_receive_latency(t_stm32_send, t_receive);
 
     for (size_t i = 0; i < num_items; ++i) {
-      const ServoStateItem_v2* item = reinterpret_cast<const ServoStateItem_v2*>(
-          payload + i * sizeof(ServoStateItem_v2));
+      const ServoStateItemV2 * item = reinterpret_cast<const ServoStateItemV2 *>(
+        payload + i * sizeof(ServoStateItemV2));
 
       if (item->servo_id >= 4) {
         RCLCPP_WARN(this->get_logger(), "Invalid servo_id: %u (expected 0-3)", item->servo_id);
@@ -115,7 +122,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
       }
 
       uint32_t dropped = 0;
-      bool seq_ok = sequence_checker_.CheckSequence(item->servo_id, item->frame_seq, dropped);
+      bool seq_ok = sequence_checker_.check_sequence(item->servo_id, item->frame_seq, dropped);
       if (!seq_ok && dropped > 0) {
         RCLCPP_WARN(this->get_logger(), "Frame loss detected on servo %u: %u frames lost",
                     item->servo_id, dropped);
@@ -124,7 +131,7 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
       // 协议中角度以“度 ×10”传输；ROS JointState 要求弧度。
       float angle = item->current_angle_x10 / 10.0f;
 
-      const char* name = project_shared::servo_id_to_name(item->servo_id);
+      const char * name = project_shared::servo_id_to_name(item->servo_id);
       if (name == nullptr) {
         continue;
       }
@@ -134,13 +141,13 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
     }
 
     if (!state_msg->position.empty()) {
-      servo_state_pub_->publish(*state_msg);
+      servo_state_publisher_->publish(*state_msg);
       frame_received_count_++;
     }
 
     // 本帧接收完成后记录新的时间映射锚点，供下一帧插值使用。
-    timestamp_mapper_.RecordMapping(first_item->timestamp_ms, t_receive);
-  } else if (cmd_id == UART_CMD_SERVO_STATE) {
+    timestamp_mapper_.record_mapping(first_item->timestamp_ms, t_receive);
+  } else if (cmd_id == kUartCmdServoState) {
     if (len % sizeof(ServoStateItem) != 0) {
       RCLCPP_WARN(this->get_logger(), "Invalid servo state v1 payload size: %zu", len);
       return;
@@ -152,12 +159,12 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
 
     size_t num_items = len / sizeof(ServoStateItem);
     for (size_t i = 0; i < num_items; ++i) {
-      const ServoStateItem* item = reinterpret_cast<const ServoStateItem*>(
-          payload + i * sizeof(ServoStateItem));
+      const ServoStateItem * item = reinterpret_cast<const ServoStateItem *>(
+        payload + i * sizeof(ServoStateItem));
       // v1 兼容帧无时间戳，只能使用本机当前时间。
       float angle = item->current_angle_x10 / 10.0f;
 
-      const char* name = project_shared::servo_id_to_name(item->servo_id);
+      const char * name = project_shared::servo_id_to_name(item->servo_id);
       if (name == nullptr) {
         continue;
       }
@@ -167,17 +174,18 @@ void UartBridgeNode::OnFrameReceived(uint8_t cmd_id, const uint8_t* payload, siz
     }
 
     if (!state_msg->position.empty()) {
-      servo_state_pub_->publish(*state_msg);
+      servo_state_publisher_->publish(*state_msg);
       frame_received_count_++;
     }
   }
 }
 
-void UartBridgeNode::OnServoCmdReceived(const sensor_msgs::msg::JointState::SharedPtr msg) {
+void UartBridgeNode::servo_command_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
+{
   if (!handshake_complete_.load()) {
     RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000,
-                         "Dropping /servo_cmd until STM32 handshake completes (state=%s)",
-                         SystemStateToString(stm32_system_state_.load()));
+                         "Dropping ~/input/servo_command until STM32 handshake completes (state=%s)",
+                         system_state_to_string(stm32_system_state_.load()));
     return;
   }
 
@@ -200,7 +208,7 @@ void UartBridgeNode::OnServoCmdReceived(const sensor_msgs::msg::JointState::Shar
   std::vector<ServoCmdItem> items;
   for (size_t i = 0; i < msg->name.size() && i < msg->position.size(); ++i) {
     // JointState 的 name 决定舵机编号，position 单位是弧度。
-    uint8_t servo_id = NameToServoId(msg->name[i]);
+    uint8_t servo_id = servo_id_by_name(msg->name[i]);
     if (servo_id >= 4) {
       RCLCPP_WARN(this->get_logger(), "Unknown servo name: %s", msg->name[i].c_str());
       continue;
@@ -228,14 +236,15 @@ void UartBridgeNode::OnServoCmdReceived(const sensor_msgs::msg::JointState::Shar
     return;
   }
 
-  auto frame = encoder_->EncodeServoControl(items.data(), items.size());
-  WriteFrame(frame);
+  auto frame = encoder_->encode_servo_control(items.data(), items.size());
+  write_frame(frame);
 }
 
-void UartBridgeNode::ReportStatistics() {
+void UartBridgeNode::report_statistics()
+{
   double min_ms, max_ms, avg_ms;
   uint32_t count;
-  latency_monitor_.GetStats(min_ms, max_ms, avg_ms, count);
+  latency_monitor_.stats(min_ms, max_ms, avg_ms, count);
 
   RCLCPP_INFO(this->get_logger(),
       "=== UART Bridge Statistics ===\n"
@@ -245,6 +254,8 @@ void UartBridgeNode::ReportStatistics() {
       "  Latency UART RX: min=%.2f ms, max=%.2f ms, avg=%.2f ms (samples: %u)",
       frame_received_count_,
       frame_error_count_,
-      sequence_checker_.GetTotalDropped(),
+      sequence_checker_.total_dropped(),
       min_ms, max_ms, avg_ms, count);
 }
+
+}  // namespace uart_bridge

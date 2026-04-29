@@ -2,17 +2,22 @@
 
 #include <algorithm>
 
-void TimestampMapper::RecordMapping(uint32_t stm32_time_ms, rclcpp::Time rpi_now) {
+namespace uart_bridge
+{
+
+void TimestampMapper::record_mapping(uint32_t stm32_time_ms, rclcpp::Time rpi_now)
+{
   std::lock_guard<std::mutex> lock(mutex_);
   // 用最近状态帧建立 MCU 毫秒时间与 ROS 时间的粗略对应关系。
   mappings_.push_back({stm32_time_ms, rpi_now});
-  if (mappings_.size() > MAX_MAPPINGS) {
+  if (mappings_.size() > kMaxMappings) {
     mappings_.pop_front();
   }
 }
 
-rclcpp::Time TimestampMapper::MapTimestamp(
-    uint32_t stm32_time_ms, const rclcpp::Time& fallback_time) {
+rclcpp::Time TimestampMapper::map_timestamp(
+  uint32_t stm32_time_ms, const rclcpp::Time & fallback_time)
+{
   std::lock_guard<std::mutex> lock(mutex_);
   if (mappings_.empty()) {
     // 启动初期还没有映射，保守使用接收时间作为消息时间。
@@ -22,14 +27,15 @@ rclcpp::Time TimestampMapper::MapTimestamp(
   if (mappings_.size() == 1) {
     // 只有一个锚点时按毫秒差线性平移，适合短时间内的状态帧。
     int64_t delta_ms = static_cast<int64_t>(stm32_time_ms) -
-                       static_cast<int64_t>(mappings_[0].stm32_time_ms);
+      static_cast<int64_t>(mappings_[0].stm32_time_ms);
     return mappings_[0].rpi_time +
            rclcpp::Duration::from_nanoseconds(delta_ms * 1000000LL);
   }
 
   for (size_t i = 1; i < mappings_.size(); i++) {
     if (stm32_time_ms >= mappings_[i - 1].stm32_time_ms &&
-        stm32_time_ms <= mappings_[i].stm32_time_ms) {
+      stm32_time_ms <= mappings_[i].stm32_time_ms)
+    {
       // 在两个锚点之间做线性插值，减小 UART 抖动对 header.stamp 的影响。
       uint32_t dt = mappings_[i].stm32_time_ms - mappings_[i - 1].stm32_time_ms;
       if (dt == 0) {
@@ -47,7 +53,8 @@ rclcpp::Time TimestampMapper::MapTimestamp(
   return mappings_.back().rpi_time;
 }
 
-void LatencyMonitor::RecordReceiveLatency(rclcpp::Time stm32_send, rclcpp::Time rpi_receive) {
+void LatencyMonitor::record_receive_latency(rclcpp::Time stm32_send, rclcpp::Time rpi_receive)
+{
   std::lock_guard<std::mutex> lock(mutex_);
   // 这里统计的是状态帧从 STM32 打包到 ROS 接收的近似延迟。
   rclcpp::Duration latency = rpi_receive - stm32_send;
@@ -59,8 +66,9 @@ void LatencyMonitor::RecordReceiveLatency(rclcpp::Time stm32_send, rclcpp::Time 
   latency_uart_count_++;
 }
 
-void LatencyMonitor::GetStats(
-    double& min_ms, double& max_ms, double& avg_ms, uint32_t& count) {
+void LatencyMonitor::stats(
+  double & min_ms, double & max_ms, double & avg_ms, uint32_t & count)
+{
   std::lock_guard<std::mutex> lock(mutex_);
   min_ms = latency_uart_min_ms_;
   max_ms = latency_uart_max_ms_;
@@ -68,7 +76,8 @@ void LatencyMonitor::GetStats(
   count = latency_uart_count_;
 }
 
-void LatencyMonitor::ResetStats() {
+void LatencyMonitor::reset_stats()
+{
   std::lock_guard<std::mutex> lock(mutex_);
   latency_uart_min_ms_ = 1000.0;
   latency_uart_max_ms_ = 0.0;
@@ -76,7 +85,8 @@ void LatencyMonitor::ResetStats() {
   latency_uart_count_ = 0;
 }
 
-FrameSequenceChecker::FrameSequenceChecker() {
+FrameSequenceChecker::FrameSequenceChecker()
+{
   for (int i = 0; i < 4; i++) {
     // 0xFFFF 作为未初始化哨兵，首帧不参与丢帧统计。
     seq_data_.last_seq[i] = 0xFFFF;
@@ -84,7 +94,10 @@ FrameSequenceChecker::FrameSequenceChecker() {
   seq_data_.drop_count = 0;
 }
 
-bool FrameSequenceChecker::CheckSequence(uint8_t servo_id, uint16_t current_seq, uint32_t& dropped) {
+bool FrameSequenceChecker::check_sequence(
+  uint8_t servo_id, uint16_t current_seq,
+  uint32_t & dropped)
+{
   if (servo_id >= 4) {
     return false;
   }
@@ -111,15 +124,19 @@ bool FrameSequenceChecker::CheckSequence(uint8_t servo_id, uint16_t current_seq,
   return dropped == 0;
 }
 
-uint32_t FrameSequenceChecker::GetTotalDropped() {
+uint32_t FrameSequenceChecker::total_dropped()
+{
   std::lock_guard<std::mutex> lock(seq_data_.mutex);
   return seq_data_.drop_count;
 }
 
-void FrameSequenceChecker::ResetStats() {
+void FrameSequenceChecker::reset_stats()
+{
   std::lock_guard<std::mutex> lock(seq_data_.mutex);
   for (int i = 0; i < 4; i++) {
     seq_data_.last_seq[i] = 0xFFFF;
   }
   seq_data_.drop_count = 0;
 }
+
+}  // namespace uart_bridge

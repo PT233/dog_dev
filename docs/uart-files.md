@@ -35,6 +35,6 @@
 | 文件 | 作用 |
 | --- | --- |
 | `scripts/test_uart_rpi.py` | Pi 侧串口测试 |
-| `scripts/mock_uart_bridge.py` | 无硬件时模拟 `/servo_state` |
+| `scripts/mock_uart_bridge.py` | 无硬件时模拟 `/uart_bridge_node/output/servo_state` |
 | `tests/test_uart_frame_codec.cpp` | 编解码测试 |
 | `tests/test_uart_frame_parser.cpp` | 状态机解析测试 |

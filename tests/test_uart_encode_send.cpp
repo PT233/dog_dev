@@ -10,25 +10,25 @@
 // Mock frame encoder (simplified for testing)
 class SimpleFrameEncoder {
 public:
-  std::vector<uint8_t> EncodeSingleServo(uint8_t servo_id, int16_t angle_x10,
+  std::vector<uint8_t> encode_single_servo(uint8_t servo_id, int16_t angle_x10,
                                           uint16_t duration_ms = 100) {
     ServoCmdItem item;
     item.servo_id = servo_id;
     item.angle_x10 = angle_x10;
     item.duration_ms = duration_ms;
 
-    return BuildFrame(UART_CMD_SERVO_CONTROL, (const uint8_t*)&item,
+    return build_frame(kUartCmdServoControl, (const uint8_t*)&item,
                       sizeof(ServoCmdItem));
   }
 
-  std::vector<uint8_t> EncodeMultipleServos(const ServoCmdItem* items,
+  std::vector<uint8_t> encode_multiple_servos(const ServoCmdItem* items,
                                              size_t count) {
     size_t payload_len = count * sizeof(ServoCmdItem);
-    return BuildFrame(UART_CMD_SERVO_CONTROL, (const uint8_t*)items, payload_len);
+    return build_frame(kUartCmdServoControl, (const uint8_t*)items, payload_len);
   }
 
 private:
-  std::vector<uint8_t> BuildFrame(uint8_t cmd_id, const uint8_t* payload,
+  std::vector<uint8_t> build_frame(uint8_t cmd_id, const uint8_t* payload,
                                    size_t payload_len) {
     std::vector<uint8_t> frame;
 
@@ -63,68 +63,68 @@ private:
 class SimpleFrameParser {
 public:
   enum State {
-    WAIT_HEADER_0,
-    WAIT_HEADER_1,
-    READ_CMD_ID,
-    READ_LEN,
-    READ_PAYLOAD,
-    READ_CRC_0,
-    READ_CRC_1,
-    READ_TAIL
+    kWaitHeader0,
+    kWaitHeader1,
+    kReadCmdId,
+    kReadLength,
+    kReadPayload,
+    kReadCrc0,
+    kReadCrc1,
+    kReadTail
   };
 
-  SimpleFrameParser() : state_(WAIT_HEADER_0), payload_len_(0) {}
+  SimpleFrameParser() : state_(kWaitHeader0), payload_len_(0) {}
 
-  bool ProcessByte(uint8_t byte) {
+  bool process_byte(uint8_t byte) {
     switch (state_) {
-      case WAIT_HEADER_0:
+      case kWaitHeader0:
         if (byte == UART_FRAME_HEADER_0) {
-          state_ = WAIT_HEADER_1;
+          state_ = kWaitHeader1;
         }
         break;
 
-      case WAIT_HEADER_1:
+      case kWaitHeader1:
         if (byte == UART_FRAME_HEADER_1) {
-          state_ = READ_CMD_ID;
+          state_ = kReadCmdId;
         } else {
-          state_ = WAIT_HEADER_0;
+          state_ = kWaitHeader0;
         }
         break;
 
-      case READ_CMD_ID:
+      case kReadCmdId:
         cmd_id_ = byte;
-        state_ = READ_LEN;
+        state_ = kReadLength;
         break;
 
-      case READ_LEN:
+      case kReadLength:
         payload_len_ = byte;
         payload_idx_ = 0;
-        state_ = (payload_len_ == 0) ? READ_CRC_0 : READ_PAYLOAD;
+        state_ = (payload_len_ == 0) ? kReadCrc0 : kReadPayload;
         break;
 
-      case READ_PAYLOAD:
+      case kReadPayload:
         payload_[payload_idx_++] = byte;
         if (payload_idx_ >= payload_len_) {
-          state_ = READ_CRC_0;
+          state_ = kReadCrc0;
         }
         break;
 
-      case READ_CRC_0:
+      case kReadCrc0:
         crc_0_ = byte;
-        state_ = READ_CRC_1;
+        state_ = kReadCrc1;
         break;
 
-      case READ_CRC_1: {
+      case kReadCrc1: {
         uint16_t crc_received = ((uint16_t)byte << 8) | crc_0_;
         if (crc_received != calculate_crc()) {
           reset();
           return false;
         }
-        state_ = READ_TAIL;
+        state_ = kReadTail;
         break;
       }
 
-      case READ_TAIL:
+      case kReadTail:
         if (byte == UART_FRAME_TAIL) {
           reset();
           return true;
@@ -135,9 +135,9 @@ public:
     return false;
   }
 
-  uint8_t GetCmdId() const { return cmd_id_; }
-  const uint8_t* GetPayload() const { return payload_; }
-  size_t GetPayloadLen() const { return payload_len_; }
+  uint8_t cmd_id() const { return cmd_id_; }
+  const uint8_t* payload() const { return payload_; }
+  size_t payload_length() const { return payload_len_; }
 
 private:
   State state_;
@@ -157,11 +157,11 @@ private:
     return crc16_ccitt(crc_data, payload_len_ + 2);
   }
 
-  void reset() { state_ = WAIT_HEADER_0; }
+  void reset() { state_ = kWaitHeader0; }
 };
 
 // Helper: Convert radians to degrees*10
-int16_t RadiansToDegX10(double radians) {
+int16_t radians_to_deg_x10(double radians) {
   double degrees = radians * 180.0 / M_PI;
   return (int16_t)(degrees * 10.0);
 }
@@ -174,31 +174,31 @@ int main() {
     std::cout << "Test 1: Encode single servo command (yaw = 90°)\n";
 
     SimpleFrameEncoder encoder;
-    int16_t angle_x10 = RadiansToDegX10(M_PI / 2.0);  // 90 degrees
-    auto frame = encoder.EncodeSingleServo(0, angle_x10, 100);
+    int16_t angle_x10 = radians_to_deg_x10(M_PI / 2.0);  // 90 degrees
+    auto frame = encoder.encode_single_servo(0, angle_x10, 100);
 
     // Verify frame structure
     assert(frame.size() >= 8 && "Frame too short");
     assert(frame[0] == UART_FRAME_HEADER_0 && "Invalid header 0");
     assert(frame[1] == UART_FRAME_HEADER_1 && "Invalid header 1");
-    assert(frame[2] == UART_CMD_SERVO_CONTROL && "Invalid command ID");
+    assert(frame[2] == kUartCmdServoControl && "Invalid command ID");
     assert(frame.back() == UART_FRAME_TAIL && "Invalid tail");
 
     // Parse the frame back to verify it's correct
     SimpleFrameParser parser;
     bool complete = false;
     for (uint8_t byte : frame) {
-      if (parser.ProcessByte(byte)) {
+      if (parser.process_byte(byte)) {
         complete = true;
         break;
       }
     }
 
     assert(complete && "Frame should parse successfully");
-    assert(parser.GetCmdId() == UART_CMD_SERVO_CONTROL && "Command ID mismatch");
-    assert(parser.GetPayloadLen() == sizeof(ServoCmdItem) && "Payload length mismatch");
+    assert(parser.cmd_id() == kUartCmdServoControl && "Command ID mismatch");
+    assert(parser.payload_length() == sizeof(ServoCmdItem) && "Payload length mismatch");
 
-    const ServoCmdItem* parsed = (const ServoCmdItem*)parser.GetPayload();
+    const ServoCmdItem* parsed = (const ServoCmdItem*)parser.payload();
     assert(parsed->servo_id == 0 && "Servo ID mismatch");
     assert(parsed->angle_x10 == 900 && "Angle mismatch");
     assert(parsed->duration_ms == 100 && "Duration mismatch");
@@ -215,30 +215,30 @@ int main() {
 
     // Servo 0 (yaw): 45 degrees
     items[0].servo_id = 0;
-    items[0].angle_x10 = RadiansToDegX10(M_PI / 4.0);  // 45 degrees
+    items[0].angle_x10 = radians_to_deg_x10(M_PI / 4.0);  // 45 degrees
     items[0].duration_ms = 500;
 
     // Servo 1 (pitch): 90 degrees
     items[1].servo_id = 1;
-    items[1].angle_x10 = RadiansToDegX10(M_PI / 2.0);  // 90 degrees
+    items[1].angle_x10 = radians_to_deg_x10(M_PI / 2.0);  // 90 degrees
     items[1].duration_ms = 500;
 
-    auto frame = encoder.EncodeMultipleServos(items, 2);
+    auto frame = encoder.encode_multiple_servos(items, 2);
 
     // Parse frame
     SimpleFrameParser parser;
     bool complete = false;
     for (uint8_t byte : frame) {
-      if (parser.ProcessByte(byte)) {
+      if (parser.process_byte(byte)) {
         complete = true;
         break;
       }
     }
 
     assert(complete && "Frame should parse successfully");
-    assert(parser.GetPayloadLen() == sizeof(ServoCmdItem) * 2 && "Payload length mismatch");
+    assert(parser.payload_length() == sizeof(ServoCmdItem) * 2 && "Payload length mismatch");
 
-    const ServoCmdItem* parsed = (const ServoCmdItem*)parser.GetPayload();
+    const ServoCmdItem* parsed = (const ServoCmdItem*)parser.payload();
     assert(parsed[0].servo_id == 0 && "First servo ID mismatch");
     assert(parsed[0].angle_x10 == 450 && "First servo angle mismatch");
     assert(parsed[1].servo_id == 1 && "Second servo ID mismatch");
@@ -258,20 +258,20 @@ int main() {
 
     for (int i = 0; i < 5; ++i) {
       double radians = angles_deg[i] * M_PI / 180.0;
-      int16_t angle_x10 = RadiansToDegX10(radians);
-      auto frame = encoder.EncodeSingleServo(1, angle_x10, 250);
+      int16_t angle_x10 = radians_to_deg_x10(radians);
+      auto frame = encoder.encode_single_servo(1, angle_x10, 250);
 
       SimpleFrameParser parser;
       bool complete = false;
       for (uint8_t byte : frame) {
-        if (parser.ProcessByte(byte)) {
+        if (parser.process_byte(byte)) {
           complete = true;
           break;
         }
       }
 
       assert(complete && "Frame should parse");
-      const ServoCmdItem* parsed = (const ServoCmdItem*)parser.GetPayload();
+      const ServoCmdItem* parsed = (const ServoCmdItem*)parser.payload();
       // Allow ±1 tolerance for floating point precision
       int expected = angles_deg[i] * 10;
       assert(parsed->angle_x10 >= expected - 1 && parsed->angle_x10 <= expected + 1 &&
@@ -289,19 +289,19 @@ int main() {
     uint8_t servo_ids[] = {0, 1, 2, 3};
 
     for (int i = 0; i < 4; ++i) {
-      auto frame = encoder.EncodeSingleServo(servo_ids[i], 0, 100);
+      auto frame = encoder.encode_single_servo(servo_ids[i], 0, 100);
 
       SimpleFrameParser parser;
       bool complete = false;
       for (uint8_t byte : frame) {
-        if (parser.ProcessByte(byte)) {
+        if (parser.process_byte(byte)) {
           complete = true;
           break;
         }
       }
 
       assert(complete && "Frame should parse");
-      const ServoCmdItem* parsed = (const ServoCmdItem*)parser.GetPayload();
+      const ServoCmdItem* parsed = (const ServoCmdItem*)parser.payload();
       assert(parsed->servo_id == servo_ids[i] && "Servo ID mismatch");
     }
 

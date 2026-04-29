@@ -5,6 +5,8 @@ robot_interfaces.egg-info/SOURCES.txt
 robot_interfaces.egg-info/dependency_links.txt
 robot_interfaces.egg-info/top_level.txt
 robot_interfaces/msg/__init__.py
+robot_interfaces/msg/_detection2_d.py
+robot_interfaces/msg/_detection2_d_array.py
 robot_interfaces/msg/_simple_detection.py
 robot_interfaces/msg/_simple_detection2_d_array.py
 robot_interfaces/msg/_target_info.py

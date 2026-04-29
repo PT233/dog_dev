@@ -353,9 +353,11 @@ robot_interfaces__srv__CalibrateCenter_Event__get_type_description(
 }
 
 static char toplevel_type_raw_source[] =
+  "# \\xe8\\xaf\\xb7\\xe6\\xb1\\x82\\xe6\\x8a\\x8a\\xe8\\xa1\\x8c\\xe4\\xb8\\xba\\xe8\\x8a\\x82\\xe7\\x82\\xb9\\xe7\\x9a\\x84\\xe5\\x9b\\xbe\\xe5\\x83\\x8f\\xe4\\xb8\\xad\\xe5\\xbf\\x83\\xe7\\x82\\xb9\\xe8\\xae\\xbe\\xe7\\xbd\\xae\\xe4\\xb8\\xba\\xe6\\x8c\\x87\\xe5\\xae\\x9a\\xe5\\x83\\x8f\\xe7\\xb4\\xa0\\xe5\\x9d\\x90\\xe6\\xa0\\x87\\xe3\\x80\\x82\n"
   "int32 center_x\n"
   "int32 center_y\n"
   "---\n"
+  "# \\xe8\\xbf\\x94\\xe5\\x9b\\x9e\\xe6\\xa0\\x87\\xe5\\xae\\x9a\\xe6\\x98\\xaf\\xe5\\x90\\xa6\\xe6\\x88\\x90\\xe5\\x8a\\x9f\\xe4\\xbb\\xa5\\xe5\\x8f\\x8a\\xe6\\x96\\x87\\xe6\\x9c\\xac\\xe8\\xaf\\xb4\\xe6\\x98\\x8e\\xe3\\x80\\x82\n"
   "bool success\n"
   "string message";
 
@@ -372,7 +374,7 @@ robot_interfaces__srv__CalibrateCenter__get_individual_type_description_source(
   static const rosidl_runtime_c__type_description__TypeSource source = {
     {robot_interfaces__srv__CalibrateCenter__TYPE_NAME, 36, 36},
     {srv_encoding, 3, 3},
-    {toplevel_type_raw_source, 62, 62},
+    {toplevel_type_raw_source, 106, 106},
   };
   return &source;
 }

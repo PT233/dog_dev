@@ -10,68 +10,68 @@
 class SimpleFrameParser {
 public:
   enum State {
-    WAIT_HEADER_0,
-    WAIT_HEADER_1,
-    READ_CMD_ID,
-    READ_LEN,
-    READ_PAYLOAD,
-    READ_CRC_0,
-    READ_CRC_1,
-    READ_TAIL
+    kWaitHeader0,
+    kWaitHeader1,
+    kReadCmdId,
+    kReadLength,
+    kReadPayload,
+    kReadCrc0,
+    kReadCrc1,
+    kReadTail
   };
 
-  SimpleFrameParser() : state_(WAIT_HEADER_0), payload_len_(0), payload_idx_(0) {}
+  SimpleFrameParser() : state_(kWaitHeader0), payload_len_(0), payload_idx_(0) {}
 
-  bool ProcessByte(uint8_t byte) {
+  bool process_byte(uint8_t byte) {
     switch (state_) {
-      case WAIT_HEADER_0:
+      case kWaitHeader0:
         if (byte == UART_FRAME_HEADER_0) {
-          state_ = WAIT_HEADER_1;
+          state_ = kWaitHeader1;
         }
         break;
 
-      case WAIT_HEADER_1:
+      case kWaitHeader1:
         if (byte == UART_FRAME_HEADER_1) {
-          state_ = READ_CMD_ID;
+          state_ = kReadCmdId;
         } else {
-          state_ = WAIT_HEADER_0;
+          state_ = kWaitHeader0;
         }
         break;
 
-      case READ_CMD_ID:
+      case kReadCmdId:
         cmd_id_ = byte;
-        state_ = READ_LEN;
+        state_ = kReadLength;
         break;
 
-      case READ_LEN:
+      case kReadLength:
         payload_len_ = byte;
         payload_idx_ = 0;
-        state_ = (payload_len_ == 0) ? READ_CRC_0 : READ_PAYLOAD;
+        state_ = (payload_len_ == 0) ? kReadCrc0 : kReadPayload;
         break;
 
-      case READ_PAYLOAD:
+      case kReadPayload:
         payload_[payload_idx_++] = byte;
         if (payload_idx_ >= payload_len_) {
-          state_ = READ_CRC_0;
+          state_ = kReadCrc0;
         }
         break;
 
-      case READ_CRC_0:
+      case kReadCrc0:
         crc_0_ = byte;
-        state_ = READ_CRC_1;
+        state_ = kReadCrc1;
         break;
 
-      case READ_CRC_1: {
+      case kReadCrc1: {
         uint16_t crc_received = ((uint16_t)byte << 8) | crc_0_;
         if (crc_received != calculate_crc()) {
           reset();
           return false;
         }
-        state_ = READ_TAIL;
+        state_ = kReadTail;
         break;
       }
 
-      case READ_TAIL:
+      case kReadTail:
         if (byte == UART_FRAME_TAIL) {
           reset();
           return true;  // Frame complete
@@ -82,9 +82,9 @@ public:
     return false;
   }
 
-  uint8_t GetCmdId() const { return cmd_id_; }
-  const uint8_t* GetPayload() const { return payload_; }
-  size_t GetPayloadLen() const { return payload_len_; }
+  uint8_t cmd_id() const { return cmd_id_; }
+  const uint8_t* payload() const { return payload_; }
+  size_t payload_length() const { return payload_len_; }
 
 private:
   State state_;
@@ -104,11 +104,11 @@ private:
     return crc16_ccitt(crc_data, payload_len_ + 2);
   }
 
-  void reset() { state_ = WAIT_HEADER_0; payload_idx_ = 0; }
+  void reset() { state_ = kWaitHeader0; payload_idx_ = 0; }
 };
 
 // Helper to build a complete frame
-std::vector<uint8_t> BuildFrame(uint8_t cmd_id, const uint8_t* payload, size_t payload_len) {
+std::vector<uint8_t> build_frame(uint8_t cmd_id, const uint8_t* payload, size_t payload_len) {
   std::vector<uint8_t> frame;
   frame.push_back(UART_FRAME_HEADER_0);
   frame.push_back(UART_FRAME_HEADER_1);
@@ -140,22 +140,22 @@ int main() {
     state.current_angle_x10 = 900;  // 90.0 degrees
     state.status = 0;
 
-    auto frame = BuildFrame(UART_CMD_SERVO_STATE, (const uint8_t*)&state, sizeof(state));
+    auto frame = build_frame(kUartCmdServoState, (const uint8_t*)&state, sizeof(state));
     SimpleFrameParser parser;
 
     bool complete = false;
     for (uint8_t byte : frame) {
-      if (parser.ProcessByte(byte)) {
+      if (parser.process_byte(byte)) {
         complete = true;
         break;
       }
     }
 
     assert(complete && "Frame should be complete");
-    assert(parser.GetCmdId() == UART_CMD_SERVO_STATE && "Command ID should match");
-    assert(parser.GetPayloadLen() == sizeof(ServoStateItem) && "Payload length should match");
+    assert(parser.cmd_id() == kUartCmdServoState && "Command ID should match");
+    assert(parser.payload_length() == sizeof(ServoStateItem) && "Payload length should match");
 
-    const ServoStateItem* parsed = (const ServoStateItem*)parser.GetPayload();
+    const ServoStateItem* parsed = (const ServoStateItem*)parser.payload();
     assert(parsed->servo_id == 0 && "Servo ID should be 0");
     assert(parsed->current_angle_x10 == 900 && "Angle should be 900 (90.0°)");
     assert(parsed->status == 0 && "Status should be 0");
@@ -172,21 +172,21 @@ int main() {
     cmd.angle_x10 = 1800;  // 180.0 degrees
     cmd.duration_ms = 1000;
 
-    auto frame = BuildFrame(UART_CMD_SERVO_CONTROL, (const uint8_t*)&cmd, sizeof(cmd));
+    auto frame = build_frame(kUartCmdServoControl, (const uint8_t*)&cmd, sizeof(cmd));
     SimpleFrameParser parser;
 
     bool complete = false;
     for (uint8_t byte : frame) {
-      if (parser.ProcessByte(byte)) {
+      if (parser.process_byte(byte)) {
         complete = true;
         break;
       }
     }
 
     assert(complete && "Frame should be complete");
-    assert(parser.GetCmdId() == UART_CMD_SERVO_CONTROL && "Command ID should match");
+    assert(parser.cmd_id() == kUartCmdServoControl && "Command ID should match");
 
-    const ServoCmdItem* parsed = (const ServoCmdItem*)parser.GetPayload();
+    const ServoCmdItem* parsed = (const ServoCmdItem*)parser.payload();
     assert(parsed->servo_id == 1 && "Servo ID should be 1");
     assert(parsed->angle_x10 == 1800 && "Angle should be 1800 (180.0°)");
     assert(parsed->duration_ms == 1000 && "Duration should be 1000ms");
@@ -203,7 +203,7 @@ int main() {
     state.current_angle_x10 = 500;
     state.status = 1;
 
-    auto frame = BuildFrame(UART_CMD_SERVO_STATE, (const uint8_t*)&state, sizeof(state));
+    auto frame = build_frame(kUartCmdServoState, (const uint8_t*)&state, sizeof(state));
     // Corrupt the CRC
     if (frame.size() > 3) {
       frame[frame.size() - 3] ^= 0xFF;  // Flip bits in first CRC byte
@@ -212,7 +212,7 @@ int main() {
     SimpleFrameParser parser;
     bool complete = false;
     for (uint8_t byte : frame) {
-      if (parser.ProcessByte(byte)) {
+      if (parser.process_byte(byte)) {
         complete = true;
         break;
       }
@@ -230,7 +230,7 @@ int main() {
     state.current_angle_x10 = 1350;
     state.status = 0;
 
-    auto frame = BuildFrame(UART_CMD_SERVO_STATE, (const uint8_t*)&state, sizeof(state));
+    auto frame = build_frame(kUartCmdServoState, (const uint8_t*)&state, sizeof(state));
 
     // Insert garbage before valid frame
     std::vector<uint8_t> data;
@@ -241,16 +241,16 @@ int main() {
     SimpleFrameParser parser;
     bool complete = false;
     for (uint8_t byte : data) {
-      if (parser.ProcessByte(byte)) {
+      if (parser.process_byte(byte)) {
         complete = true;
         break;
       }
     }
 
     assert(complete && "Should recover from garbage bytes");
-    assert(parser.GetCmdId() == UART_CMD_SERVO_STATE && "Command ID should match");
+    assert(parser.cmd_id() == kUartCmdServoState && "Command ID should match");
 
-    const ServoStateItem* parsed = (const ServoStateItem*)parser.GetPayload();
+    const ServoStateItem* parsed = (const ServoStateItem*)parser.payload();
     assert(parsed->servo_id == 2 && "Servo ID should be 2");
 
     std::cout << "  ✓ Successfully recovered from garbage bytes\n\n";

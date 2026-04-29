@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Letterbox resize function
+// letterbox resize function
 cv::Mat letterbox(const cv::Mat& img, int target_size = 640) {
     int h = img.rows, w = img.cols;
     float scale = min((float)target_size / h, (float)target_size / w);
@@ -17,9 +17,9 @@ cv::Mat letterbox(const cv::Mat& img, int target_size = 640) {
 
     // Create canvas
     cv::Mat canvas(target_size, target_size, CV_8UC3, cv::Scalar(114, 114, 114));
-    int pad_x = (target_size - new_w) / 2;
-    int pad_y = (target_size - new_h) / 2;
-    resized.copyTo(canvas(cv::Rect(pad_x, pad_y, new_w, new_h)));
+    int padding_x = (target_size - new_w) / 2;
+    int padding_y = (target_size - new_h) / 2;
+    resized.copyTo(canvas(cv::Rect(padding_x, padding_y, new_w, new_h)));
 
     return canvas;
 }
@@ -51,9 +51,9 @@ int main() {
         }
         cout << "✓ Image loaded: " << img.cols << "x" << img.rows << endl;
 
-        // Letterbox resize
+        // letterbox resize
         cv::Mat input_img = letterbox(img, 640);
-        cout << "✓ Letterbox resized to: " << input_img.cols << "x" << input_img.rows << endl;
+        cout << "✓ letterbox resized to: " << input_img.cols << "x" << input_img.rows << endl;
 
         // Prepare input tensor
         input_img.convertTo(input_img, CV_32F, 1.0 / 255.0);

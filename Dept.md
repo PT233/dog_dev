@@ -44,7 +44,7 @@
 | --- | ---: | --- |
 | `uart_bridge/src/uart_bridge_time_sync.cpp` | ~180 | `TimestampMapper`、`LatencyMonitor`、`FrameSequenceChecker` |
 | `uart_bridge/src/uart_bridge_transport.cpp` | ~170 | 构造/析构、串口打开配置、读线程、写串口 |
-| `uart_bridge/src/uart_bridge_protocol.cpp` | ~220 | 握手、系统状态处理、帧解码、`/servo_cmd` 编码发送、统计输出 |
+| `uart_bridge/src/uart_bridge_protocol.cpp` | ~220 | 握手、系统状态处理、帧解码、`/leg_motion_node/output/servo_command` 编码发送、统计输出 |
 | `uart_bridge/src/uart_bridge_main.cpp` | <20 | `main()` |
 | `uart_bridge/src/uart_bridge_node_internal.hpp` | ~120 | `UartBridgeNode` 私有声明，供以上 3 个 `.cpp` 共享 |
 
@@ -80,7 +80,7 @@
 | `:367` | `UartBridgeNode::OnSystemStateReceived()` | `uart_bridge_protocol.cpp` |
 | `:404` | `UartBridgeNode::OnFrameReceived()` | `uart_bridge_protocol.cpp` |
 | `:499` | `UartBridgeNode::OnServoCmdReceived()` | `uart_bridge_protocol.cpp` |
-| `:556` | `UartBridgeNode::NameToServoId()` | `uart_bridge_transport.cpp` |
+| `:556` | `UartBridgeNode::servo_id_by_name()` | `uart_bridge_transport.cpp` |
 | `:564` | `UartBridgeNode::WriteFrame()` | `uart_bridge_transport.cpp` |
 | `:586` | `UartBridgeNode::ReportStatistics()` | `uart_bridge_protocol.cpp` |
 | `:604` | `main()` | `uart_bridge_main.cpp` |
@@ -117,7 +117,7 @@
 | `FrameEncoder` (`ros2_ws/src/uart_bridge/include/uart_bridge/frame_encoder.hpp:12`) | 生产代码 1 处：`uart_bridge_node.cpp:256`；测试 1 处：`tests/test_uart_frame_codec.cpp:67` | 有价值。它把“协议编码”从节点 I/O 里分离出来，测试也直接依赖它。 | 不建议 | 至少影响 2 个文件：`uart_bridge_node.cpp`、`tests/test_uart_frame_codec.cpp` |
 | `FrameParser` (`ros2_ws/src/uart_bridge/include/uart_bridge/frame_parser.hpp:14`) | 生产代码 1 处：`uart_bridge_node.cpp:247`；测试 1 处：`tests/test_uart_frame_codec.cpp:77` 及后续多处 | 有价值。状态机和 CRC 校验从节点线程中分离是合理的。 | 不建议 | 至少影响 2 个文件：`uart_bridge_node.cpp`、`tests/test_uart_frame_codec.cpp` |
 | `YoloInfer` (`ros2_ws/src/detection_node/include/detection_node/yolo_infer.hpp:33`) | 生产代码 1 处：`detection_node.cpp:30`；测试 1 处：`test_yolo_infer.cpp:13` | 有价值。它隔离了 ONNX Runtime/OpenCV 细节，节点本身只处理 ROS 输入输出。 | 不建议 | 至少影响 2 个文件：`detection_node.cpp`、`test_yolo_infer.cpp` |
-| `PIDController` (`ros2_ws/src/visual_servo/include/visual_servo/pid_controller.hpp:12`) | 生产代码 1 处：`visual_servo_node.cpp:71-75`；测试 1 处：`tests/test_pid_controller.cpp` | 有价值。控制律单独成类便于测试和调参，不是空抽象。 | 不建议 | 至少影响 2 个文件：`visual_servo_node.cpp`、`tests/test_pid_controller.cpp` |
+| `PidController` (`ros2_ws/src/visual_servo/include/visual_servo/pid_controller.hpp:12`) | 生产代码 1 处：`visual_servo_node.cpp:71-75`；测试 1 处：`tests/test_pid_controller.cpp` | 有价值。控制律单独成类便于测试和调参，不是空抽象。 | 不建议 | 至少影响 2 个文件：`visual_servo_node.cpp`、`tests/test_pid_controller.cpp` |
 | `ByteTracker` (`ros2_ws/src/tracker_node/include/tracker_node/byte_tracker.hpp:43`) | 生产代码 1 处：`tracker_node.cpp:13`；测试 3 处：`tests/test_byte_tracker.cpp`、`tracker_node/test/test_byte_tracker.cpp`、`tracker_node/test/test_tracker_node_integration.cpp` | 有价值。跟踪算法与 ROS 节点边界清晰，测试覆盖也依赖它。 | 不建议 | 至少影响 4 个文件 |
 
 ### 2.3 模式 2 结论
@@ -159,7 +159,7 @@
 
 说明：
 
-- `PascalCase` 主要来自项目自定义 C++ 方法：`OnTrackedObjects`、`LoadCocoClasses`、`ReportStatistics`
+- `PascalCase` 主要来自项目自定义 C++ 方法：`tracked_objects_callback`、`load_coco_classes`、`ReportStatistics`
 - `snake_case` 主要来自 C 函数、Python launch、topic/parameter 风格，以及少量 C++ 辅助函数：`crc16_ccitt`、`try_build_pipeline`、`image_callback`
 - `camelCase` 大多是 FreeRTOS / CMSIS API：`xTaskCreate`、`osThreadNew`
 - `UPPER_CASE` 大多是宏和测试宏，不属于业务命名层
@@ -168,7 +168,7 @@
 
 | 位置 | 现象 |
 | --- | --- |
-| `ros2_ws/src/behavior_node/src/behavior_node.cpp:48` | C++ 回调用 `OnTrackedObjects`，是 `PascalCase` |
+| `ros2_ws/src/behavior_node/src/behavior_node.cpp:48` | C++ 回调用 `tracked_objects_callback`，是 `PascalCase` |
 | `ros2_ws/src/stereo_splitter/src/stereo_splitter_node.cpp:18` | 同类回调用 `image_callback`，是 `snake_case` |
 | `ros2_ws/src/gst_receiver/src/gst_receiver_node.cpp:53` | 内部 helper 用 `try_build_pipeline`，是 `snake_case` |
 | `shared/uart_protocol.c:3` | C 函数 `crc16_ccitt`，是 `snake_case` |
@@ -185,7 +185,7 @@
   例如：`BehaviorNode`、`FrameParser`
 - 函数/方法名：`snake_case`
   - 新代码统一改为 `snake_case`
-  - 旧代码里的 `OnTrackedObjects`、`LoadCocoClasses`、`ReportStatistics` 逐步迁移
+  - 旧代码里的 `tracked_objects_callback`、`load_coco_classes`、`ReportStatistics` 逐步迁移
 - 变量名：`snake_case`
 - 成员变量：`snake_case_`
 - `constexpr` 常量：`kPascalCase`

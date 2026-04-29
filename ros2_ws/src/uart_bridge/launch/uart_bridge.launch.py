@@ -1,4 +1,5 @@
 import os
+
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -15,7 +16,10 @@ def generate_launch_description():
         executable='uart_bridge_node',
         name='uart_bridge_node',
         parameters=[config_file],
-        output='screen'
+        output='screen',
+        remappings=[
+            ('~/input/servo_command', 'leg_motion_node/output/servo_command'),
+        ],
     )
 
     return LaunchDescription([uart_bridge_node])

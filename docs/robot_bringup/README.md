@@ -1,8 +1,8 @@
 # robot_bringup 代码说明文档
 
-> 文档范围说明：`robot_bringup` 从严格意义上说不是一个“单一 ROS 2 业务节点”，而是一个 **bringup 启动包**。  
-> 它的主要职责是把多个子包的 launch 文件组合起来，形成完整系统启动入口。  
-> 这个包内部真正会直接参与 Topic 通信的代码，只有测试用的 `mock_uart_bridge_node`。  
+> 文档范围说明：`robot_bringup` 从严格意义上说不是一个“单一 ROS 2 业务节点”，而是一个 **bringup 启动包**。
+> 它的主要职责是把多个子包的 launch 文件组合起来，形成完整系统启动入口。
+> 这个包内部真正会直接参与 Topic 通信的代码，只有测试用的 `mock_uart_bridge_node`。
 > 因此本文档会分成两层来讲：
 >
 > 1. `robot_bringup` 作为 **启动编排包** 的行为
@@ -185,19 +185,19 @@ ROS 2 中只有真正继承 `rclcpp::Node` 或 `rclpy.node.Node` 的对象，才
 
 ### 3.3 `mock_uart_bridge_node` 接口
 
-`mock_uart_bridge_node` 只会在 `test_73_complete.launch.py` 启动时被拉起，目的是在没有 Raspberry Pi 和 UART 硬件时，模拟 `/servo_state` 反馈。
+`mock_uart_bridge_node` 只会在 `test_73_complete.launch.py` 启动时被拉起，目的是在没有 Raspberry Pi 和 UART 硬件时，模拟 `/uart_bridge_node/output/servo_state` 反馈。
 
 #### 3.3.1 订阅的话题
 
 | 名称 | 消息类型 | QoS | 回调函数 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/servo_cmd` | `sensor_msgs/msg/JointState` | `RELIABLE`, depth=10 | `on_servo_cmd` | 接收腿部舵机目标角，模拟舵机响应 |
+| `/leg_motion_node/output/servo_command` | `sensor_msgs/msg/JointState` | `RELIABLE`, depth=10 | `on_servo_cmd` | 接收腿部舵机目标角，模拟舵机响应 |
 
 #### 3.3.2 发布的话题
 
 | 名称 | 消息类型 | QoS | 发布频率 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/servo_state` | `sensor_msgs/msg/JointState` | `RELIABLE`, depth=10 | 50 Hz | 模拟舵机当前位置反馈 |
+| `/uart_bridge_node/output/servo_state` | `sensor_msgs/msg/JointState` | `RELIABLE`, depth=10 | 50 Hz | 模拟舵机当前位置反馈 |
 
 #### 3.3.3 提供的服务 / 动作
 
@@ -220,7 +220,7 @@ ROS 2 中只有真正继承 `rclcpp::Node` 或 `rclpy.node.Node` 的对象，才
 
 ### 3.4 `vision_front` 进程接口说明
 
-`vision_front` 是一个 **可执行进程入口**，不是单独的 ROS 节点名。  
+`vision_front` 是一个 **可执行进程入口**，不是单独的 ROS 节点名。
 它在一个进程里直接实例化了：
 
 - `GstReceiverNode`
@@ -259,11 +259,11 @@ ROS 2 中只有真正继承 `rclcpp::Node` 或 `rclpy.node.Node` 的对象，才
 
 | 下游包 | 参数文件 | 被哪个入口间接使用 | 典型参数 |
 | --- | --- | --- | --- |
-| `detection_node` | `share/detection_node/config/detection.yaml` | `vision_stack.launch.py` | `model_path`、`conf_threshold` |
-| `tracker_node` | `share/tracker_node/config/tracker.yaml` | `vision_stack.launch.py` | `track_thresh`、`track_buffer` |
-| `behavior_node` | `share/behavior_node/config/behavior.yaml` | `vision_stack.launch.py` | `image_width`、`center_x` |
-| `visual_servo` | `share/visual_servo/config/visual_servo.yaml` | `vision_stack.launch.py` | `control_rate_hz`、PID 参数 |
-| `uart_bridge` | `share/uart_bridge/config/uart_bridge.yaml` | `rpi_stack.launch.py` | `uart_device`、`uart_baudrate` |
+| `detection_node` | `share/detection_node/config/detection.yaml` | `vision_stack.launch.py` | `inference.model_path`、`inference.confidence_threshold` |
+| `tracker_node` | `share/tracker_node/config/tracker.yaml` | `vision_stack.launch.py` | `tracking.confidence_threshold`、`tracking.track_buffer` |
+| `behavior_node` | `share/behavior_node/config/behavior.yaml` | `vision_stack.launch.py` | `image.width`、`image.center_x` |
+| `visual_servo` | `share/visual_servo/config/visual_servo.yaml` | `vision_stack.launch.py` | `controller.control_rate_hz`、PID 参数 |
+| `uart_bridge` | `share/uart_bridge/config/uart_bridge.yaml` | `rpi_stack.launch.py` | `uart.device`、`uart.baudrate` |
 
 ## 5. 核心代码逻辑
 
@@ -320,10 +320,10 @@ flowchart TD
 
 处理步骤可以概括成：
 
-1. 通过 `get_package_share_directory()` 定位每个子包的安装目录  
-2. 用 `PythonLaunchDescriptionSource()` 指向子包自己的 launch 文件  
-3. 用 `IncludeLaunchDescription()` 把子 launch 纳入当前启动树  
-4. 最后把所有动作放进 `LaunchDescription([...])` 返回  
+1. 通过 `get_package_share_directory()` 定位每个子包的安装目录
+2. 用 `PythonLaunchDescriptionSource()` 指向子包自己的 launch 文件
+3. 用 `IncludeLaunchDescription()` 把子 launch 纳入当前启动树
+4. 最后把所有动作放进 `LaunchDescription([...])` 返回
 
 这意味着 `robot_bringup` 并不重新实现视觉处理逻辑，只是把已经存在的节点组合起来。
 
@@ -335,7 +335,7 @@ flowchart TD
 2. 引入 `uart_bridge.launch.py`
 3. 返回只包含一个动作的 `LaunchDescription`
 
-这个入口适合部署在 Raspberry Pi 上，因为 Pi 侧只需要负责 `/servo_cmd <-> UART <-> /servo_state` 的桥接。
+这个入口适合部署在 Raspberry Pi 上，因为 Pi 侧只需要负责 `/leg_motion_node/output/servo_command <-> UART <-> /uart_bridge_node/output/servo_state` 的桥接。
 
 ### 5.4 `test_73_complete.launch.py` 初始化流程
 
@@ -351,7 +351,7 @@ flowchart TD
     C[创建 Node(package=robot_bringup, executable=mock_uart_bridge)]
     D[返回 LaunchDescription]
     E[视觉主链运行]
-    F[模拟串口桥开始发布 /servo_state]
+    F[模拟串口桥开始发布 /uart_bridge_node/output/servo_state]
 
     A --> B --> C --> D --> E --> F
 ```
@@ -360,11 +360,11 @@ flowchart TD
 
 - 还没有 Raspberry Pi
 - 串口链路还没打通
-- 只想验证 `/pixel_error -> /servo_cmd -> /servo_state` 的 ROS 2 闭环
+- 只想验证 `/behavior_node/output/pixel_error -> /leg_motion_node/output/servo_command -> /uart_bridge_node/output/servo_state` 的 ROS 2 闭环
 
 ### 5.5 `vision_front_main.cpp` 初始化流程
 
-`vision_front` 是一个实验性的 **单进程组合入口**。  
+`vision_front` 是一个实验性的 **单进程组合入口**。
 它把 3 个节点放进同一个 `MultiThreadedExecutor` 中运行，并打开进程内通信优化。
 
 ```cpp
@@ -404,14 +404,14 @@ qos_profile = QoSProfile(
 
 self.servo_cmd_sub = self.create_subscription(
     JointState,           # 订阅消息类型
-    '/servo_cmd',         # 订阅的话题名
+    '/leg_motion_node/output/servo_command',         # 订阅的话题名
     self.on_servo_cmd,    # 消息到达时调用的回调
     qos_profile           # QoS 配置
 )
 
 self.servo_state_pub = self.create_publisher(
     JointState,           # 发布消息类型
-    '/servo_state',       # 发布的话题名
+    '/uart_bridge_node/output/servo_state',       # 发布的话题名
     qos_profile           # 和订阅侧保持一致的 QoS
 )
 
@@ -422,8 +422,8 @@ self.timer = self.create_timer(0.02, self.publish_servo_state)  # 50 Hz 定时�
 
 1. 调用 `super().__init__('mock_uart_bridge_node')` 注册节点名
 2. 创建 `RELIABLE + depth=10` 的 QoS
-3. 订阅 `/servo_cmd`
-4. 创建 `/servo_state` 发布器
+3. 订阅 `/leg_motion_node/output/servo_command`
+4. 创建 `/uart_bridge_node/output/servo_state` 发布器
 5. 初始化 4 路舵机角度为 `90°`
 6. 创建一个 `0.02 s` 周期定时器，也就是 `50 Hz`
 7. 打印日志，提示订阅和发布关系已经建立
@@ -436,9 +436,9 @@ self.timer = self.create_timer(0.02, self.publish_servo_state)  # 50 Hz 定时�
 
 | 项目 | 说明 |
 | --- | --- |
-| 触发条件 | 收到 `/servo_cmd` 的 `sensor_msgs/msg/JointState` 消息 |
+| 触发条件 | 收到 `/leg_motion_node/output/servo_command` 的 `sensor_msgs/msg/JointState` 消息 |
 | 输入 | `msg.name`、`msg.position`、`msg.effort` |
-| 处理结果 | 更新内部 `self.servo_angles`，但不立即发布；等待定时器统一发布 `/servo_state` |
+| 处理结果 | 更新内部 `self.servo_angles`，但不立即发布；等待定时器统一发布 `/uart_bridge_node/output/servo_state` |
 
 处理步骤：
 
@@ -453,14 +453,14 @@ self.timer = self.create_timer(0.02, self.publish_servo_state)  # 50 Hz 定时�
 
 ```mermaid
 flowchart TD
-    A[/收到 /servo_cmd/]
+    A[/收到 /leg_motion_node/output/servo_command/]
     B[读取 JointState.position]
     C[弧度转角度]
     D[读取当前角度 current]
     E[计算 target]
     F[step = (target - current) * 0.2]
     G[更新 self.servo_angles]
-    H[等待定时器发布 /servo_state]
+    H[等待定时器发布 /uart_bridge_node/output/servo_state]
 
     A --> B --> C --> D --> E --> F --> G --> H
 ```
@@ -472,7 +472,7 @@ flowchart TD
 | 触发条件 | `create_timer(0.02, ...)` 周期性触发 |
 | 触发频率 | 50 Hz |
 | 输入 | 当前内部数组 `self.servo_angles` |
-| 处理结果 | 发布 `/servo_state`，供下游控制节点读取 |
+| 处理结果 | 发布 `/uart_bridge_node/output/servo_state`，供下游控制节点读取 |
 
 处理步骤：
 
@@ -481,7 +481,7 @@ flowchart TD
 3. 写入四个关节名字
 4. 把内部角度从 **度转回弧度**
 5. `velocity` 和 `effort` 填 0
-6. 发布到 `/servo_state`
+6. 发布到 `/uart_bridge_node/output/servo_state`
 
 #### 5.7.3 本包中“没有回调”的函数
 
@@ -517,7 +517,7 @@ step = (target - current) * 0.2  # 每次只朝目标靠近 20%
 
 - 角度不会瞬间跳到目标值
 - 而是每次回调只前进一小步
-- 这样下游看到的 `/servo_state` 会更接近“机械系统逐渐响应”的效果
+- 这样下游看到的 `/uart_bridge_node/output/servo_state` 会更接近“机械系统逐渐响应”的效果
 
 #### 5.8.3 它没有真实串口桥的握手状态机
 
@@ -534,7 +534,7 @@ step = (target - current) * 0.2  # 每次只朝目标靠近 20%
 
 ### 6.1 是否使用 ROS 2 Lifecycle Node
 
-没有。  
+没有。
 当前 `robot_bringup` 包内代码没有使用 `rclcpp_lifecycle::LifecycleNode` 或 `nav2` 常见的生命周期模式。
 
 ### 6.2 执行器与线程模型总览
@@ -552,7 +552,7 @@ step = (target - current) * 0.2  # 每次只朝目标靠近 20%
 对初学者来说，可以这样理解：
 
 - `rclpy.spin(node)` 会进入事件循环
-- 当 `/servo_cmd` 来消息时，执行 `on_servo_cmd`
+- 当 `/leg_motion_node/output/servo_command` 来消息时，执行 `on_servo_cmd`
 - 当定时器到期时，执行 `publish_servo_state`
 - 因为代码里没有显式创建多线程执行器，所以可以按“默认单线程串行处理”来理解
 
@@ -583,7 +583,7 @@ ros2 run robot_bringup mock_uart_bridge
 
 适用场景：
 
-- 想单独验证 `/servo_cmd -> /servo_state`
+- 想单独验证 `/leg_motion_node/output/servo_command -> /uart_bridge_node/output/servo_state`
 - 不想启动完整视觉链路
 
 #### 7.1.2 运行 `vision_front`（需要先启用构建）
@@ -671,10 +671,10 @@ def generate_launch_description():
 ```yaml
 behavior_node:
   ros__parameters:
-    image_width: 320   # 输入图像宽度，单位：像素
-    image_height: 480  # 输入图像高度，单位：像素
-    center_x: 160      # 期望目标中心 x
-    center_y: 240      # 期望目标中心 y
+    image.width: 320   # 输入图像宽度，单位：像素
+    image.height: 480  # 输入图像高度，单位：像素
+    image.center_x: 160      # 期望目标中心 x
+    image.center_y: 240      # 期望目标中心 y
 ```
 
 #### 7.4.2 `uart_bridge.yaml`
@@ -682,8 +682,8 @@ behavior_node:
 ```yaml
 uart_bridge_node:
   ros__parameters:
-    uart_device: "/dev/ttyAMA0"  # 串口设备路径
-    uart_baudrate: 921600        # 波特率
+    uart.device: "/dev/ttyAMA0"  # 串口设备路径
+    uart.baudrate: 921600        # 波特率
 ```
 
 #### 7.4.3 `visual_servo.yaml`
@@ -691,11 +691,11 @@ uart_bridge_node:
 ```yaml
 leg_motion_node:
   ros__parameters:
-    control_rate_hz: 30.0         # 控制循环频率
-    deadband_px: 5.0              # 死区像素，误差小于该值时不动作
-    neutral_angle_deg: 90.0       # 舵机中位角
-    gait_frequency_hz: 2.0        # 步态频率
-    target_timeout_sec: 0.5       # 目标丢失超时
+    controller.control_rate_hz: 30.0         # 控制循环频率
+    controller.deadband_pixels: 5.0              # 死区像素，误差小于该值时不动作
+    servo.neutral_angle_deg: 90.0       # 舵机中位角
+    gait.frequency_hz: 2.0        # 步态频率
+    target.timeout_sec: 0.5       # 目标丢失超时
 ```
 
 ## 8. 调试与排错
@@ -705,8 +705,8 @@ leg_motion_node:
 | 现象 | 可能原因 | 排查建议 |
 | --- | --- | --- |
 | `ros2 launch robot_bringup vision_stack.launch.py` 失败 | 下游包未构建或未安装 | 用 `ros2 pkg prefix <pkg>` 检查 `gst_receiver`、`detection_node` 等 |
-| `rpi_stack.launch.py` 启动后没有 `/servo_state` | Pi 串口未连通或 STM32 未握手 | 检查 `/dev/ttyAMA0`、波特率、供电、连线 |
-| `test_73_complete.launch.py` 运行了但舵机状态不变化 | `/servo_cmd` 没有数据或目标未被检测到 | `ros2 topic echo /servo_cmd`、检查 `behavior_node` 输出 |
+| `rpi_stack.launch.py` 启动后没有 `/uart_bridge_node/output/servo_state` | Pi 串口未连通或 STM32 未握手 | 检查 `/dev/ttyAMA0`、波特率、供电、连线 |
+| `test_73_complete.launch.py` 运行了但舵机状态不变化 | `/leg_motion_node/output/servo_command` 没有数据或目标未被检测到 | `ros2 topic echo /leg_motion_node/output/servo_command`、检查 `behavior_node` 输出 |
 | `ros2 run robot_bringup vision_front` 找不到 | 没有用 `-DBUILD_VISION_FRONT=ON` 编译 | 重新构建 `robot_bringup` |
 | `vision_front` 编译失败 | `ONNXRUNTIME_ROOT` 未设置或依赖库缺失 | 检查 CMake 配置与库路径 |
 | launch 能跑但参数不生效 | 下游包配置文件未安装或路径写错 | 检查 `share/<pkg>/config/*.yaml` 是否存在 |
@@ -729,16 +729,16 @@ ros2 topic list
 
 ```bash
 ros2 topic hz /stereo/image_raw
-ros2 topic hz /tracked_objects
-ros2 topic hz /servo_state
+ros2 topic hz /tracker_node/output/tracked_objects
+ros2 topic hz /uart_bridge_node/output/servo_state
 ```
 
 #### 8.2.4 直接查看消息内容
 
 ```bash
-ros2 topic echo /servo_cmd
-ros2 topic echo /servo_state
-ros2 topic echo /pixel_error
+ros2 topic echo /leg_motion_node/output/servo_command
+ros2 topic echo /uart_bridge_node/output/servo_state
+ros2 topic echo /behavior_node/output/pixel_error
 ```
 
 #### 8.2.5 查看已安装的 launch 文件
@@ -759,20 +759,20 @@ ros2 launch --show-args robot_bringup rpi_stack.launch.py
 | 工具 | 推荐用途 | 说明 |
 | --- | --- | --- |
 | `rqt_graph` | 看节点与话题拓扑 | 最适合理解 `robot_bringup` 的编排效果 |
-| `rqt_image_view` | 看图像话题 | 检查 `/stereo/image_raw`、`/camera/image_mono` |
-| `rqt_plot` | 看数值曲线 | 检查 `/pixel_error/x`、`/pixel_error/y` |
+| `rqt_image_view` | 看图像话题 | 检查 `/stereo/image_raw`、`~/input/image` |
+| `rqt_plot` | 看数值曲线 | 检查 `/behavior_node/output/pixel_error/x`、`/behavior_node/output/pixel_error/y` |
 | `rviz2` | 组合可视化 | 本包不涉及 TF，但可用于展示图像、轨迹等下游结果 |
 
 ### 8.4 推荐调试顺序
 
 对于初学者，建议按下面顺序排查：
 
-1. `ros2 node list` 看节点是否都起来了  
-2. `ros2 topic list` 看关键话题是否存在  
-3. `ros2 topic hz /stereo/image_raw` 看数据流是否持续  
-4. `ros2 topic echo /tracked_objects` 看感知链路是否产出  
-5. `ros2 topic echo /servo_cmd` 看控制链路是否产出  
-6. `ros2 topic echo /servo_state` 看执行反馈是否闭环  
+1. `ros2 node list` 看节点是否都起来了
+2. `ros2 topic list` 看关键话题是否存在
+3. `ros2 topic hz /stereo/image_raw` 看数据流是否持续
+4. `ros2 topic echo /tracker_node/output/tracked_objects` 看感知链路是否产出
+5. `ros2 topic echo /leg_motion_node/output/servo_command` 看控制链路是否产出
+6. `ros2 topic echo /uart_bridge_node/output/servo_state` 看执行反馈是否闭环
 
 ## 9. 单元测试与集成测试说明
 

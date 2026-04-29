@@ -65,12 +65,13 @@ echo ""
 echo -e "${CYAN}[2/5] 检查话题频率...${RESET}"
 echo ""
 
-# 检查关键话题频率（采样 3 秒）
+# 检查关键话题频率（采样 3 秒）。
+# 这里使用全局 topic 名是为了让 ros2 CLI 校验运行时已解析的完整图名，便于跨节点端到端检查。
 TOPICS_TO_CHECK=(
-    "/stereo/image_raw:~30"
-    "/tracked_objects:~30"
-    "/pixel_error:~30"
-    "/servo_cmd:~30"
+    "/gst_receiver_node/output/stereo_image_raw:~30"
+    "/tracker_node/output/tracked_objects:~30"
+    "/behavior_node/output/pixel_error:~30"
+    "/leg_motion_node/output/servo_command:~30"
 )
 
 for topic_freq in "${TOPICS_TO_CHECK[@]}"; do
@@ -88,12 +89,12 @@ for topic_freq in "${TOPICS_TO_CHECK[@]}"; do
 done
 echo ""
 
-echo -e "${CYAN}[3/5] 检查 /tracked_objects 输出...${RESET}"
+echo -e "${CYAN}[3/5] 检查 /tracker_node/output/tracked_objects 输出...${RESET}"
 echo ""
 
-detection=$(timeout 2 ros2 topic echo /tracked_objects --limit 1 2>/dev/null || echo "")
+detection=$(timeout 2 ros2 topic echo /tracker_node/output/tracked_objects --limit 1 2>/dev/null || echo "")
 if [ -z "$detection" ]; then
-    echo -e "${YELLOW}⚠ 未收到 /tracked_objects 数据${RESET}"
+    echo -e "${YELLOW}⚠ 未收到 /tracker_node/output/tracked_objects 数据${RESET}"
     echo "   可能原因："
     echo "   - 摄像机中没有检测到物体"
     echo "   - 目标类别不匹配"
@@ -108,7 +109,7 @@ echo -e "${CYAN}[4/5] 采样像素误差（持续 10 秒）...${RESET}"
 echo ""
 
 # 采样像素误差
-timeout 10 ros2 topic echo /pixel_error 2>/dev/null | grep -A 2 "x:" | head -30 > /tmp/pixel_errors.txt
+timeout 10 ros2 topic echo /behavior_node/output/pixel_error 2>/dev/null | grep -A 2 "x:" | head -30 > /tmp/pixel_errors.txt
 
 if [ -s /tmp/pixel_errors.txt ]; then
     echo -e "${GREEN}✓ 成功采集误差数据${RESET}"
@@ -118,7 +119,7 @@ if [ -s /tmp/pixel_errors.txt ]; then
     echo "  最近的像素误差样本："
     tail -9 /tmp/pixel_errors.txt | grep -E "^\s+(x|y):" | sed 's/^/    /'
 else
-    echo -e "${YELLOW}⚠ 未收到 /pixel_error 数据${RESET}"
+    echo -e "${YELLOW}⚠ 未收到 /behavior_node/output/pixel_error 数据${RESET}"
     echo "   可能原因："
     echo "   - behavior_node 未启动"
     echo "   - 没有检测到目标"
@@ -156,13 +157,13 @@ echo ""
 echo -e "${YELLOW}[调试命令参考]${RESET}"
 echo ""
 echo "  监控像素误差（实时）："
-echo "    ros2 topic echo /pixel_error"
+echo "    ros2 topic echo /behavior_node/output/pixel_error"
 echo ""
 echo "  查看追踪对象："
-echo "    ros2 topic echo /tracked_objects"
+echo "    ros2 topic echo /tracker_node/output/tracked_objects"
 echo ""
 echo "  实时绘制误差曲线："
-echo "    rqt_plot /pixel_error/x /pixel_error/y &"
+echo "    rqt_plot /behavior_node/output/pixel_error/x /behavior_node/output/pixel_error/y &"
 echo ""
 echo "  查看摄像机输出："
 echo "    rqt_image_view"

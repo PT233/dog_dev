@@ -11,7 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-# 视觉伺服节点：PID + 简化步态控制，输出 /servo_cmd。
+# 视觉伺服节点：PID + 简化步态控制，输出私有 servo_command。
 add_executable(visual_servo_node_exe
   src/leg_motion_controller_node.cpp
   src/pid_controller.cpp
@@ -30,6 +30,7 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 install(FILES ../../../config/visual_servo.yaml DESTINATION share/${PROJECT_NAME}/config)
 
 if(BUILD_TESTING)
+  enable_testing()
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files
@@ -39,6 +40,11 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+
+  add_executable(test_pid_controller ../../../tests/test_pid_controller.cpp src/pid_controller.cpp)
+  target_include_directories(test_pid_controller PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  add_test(NAME test_pid_controller COMMAND test_pid_controller)
 endif()
 
 ament_package()

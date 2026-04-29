@@ -19,7 +19,7 @@
 <g id="node10" class="node">
 <title>t__pixel_error</title>
 <path fill="#f8fafc" stroke="#94a3b8" d="M2123.27,-36C2123.27,-36 1970.27,-36 1970.27,-36 1964.27,-36 1958.27,-30 1958.27,-24 1958.27,-24 1958.27,-12 1958.27,-12 1958.27,-6 1964.27,0 1970.27,0 1970.27,0 2123.27,0 2123.27,0 2129.27,0 2135.27,-6 2135.27,-12 2135.27,-12 2135.27,-24 2135.27,-24 2135.27,-30 2129.27,-36 2123.27,-36"/>
-<text text-anchor="middle" x="2046.77" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/pixel_error</text>
+<text text-anchor="middle" x="2046.77" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/behavior_node/output/pixel_error</text>
 <text text-anchor="middle" x="2046.77" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">geometry_msgs/msg/Vector3</text>
 </g>
 <!-- n__behavior_node&#45;&gt;t__pixel_error -->
@@ -38,8 +38,8 @@
 <g id="node9" class="node">
 <title>t__detections</title>
 <path fill="#f8fafc" stroke="#94a3b8" d="M1242.15,-36C1242.15,-36 994.15,-36 994.15,-36 988.15,-36 982.15,-30 982.15,-24 982.15,-24 982.15,-12 982.15,-12 982.15,-6 988.15,0 994.15,0 994.15,0 1242.15,0 1242.15,0 1248.15,0 1254.15,-6 1254.15,-12 1254.15,-12 1254.15,-24 1254.15,-24 1254.15,-30 1248.15,-36 1242.15,-36"/>
-<text text-anchor="middle" x="1118.15" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/detections</text>
-<text text-anchor="middle" x="1118.15" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">robot_interfaces/msg/SimpleDetection2DArray</text>
+<text text-anchor="middle" x="1118.15" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/detection_node/output/detections</text>
+<text text-anchor="middle" x="1118.15" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">robot_interfaces/msg/Detection2DArray</text>
 </g>
 <!-- n__detection_node&#45;&gt;t__detections -->
 <g id="edge3" class="edge">
@@ -76,7 +76,7 @@
 <g id="node11" class="node">
 <title>t__servo_cmd</title>
 <path fill="#f8fafc" stroke="#94a3b8" d="M2531.17,-73C2531.17,-73 2383.17,-73 2383.17,-73 2377.17,-73 2371.17,-67 2371.17,-61 2371.17,-61 2371.17,-49 2371.17,-49 2371.17,-43 2377.17,-37 2383.17,-37 2383.17,-37 2531.17,-37 2531.17,-37 2537.17,-37 2543.17,-43 2543.17,-49 2543.17,-49 2543.17,-61 2543.17,-61 2543.17,-67 2537.17,-73 2531.17,-73"/>
-<text text-anchor="middle" x="2457.17" y="-58.2" font-family="Helvetica,sans-Serif" font-size="11.00">/servo_cmd</text>
+<text text-anchor="middle" x="2457.17" y="-58.2" font-family="Helvetica,sans-Serif" font-size="11.00">/leg_motion_node/output/servo_command</text>
 <text text-anchor="middle" x="2457.17" y="-46.2" font-family="Helvetica,sans-Serif" font-size="11.00">sensor_msgs/msg/JointState</text>
 </g>
 <!-- n__leg_motion_node&#45;&gt;t__servo_cmd -->
@@ -95,7 +95,7 @@
 <g id="node12" class="node">
 <title>t__servo_state</title>
 <path fill="#f8fafc" stroke="#94a3b8" d="M2982.37,-36C2982.37,-36 2834.37,-36 2834.37,-36 2828.37,-36 2822.37,-30 2822.37,-24 2822.37,-24 2822.37,-12 2822.37,-12 2822.37,-6 2828.37,0 2834.37,0 2834.37,0 2982.37,0 2982.37,0 2988.37,0 2994.37,-6 2994.37,-12 2994.37,-12 2994.37,-24 2994.37,-24 2994.37,-30 2988.37,-36 2982.37,-36"/>
-<text text-anchor="middle" x="2908.37" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/servo_state</text>
+<text text-anchor="middle" x="2908.37" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/uart_bridge_node/output/servo_state</text>
 <text text-anchor="middle" x="2908.37" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">sensor_msgs/msg/JointState</text>
 </g>
 <!-- n__mock_uart_bridge_node&#45;&gt;t__servo_state -->
@@ -114,7 +114,7 @@
 <g id="node8" class="node">
 <title>t__camera_image_mono</title>
 <path fill="#f8fafc" stroke="#94a3b8" d="M745.07,-36C745.07,-36 617.07,-36 617.07,-36 611.07,-36 605.07,-30 605.07,-24 605.07,-24 605.07,-12 605.07,-12 605.07,-6 611.07,0 617.07,0 617.07,0 745.07,0 745.07,0 751.07,0 757.07,-6 757.07,-12 757.07,-12 757.07,-24 757.07,-24 757.07,-30 751.07,-36 745.07,-36"/>
-<text text-anchor="middle" x="681.07" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/camera/image_mono</text>
+<text text-anchor="middle" x="681.07" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">~/input/image</text>
 <text text-anchor="middle" x="681.07" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">sensor_msgs/msg/Image</text>
 </g>
 <!-- n__stereo_splitter_node&#45;&gt;t__camera_image_mono -->
@@ -133,8 +133,8 @@
 <g id="node14" class="node">
 <title>t__tracked_objects</title>
 <path fill="#f8fafc" stroke="#94a3b8" d="M1724.8,-36C1724.8,-36 1476.8,-36 1476.8,-36 1470.8,-36 1464.8,-30 1464.8,-24 1464.8,-24 1464.8,-12 1464.8,-12 1464.8,-6 1470.8,0 1476.8,0 1476.8,0 1724.8,0 1724.8,0 1730.8,0 1736.8,-6 1736.8,-12 1736.8,-12 1736.8,-24 1736.8,-24 1736.8,-30 1730.8,-36 1724.8,-36"/>
-<text text-anchor="middle" x="1600.8" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/tracked_objects</text>
-<text text-anchor="middle" x="1600.8" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">robot_interfaces/msg/SimpleDetection2DArray</text>
+<text text-anchor="middle" x="1600.8" y="-21.2" font-family="Helvetica,sans-Serif" font-size="11.00">/tracker_node/output/tracked_objects</text>
+<text text-anchor="middle" x="1600.8" y="-9.2" font-family="Helvetica,sans-Serif" font-size="11.00">robot_interfaces/msg/Detection2DArray</text>
 </g>
 <!-- n__tracker_node&#45;&gt;t__tracked_objects -->
 <g id="edge13" class="edge">

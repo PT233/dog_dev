@@ -4,7 +4,7 @@
 
 set -e
 
-WORKSPACE_DIR="/mnt/c/Users/Pt/Desktop/dog/agent_dev/ros2_ws"
+WORKSPACE_DIR="${WORKSPACE_DIR:-/home/peter/dog/dog_dev/ros2_ws}"
 cd "$WORKSPACE_DIR"
 
 source install/setup.bash
@@ -39,7 +39,7 @@ fi
 
 echo ""
 echo "========== Test 4: Verify code has threading support =========="
-if grep -q "std::thread" src/uart_bridge/src/uart_bridge_node.cpp; then
+if grep -q "std::thread" src/uart_bridge/src/uart_bridge_transport.cpp; then
   echo "✓ Code includes threading support"
 else
   echo "✗ Code missing threading support"
@@ -48,7 +48,7 @@ fi
 
 echo ""
 echo "========== Test 5: Verify UART configuration (termios) =========="
-if grep -q "termios\|tcgetattr\|tcsetattr" src/uart_bridge/src/uart_bridge_node.cpp; then
+if grep -q "termios\|tcgetattr\|tcsetattr" src/uart_bridge/src/uart_bridge_transport.cpp; then
   echo "✓ Code includes UART termios configuration"
 else
   echo "✗ Code missing UART configuration"

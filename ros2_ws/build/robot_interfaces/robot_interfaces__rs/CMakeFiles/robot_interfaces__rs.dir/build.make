@@ -87,13 +87,13 @@ rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/rosid
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/rosidl_generator_rs/resource/templates/srv_idiomatic.rs.em
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/rosidl_generator_rs/resource/templates/srv_rmw.rs.em
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
-rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
-rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/Detection2D.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/Detection2DArray.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/TargetInfo.idl
-rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl
-rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/Detection2D.idl
+rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/msg/Detection2DArray.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl
 rosidl_generator_rs/robot_interfaces/rust/src/lib.rs: /opt/ros/jazzy/share/std_msgs/msg/Bool.idl

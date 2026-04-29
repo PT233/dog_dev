@@ -9,24 +9,30 @@
 
 #include "shared/servo_names.hpp"
 
+namespace uart_bridge
+{
+
 UartBridgeNode::UartBridgeNode()
-    : Node("uart_bridge_node"),
-      uart_fd_(-1),
-      parser_(nullptr),
-      handshake_complete_(false),
-      stm32_system_state_(UART_SYSTEM_STATE_BOOT_CENTERING) {
+: Node("uart_bridge_node"),
+  uart_fd_(-1),
+  parser_(nullptr),
+  handshake_complete_(false),
+  stm32_system_state_(kUartSystemStateBootCentering)
+{
   // 参数默认面向树莓派 UART1。WSL/USB 转串口调试时可在 YAML 中改成 /dev/ttyUSB*。
-  declare_parameter<std::string>("uart_device", "/dev/ttyAMA0");
-  declare_parameter<int>("uart_baudrate", 921600);
-  declare_parameter<double>("stats_report_interval_sec", 10.0);
+  declare_parameter<std::string>("uart.device", "/dev/ttyAMA0");
+  declare_parameter<int>("uart.baudrate", 921600);
+  declare_parameter<double>("diagnostics.stats_report_interval_sec", 10.0);
 
-  std::string device = this->get_parameter("uart_device").as_string();
-  int baudrate = this->get_parameter("uart_baudrate").as_int();
-  double stats_interval = this->get_parameter("stats_report_interval_sec").as_double();
+  std::string serial_device_path = this->get_parameter("uart.device").as_string();
+  int uart_baud_rate = this->get_parameter("uart.baudrate").as_int();
+  double stats_interval_sec =
+    this->get_parameter("diagnostics.stats_report_interval_sec").as_double();
 
-  uart_fd_ = open(device.c_str(), O_RDWR | O_NOCTTY);
+  uart_fd_ = open(serial_device_path.c_str(), O_RDWR | O_NOCTTY);
   if (uart_fd_ < 0) {
-    RCLCPP_ERROR(this->get_logger(), "Failed to open %s: %s", device.c_str(), strerror(errno));
+    RCLCPP_ERROR(
+      this->get_logger(), "Failed to open %s: %s", serial_device_path.c_str(), strerror(errno));
     return;
   }
 
@@ -40,7 +46,7 @@ UartBridgeNode::UartBridgeNode()
   }
 
   speed_t baud;
-  switch (baudrate) {
+  switch (uart_baud_rate) {
     case 115200:
       baud = B115200;
       break;
@@ -48,7 +54,7 @@ UartBridgeNode::UartBridgeNode()
       baud = B921600;
       break;
     default:
-      RCLCPP_ERROR(this->get_logger(), "Unsupported baudrate: %d", baudrate);
+      RCLCPP_ERROR(this->get_logger(), "Unsupported baudrate: %d", uart_baud_rate);
       close(uart_fd_);
       uart_fd_ = -1;
       return;
@@ -77,52 +83,53 @@ UartBridgeNode::UartBridgeNode()
   tcflush(uart_fd_, TCIOFLUSH);
 
   RCLCPP_INFO(this->get_logger(), "UART device %s opened at %d bps (protocol v%d with monitoring)",
-              device.c_str(), baudrate, UART_PROTOCOL_VERSION);
+              serial_device_path.c_str(), uart_baud_rate, UART_PROTOCOL_VERSION);
 
   parser_ = std::make_unique<FrameParser>();
-  // 解析器只负责字节流组帧；业务语义在 OnFrameReceived 中处理。
-  parser_->SetFrameCallback([this](uint8_t cmd_id, const uint8_t* payload, size_t len) {
-    OnFrameReceived(cmd_id, payload, len);
+  // 解析器只负责字节流组帧；业务语义在 frame_callback 中处理。
+  parser_->set_frame_callback([this](uint8_t cmd_id, const uint8_t * payload, size_t len) {
+      frame_callback(cmd_id, payload, len);
   });
-  parser_->SetErrorCallback([this](const char* msg) {
-    RCLCPP_WARN(this->get_logger(), "Parse error: %s", msg);
-    frame_error_count_++;
+  parser_->set_error_callback([this](const char * msg) {
+      RCLCPP_WARN(this->get_logger(), "Parse error: %s", msg);
+      frame_error_count_++;
   });
 
   encoder_ = std::make_unique<FrameEncoder>();
 
   // 使用 SensorDataQoS 接收控制命令，优先保持低延迟，过期帧可被新帧覆盖。
-  servo_cmd_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
-      "/servo_cmd",
+  servo_command_subscription_ = this->create_subscription<sensor_msgs::msg::JointState>(
+      "~/input/servo_command",
       rclcpp::SensorDataQoS(),
-      [this](const sensor_msgs::msg::JointState::SharedPtr msg) {
-        OnServoCmdReceived(msg);
+    [this](const sensor_msgs::msg::JointState::SharedPtr msg) {
+      servo_command_callback(msg);
       });
 
   rclcpp::QoS qos(10);
   qos.reliable();
   // 舵机状态是控制闭环的反馈，使用 reliable 避免本机进程间传输丢消息。
-  servo_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(
-      "/servo_state", qos);
+  servo_state_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>(
+      "~/output/servo_state", qos);
 
   stats_timer_ = this->create_wall_timer(
-      std::chrono::duration<double>(stats_interval),
-      [this]() { ReportStatistics(); });
+      std::chrono::duration<double>(stats_interval_sec),
+    [this]() {report_statistics();});
 
   handshake_timer_ = this->create_wall_timer(
       std::chrono::milliseconds(500),
-      [this]() {
-        if (!handshake_complete_.load()) {
-          SendInitHandshake();
-        }
+    [this]() {
+      if (!handshake_complete_.load()) {
+        send_init_handshake();
+      }
       });
 
   // 串口读取是阻塞 I/O，放到独立线程，避免占用 ROS executor。
-  read_thread_ = std::thread(&UartBridgeNode::ReadLoop, this);
-  SendInitHandshake();
+  read_thread_ = std::thread(&UartBridgeNode::read_loop, this);
+  send_init_handshake();
 }
 
-UartBridgeNode::~UartBridgeNode() {
+UartBridgeNode::~UartBridgeNode()
+{
   if (read_thread_.joinable()) {
     read_thread_.join();
   }
@@ -131,28 +138,30 @@ UartBridgeNode::~UartBridgeNode() {
   }
 }
 
-void UartBridgeNode::ReadLoop() {
-  unsigned char buf[256];
+void UartBridgeNode::read_loop()
+{
+  unsigned char read_buffer[256];
   if (uart_fd_ < 0) {
     RCLCPP_ERROR(this->get_logger(), "UART not initialized, cannot start read loop");
     return;
   }
 
   while (rclcpp::ok()) {
-    int n = read(uart_fd_, buf, sizeof(buf));
-    if (n > 0) {
+    int bytes_read = read(uart_fd_, read_buffer, sizeof(read_buffer));
+    if (bytes_read > 0) {
       // UART 是无边界字节流，必须逐字节推进协议状态机。
-      for (int i = 0; i < n; ++i) {
-        parser_->ProcessByte(buf[i]);
+      for (int byte_index = 0; byte_index < bytes_read; ++byte_index) {
+        parser_->process_byte(read_buffer[byte_index]);
       }
-    } else if (n < 0) {
+    } else if (bytes_read < 0) {
       RCLCPP_ERROR(this->get_logger(), "UART read error: %s", strerror(errno));
       break;
     }
   }
 }
 
-uint8_t UartBridgeNode::NameToServoId(const std::string& name) {
+uint8_t UartBridgeNode::servo_id_by_name(const std::string & name)
+{
   // 关节名映射集中放在 shared/servo_names.hpp，避免 ROS 和 STM32 顺序漂移。
   int servo_id = project_shared::servo_name_to_id(name);
   if (servo_id < 0) {
@@ -161,7 +170,8 @@ uint8_t UartBridgeNode::NameToServoId(const std::string& name) {
   return static_cast<uint8_t>(servo_id);
 }
 
-void UartBridgeNode::WriteFrame(const std::vector<uint8_t>& frame) {
+void UartBridgeNode::write_frame(const std::vector<uint8_t> & frame)
+{
   if (uart_fd_ < 0) {
     RCLCPP_ERROR(this->get_logger(), "UART not open, cannot send frame of %zu bytes", frame.size());
     return;
@@ -182,3 +192,5 @@ void UartBridgeNode::WriteFrame(const std::vector<uint8_t>& frame) {
     RCLCPP_DEBUG(this->get_logger(), "Successfully wrote %zu bytes to UART", frame.size());
   }
 }
+
+}  // namespace uart_bridge

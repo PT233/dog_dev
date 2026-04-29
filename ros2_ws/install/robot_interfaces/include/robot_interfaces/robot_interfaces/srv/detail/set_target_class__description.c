@@ -342,8 +342,10 @@ robot_interfaces__srv__SetTargetClass_Event__get_type_description(
 }
 
 static char toplevel_type_raw_source[] =
+  "# \\xe8\\xaf\\xb7\\xe6\\xb1\\x82\\xe6\\x8c\\x89 COCO \\xe7\\xb1\\xbb\\xe5\\x88\\xab\\xe5\\x90\\x8d\\xe5\\x88\\x87\\xe6\\x8d\\xa2\\xe7\\x9b\\xae\\xe6\\xa0\\x87\\xef\\xbc\\x8c\\xe4\\xbe\\x8b\\xe5\\xa6\\x82 person\\xe3\\x80\\x81cup\\xe3\\x80\\x82\n"
   "string class_name\n"
   "---\n"
+  "# success=false \\xe6\\x97\\xb6 message \\xe4\\xbc\\x9a\\xe8\\xaf\\xb4\\xe6\\x98\\x8e\\xe6\\x9c\\xaa\\xe7\\x9f\\xa5\\xe7\\xb1\\xbb\\xe5\\x88\\xab\\xe7\\xad\\x89\\xe9\\x94\\x99\\xe8\\xaf\\xaf\\xe5\\x8e\\x9f\\xe5\\x9b\\xa0\\xe3\\x80\\x82\n"
   "bool success\n"
   "string message";
 
@@ -360,7 +362,7 @@ robot_interfaces__srv__SetTargetClass__get_individual_type_description_source(
   static const rosidl_runtime_c__type_description__TypeSource source = {
     {robot_interfaces__srv__SetTargetClass__TYPE_NAME, 35, 35},
     {srv_encoding, 3, 3},
-    {toplevel_type_raw_source, 50, 50},
+    {toplevel_type_raw_source, 124, 124},
   };
   return &source;
 }

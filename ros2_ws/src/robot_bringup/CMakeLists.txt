@@ -64,4 +64,12 @@ if(EXISTS "${MOCK_UART_BRIDGE}")
     RENAME mock_uart_bridge)
 endif()
 
+if(BUILD_TESTING)
+  enable_testing()
+  find_package(ament_lint_auto REQUIRED)
+  set(ament_cmake_copyright_FOUND TRUE)
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
 ament_package()

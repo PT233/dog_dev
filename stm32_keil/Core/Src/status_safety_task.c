@@ -19,7 +19,7 @@
 #define STATUS_FRAME_LEN_V1    ((uint8_t)(7U + STATUS_PAYLOAD_LEN_V1))
 
 /* Frame v2 = header(2) + cmd(1) + len(1) + payload_v2(N) + crc(2) + tail(1) */
-#define STATUS_PAYLOAD_LEN_V2  ((uint8_t)(TRAJ_SERVO_COUNT * sizeof(ServoStateItem_v2)))
+#define STATUS_PAYLOAD_LEN_V2  ((uint8_t)(TRAJ_SERVO_COUNT * sizeof(ServoStateItemV2)))
 #define STATUS_FRAME_LEN_V2    ((uint8_t)(7U + STATUS_PAYLOAD_LEN_V2))
 
 #define STATUS_FRAME_LEN STATUS_FRAME_LEN_V2
@@ -29,7 +29,7 @@
 #define SYSTEM_STATE_FRAME_LEN    ((uint8_t)(7U + SYSTEM_STATE_PAYLOAD_LEN))
 
 static volatile uint16_t s_frame_seq = 0U;
-static volatile uint8_t s_system_state = UART_SYSTEM_STATE_BOOT_CENTERING;
+static volatile uint8_t s_system_state = kUartSystemStateBootCentering;
 static uint32_t s_center_start_tick = 0U;
 static osThreadId_t s_status_tx_handle = NULL;
 static volatile uint32_t s_status_tx_stack_high_water_mark = 0U;
@@ -39,15 +39,15 @@ void StatusSafety_SystemStateInit(void)
 {
     /* main.c 在启动调度器前调用，记录舵机归中开始时间。 */
     s_center_start_tick = HAL_GetTick();
-    s_system_state = UART_SYSTEM_STATE_BOOT_CENTERING;
+    s_system_state = kUartSystemStateBootCentering;
 }
 
 static void SystemState_Update(void)
 {
     /* 归中保持时间到后才进入等待连接，期间 UART 控制帧会被拒绝。 */
-    if ((s_system_state == UART_SYSTEM_STATE_BOOT_CENTERING) &&
+    if ((s_system_state == kUartSystemStateBootCentering) &&
         ((HAL_GetTick() - s_center_start_tick) >= BOOT_CENTER_HOLD_MS)) {
-        s_system_state = UART_SYSTEM_STATE_WAITING_CONNECTION;
+        s_system_state = kUartSystemStateWaitingConnection;
     }
 }
 
@@ -66,10 +66,10 @@ uint8_t StatusSafety_HandleInitHandshake(const UartHandshakePayload *payload)
      */
     if ((payload != NULL) &&
         (payload->protocol_version == UART_PROTOCOL_VERSION) &&
-        (payload->requested_state == UART_SYSTEM_STATE_ACTIVE)) {
-        if ((s_system_state == UART_SYSTEM_STATE_WAITING_CONNECTION) ||
-            (s_system_state == UART_SYSTEM_STATE_ACTIVE)) {
-            s_system_state = UART_SYSTEM_STATE_ACTIVE;
+        (payload->requested_state == kUartSystemStateActive)) {
+        if ((s_system_state == kUartSystemStateWaitingConnection) ||
+            (s_system_state == kUartSystemStateActive)) {
+            s_system_state = kUartSystemStateActive;
         }
     }
 
@@ -104,7 +104,7 @@ static void StatusTX_SendFrame(void)
 
     tx_buf[0] = UART_FRAME_HEADER_0;
     tx_buf[1] = UART_FRAME_HEADER_1;
-    tx_buf[2] = (uint8_t)UART_CMD_SERVO_STATE_V2;
+    tx_buf[2] = (uint8_t)kUartCmdServoStateV2;
     tx_buf[3] = STATUS_PAYLOAD_LEN_V2;
 
     timestamp_ms = StatusTX_GetTimestampMs();
@@ -113,13 +113,13 @@ static void StatusTX_SendFrame(void)
     TrajPlanner_CopyStateSnapshot(traj_snapshot);
 
     for (i = 0U; i < TRAJ_SERVO_COUNT; i++) {
-        ServoStateItem_v2 item;
+        ServoStateItemV2 item;
         item.servo_id           = i;
         item.current_angle_x10  = (int16_t)(traj_snapshot[i].current_angle * 10.0f);
         item.status             = (traj_snapshot[i].duration_ms > 0U) ? 1U : 0U;
         item.timestamp_ms       = (uint16_t)timestamp_ms;
         item.frame_seq          = frame_seq;
-        memcpy(&tx_buf[4U + (uint8_t)(i * sizeof(ServoStateItem_v2))], &item, sizeof(ServoStateItem_v2));
+        memcpy(&tx_buf[4U + (uint8_t)(i * sizeof(ServoStateItemV2))], &item, sizeof(ServoStateItemV2));
     }
 
     crc = crc16_ccitt(&tx_buf[2], (size_t)(2U + STATUS_PAYLOAD_LEN_V2));
@@ -147,7 +147,7 @@ static void StatusTX_SendSystemStateFrame(void)
 
     tx_buf[0] = UART_FRAME_HEADER_0;
     tx_buf[1] = UART_FRAME_HEADER_1;
-    tx_buf[2] = (uint8_t)UART_CMD_SYSTEM_STATE;
+    tx_buf[2] = (uint8_t)kUartCmdSystemState;
     tx_buf[3] = SYSTEM_STATE_PAYLOAD_LEN;
     memcpy(&tx_buf[4], &payload, sizeof(payload));
 

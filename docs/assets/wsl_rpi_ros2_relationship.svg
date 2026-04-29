@@ -181,42 +181,42 @@
 <title>wsl_split&#45;&gt;wsl_det</title>
 <path fill="none" stroke="#475569" stroke-width="1.2" d="M1505.79,-383.5C1613.08,-383.5 1826,-383.5 1826,-383.5 1826,-383.5 1826,-391.94 1826,-391.94"/>
 <polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="1823.2,-391.94 1826,-399.94 1828.8,-391.94 1823.2,-391.94"/>
-<text text-anchor="middle" x="1651" y="-414.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/camera/image_mono</text>
+<text text-anchor="middle" x="1651" y="-414.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">~/input/image</text>
 </g>
 <!-- wsl_split&#45;&gt;wsl_viz -->
 <g id="edge19" class="edge">
 <title>wsl_split&#45;&gt;wsl_viz</title>
 <path fill="none" stroke="#d97706" stroke-width="1.2" stroke-dasharray="5,2" d="M1505.51,-365.5C1505.51,-365.5 2432.88,-365.5 2432.88,-365.5"/>
 <polygon fill="#d97706" stroke="#d97706" stroke-width="1.2" points="2432.88,-368.3 2440.88,-365.5 2432.88,-362.7 2432.88,-368.3"/>
-<text text-anchor="middle" x="2011.5" y="-361.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b45309">/camera/image_mono</text>
+<text text-anchor="middle" x="2011.5" y="-361.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b45309">~/input/image</text>
 </g>
 <!-- wsl_det&#45;&gt;wsl_track -->
 <g id="edge15" class="edge">
 <title>wsl_det&#45;&gt;wsl_track</title>
 <path fill="none" stroke="#475569" stroke-width="1.2" d="M1874.25,-419C1977.38,-419 2210,-419 2210,-419 2210,-419 2210,-423.97 2210,-423.97"/>
 <polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="2207.2,-423.97 2210,-431.97 2212.8,-423.97 2207.2,-423.97"/>
-<text text-anchor="middle" x="2011.5" y="-431.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/detections</text>
+<text text-anchor="middle" x="2011.5" y="-431.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/detection_node/output/detections</text>
 </g>
 <!-- wsl_track&#45;&gt;wsl_beh -->
 <g id="edge16" class="edge">
 <title>wsl_track&#45;&gt;wsl_beh</title>
 <path fill="none" stroke="#475569" stroke-width="1.2" d="M2237.63,-455C2237.63,-455 2443.76,-455 2443.76,-455"/>
 <polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="2443.76,-457.8 2451.76,-455 2443.76,-452.2 2443.76,-457.8"/>
-<text text-anchor="middle" x="2362.5" y="-462.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/tracked_objects</text>
+<text text-anchor="middle" x="2362.5" y="-462.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/tracker_node/output/tracked_objects</text>
 </g>
 <!-- wsl_track&#45;&gt;wsl_viz -->
 <g id="edge18" class="edge">
 <title>wsl_track&#45;&gt;wsl_viz</title>
 <path fill="none" stroke="#d97706" stroke-width="1.2" stroke-dasharray="5,2" d="M2237.6,-437C2309.19,-437 2447,-437 2447,-437 2447,-437 2447,-385.09 2447,-385.09"/>
 <polygon fill="#d97706" stroke="#d97706" stroke-width="1.2" points="2449.8,-385.09 2447,-377.09 2444.2,-385.09 2449.8,-385.09"/>
-<text text-anchor="middle" x="2362.5" y="-407.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b45309">/tracked_objects</text>
+<text text-anchor="middle" x="2362.5" y="-407.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b45309">/tracker_node/output/tracked_objects</text>
 </g>
 <!-- wsl_beh&#45;&gt;wsl_leg -->
 <g id="edge17" class="edge">
 <title>wsl_beh&#45;&gt;wsl_leg</title>
 <path fill="none" stroke="#475569" stroke-width="1.2" d="M2499,-441.9C2499,-423.42 2499,-397.43 2499,-397.43 2499,-397.43 2808.38,-397.43 2808.38,-397.43"/>
 <polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="2808.38,-400.23 2816.38,-397.43 2808.38,-394.63 2808.38,-400.23"/>
-<text text-anchor="middle" x="2665.5" y="-409.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/pixel_error</text>
+<text text-anchor="middle" x="2665.5" y="-409.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#334155">/behavior_node/output/pixel_error</text>
 </g>
 <!-- rpi_uart -->
 <g id="node14" class="node">
@@ -230,7 +230,7 @@
 <path fill="none" stroke="#059669" stroke-width="1.8" d="M2816.33,-374.67C2745.68,-374.67 2629,-374.67 2629,-374.67 2629,-374.67 2629,-163.62 2629,-163.62 2629,-163.62 2559.2,-163.62 2559.2,-163.62"/>
 <polygon fill="#059669" stroke="#059669" stroke-width="1.8" points="2559.2,-160.83 2551.2,-163.62 2559.2,-166.43 2559.2,-160.83"/>
 <text text-anchor="middle" x="2665.5" y="-341.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#047857">ROS 2 DDS / RTPS 跨主机通信</text>
-<text text-anchor="middle" x="2665.5" y="-331.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#047857">/servo_cmd</text>
+<text text-anchor="middle" x="2665.5" y="-331.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#047857">/leg_motion_node/output/servo_command</text>
 </g>
 <!-- rpi_linux -->
 <g id="node11" class="node">
@@ -274,7 +274,7 @@
 <path fill="none" stroke="#7c3aed" stroke-width="1.8" d="M2551.17,-154.75C2611.47,-154.75 2702,-154.75 2702,-154.75 2702,-154.75 2702,-372.33 2702,-372.33 2702,-372.33 2808.16,-372.33 2808.16,-372.33"/>
 <polygon fill="#7c3aed" stroke="#7c3aed" stroke-width="1.8" points="2808.16,-375.13 2816.16,-372.33 2808.16,-369.53 2808.16,-375.13"/>
 <text text-anchor="middle" x="2665.5" y="-264.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#6d28d9">ROS 2 DDS / RTPS 跨主机通信</text>
-<text text-anchor="middle" x="2665.5" y="-254.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#6d28d9">/servo_state</text>
+<text text-anchor="middle" x="2665.5" y="-254.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#6d28d9">/uart_bridge_node/output/servo_state</text>
 </g>
 <!-- stm_fw -->
 <g id="node15" class="node">

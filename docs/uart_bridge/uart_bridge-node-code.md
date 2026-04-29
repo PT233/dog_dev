@@ -6,11 +6,11 @@
 
 `uart_bridge_node` 的职责是把 ROS 2 世界和 STM32 串口协议世界连接起来：
 
-1. 订阅 ROS 话题 `/servo_cmd`
+1. 订阅 ROS 话题 `/leg_motion_node/output/servo_command`
 2. 把 `sensor_msgs/msg/JointState` 转成 UART 二进制控制帧
 3. 通过串口发给 STM32
 4. 持续从串口读取 STM32 返回的状态帧
-5. 解析后发布成 ROS 话题 `/servo_state`
+5. 解析后发布成 ROS 话题 `/uart_bridge_node/output/servo_state`
 
 对初级 ROS 2 开发者来说，可以把它理解成一个“协议桥接节点”：
 
@@ -45,13 +45,13 @@
 
 ```text
 leg_motion_node
-  -> /servo_cmd
+  -> /leg_motion_node/output/servo_command
   -> uart_bridge_node
   -> UART (/dev/ttyAMA0)
   -> STM32
   -> UART 状态帧
   -> uart_bridge_node
-  -> /servo_state
+  -> /uart_bridge_node/output/servo_state
   -> leg_motion_node
 ```
 
@@ -59,7 +59,7 @@ leg_motion_node
 
 | 职责 | 说明 |
 | --- | --- |
-| 握手保护 | 在 STM32 进入 `ACTIVE` 前丢弃 `/servo_cmd` |
+| 握手保护 | 在 STM32 进入 `ACTIVE` 前丢弃 `/leg_motion_node/output/servo_command` |
 | 协议版本校验 | 检查 STM32 上报的协议版本是否匹配 |
 | 时间戳映射 | 把 STM32 的 `timestamp_ms` 映射到 ROS 时间 |
 | 丢包检测 | 用 `frame_seq` 统计每路舵机的帧丢失 |
@@ -119,13 +119,13 @@ leg_motion_node
 
 | 名称 | 消息类型 | QoS | 回调函数 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/servo_cmd` | `sensor_msgs/msg/JointState` | `SensorDataQoS`，即 `KeepLast(5) + BestEffort + Volatile` | `UartBridgeNode::OnServoCmdReceived` | 接收四足控制节点下发的目标关节角，编码成串口控制帧 |
+| `/leg_motion_node/output/servo_command` | `sensor_msgs/msg/JointState` | `SensorDataQoS`，即 `KeepLast(5) + BestEffort + Volatile` | `UartBridgeNode::servo_command_callback` | 接收四足控制节点下发的目标关节角，编码成串口控制帧 |
 
 ### 3.3 发布的话题
 
 | 名称 | 消息类型 | QoS | 发布频率 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/servo_state` | `sensor_msgs/msg/JointState` | `Reliable + depth=10` | 事件驱动；通常约等于 STM32 状态上报频率，典型约 `20 Hz` | 发布 STM32 当前舵机反馈，供 `leg_motion_node` 读取 |
+| `/uart_bridge_node/output/servo_state` | `sensor_msgs/msg/JointState` | `Reliable + depth=10` | 事件驱动；通常约等于 STM32 状态上报频率，典型约 `20 Hz` | 发布 STM32 当前舵机反馈，供 `leg_motion_node` 读取 |
 
 补充说明：
 
@@ -163,9 +163,9 @@ leg_motion_node
 
 | 参数名 | 类型 | 默认值 | 取值范围 | 含义 | 是否动态可调 |
 | --- | --- | --- | --- | --- | --- |
-| `uart_device` | `string` | `"/dev/ttyAMA0"` | 任意有效串口设备路径 | 要打开的 UART 设备文件 | 否 |
-| `uart_baudrate` | `int` | `921600` | 当前源码只接受 `115200` 或 `921600` | 串口波特率 | 否 |
-| `stats_report_interval_sec` | `double` | `10.0` | 代码期望为正数，但当前没有显式校验 | 统计日志输出周期（秒） | 否 |
+| `uart.device` | `string` | `"/dev/ttyAMA0"` | 任意有效串口设备路径 | 要打开的 UART 设备文件 | 否 |
+| `uart.baudrate` | `int` | `921600` | 当前源码只接受 `115200` 或 `921600` | 串口波特率 | 否 |
+| `diagnostics.stats_report_interval_sec` | `double` | `10.0` | 代码期望为正数，但当前没有显式校验 | 统计日志输出周期（秒） | 否 |
 
 ### 4.2 YAML 与源码默认值的关系
 
@@ -174,17 +174,17 @@ leg_motion_node
 ```yaml
 uart_bridge_node:
   ros__parameters:
-    uart_device: "/dev/ttyAMA0"   # 串口设备路径
-    uart_baudrate: 921600         # 串口波特率
+    uart.device: "/dev/ttyAMA0"   # 串口设备路径
+    uart.baudrate: 921600         # 串口波特率
 ```
 
 这意味着：
 
 | 参数 | 来源 |
 | --- | --- |
-| `uart_device` | YAML 覆盖 |
-| `uart_baudrate` | YAML 覆盖 |
-| `stats_report_interval_sec` | 当前仍使用源码默认值 `10.0` |
+| `uart.device` | YAML 覆盖 |
+| `uart.baudrate` | YAML 覆盖 |
+| `diagnostics.stats_report_interval_sec` | 当前仍使用源码默认值 `10.0` |
 
 ## 5. 核心代码逻辑
 
@@ -229,8 +229,8 @@ flowchart TD
   F --> G[tcsetattr 生效并 tcflush]
   G --> H[创建 FrameParser 与错误/成帧回调]
   H --> I[创建 FrameEncoder]
-  I --> J[创建 /servo_cmd 订阅器]
-  J --> K[创建 /servo_state 发布器]
+  I --> J[创建 /leg_motion_node/output/servo_command 订阅器]
+  J --> K[创建 /uart_bridge_node/output/servo_state 发布器]
   K --> L[创建统计定时器]
   L --> M[创建握手定时器]
   M --> N[启动 read_thread_ 读串口线程]
@@ -240,9 +240,9 @@ flowchart TD
 关键代码片段如下：
 
 ```cpp
-declare_parameter<std::string>("uart_device", "/dev/ttyAMA0");  // 串口设备路径
-declare_parameter<int>("uart_baudrate", 921600);                // 支持的波特率
-declare_parameter<double>("stats_report_interval_sec", 10.0);   // 统计输出周期
+declare_parameter<std::string>("uart.device", "/dev/ttyAMA0");  // 串口设备路径
+declare_parameter<int>("uart.baudrate", 921600);                // 支持的波特率
+declare_parameter<double>("diagnostics.stats_report_interval_sec", 10.0);   // 统计输出周期
 
 uart_fd_ = open(device.c_str(), O_RDWR | O_NOCTTY);             // 打开串口设备
 if (uart_fd_ < 0) {
@@ -251,17 +251,17 @@ if (uart_fd_ < 0) {
   return;                                                       // 打不开就提前返回
 }
 
-servo_cmd_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
-    "/servo_cmd",
+servo_command_subscription_ = this->create_subscription<sensor_msgs::msg::JointState>(
+    "~/input/servo_command",
     rclcpp::SensorDataQoS(),                                    // 上游控制命令偏低延迟
     [this](const sensor_msgs::msg::JointState::SharedPtr msg) {
-      OnServoCmdReceived(msg);                                  // 收到命令后编码下发
+      servo_command_callback(msg);                              // 收到命令后编码下发
     });
 
 rclcpp::QoS qos(10);
 qos.reliable();                                                 // 状态反馈更强调可靠性
-servo_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>(
-    "/servo_state", qos);
+servo_state_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>(
+    "~/output/servo_state", qos);
 ```
 
 ### 5.3 读线程 `ReadLoop()` 的处理流程
@@ -332,18 +332,18 @@ handshake_timer_ = this->create_wall_timer(
 
 | 步骤 | 作用 |
 | --- | --- |
-| `encoder_->EncodeInitHandshake()` | 构造 `CMD_ID=0x10` 握手帧 |
-| `WriteFrame(frame)` | 发到 UART |
+| `encoder_->encode_init_handshake()` | 构造 `CMD_ID=0x10` 握手帧 |
+| `write_frame(frame)` | 发到 UART |
 | `handshake_tx_count_++` | 统计发过多少次握手 |
 | 打日志 | 第一次 `INFO`，后续重试 `DEBUG` |
 
-### 5.5 回调函数：`OnServoCmdReceived()`
+### 5.5 回调函数：`servo_command_callback()`
 
-这是唯一一个 ROS 订阅回调，负责把 `/servo_cmd` 变成串口控制帧。
+这是唯一一个 ROS 订阅回调，负责把 `/leg_motion_node/output/servo_command` 变成串口控制帧。
 
 | 项目 | 内容 |
 | --- | --- |
-| 触发条件 | 收到 `/servo_cmd` 的 `sensor_msgs/msg/JointState` |
+| 触发条件 | 收到 `/leg_motion_node/output/servo_command` 的 `sensor_msgs/msg/JointState` |
 | 输入 | `name[] + position[]`，角度单位是弧度 |
 | 输出 | UART `SERVO_CONTROL` 帧 |
 | 处理结果 | 握手未完成时丢弃；握手完成后发送控制帧 |
@@ -352,7 +352,7 @@ handshake_timer_ = this->create_wall_timer(
 
 ```mermaid
 flowchart TD
-  A[收到 /servo_cmd] --> B{握手是否完成}
+  A[收到 /leg_motion_node/output/servo_command] --> B{握手是否完成}
   B -->|否| C[节流打印告警并丢弃]
   B -->|是| D{msg 是否为空}
   D -->|是| E[打印错误并返回]
@@ -363,7 +363,7 @@ flowchart TD
   I --> J[把弧度转成角度 x10]
   J --> K[填充 ServoCmdItem，duration_ms 固定 100]
   K --> L[调用 FrameEncoder 编码]
-  L --> M[WriteFrame 发串口]
+  L --> M[write_frame 发串口]
 ```
 
 关键代码片段如下：
@@ -371,11 +371,11 @@ flowchart TD
 ```cpp
 if (!handshake_complete_.load()) {
   RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000,
-                       "Dropping /servo_cmd until STM32 handshake completes");
+                       "Dropping /leg_motion_node/output/servo_command until STM32 handshake completes");
   return;                                                     // 握手没完成，控制命令不下发
 }
 
-uint8_t servo_id = NameToServoId(msg->name[i]);               // front_left -> 0 等
+uint8_t servo_id = servo_id_by_name(msg->name[i]);               // front_left -> 0 等
 float angle_deg = msg->position[i] * 180.0f / M_PI;          // ROS 弧度 -> 角度
 int16_t angle_x10 = static_cast<int16_t>(angle_deg * 10.0f); // 角度 -> 0.1° 单位
 
@@ -402,7 +402,7 @@ item.duration_ms = 100;                                       // 当前实现写
 | --- | --- |
 | 触发条件 | `FrameParser` 成功解析出一帧完整 UART 数据 |
 | 输入 | `cmd_id + payload + payload_len` |
-| 输出 | 可能更新握手状态，也可能发布 `/servo_state` |
+| 输出 | 可能更新握手状态，也可能发布 `/uart_bridge_node/output/servo_state` |
 | 处理结果 | 根据命令 ID 分流到 `SYSTEM_STATE`、`SERVO_STATE_V2` 或 `SERVO_STATE` 处理逻辑 |
 
 分支处理如下：
@@ -410,8 +410,8 @@ item.duration_ms = 100;                                       // 当前实现写
 | `cmd_id` | 处理逻辑 | 结果 |
 | --- | --- | --- |
 | `UART_CMD_SYSTEM_STATE (0x83)` | 调用 `OnSystemStateReceived()` | 更新 STM32 启动状态与握手状态 |
-| `UART_CMD_SERVO_STATE_V2 (0x82)` | 解析带时间戳和序列号的状态数组 | 发布 `/servo_state`，并统计时延与丢包 |
-| `UART_CMD_SERVO_STATE (0x81)` | 解析旧版无时间戳状态数组 | 发布 `/servo_state` |
+| `UART_CMD_SERVO_STATE_V2 (0x82)` | 解析带时间戳和序列号的状态数组 | 发布 `/uart_bridge_node/output/servo_state`，并统计时延与丢包 |
+| `UART_CMD_SERVO_STATE (0x81)` | 解析旧版无时间戳状态数组 | 发布 `/uart_bridge_node/output/servo_state` |
 | 其他命令 | 当前忽略 | 无进一步动作 |
 
 对于 `SERVO_STATE_V2`，处理流程是：
@@ -425,7 +425,7 @@ item.duration_ms = 100;                                       // 当前实现写
 7. 用 `frame_seq` 检查该路舵机是否丢帧
 8. 把角度从 `0.1°` 转成弧度
 9. 填充 `JointState.name/position`
-10. 发布 `/servo_state`
+10. 发布 `/uart_bridge_node/output/servo_state`
 11. 记录一条新的时间映射样本
 
 关键代码片段如下：
@@ -455,7 +455,7 @@ state_msg->position.push_back(angle * M_PI / 180.0);    // ° -> 弧度
 | 触发条件 | `OnFrameReceived()` 收到 `UART_CMD_SYSTEM_STATE` |
 | 输入 | `UartSystemStatePayload` |
 | 输出 | 更新 `stm32_system_state_`、`handshake_complete_` |
-| 处理结果 | 当 STM32 进入 `ACTIVE` 时，取消握手定时器并放行 `/servo_cmd` |
+| 处理结果 | 当 STM32 进入 `ACTIVE` 时，取消握手定时器并放行 `/leg_motion_node/output/servo_command` |
 
 关键流程：
 
@@ -536,7 +536,7 @@ flowchart LR
 | 优点 | 说明 |
 | --- | --- |
 | 适合串口流 | 不要求一次就读到完整帧 |
-| 易于恢复 | CRC 或帧尾错误时可立即 `Reset()` |
+| 易于恢复 | CRC 或帧尾错误时可立即 `reset()` |
 | 内存简单 | 只维护一个固定大小 payload 缓冲区 |
 
 **3. 握手状态机**
@@ -550,7 +550,7 @@ flowchart TD
   C --> D[uart_bridge 每 500 ms 发送 INIT_HANDSHAKE]
   D --> E[STM32 回 SYSTEM_STATE]
   E -->|ACTIVE| F[handshake_complete_=true]
-  F --> G[/servo_cmd 开始允许下发]
+  F --> G[/leg_motion_node/output/servo_command 开始允许下发]
   E -->|非 ACTIVE| D
 ```
 
@@ -587,7 +587,7 @@ flowchart TD
 | 阶段 | 发生位置 | 说明 |
 | --- | --- | --- |
 | 创建节点 | 构造函数 | 读参数、打开并配置串口、创建 parser/encoder、注册 ROS 接口、启动读线程、发送首次握手 |
-| 运行中 | 订阅回调 + 定时器 + 读线程 | 同时处理 `/servo_cmd`、握手重发、统计输出和串口状态帧 |
+| 运行中 | 订阅回调 + 定时器 + 读线程 | 同时处理 `/leg_motion_node/output/servo_command`、握手重发、统计输出和串口状态帧 |
 | 销毁节点 | 析构函数 | `join` 读线程并关闭串口文件描述符 |
 
 析构逻辑如下：
@@ -615,7 +615,7 @@ if (uart_fd_ >= 0) {
 | 项目 | 当前实现 |
 | --- | --- |
 | 回调组（Callback Group） | 未显式创建 |
-| ROS 订阅回调 | `OnServoCmdReceived()` |
+| ROS 订阅回调 | `servo_command_callback()` |
 | 定时器 1 | `handshake_timer_`，500 ms |
 | 定时器 2 | `stats_timer_`，默认 10 s |
 | 后台线程 | `read_thread_` |
@@ -626,12 +626,12 @@ if (uart_fd_ >= 0) {
 
 | 执行上下文 | 执行内容 |
 | --- | --- |
-| ROS executor 线程 | 运行 `/servo_cmd` 订阅回调、握手定时器回调、统计定时器回调 |
+| ROS executor 线程 | 运行 `/leg_motion_node/output/servo_command` 订阅回调、握手定时器回调、统计定时器回调 |
 | `read_thread_` 后台线程 | 调用 `read()` 读取串口字节，并在成帧后执行 `OnFrameReceived()` |
 
 这意味着：
 
-1. `/servo_state` 的发布不一定发生在 ROS executor 线程里，也可能发生在读线程里。
+1. `/uart_bridge_node/output/servo_state` 的发布不一定发生在 ROS executor 线程里，也可能发生在读线程里。
 2. `handshake_complete_` 和 `stm32_system_state_` 用 `atomic` 保存，是因为它们会被不同线程同时访问。
 3. 时间映射、延迟统计、丢包统计各自用 `mutex` 保护内部数据。
 
@@ -652,9 +652,9 @@ ros2 run uart_bridge uart_bridge_node
 
 ```bash
 ros2 run uart_bridge uart_bridge_node --ros-args \
-  -p uart_device:=/dev/ttyAMA0 \
-  -p uart_baudrate:=921600 \
-  -p stats_report_interval_sec:=5.0
+  -p uart.device:=/dev/ttyAMA0 \
+  -p uart.baudrate:=921600 \
+  -p diagnostics.stats_report_interval_sec:=5.0
 ```
 
 启动前提：
@@ -694,8 +694,8 @@ ros2 launch robot_bringup rpi_stack.launch.py
 ```yaml
 uart_bridge_node:
   ros__parameters:
-    uart_device: "/dev/ttyAMA0"   # 默认串口设备
-    uart_baudrate: 921600         # 默认高速波特率
+    uart.device: "/dev/ttyAMA0"   # 默认串口设备
+    uart.baudrate: 921600         # 默认高速波特率
 ```
 
 如果要把统计周期也一并写进 YAML，可以扩展成：
@@ -703,9 +703,9 @@ uart_bridge_node:
 ```yaml
 uart_bridge_node:
   ros__parameters:
-    uart_device: "/dev/ttyAMA0"
-    uart_baudrate: 921600
-    stats_report_interval_sec: 10.0
+    uart.device: "/dev/ttyAMA0"
+    uart.baudrate: 921600
+    diagnostics.stats_report_interval_sec: 10.0
 ```
 
 ## 8. 调试与排错
@@ -715,13 +715,13 @@ uart_bridge_node:
 | 现象 | 可能原因 | 排查方法 | 处理建议 |
 | --- | --- | --- | --- |
 | 节点一启动就报 `Failed to open /dev/ttyAMA0` | 设备不存在、权限不足或运行环境不是 Pi | `ls -l /dev/ttyAMA0` | 先确认实际串口设备路径和权限 |
-| 启动后不断打印握手相关日志，但 `/servo_state` 没有数据 | STM32 未上电、接线错误、波特率不匹配 | 看终端日志，确认是否收到 `SYSTEM_STATE` | 重点检查 TX/RX/GND 连线和串口波特率 |
-| `/servo_cmd` 有数据，但 STM32 没动作 | 握手还没完成，节点在主动丢弃命令 | `ros2 topic echo /servo_cmd` + 看 `Dropping /servo_cmd until STM32 handshake completes` | 先解决握手问题，再看控制帧 |
+| 启动后不断打印握手相关日志，但 `/uart_bridge_node/output/servo_state` 没有数据 | STM32 未上电、接线错误、波特率不匹配 | 看终端日志，确认是否收到 `SYSTEM_STATE` | 重点检查 TX/RX/GND 连线和串口波特率 |
+| `/leg_motion_node/output/servo_command` 有数据，但 STM32 没动作 | 握手还没完成，节点在主动丢弃命令 | `ros2 topic echo /leg_motion_node/output/servo_command` + 看 `Dropping /leg_motion_node/output/servo_command until STM32 handshake completes` | 先解决握手问题，再看控制帧 |
 | 出现 `Unsupported baudrate` | 参数不是 `115200` 或 `921600` | 检查启动参数与 YAML | 当前实现只支持这两档 |
 | 出现 `Parse error: CRC mismatch` | 串口噪声、波特率配置错误、协议帧不一致 | 观察是否持续出现 Parse error | 优先确认两端协议版本和串口配置一致 |
 | 出现 `STM32 protocol version mismatch` | Pi 与 STM32 使用了不同版本的 `uart_protocol.h` | 看日志里的版本号 | 保证两端共享同一份协议头 |
 | 出现 `Frame loss detected on servo X` | 状态帧在串口链路中丢失或乱序 | 观察统计日志和单路丢包告警 | 优先检查线缆、供电和串口稳定性 |
-| `/servo_state` 时间戳看起来异常 | 时间映射样本不足或时间戳区间不连续 | `ros2 topic echo /servo_state --once` | 联合查看 `time-sync.md` 和 STM32 上报行为 |
+| `/uart_bridge_node/output/servo_state` 时间戳看起来异常 | 时间映射样本不足或时间戳区间不连续 | `ros2 topic echo /uart_bridge_node/output/servo_state --once` | 联合查看 `time-sync.md` 和 STM32 上报行为 |
 
 ### 8.2 日志与命令行排查方法
 
@@ -729,9 +729,9 @@ uart_bridge_node:
 | --- | --- |
 | 查看节点是否启动 | `ros2 node list` |
 | 查看节点接口 | `ros2 node info /uart_bridge_node` |
-| 查看控制命令是否进入桥接节点 | `ros2 topic echo /servo_cmd` |
-| 查看状态反馈是否发布 | `ros2 topic echo /servo_state` |
-| 查看状态反馈频率 | `ros2 topic hz /servo_state` |
+| 查看控制命令是否进入桥接节点 | `ros2 topic echo /leg_motion_node/output/servo_command` |
+| 查看状态反馈是否发布 | `ros2 topic echo /uart_bridge_node/output/servo_state` |
+| 查看状态反馈频率 | `ros2 topic hz /uart_bridge_node/output/servo_state` |
 | 查看启动和错误日志 | `ros2 launch uart_bridge uart_bridge.launch.py` |
 | 查看串口设备是否存在 | `ls -l /dev/ttyAMA0` |
 
@@ -739,9 +739,9 @@ uart_bridge_node:
 
 | 工具 | 用途 | 建议 |
 | --- | --- | --- |
-| `rqt_graph` | 看 `/servo_cmd -> uart_bridge_node -> /servo_state` 链路 | 最先确认拓扑是否对上 |
+| `rqt_graph` | 看 `/leg_motion_node/output/servo_command -> uart_bridge_node -> /uart_bridge_node/output/servo_state` 链路 | 最先确认拓扑是否对上 |
 | `rqt_console` | 集中看告警与错误日志 | 尤其适合观察握手、解析错误、丢包日志 |
-| `rqt_plot` | 看关节反馈曲线 | 可直接画 `/servo_state` 中各关节位置变化 |
+| `rqt_plot` | 看关节反馈曲线 | 可直接画 `/uart_bridge_node/output/servo_state` 中各关节位置变化 |
 | `rviz2` | 本节点本身不依赖 RViz | 一般不是排查 `uart_bridge` 的首选工具 |
 
 ## 9. 单元测试与集成测试说明
@@ -766,11 +766,11 @@ uart_bridge_node:
 ros2 launch uart_bridge uart_bridge.launch.py
 
 # 2. 观察控制话题与状态话题
-ros2 topic echo /servo_cmd
-ros2 topic echo /servo_state
+ros2 topic echo /leg_motion_node/output/servo_command
+ros2 topic echo /uart_bridge_node/output/servo_state
 
 # 3. 查看状态反馈频率
-ros2 topic hz /servo_state
+ros2 topic hz /uart_bridge_node/output/servo_state
 ```
 
 ### 9.3 后续建议补充的测试
@@ -778,7 +778,7 @@ ros2 topic hz /servo_state
 | 建议项 | 价值 |
 | --- | --- |
 | 用 `ament_add_gtest()` 接入 `FrameEncoder` / `FrameParser` 单元测试 | 让协议层测试进入正式构建流程 |
-| 为 `OnServoCmdReceived()` 增加消息到帧的断言测试 | 能验证角度换算、舵机名映射和 `duration_ms` 填充 |
+| 为 `servo_command_callback()` 增加消息到帧的断言测试 | 能验证角度换算、舵机名映射和 `duration_ms` 填充 |
 | 用伪串口（pty）做桥接集成测试 | 能在无真硬件时验证“订阅 -> 编码 -> 解析 -> 发布”整链路 |
 | 增加握手失败与协议版本不匹配测试 | 能覆盖最常见真机联调故障 |
 
@@ -796,7 +796,7 @@ ros2 topic hz /servo_state
 
 | 优先级 | 待办项 | 原因 |
 | --- | --- | --- |
-| 高 | 为 `uart_baudrate`、`stats_report_interval_sec` 增加更严格的参数校验 | 现在只有波特率有简单 `switch` 检查，统计周期未校验 |
+| 高 | 为 `uart.baudrate`、`diagnostics.stats_report_interval_sec` 增加更严格的参数校验 | 现在只有波特率有简单 `switch` 检查，统计周期未校验 |
 | 高 | 为握手失败增加更明确的恢复和诊断策略 | 当前主要依靠反复重发和日志提示 |
 | 中 | 把 `duration_ms=100` 改成可配置参数 | 现在舵机控制时长写死在代码里 |
 | 中 | 明确 `servo_state` 的发布顺序与完整性约束 | 当前顺序取决于收到的 payload 项顺序 |
@@ -810,7 +810,7 @@ ros2 topic hz /servo_state
 | --- | --- | --- |
 | 1 | `ros2_ws/src/uart_bridge/src/uart_bridge_node_internal.hpp` | 先看类成员、线程、定时器和 helper 组件有哪些 |
 | 2 | `ros2_ws/src/uart_bridge/src/uart_bridge_transport.cpp` | 理解串口打开、参数读取、读线程和写串口逻辑 |
-| 3 | `ros2_ws/src/uart_bridge/src/uart_bridge_protocol.cpp` | 理解握手、状态帧处理、`/servo_cmd` 编码发送 |
+| 3 | `ros2_ws/src/uart_bridge/src/uart_bridge_protocol.cpp` | 理解握手、状态帧处理、`/leg_motion_node/output/servo_command` 编码发送 |
 | 4 | `ros2_ws/src/uart_bridge/src/uart_bridge_time_sync.cpp` | 理解时间戳映射、延迟统计、丢包检测 |
 | 5 | `ros2_ws/src/uart_bridge/src/frame_parser.cpp` | 理解逐字节 UART 状态机 |
 | 6 | `shared/uart_protocol.h` | 最后统一看协议数据结构和命令 ID 语义 |

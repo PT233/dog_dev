@@ -18,7 +18,7 @@ timeout 3 ros2 run visual_servo visual_servo_node_exe 2>&1 | head -5 && echo "�
 
 echo ""
 echo "Test 3: Check behavior_node service registration"
-ros2 service list 2>/dev/null | grep -q "set_target_class" && echo "✓ /set_target_class service exists" || echo "✗ Service not found"
+ros2 service list 2>/dev/null | grep -q "set_target_class" && echo "✓ /behavior_node/input/set_target_class service exists" || echo "✗ Service not found"
 
 echo ""
 echo "All tests completed!"

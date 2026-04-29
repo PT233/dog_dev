@@ -105,22 +105,22 @@ digraph wsl_rpi_ros2_relationship {
   ];
 
   wsl_gst -> wsl_split [label="/stereo/image_raw"];
-  wsl_split -> wsl_det [label="/camera/image_mono"];
-  wsl_det -> wsl_track [label="/detections"];
-  wsl_track -> wsl_beh [label="/tracked_objects"];
-  wsl_beh -> wsl_leg [label="/pixel_error"];
-  wsl_track -> wsl_viz [label="/tracked_objects" style=dashed color="#d97706" fontcolor="#b45309"];
-  wsl_split -> wsl_viz [label="/camera/image_mono" style=dashed color="#d97706" fontcolor="#b45309"];
+  wsl_split -> wsl_det [label="~/input/image"];
+  wsl_det -> wsl_track [label="/detection_node/output/detections"];
+  wsl_track -> wsl_beh [label="/tracker_node/output/tracked_objects"];
+  wsl_beh -> wsl_leg [label="/behavior_node/output/pixel_error"];
+  wsl_track -> wsl_viz [label="/tracker_node/output/tracked_objects" style=dashed color="#d97706" fontcolor="#b45309"];
+  wsl_split -> wsl_viz [label="~/input/image" style=dashed color="#d97706" fontcolor="#b45309"];
 
   wsl_leg -> rpi_uart [
-    label="ROS 2 DDS / RTPS 跨主机通信\n/servo_cmd"
+    label="ROS 2 DDS / RTPS 跨主机通信\n/leg_motion_node/output/servo_command"
     color="#059669"
     fontcolor="#047857"
     penwidth=1.8
   ];
 
   rpi_uart -> wsl_leg [
-    label="ROS 2 DDS / RTPS 跨主机通信\n/servo_state"
+    label="ROS 2 DDS / RTPS 跨主机通信\n/uart_bridge_node/output/servo_state"
     color="#7c3aed"
     fontcolor="#6d28d9"
     penwidth=1.8

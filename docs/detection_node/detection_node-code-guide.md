@@ -15,9 +15,9 @@
 
 ### 1.1 用途
 
-`detection_node` 用来接收相机图像，调用 `YOLOv8 + ONNX Runtime` 执行目标检测，并把检测框结果发布为自定义 ROS 2 消息 `/detections`。
+`detection_node` 用来接收相机图像，调用 `YOLOv8 + ONNX Runtime` 执行目标检测，并把检测框结果发布为自定义 ROS 2 消息 `/detection_node/output/detections`。
 
-它的输入是上游 `stereo_splitter_node` 发布的左目图像 `/camera/image_mono`，输出会被下游 `tracker_node` 继续消费，用于目标跟踪。
+它的输入是上游 `stereo_splitter_node` 发布的左目图像 `~/input/image`，输出会被下游 `tracker_node` 继续消费，用于目标跟踪。
 
 ### 1.2 所属功能包
 
@@ -59,7 +59,7 @@ gst_receiver_node
 | --- | --- | --- |
 | `rclcpp` | ROS 2 C++ 客户端库 | 提供节点、发布订阅、日志、参数等基础能力 |
 | `sensor_msgs` | 官方消息包 | 提供 `sensor_msgs/msg/Image` 图像消息 |
-| `robot_interfaces` | 自定义接口包 | 提供检测结果消息 `SimpleDetection` 和 `SimpleDetection2DArray` |
+| `robot_interfaces` | 自定义接口包 | 提供检测结果消息 `Detection2D` 和 `Detection2DArray` |
 | `opencv` | 包装后的系统依赖 | 在 CMake 中作为 OpenCV 依赖暴露 |
 
 ### 2.3 第三方库
@@ -73,7 +73,7 @@ gst_receiver_node
 
 ### 2.4 自定义消息
 
-#### `robot_interfaces/msg/SimpleDetection`
+#### `robot_interfaces/msg/Detection2D`
 
 | 字段 | 类型 | 含义 |
 | --- | --- | --- |
@@ -85,12 +85,12 @@ gst_receiver_node
 | `class_id` | `int32` | 类别 ID，和 COCO 类别表对应 |
 | `track_id` | `string` | 跟踪 ID；本节点发布时为空字符串 |
 
-#### `robot_interfaces/msg/SimpleDetection2DArray`
+#### `robot_interfaces/msg/Detection2DArray`
 
 | 字段 | 类型 | 含义 |
 | --- | --- | --- |
 | `header` | `std_msgs/Header` | 时间戳和坐标系信息 |
-| `detections` | `SimpleDetection[]` | 检测结果数组 |
+| `detections` | `Detection2D[]` | 检测结果数组 |
 
 ### 2.5 外部运行时依赖
 
@@ -108,13 +108,13 @@ gst_receiver_node
 
 | 话题名 | 消息类型 | QoS | 回调函数 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/camera/image_mono` | `sensor_msgs/msg/Image` | `rclcpp::SensorDataQoS()`，即 `KeepLast(5) + BestEffort + Volatile` | `DetectionNode::ImageCallback` | 接收上游裁切后的左目图像，送入内部待推理队列 |
+| `~/input/image` | `sensor_msgs/msg/Image` | `rclcpp::SensorDataQoS()`，即 `KeepLast(5) + BestEffort + Volatile` | `DetectionNode::image_callback` | 接收上游裁切后的左目图像，送入内部待推理队列 |
 
 ### 3.2 发布的话题
 
 | 话题名 | 消息类型 | QoS | 发布频率 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/detections` | `robot_interfaces/msg/SimpleDetection2DArray` | `rclcpp::QoS(10)`，即 `KeepLast(10) + Reliable + Volatile` | 事件驱动，频率约等于 `min(图像输入频率, 推理处理频率)` | 向下游 `tracker_node` 发布检测框数组 |
+| `/detection_node/output/detections` | `robot_interfaces/msg/Detection2DArray` | `rclcpp::QoS(10)`，即 `KeepLast(10) + Reliable + Volatile` | 事件驱动，频率约等于 `min(图像输入频率, 推理处理频率)` | 向下游 `tracker_node` 发布检测框数组 |
 
 ### 3.3 提供的服务 / 动作
 
@@ -151,7 +151,7 @@ gst_receiver_node
 | --- | --- | --- | --- | --- | --- | --- |
 | `model_path` | `string` | `models/yolov8n.onnx` | 有效文件路径 | ONNX 模型文件路径 | 否 | 已生效，构造函数中传给 `YoloInfer` |
 | `conf_threshold` | `float` | `0.25` | 建议 `0.0 ~ 1.0` | 期望控制置信度阈值 | 否 | **当前未真正生效**；只读取和打印，后处理里仍写死阈值 |
-| `nms_threshold` | `float` | `0.45` | 建议 `0.0 ~ 1.0` | 期望控制 NMS IoU 阈值 | 否 | **当前未真正生效**；只读取和打印，NMS 仍用默认值 |
+| `nms_threshold` | `float` | `0.45` | 建议 `0.0 ~ 1.0` | 期望控制 non_maximum_suppression IoU 阈值 | 否 | **当前未真正生效**；只读取和打印，non_maximum_suppression 仍用默认值 |
 | `use_cuda` | `bool` | `true` | `true/false` | 是否尝试启用 CUDA 推理 | 否 | 已生效；失败时会自动回退 CPU |
 | `infer_queue_size` | `int` | `2` | 建议正整数 | 期望控制内部待推理队列长度 | 否 | **当前未真正生效**；代码里队列深度写死为 `2` |
 | `ort_intra_threads` | `int` | `2` | 建议 `>=1` | ONNX Runtime 算子内线程数 | 否 | 已生效 |
@@ -168,7 +168,7 @@ gst_receiver_node
 原因是：
 
 - `DetectionNode` 只读取这些参数并打印日志
-- 真正的后处理阈值写死在 `YoloInfer::PostProcess()`
+- 真正的后处理阈值写死在 `YoloInfer::post_process()`
 - 队列长度判断也直接写成了 `2`
 
 因此，**如果你改了 YAML 中这三个参数，节点日志会显示新值，但实际推理结果可能完全不变。**
@@ -184,32 +184,32 @@ classDiagram
     class rclcpp::Node
 
     class DetectionNode {
-        -unique_ptr<YoloInfer> infer_
+        -unique_ptr<YoloInfer> yolo_infer_
         -Subscription~Image~ sub_image_
-        -Publisher~SimpleDetection2DArray~ pub_detections_
+        -Publisher~Detection2DArray~ pub_detections_
         -queue~UniquePtr<Image>~ image_queue_
         -mutex queue_mutex_
-        -condition_variable cv_
+        -condition_variable queue_condition_
         -thread inference_thread_
-        -bool running_
+        -bool is_running_
         +DetectionNode(options)
         +~DetectionNode()
-        -ImageCallback(msg)
+        -image_callback(msg)
         -InferenceWorker()
     }
 
     class YoloInfer {
         -string model_path_
-        -bool cuda_enabled_
+        -bool is_cuda_enabled_
         -int num_classes_
         -vector~string~ class_names_
         -Ort::Session session_
-        +Infer(image)
-        +IsCudaEnabled()
-        +GetNumClasses()
-        -Letterbox(img, letterboxed, target_size)
-        -PostProcess(outputs, params)
-        -NMS(detections, iou_threshold)
+        +infer(image)
+        +is_cuda_enabled()
+        +num_classes()
+        -letterbox(img, letterboxed, target_size)
+        -post_process(outputs, params)
+        -non_maximum_suppression(detections, iou_threshold)
     }
 
     rclcpp::Node <|-- DetectionNode
@@ -224,8 +224,8 @@ classDiagram
 2. 读取参数值
 3. 打印参数日志
 4. 创建 `YoloInfer`，加载 ONNX Runtime 会话
-5. 创建图像订阅器 `/camera/image_mono`
-6. 创建检测结果发布器 `/detections`
+5. 创建图像订阅器 `~/input/image`
+6. 创建检测结果发布器 `/detection_node/output/detections`
 7. 启动独立推理线程 `inference_thread_`
 
 ```mermaid
@@ -235,8 +235,8 @@ flowchart TD
     C --> D[创建 YoloInfer]
     D --> E{模型/ORT 初始化成功?}
     E -- 否 --> F[抛出异常并退出]
-    E -- 是 --> G[创建 /camera/image_mono 订阅]
-    G --> H[创建 /detections 发布器]
+    E -- 是 --> G[创建 ~/input/image 订阅]
+    G --> H[创建 /detection_node/output/detections 发布器]
     H --> I[启动 inference_thread_]
     I --> J[节点进入 spin]
 ```
@@ -250,27 +250,27 @@ declare_parameter<bool>("use_cuda", true);                            // 声明�
 std::string model_path = get_parameter("model_path").as_string();     // 读取参数
 bool use_cuda = get_parameter("use_cuda").as_bool();                  // 读取参数
 
-infer_ = std::make_unique<detection_node::YoloInfer>(                 // 创建推理器并加载模型
+yolo_infer_ = std::make_unique<detection_node::YoloInfer>(                 // 创建推理器并加载模型
     model_path, use_cuda, intra_threads, inter_threads);
 
 sub_image_ = create_subscription<sensor_msgs::msg::Image>(            // 订阅图像
-    "/camera/image_mono",
+    "~/input/image",
     rclcpp::SensorDataQoS(),
-    std::bind(&DetectionNode::ImageCallback, this, std::placeholders::_1));
+    std::bind(&DetectionNode::image_callback, this, std::placeholders::_1));
 
-pub_detections_ = create_publisher<robot_interfaces::msg::SimpleDetection2DArray>(
-    "/detections", 10);                                               // 发布检测结果
+pub_detections_ = create_publisher<robot_interfaces::msg::Detection2DArray>(
+    "/detection_node/output/detections", 10);                                               // 发布检测结果
 
 inference_thread_ = std::thread(&DetectionNode::InferenceWorker, this);  // 启动后台推理线程
 ```
 
 ### 5.3 主要回调函数处理流程
 
-#### 5.3.1 `ImageCallback`
+#### 5.3.1 `image_callback`
 
 **触发条件**
 
-- 收到一帧来自 `/camera/image_mono` 的 `sensor_msgs/msg/Image`
+- 收到一帧来自 `~/input/image` 的 `sensor_msgs/msg/Image`
 
 **处理结果**
 
@@ -288,13 +288,13 @@ inference_thread_ = std::thread(&DetectionNode::InferenceWorker, this);  // 启�
 **关键代码片段**
 
 ```cpp
-void DetectionNode::ImageCallback(sensor_msgs::msg::Image::UniquePtr msg) {
-    if (!running_) return;                              // 节点正在退出时，直接忽略新图像
+void DetectionNode::image_callback(sensor_msgs::msg::Image::UniquePtr msg) {
+    if (!is_running_) return;                              // 节点正在退出时，直接忽略新图像
 
     std::lock_guard<std::mutex> lock(queue_mutex_);    // 保护共享队列
     if (image_queue_.size() < 2) {                     // 当前实现把队列长度写死为 2
         image_queue_.push(std::move(msg));             // 转移所有权，避免整帧拷贝
-        cv_.notify_one();                              // 唤醒后台推理线程
+        queue_condition_.notify_one();                              // 唤醒后台推理线程
     }                                                  // 队列满时直接丢帧
 }
 ```
@@ -305,14 +305,14 @@ void DetectionNode::ImageCallback(sensor_msgs::msg::Image::UniquePtr msg) {
 
 **触发条件**
 
-- 条件变量 `cv_` 被唤醒，且内部图像队列非空
+- 条件变量 `queue_condition_` 被唤醒，且内部图像队列非空
 
 **处理结果**
 
 - 取出一帧图像
-- 调用 `YoloInfer::Infer()`
-- 将检测框转为 `SimpleDetection2DArray`
-- 发布到 `/detections`
+- 调用 `YoloInfer::infer()`
+- 将检测框转为 `Detection2DArray`
+- 发布到 `/detection_node/output/detections`
 - 如推理失败，则打印错误日志
 
 **处理步骤**
@@ -320,8 +320,8 @@ void DetectionNode::ImageCallback(sensor_msgs::msg::Image::UniquePtr msg) {
 1. 阻塞等待队列中有数据
 2. 从队列头部取出一帧图像
 3. 用图像缓冲区构造 `cv::Mat`
-4. 调用 `infer_->Infer(img)`
-5. 把每个检测框转成 `SimpleDetection`
+4. 调用 `yolo_infer_->infer(img)`
+5. 把每个检测框转成 `Detection2D`
 6. 填充 `header`
 7. 发布结果
 
@@ -331,10 +331,10 @@ flowchart TD
     B -- 否 --> A
     B -- 是 --> C[取出一帧 image_msg]
     C --> D[构造 cv::Mat]
-    D --> E[调用 YoloInfer::Infer]
+    D --> E[调用 YoloInfer::infer]
     E --> F[得到 Detection 列表]
-    F --> G[转换为 SimpleDetection2DArray]
-    G --> H[发布 /detections]
+    F --> G[转换为 Detection2DArray]
+    G --> H[发布 /detection_node/output/detections]
     H --> A
 ```
 
@@ -342,7 +342,7 @@ flowchart TD
 
 这个节点使用的是典型的 **生产者-消费者模型**：
 
-- `ImageCallback` 是生产者：只负责收图、入队
+- `image_callback` 是生产者：只负责收图、入队
 - `InferenceWorker` 是消费者：只负责取图、推理、发布
 
 这样做的好处是：
@@ -353,14 +353,14 @@ flowchart TD
 
 ### 5.4 关键算法说明
 
-#### 5.4.1 图像预处理：Letterbox
+#### 5.4.1 图像预处理：letterbox
 
 YOLOv8 的 ONNX 模型输入固定为 `640x640`，而真实图像尺寸不一定正好是正方形，所以代码先做 `letterbox`：
 
 1. 按比例缩放原图
 2. 把缩放后的图贴到 `640x640` 画布中央
 3. 空白区域填充为灰色 `(114, 114, 114)`
-4. 记录缩放比例 `scale` 和 padding `pad_x/pad_y`
+4. 记录缩放比例 `scale` 和 padding `padding_x/padding_y`
 
 这样可以避免直接拉伸图像导致目标形变。
 
@@ -415,11 +415,11 @@ for (int c = 0; c < 3; ++c) {                            // HWC -> CHW
 4. 计算 `confidence = objectness * max_class_prob`
 5. 再按 `confidence >= 0.5` 做第二次过滤
 6. 把 `640x640` 模型坐标映射回原图坐标
-7. 执行 NMS 去除重叠框
+7. 执行 non_maximum_suppression 去除重叠框
 
-#### 5.4.5 NMS（非极大值抑制）
+#### 5.4.5 non_maximum_suppression（非极大值抑制）
 
-NMS 的逻辑是：
+non_maximum_suppression 的逻辑是：
 
 1. 先按置信度从高到低排序
 2. 依次取最高分框
@@ -427,7 +427,7 @@ NMS 的逻辑是：
 4. 如果 IoU 超过阈值，则丢弃当前框
 5. 否则保留
 
-> 初学者可以把 NMS 理解成“同一个目标附近可能有很多相似框，最后只保留最有代表性的那一个”。
+> 初学者可以把 non_maximum_suppression 理解成“同一个目标附近可能有很多相似框，最后只保留最有代表性的那一个”。
 
 ### 5.5 本节点是否有状态机
 
@@ -437,7 +437,7 @@ NMS 的逻辑是：
 
 1. `初始化阶段`：加载参数、模型、创建通信对象
 2. `运行阶段`：收图、排队、推理、发布
-3. `退出阶段`：设置 `running_ = false`，通知线程并 `join()`
+3. `退出阶段`：设置 `is_running_ = false`，通知线程并 `join()`
 
 ## 6. 生命周期与线程模型
 
@@ -469,7 +469,7 @@ rclcpp::spin(node);
 
 不过要注意，本节点额外自己创建了一条 `std::thread`：
 
-- ROS 执行器线程：负责订阅回调 `ImageCallback`
+- ROS 执行器线程：负责订阅回调 `image_callback`
 - 后台推理线程：负责 `InferenceWorker`
 
 所以它虽然在 ROS 层看起来像单线程执行器，但在进程内部其实是 **两条并发执行路径**。
@@ -482,8 +482,8 @@ rclcpp::spin(node);
 
 | 线程/执行路径 | 负责内容 |
 | --- | --- |
-| ROS 执行器线程 | 接收 `/camera/image_mono` 并调用 `ImageCallback` |
-| 后台推理线程 | 从队列取图、执行 ONNX 推理、发布 `/detections` |
+| ROS 执行器线程 | 接收 `~/input/image` 并调用 `image_callback` |
+| 后台推理线程 | 从队列取图、执行 ONNX 推理、发布 `/detection_node/output/detections` |
 
 ### 6.6 进程内组合模式的补充说明
 
@@ -573,7 +573,7 @@ detection_node:
 | --- | --- |
 | 模型文件存在 | `models/yolov8n.onnx` 路径必须可访问 |
 | 类别文件存在 | `models/coco_classes.txt` 最好存在，否则类别名列表为空 |
-| 上游图像存在 | `/camera/image_mono` 必须有数据输入 |
+| 上游图像存在 | `~/input/image` 必须有数据输入 |
 | ONNX Runtime 已配置 | 构建阶段必须能找到 `ONNXRUNTIME_ROOT` |
 
 ## 8. 调试与排错
@@ -586,16 +586,16 @@ detection_node:
 ros2 node list
 ros2 node info /detection_node
 ros2 topic list
-ros2 topic info /camera/image_mono
-ros2 topic info /detections
+ros2 topic info ~/input/image
+ros2 topic info /detection_node/output/detections
 ```
 
 #### 查看数据流是否正常
 
 ```bash
-ros2 topic hz /camera/image_mono
-ros2 topic hz /detections
-ros2 topic echo /detections --once
+ros2 topic hz ~/input/image
+ros2 topic hz /detection_node/output/detections
+ros2 topic echo /detection_node/output/detections --once
 ```
 
 #### 查看日志
@@ -608,7 +608,7 @@ ros2 run detection_node detection_node_exe --ros-args --log-level debug
 
 | 工具 | 建议用途 |
 | --- | --- |
-| `rqt_graph` | 看清楚 `/camera/image_mono -> /detections` 的拓扑关系 |
+| `rqt_graph` | 看清楚 `~/input/image -> /detection_node/output/detections` 的拓扑关系 |
 | `rqt_image_view` | 查看原始图像或调试叠加图像 |
 | `detection_viz_node_exe` | 把检测/跟踪结果画到图像上，发布 `/camera/image_detected` |
 | RViz2 | 如果你后续把检测结果转成 Marker 或 TF，可继续扩展；当前节点本身不直接面向 RViz2 |
@@ -636,7 +636,7 @@ ros2 run rqt_image_view rqt_image_view /camera/image_detected
 2. 检查 `ONNXRUNTIME_ROOT` 是否正确
 3. 先把 `use_cuda` 改为 `false`，确认 CPU 模式能否启动
 
-#### 问题 2：有图像输入，但 `/detections` 没数据
+#### 问题 2：有图像输入，但 `/detection_node/output/detections` 没数据
 
 **常见原因**
 
@@ -647,7 +647,7 @@ ros2 run rqt_image_view rqt_image_view /camera/image_detected
 
 **排查建议**
 
-1. `ros2 topic echo /camera/image_mono --once`
+1. `ros2 topic echo ~/input/image --once`
 2. 检查图像 `encoding` 字段
 3. 打开 `debug` 日志，观察是否持续输出推理错误
 
@@ -711,7 +711,7 @@ ros2 run rqt_image_view rqt_image_view /camera/image_detected
 对初学者，推荐按下面顺序验证：
 
 1. 先跑离线 ONNX 测试，确认模型能推理
-2. 再单独启动 `detection_node`，确认 `/detections` 有输出
+2. 再单独启动 `detection_node`，确认 `/detection_node/output/detections` 有输出
 3. 最后跑 `vision_stack.launch.py`，做完整链路联调
 
 ## 10. 变更记录与待办事项
@@ -727,7 +727,7 @@ ros2 run rqt_image_view rqt_image_view /camera/image_detected
 | 待办项 | 原因 |
 | --- | --- |
 | 让 `conf_threshold` 真正传入后处理逻辑 | 现在参数只读取不生效 |
-| 让 `nms_threshold` 真正控制 NMS | 现在仍使用函数默认值 |
+| 让 `nms_threshold` 真正控制 non_maximum_suppression | 现在仍使用函数默认值 |
 | 让 `infer_queue_size` 真正控制队列长度 | 当前队列判断写死为 `2` |
 | 检查并显式处理图像 `encoding` | 当前默认按 `bgr8 / CV_8UC3` 解释图像 |
 | 把模型和类别文件路径改成更稳妥的绝对路径或包内资源路径 | 目前相对路径依赖启动目录 |

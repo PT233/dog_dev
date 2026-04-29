@@ -75,17 +75,17 @@ ros2 launch robot_bringup test_73_complete.launch.py
 ros2 node list
 ros2 topic list
 ros2 topic hz /stereo/image_raw
-ros2 topic hz /tracked_objects
-ros2 topic echo /pixel_error
-ros2 topic echo /servo_state
-ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
+ros2 topic hz /tracker_node/output/tracker_node/output/tracked_objects
+ros2 topic echo /behavior_node/output/behavior_node/output/pixel_error
+ros2 topic echo /uart_bridge_node/output/uart_bridge_node/output/servo_state
+ros2 service call /behavior_node/input/behavior_node/input/set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
 ```
 
 ## 7. 判断系统是否真正跑通
 
 - WSL2 能看到 `/stereo/image_raw`
-- `detection_node` 持续发布 `/detections`
-- `tracker_node` 持续发布带 `track_id` 的 `/tracked_objects`
-- `behavior_node` 在检测到目标类别时持续发布 `/pixel_error`
+- `detection_node` 持续发布 `/detection_node/output/detection_node/output/detections`
+- `tracker_node` 持续发布带 `track_id` 的 `/tracker_node/output/tracker_node/output/tracked_objects`
+- `behavior_node` 在检测到目标类别时持续发布 `/behavior_node/output/behavior_node/output/pixel_error`
 - Pi 上 `uart_bridge_node` 不再打印握手未完成告警
-- `/servo_state` 持续更新
+- `/uart_bridge_node/output/uart_bridge_node/output/servo_state` 持续更新

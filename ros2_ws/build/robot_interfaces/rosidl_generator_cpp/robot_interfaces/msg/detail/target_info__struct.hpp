@@ -50,11 +50,11 @@ struct TargetInfo_
       this->class_name = "";
       this->track_id = "";
       this->confidence = 0.0f;
-      this->bbox_cx = 0l;
-      this->bbox_cy = 0l;
-      this->bbox_w = 0l;
-      this->bbox_h = 0l;
-      this->locked = false;
+      this->bounding_box_center_x = 0l;
+      this->bounding_box_center_y = 0l;
+      this->bounding_box_width = 0l;
+      this->bounding_box_height = 0l;
+      this->is_locked = false;
     }
   }
 
@@ -69,11 +69,11 @@ struct TargetInfo_
       this->class_name = "";
       this->track_id = "";
       this->confidence = 0.0f;
-      this->bbox_cx = 0l;
-      this->bbox_cy = 0l;
-      this->bbox_w = 0l;
-      this->bbox_h = 0l;
-      this->locked = false;
+      this->bounding_box_center_x = 0l;
+      this->bounding_box_center_y = 0l;
+      this->bounding_box_width = 0l;
+      this->bounding_box_height = 0l;
+      this->is_locked = false;
     }
   }
 
@@ -90,21 +90,21 @@ struct TargetInfo_
   using _confidence_type =
     float;
   _confidence_type confidence;
-  using _bbox_cx_type =
+  using _bounding_box_center_x_type =
     int32_t;
-  _bbox_cx_type bbox_cx;
-  using _bbox_cy_type =
+  _bounding_box_center_x_type bounding_box_center_x;
+  using _bounding_box_center_y_type =
     int32_t;
-  _bbox_cy_type bbox_cy;
-  using _bbox_w_type =
+  _bounding_box_center_y_type bounding_box_center_y;
+  using _bounding_box_width_type =
     int32_t;
-  _bbox_w_type bbox_w;
-  using _bbox_h_type =
+  _bounding_box_width_type bounding_box_width;
+  using _bounding_box_height_type =
     int32_t;
-  _bbox_h_type bbox_h;
-  using _locked_type =
+  _bounding_box_height_type bounding_box_height;
+  using _is_locked_type =
     bool;
-  _locked_type locked;
+  _is_locked_type is_locked;
 
   // setters for named parameter idiom
   Type & set__header(
@@ -131,34 +131,34 @@ struct TargetInfo_
     this->confidence = _arg;
     return *this;
   }
-  Type & set__bbox_cx(
+  Type & set__bounding_box_center_x(
     const int32_t & _arg)
   {
-    this->bbox_cx = _arg;
+    this->bounding_box_center_x = _arg;
     return *this;
   }
-  Type & set__bbox_cy(
+  Type & set__bounding_box_center_y(
     const int32_t & _arg)
   {
-    this->bbox_cy = _arg;
+    this->bounding_box_center_y = _arg;
     return *this;
   }
-  Type & set__bbox_w(
+  Type & set__bounding_box_width(
     const int32_t & _arg)
   {
-    this->bbox_w = _arg;
+    this->bounding_box_width = _arg;
     return *this;
   }
-  Type & set__bbox_h(
+  Type & set__bounding_box_height(
     const int32_t & _arg)
   {
-    this->bbox_h = _arg;
+    this->bounding_box_height = _arg;
     return *this;
   }
-  Type & set__locked(
+  Type & set__is_locked(
     const bool & _arg)
   {
-    this->locked = _arg;
+    this->is_locked = _arg;
     return *this;
   }
 
@@ -216,19 +216,19 @@ struct TargetInfo_
     if (this->confidence != other.confidence) {
       return false;
     }
-    if (this->bbox_cx != other.bbox_cx) {
+    if (this->bounding_box_center_x != other.bounding_box_center_x) {
       return false;
     }
-    if (this->bbox_cy != other.bbox_cy) {
+    if (this->bounding_box_center_y != other.bounding_box_center_y) {
       return false;
     }
-    if (this->bbox_w != other.bbox_w) {
+    if (this->bounding_box_width != other.bounding_box_width) {
       return false;
     }
-    if (this->bbox_h != other.bbox_h) {
+    if (this->bounding_box_height != other.bounding_box_height) {
       return false;
     }
-    if (this->locked != other.locked) {
+    if (this->is_locked != other.is_locked) {
       return false;
     }
     return true;

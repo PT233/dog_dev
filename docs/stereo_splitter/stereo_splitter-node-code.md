@@ -4,7 +4,7 @@
 
 ### 1.1 用途
 
-`stereo_splitter_node` 的职责是订阅上游 `gst_receiver_node` 发布的双目拼接图像 `/stereo/image_raw`，从中裁出左半边图像，再把结果发布到 `/camera/image_mono`，供下游 `detection_node` 做目标检测。
+`stereo_splitter_node` 的职责是订阅上游 `gst_receiver_node` 发布的双目拼接图像 `/stereo/image_raw`，从中裁出左半边图像，再把结果发布到 `~/input/image`，供下游 `detection_node` 做目标检测。
 
 对初级 ROS 2 开发者来说，可以把它理解成一个“图像预处理节点”：
 
@@ -32,7 +32,7 @@
 gst_receiver_node
   -> /stereo/image_raw
   -> stereo_splitter_node
-  -> /camera/image_mono
+  -> ~/input/image
   -> detection_node
   -> tracker_node
   -> ...
@@ -79,7 +79,7 @@ gst_receiver_node
 
 | 名称 | 消息类型 | QoS | 发布频率 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/camera/image_mono` | `sensor_msgs/msg/Image` | `SensorDataQoS`，即 `KeepLast(5) + BestEffort + Volatile` | 事件驱动；通常约等于输入图像帧率 | 发布裁切后的左目图像，供 `detection_node` 使用 |
+| `~/input/image` | `sensor_msgs/msg/Image` | `SensorDataQoS`，即 `KeepLast(5) + BestEffort + Volatile` | 事件驱动；通常约等于输入图像帧率 | 发布裁切后的左目图像，供 `detection_node` 使用 |
 
 补充说明：
 
@@ -124,7 +124,7 @@ gst_receiver_node
 | 硬编码项 | 当前值 | 位置 | 影响 |
 | --- | --- | --- | --- |
 | 输入 topic | `/stereo/image_raw` | 构造函数 | 上游改 topic 后需要改代码 |
-| 输出 topic | `/camera/image_mono` | 构造函数 | 下游依赖这个名字 |
+| 输出 topic | `~/input/image` | 构造函数 | 下游依赖这个名字 |
 | 裁切宽度 | `320` | `image_callback()` | 假定左目图宽固定为 320 |
 | 裁切高度 | `480` | `image_callback()` | 假定输入图至少有 480 行 |
 | 输出编码 | `bgr8` | `image_callback()` | 下游会按彩色三通道图解释这条消息 |
@@ -139,7 +139,7 @@ gst_receiver_node
 | --- | --- | --- |
 | `StereoSplitterNode` | `public rclcpp::Node` | ROS 2 节点主体 |
 | `image_sub_` | ROS 订阅器 | 订阅 `/stereo/image_raw` |
-| `left_pub_` | ROS 发布器 | 发布 `/camera/image_mono` |
+| `left_pub_` | ROS 发布器 | 发布 `~/input/image` |
 | `image_callback()` | 成员函数 | 收到图像后裁切左半边并发布 |
 
 继承关系可以简化为：
@@ -158,7 +158,7 @@ flowchart TD
   A[创建 StereoSplitterNode] --> B[打印启动日志]
   B --> C[创建 /stereo/image_raw 订阅器]
   C --> D[绑定 image_callback]
-  D --> E[创建 /camera/image_mono 发布器]
+  D --> E[创建 ~/input/image 发布器]
   E --> F[等待图像到来]
 ```
 
@@ -173,7 +173,7 @@ image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
             std::placeholders::_1));      // 收到图像时进入裁切回调
 
 left_pub_ = this->create_publisher<sensor_msgs::msg::Image>(
-  "/camera/image_mono",                   // 输出 topic
+  "~/input/image",                   // 输出 topic
   rclcpp::SensorDataQoS());               // 输出也沿用传感器型 QoS
 ```
 
@@ -185,7 +185,7 @@ left_pub_ = this->create_publisher<sensor_msgs::msg::Image>(
 | --- | --- |
 | 触发条件 | 收到一条来自 `/stereo/image_raw` 的 `sensor_msgs/msg/Image` |
 | 输入 | `sensor_msgs::msg::Image::UniquePtr` |
-| 输出 | 向 `/camera/image_mono` 发布一条新的 `sensor_msgs::msg::Image` |
+| 输出 | 向 `~/input/image` 发布一条新的 `sensor_msgs::msg::Image` |
 | 处理结果 | 成功时发布固定 `320x480` 的左目图像；失败时直接返回或产生错误结果 |
 
 处理流程如下：
@@ -201,7 +201,7 @@ flowchart TD
   G --> H[把输出编码固定写成 bgr8]
   H --> I[预分配 480x320x3 字节缓存]
   I --> J[按行 memcpy 左半边像素]
-  J --> K[发布 /camera/image_mono]
+  J --> K[发布 ~/input/image]
 ```
 
 关键代码片段如下：
@@ -323,7 +323,7 @@ ros2 run stereo_splitter stereo_splitter_node
 | --- | --- |
 | 上游图像存在 | `/stereo/image_raw` 必须持续有数据 |
 | 本机已完成工作区构建 | `ros2_ws/install/setup.bash` 必须存在 |
-| 上下游 topic 名匹配 | 上游必须发布 `/stereo/image_raw`，下游默认订阅 `/camera/image_mono` |
+| 上下游 topic 名匹配 | 上游必须发布 `/stereo/image_raw`，下游默认订阅 `~/input/image` |
 
 ### 7.2 launch 文件示例
 
@@ -365,7 +365,7 @@ stereo_splitter_node:
 stereo_splitter_node:
   ros__parameters:
     input_topic: "/stereo/image_raw"
-    output_topic: "/camera/image_mono"
+    output_topic: "~/input/image"
     crop_x: 0
     crop_y: 0
     crop_width: 320
@@ -381,12 +381,12 @@ stereo_splitter_node:
 
 | 现象 | 可能原因 | 排查方法 | 处理建议 |
 | --- | --- | --- | --- |
-| `/camera/image_mono` 没有数据 | 上游 `/stereo/image_raw` 没有发布 | `ros2 topic hz /stereo/image_raw` | 先确认 `gst_receiver_node` 正常工作 |
+| `~/input/image` 没有数据 | 上游 `/stereo/image_raw` 没有发布 | `ros2 topic hz /stereo/image_raw` | 先确认 `gst_receiver_node` 正常工作 |
 | 节点启动正常，但下游检测结果异常 | 输入图像编码或布局不符合当前假设 | `ros2 topic echo /stereo/image_raw --once` | 确认上游确实输出三通道彩色双目拼接图 |
-| 图像颜色不对 | topic 名叫 `image_mono`，但实际输出是 `bgr8` | `ros2 topic echo /camera/image_mono --once` 看 `encoding` | 不要仅凭 topic 名判断它是灰度图 |
+| 图像颜色不对 | topic 名叫 `image_mono`，但实际输出是 `bgr8` | `ros2 topic echo ~/input/image --once` 看 `encoding` | 不要仅凭 topic 名判断它是灰度图 |
 | 输入分辨率变化后程序行为异常 | 代码把输出裁切范围写死成 `320x480` | 查看上游图像实际宽高 | 为输入尺寸和编码增加检查，或把裁切参数改成可配置 |
 | 输出图像不是想要的左目内容 | 输入不再是“左右拼接，左目在最左边”的布局 | 用 `rqt_image_view` 同时看输入和输出 | 重新定义裁切区域 |
-| 回调运行但处理效率下降 | 每帧都做一次内存分配和逐行拷贝 | 看 `/camera/image_mono` 实际频率 | 如有必要可引入缓冲复用或进程内优化 |
+| 回调运行但处理效率下降 | 每帧都做一次内存分配和逐行拷贝 | 看 `~/input/image` 实际频率 | 如有必要可引入缓冲复用或进程内优化 |
 
 ### 8.2 日志与命令行排查方法
 
@@ -395,15 +395,15 @@ stereo_splitter_node:
 | 查看节点是否启动 | `ros2 node list` |
 | 查看节点接口 | `ros2 node info /stereo_splitter_node` |
 | 查看输入 topic 频率 | `ros2 topic hz /stereo/image_raw` |
-| 查看输出 topic 频率 | `ros2 topic hz /camera/image_mono` |
+| 查看输出 topic 频率 | `ros2 topic hz ~/input/image` |
 | 查看输入消息头和编码 | `ros2 topic echo /stereo/image_raw --once` |
-| 查看输出消息头和编码 | `ros2 topic echo /camera/image_mono --once` |
+| 查看输出消息头和编码 | `ros2 topic echo ~/input/image --once` |
 
 ### 8.3 可视化工具建议
 
 | 工具 | 用途 | 建议 |
 | --- | --- | --- |
-| `rqt_graph` | 看 topic 拓扑 | 先确认 `/stereo/image_raw -> /stereo_splitter_node -> /camera/image_mono` 是否成立 |
+| `rqt_graph` | 看 topic 拓扑 | 先确认 `/stereo/image_raw -> /stereo_splitter_node -> ~/input/image` 是否成立 |
 | `rqt_image_view` | 直接查看输入和输出图像 | 这是验证裁切是否正确的首选工具 |
 | `rviz2` | 通过 `Image` 显示图像 | 适合联调时观察上下游图像 |
 | `rqt_console` | 看节点日志 | 适合集中查看启动与调试日志 |
@@ -418,7 +418,7 @@ stereo_splitter_node:
 | 包级 lint | 有 | `CMakeLists.txt` 中启用了 `ament_lint_auto` |
 | 节点级自动化集成测试 | 无 | 当前没有用伪造图像自动验证裁切结果 |
 | 仓库级烟雾测试 | 有，但较弱 | `scripts/test_vision_stack.sh` 只检查包可用性和 launch 可加载性，且使用前应先确认脚本中的 `setup.bash` 路径是否与本地工作区一致 |
-| 端到端联调脚本 | 有，间接覆盖 | `scripts/verify_tracking.sh` 主要检查整条链路，不专门验证 `/camera/image_mono` 的像素内容 |
+| 端到端联调脚本 | 有，间接覆盖 | `scripts/verify_tracking.sh` 主要检查整条链路，不专门验证 `~/input/image` 的像素内容 |
 
 ### 9.2 现有可参考测试方式
 
@@ -428,7 +428,7 @@ ros2 launch robot_bringup vision_stack.launch.py
 
 # 2. 检查输入输出频率是否都存在
 ros2 topic hz /stereo/image_raw
-ros2 topic hz /camera/image_mono
+ros2 topic hz ~/input/image
 
 # 3. 直接查看裁切结果
 rqt_image_view
@@ -459,7 +459,7 @@ rqt_image_view
 | --- | --- | --- |
 | 高 | 为输入图像尺寸、`step` 和 `encoding` 增加显式校验 | 当前实现对输入格式有强假设，但没有检查 |
 | 高 | 把裁切区域改成 ROS 参数 | 现在固定写死为 `320x480`，适应性差 |
-| 中 | 明确 `/camera/image_mono` 的语义 | 现在 topic 名带 `mono`，但实际输出是 `bgr8` |
+| 中 | 明确 `~/input/image` 的语义 | 现在 topic 名带 `mono`，但实际输出是 `bgr8` |
 | 中 | 清理未使用变量 `width`、`height`，并评估是否保留 OpenCV / `cv_bridge` 依赖 | 代码和依赖里有冗余成分 |
 | 中 | 在高帧率场景下优化内存分配 | 当前每帧都新建输出消息并重新分配缓存 |
 | 低 | 补充包描述和许可证信息 | `package.xml` 里目前仍是 `TODO` |

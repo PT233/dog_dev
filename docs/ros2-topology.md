@@ -19,18 +19,18 @@
 | Topic | 类型 | 发布者 | 订阅者 |
 | --- | --- | --- | --- |
 | `/stereo/image_raw` | `sensor_msgs/Image` | `gst_receiver_node` | `stereo_splitter_node` |
-| `/camera/image_mono` | `sensor_msgs/Image` | `stereo_splitter_node` | `detection_node` |
-| `/detections` | `robot_interfaces/msg/SimpleDetection2DArray` | `detection_node` | `tracker_node` |
-| `/tracked_objects` | `robot_interfaces/msg/SimpleDetection2DArray` | `tracker_node` | `behavior_node` |
-| `/pixel_error` | `geometry_msgs/Vector3` | `behavior_node` | `leg_motion_node` |
-| `/servo_cmd` | `sensor_msgs/JointState` | `leg_motion_node` | `uart_bridge_node` |
-| `/servo_state` | `sensor_msgs/JointState` | `uart_bridge_node` | `leg_motion_node` |
+| `~/input/image` | `sensor_msgs/Image` | `stereo_splitter_node` | `detection_node` |
+| `/detection_node/output/detections` | `robot_interfaces/msg/Detection2DArray` | `detection_node` | `tracker_node` |
+| `/tracker_node/output/tracked_objects` | `robot_interfaces/msg/Detection2DArray` | `tracker_node` | `behavior_node` |
+| `/behavior_node/output/pixel_error` | `geometry_msgs/Vector3` | `behavior_node` | `leg_motion_node` |
+| `/leg_motion_node/output/servo_command` | `sensor_msgs/JointState` | `leg_motion_node` | `uart_bridge_node` |
+| `/uart_bridge_node/output/servo_state` | `sensor_msgs/JointState` | `uart_bridge_node` | `leg_motion_node` |
 
 ## 3. Services
 
 | Service | 类型 | 服务端 | 备注 |
 | --- | --- | --- | --- |
-| `/set_target_class` | `robot_interfaces/srv/SetTargetClass` | `behavior_node` | 已实现 |
+| `/behavior_node/input/set_target_class` | `robot_interfaces/srv/SetTargetClass` | `behavior_node` | 已实现 |
 | `/calibrate_center` | `robot_interfaces/srv/CalibrateCenter` | 无 | 仅保留接口定义 |
 
 ## 4. Launch 对应关系
@@ -46,11 +46,11 @@
 ```mermaid
 flowchart LR
   GR[gst_receiver_node] -->|/stereo/image_raw| SS[stereo_splitter_node]
-  SS -->|/camera/image_mono| DN[detection_node]
-  DN -->|/detections| TN[tracker_node]
-  TN -->|/tracked_objects| BN[behavior_node]
-  BN -->|/pixel_error| VS[leg_motion_node]
-  VS -->|/servo_cmd| UB[uart_bridge_node]
-  UB -->|/servo_state| VS
-  CLI[CLI / service call] -->|/set_target_class| BN
+  SS -->|~/input/image| DN[detection_node]
+  DN -->|/detection_node/output/detections| TN[tracker_node]
+  TN -->|/tracker_node/output/tracked_objects| BN[behavior_node]
+  BN -->|/behavior_node/output/pixel_error| VS[leg_motion_node]
+  VS -->|/leg_motion_node/output/servo_command| UB[uart_bridge_node]
+  UB -->|/uart_bridge_node/output/servo_state| VS
+  CLI[CLI / service call] -->|/behavior_node/input/set_target_class| BN
 ```

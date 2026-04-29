@@ -4,8 +4,8 @@
   "template_dir": "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource",
   "idl_tuples": [
     "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/TargetInfo.idl",
-    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/SimpleDetection.idl",
-    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/SimpleDetection2DArray.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/Detection2D.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:msg/Detection2DArray.idl",
     "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:srv/SetTargetClass.idl",
     "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces:srv/CalibrateCenter.idl"
   ],
@@ -54,8 +54,8 @@
     "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/srv__rosidl_typesupport_introspection_c.h.em",
     "/opt/ros/jazzy/share/rosidl_typesupport_introspection_c/resource/srv__type_support.c.em",
     "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/TargetInfo.idl",
-    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/SimpleDetection.idl",
-    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/SimpleDetection2DArray.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/Detection2D.idl",
+    "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/msg/Detection2DArray.idl",
     "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/srv/SetTargetClass.idl",
     "/home/peter/dog/dog_dev/ros2_ws/build/robot_interfaces/rosidl_adapter/robot_interfaces/srv/CalibrateCenter.idl",
     "/opt/ros/jazzy/share/std_msgs/msg/Bool.idl",

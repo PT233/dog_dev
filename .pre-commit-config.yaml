@@ -1,0 +1,44 @@
+exclude: >
+  (?x)^(
+    ros2_ws/(build|install|log)/|
+    stm32_keil/(Drivers|Middlewares)/|
+    .*__pycache__/
+  )
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-xml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: ament-uncrustify
+        name: ament_uncrustify
+        entry: ament_uncrustify
+        language: system
+        files: \.(c|cc|cpp|cxx|h|hh|hpp|hxx)$
+
+      - id: ament-flake8
+        name: ament_flake8
+        entry: ament_flake8
+        language: system
+        files: \.(py)$
+
+      - id: ament-xmllint
+        name: ament_xmllint
+        entry: ament_xmllint
+        language: system
+        files: \.(xml)$
+
+      - id: ament-lint-cmake
+        name: ament_lint_cmake
+        entry: ament_lint_cmake
+        language: system
+        files: (^|/)CMakeLists\.txt$|\.cmake$

@@ -1,4 +1,6 @@
+# 请求按 COCO 类别名切换目标，例如 person、cup。
 string class_name
 ---
+# success=false 时 message 会说明未知类别等错误原因。
 bool success
 string message

@@ -2,12 +2,18 @@
 #include <gst/app/gstappsink.h>
 #include <gst/gstutils.h>
 
-GstReceiverNode::GstReceiverNode(const rclcpp::NodeOptions& options)
-    : Node("gst_receiver_node", options), pipeline_(nullptr), bus_(nullptr) {
+namespace gst_receiver
+{
+
+GstReceiverNode::GstReceiverNode(const rclcpp::NodeOptions & options)
+: Node("gst_receiver_node", options), pipeline_(nullptr), bus_(nullptr)
+{
   RCLCPP_INFO(this->get_logger(), "gst_receiver_node started");
 
   // 发布完整左右拼接图像，后续 stereo_splitter 会取左半幅。
-  image_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/stereo/image_raw", rclcpp::SensorDataQoS());
+  image_pub_ =
+    this->create_publisher<sensor_msgs::msg::Image>("~/output/stereo_image_raw",
+                                                      rclcpp::SensorDataQoS());
 
   // 初始化 GStreamer，全进程只需要一次，但重复调用是安全的。
   gst_init(nullptr, nullptr);
@@ -21,7 +27,8 @@ GstReceiverNode::GstReceiverNode(const rclcpp::NodeOptions& options)
     }
   }
 
-  RCLCPP_INFO(this->get_logger(), "Using %s decoding (H.264)", hw_decode_enabled_ ? "hardware" : "software");
+  RCLCPP_INFO(this->get_logger(), "Using %s decoding (H.264)",
+              is_hw_decode_enabled_ ? "hardware" : "software");
 
   // appsink 以回调方式把解码后的 BGR 帧交给 ROS 节点。
   GstElement *appsink = gst_bin_get_by_name(GST_BIN(pipeline_), "sink");
@@ -36,10 +43,12 @@ GstReceiverNode::GstReceiverNode(const rclcpp::NodeOptions& options)
 
   // pipeline 进入 PLAYING 后开始接收 UDP 5600 端口数据。
   gst_element_set_state(pipeline_, GST_STATE_PLAYING);
-  RCLCPP_INFO(this->get_logger(), "GStreamer pipeline started, publishing to /stereo/image_raw");
+  RCLCPP_INFO(this->get_logger(),
+              "GStreamer pipeline started, publishing to ~/output/stereo_image_raw");
 }
 
-GstReceiverNode::~GstReceiverNode() {
+GstReceiverNode::~GstReceiverNode()
+{
   if (pipeline_) {
     gst_element_set_state(pipeline_, GST_STATE_NULL);
     gst_object_unref(pipeline_);
@@ -50,7 +59,8 @@ GstReceiverNode::~GstReceiverNode() {
   gst_deinit();
 }
 
-bool GstReceiverNode::try_build_pipeline(bool use_hw) {
+bool GstReceiverNode::try_build_pipeline(bool use_hw)
+{
   std::string pipeline_str;
   if (use_hw) {
     // 硬解路径：RTP 抖动缓冲 -> H264 解包/解析 -> NVIDIA 解码 -> 下载到 CPU BGR。
@@ -85,7 +95,7 @@ bool GstReceiverNode::try_build_pipeline(bool use_hw) {
       }
       g_error_free(error);
     }
-    if (p) gst_object_unref(p);
+    if (p) {gst_object_unref(p);}
     return false;
   }
 
@@ -99,23 +109,24 @@ bool GstReceiverNode::try_build_pipeline(bool use_hw) {
   }
 
   pipeline_ = p;
-  hw_decode_enabled_ = use_hw;
+  is_hw_decode_enabled_ = use_hw;
   return true;
 }
 
-gboolean GstReceiverNode::on_bus_message(GstBus * /* bus */, GstMessage *msg, gpointer user_data) {
+gboolean GstReceiverNode::on_bus_message(GstBus * /* bus */, GstMessage *msg, gpointer user_data)
+{
   GstReceiverNode *node = static_cast<GstReceiverNode *>(user_data);
 
   switch (GST_MESSAGE_TYPE(msg)) {
     case GST_MESSAGE_ERROR: {
-      GError *err = nullptr;
-      gchar *debug = nullptr;
-      gst_message_parse_error(msg, &err, &debug);
-      RCLCPP_ERROR(node->get_logger(), "GStreamer error: %s", err->message);
-      g_error_free(err);
-      g_free(debug);
-      break;
-    }
+        GError *err = nullptr;
+        gchar *debug = nullptr;
+        gst_message_parse_error(msg, &err, &debug);
+        RCLCPP_ERROR(node->get_logger(), "GStreamer error: %s", err->message);
+        g_error_free(err);
+        g_free(debug);
+        break;
+      }
     case GST_MESSAGE_EOS:
       RCLCPP_INFO(node->get_logger(), "End of stream");
       break;
@@ -125,7 +136,8 @@ gboolean GstReceiverNode::on_bus_message(GstBus * /* bus */, GstMessage *msg, gp
   return TRUE;
 }
 
-void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data) {
+void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data)
+{
   GstReceiverNode *node = static_cast<GstReceiverNode *>(user_data);
 
   GstSample *sample = gst_app_sink_pull_sample(GST_APP_SINK(appsink));
@@ -144,10 +156,10 @@ void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data) {
       // Mat 只引用 GStreamer buffer 数据，发布前需要复制到 ROS Image。
       cv::Mat frame = cv::Mat(height, width, CV_8UC3, map.data);
 
-      // 转为 ROS Image，frame_id 统一写 camera，供下游视觉节点沿用。
+      // 转为 ROS Image；该图像仍是双目拼接帧，使用 REP-105 风格 frame_id。
       auto image_msg = std::make_unique<sensor_msgs::msg::Image>();
       image_msg->header.stamp = node->now();
-      image_msg->header.frame_id = "camera";
+      image_msg->header.frame_id = "stereo_camera_link";
       image_msg->height = height;
       image_msg->width = width;
       image_msg->encoding = "bgr8";
@@ -165,3 +177,5 @@ void GstReceiverNode::on_new_sample(GstElement *appsink, gpointer user_data) {
     gst_sample_unref(sample);
   }
 }
+
+}  // namespace gst_receiver

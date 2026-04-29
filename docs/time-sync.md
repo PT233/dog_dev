@@ -48,4 +48,4 @@ STM32 在 `SERVO_STATE_V2` 里给每个状态项附带：
 
 - `timestamp_ms` 只有 `uint16_t`，约 `65.5 s` 回绕一次
 - 这是接收侧映射，不是全系统统一时钟同步
-- 目前只用于 `/servo_state` 时间戳和接收延迟统计
+- 目前只用于 `/uart_bridge_node/output/servo_state` 时间戳和接收延迟统计

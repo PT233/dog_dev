@@ -5,15 +5,16 @@ using namespace tracker_node;
 
 class TrackerNodeTest : public ::testing::Test {
 protected:
-  std::shared_ptr<ByteTracker> tracker;
+  std::shared_ptr<ByteTracker> tracker_;
 
-  void SetUp() override {
-    tracker = std::make_shared<ByteTracker>(30, 0.5f, 0.5f);
+  void SetUp() override
+  {
+    tracker_ = std::make_shared<ByteTracker>(30, 0.5f, 0.5f);
   }
 };
 
 TEST_F(TrackerNodeTest, ParameterLoading) {
-  EXPECT_NE(tracker, nullptr);
+  EXPECT_NE(tracker_, nullptr);
 }
 
 TEST_F(TrackerNodeTest, BasicTracking) {
@@ -22,7 +23,7 @@ TEST_F(TrackerNodeTest, BasicTracking) {
     {100.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {200.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0}
   };
-  auto result1 = tracker->Update(frame1);
+  auto result1 = tracker_->update(frame1);
   ASSERT_EQ(result1.size(), 2);
   EXPECT_EQ(result1[0].first, 1);
   EXPECT_EQ(result1[1].first, 2);
@@ -32,7 +33,7 @@ TEST_F(TrackerNodeTest, BasicTracking) {
     {102.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {198.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0}
   };
-  auto result2 = tracker->Update(frame2);
+  auto result2 = tracker_->update(frame2);
   ASSERT_EQ(result2.size(), 2);
   EXPECT_EQ(result2[0].first, 1);
   EXPECT_EQ(result2[1].first, 2);
@@ -43,14 +44,14 @@ TEST_F(TrackerNodeTest, NewDetectionCreatesNewTrack) {
     {100.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {200.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0}
   };
-  tracker->Update(frame1);
+  tracker_->update(frame1);
 
   std::vector<Detection> frame2 = {
     {100.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {200.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {300.0f, 300.0f, 50.0f, 50.0f, 0.9f, 0}  // New detection
   };
-  auto result2 = tracker->Update(frame2);
+  auto result2 = tracker_->update(frame2);
   ASSERT_EQ(result2.size(), 3);
   EXPECT_EQ(result2[2].first, 3);  // New ID
 }
@@ -60,24 +61,25 @@ TEST_F(TrackerNodeTest, OcclusionRecovery) {
     {100.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {200.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0}
   };
-  tracker->Update(frame1);
+  tracker_->update(frame1);
 
   // No detections (occlusion)
   std::vector<Detection> frame2 = {};
-  tracker->Update(frame2);
+  tracker_->update(frame2);
 
   // Reappearance
   std::vector<Detection> frame3 = {
     {100.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0},
     {200.0f, 100.0f, 50.0f, 50.0f, 0.9f, 0}
   };
-  auto result3 = tracker->Update(frame3);
+  auto result3 = tracker_->update(frame3);
   ASSERT_EQ(result3.size(), 2);
   EXPECT_EQ(result3[0].first, 1);  // ID preserved
   EXPECT_EQ(result3[1].first, 2);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

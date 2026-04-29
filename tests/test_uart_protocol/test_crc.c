@@ -37,7 +37,7 @@ int main(void) {
     static const uint8_t full_frame[] = {
         UART_FRAME_HEADER_0,
         UART_FRAME_HEADER_1,
-        UART_CMD_SERVO_CONTROL,
+        kUartCmdServoControl,
         0x05,
         0x00,
         0x84,

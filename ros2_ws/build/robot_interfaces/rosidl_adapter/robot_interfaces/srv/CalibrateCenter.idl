@@ -5,11 +5,15 @@
 
 module robot_interfaces {
   module srv {
+    @verbatim (language="comment", text=
+      "请求把行为节点的图像中心点设置为指定像素坐标。")
     struct CalibrateCenter_Request {
       int32 center_x;
 
       int32 center_y;
     };
+    @verbatim (language="comment", text=
+      "返回标定是否成功以及文本说明。")
     struct CalibrateCenter_Response {
       boolean success;
 

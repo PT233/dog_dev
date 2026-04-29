@@ -19,16 +19,16 @@
 ### WSL2 / PC
 
 - `gst_receiver_node`: 接收树莓派发来的 `UDP/H.264` 视频并发布 `/stereo/image_raw`
-- `stereo_splitter_node`: 从 `640x480` 双目拼接图中裁出左目，发布 `/camera/image_mono`
-- `detection_node`: 运行 YOLOv8 ONNX 推理，发布 `/detections`
-- `tracker_node`: 给检测结果分配稳定轨迹 ID，发布 `/tracked_objects`
-- `behavior_node`: 按目标类别筛选目标并发布 `/pixel_error`
-- `leg_motion_node`: 把像素误差转换为四足舵机角命令，发布 `/servo_cmd`
+- `stereo_splitter_node`: 从 `640x480` 双目拼接图中裁出左目，发布 `~/input/image`
+- `detection_node`: 运行 YOLOv8 ONNX 推理，发布 `/detection_node/output/detections`
+- `tracker_node`: 给检测结果分配稳定轨迹 ID，发布 `/tracker_node/output/tracked_objects`
+- `behavior_node`: 按目标类别筛选目标并发布 `/behavior_node/output/pixel_error`
+- `leg_motion_node`: 把像素误差转换为四足舵机角命令，发布 `/leg_motion_node/output/servo_command`
 
 ### Raspberry Pi
 
 - `scripts/start_camera_stream.sh`: `/dev/video0 -> H.264 -> UDP:5600`
-- `uart_bridge_node`: `/servo_cmd -> UART`，`UART -> /servo_state`
+- `uart_bridge_node`: `/leg_motion_node/output/servo_command -> UART`，`UART -> /uart_bridge_node/output/servo_state`
 
 ### STM32
 

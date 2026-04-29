@@ -29,6 +29,7 @@ install(TARGETS tracker_node_exe DESTINATION lib/${PROJECT_NAME})
 install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
+  enable_testing()
   find_package(ament_lint_auto REQUIRED)
   find_package(GTest REQUIRED)
   set(ament_cmake_copyright_FOUND TRUE)
@@ -40,6 +41,7 @@ if(BUILD_TESTING)
   target_link_libraries(test_byte_tracker byte_tracker)
   target_include_directories(test_byte_tracker PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  add_test(NAME test_byte_tracker COMMAND test_byte_tracker)
 
   # 集成测试覆盖 ROS 消息到跟踪输出的基本链路。
   add_executable(test_tracker_node_integration test/test_tracker_node_integration.cpp)

@@ -18,7 +18,7 @@
 
 ### 项目用途
 
-该固件是整套桌面目标跟随机器人中的 STM32 下位机部分。上位链路在 WSL2/PC 与 Raspberry Pi 上完成视觉检测、目标跟踪和 `/servo_cmd` 生成；本固件负责：
+该固件是整套桌面目标跟随机器人中的 STM32 下位机部分。上位链路在 WSL2/PC 与 Raspberry Pi 上完成视觉检测、目标跟踪和 `/leg_motion_node/output/servo_command` 生成；本固件负责：
 
 1. 从 Raspberry Pi 通过 `USART1` 接收二进制舵机控制帧。
 2. 对 4 路舵机目标角执行梯形速度轨迹插值。
@@ -869,7 +869,7 @@ sequenceDiagram
 | `UART_QUICK_TEST` | `Core/Src/main.c` | `0` | 串口快速发字串测试 | 打开后循环发送 `"TEST\r\n"` |
 | `TRAJ_ACCEL_RATIO` | `Core/Src/traj_planner.c` | `0.3f` | 加速/减速时间比例 | 影响插值速度曲线 |
 | `TRAJ_TICK_MS` | `Core/Src/traj_planner.c` | `5` | 轨迹刷新周期 | 影响控制平滑度与 CPU 占用 |
-| `STATUS_TX_PERIOD_MS` | `Core/Src/status_safety_task.c` | `50` | 状态发送周期 | 影响 `/servo_state` 刷新率 |
+| `STATUS_TX_PERIOD_MS` | `Core/Src/status_safety_task.c` | `50` | 状态发送周期 | 影响 `/uart_bridge_node/output/servo_state` 刷新率 |
 | `SAFETY_PERIOD_MS` | `Core/Src/status_safety_task.c` | `100` | 喂狗周期 | 影响看门狗裕量 |
 | `BOOT_CENTER_HOLD_MS` | `Core/Src/status_safety_task.c` | `500` | 开机中位保持时长 | 影响握手前静止时间 |
 | `UART_MAX_FRAME_LEN` | `Core/Inc/uart_protocol.h` | `256` | 最大帧长度 | 影响 DMA 缓冲与解析器上限 |

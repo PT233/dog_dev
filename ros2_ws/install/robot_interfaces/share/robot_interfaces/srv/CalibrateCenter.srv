@@ -1,5 +1,7 @@
+# 请求把行为节点的图像中心点设置为指定像素坐标。
 int32 center_x
 int32 center_y
 ---
+# 返回标定是否成功以及文本说明。
 bool success
 string message

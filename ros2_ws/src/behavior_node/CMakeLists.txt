@@ -11,7 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(robot_interfaces REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
-# 行为节点可执行文件：从跟踪结果中选择目标并发布 /pixel_error。
+# 行为节点可执行文件：从跟踪结果中选择目标并发布私有 pixel_error 输出。
 add_executable(behavior_node_exe src/behavior_node.cpp src/main.cpp)
 target_include_directories(behavior_node_exe PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -27,6 +27,7 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 install(FILES ../../../config/behavior.yaml DESTINATION share/${PROJECT_NAME}/config)
 
 if(BUILD_TESTING)
+  enable_testing()
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files

@@ -1,7 +1,10 @@
 uart_bridge_node:
   ros__parameters:
     # 树莓派 UART1 默认设备；USB 转串口调试时可改为 /dev/ttyUSB0 等。
-    uart_device: "/dev/ttyAMA0"
+    uart.device: "/dev/ttyAMA0"
 
     # 必须与 STM32 USART1 配置一致，否则会出现 CRC 错误或完全无法解析帧。
-    uart_baudrate: 921600
+    uart.baudrate: 921600
+
+    # 周期性输出 UART 链路诊断统计。
+    diagnostics.stats_report_interval_sec: 10.0

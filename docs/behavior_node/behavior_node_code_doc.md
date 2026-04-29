@@ -4,7 +4,7 @@
 
 ### 1.1 节点用途
 
-`behavior_node` 的职责是从上游 `tracker_node` 发布的 `/tracked_objects` 中，筛选出当前关心的目标类别，然后计算该目标相对画面中心的像素偏差，并通过 `/pixel_error` 发布给下游 `leg_motion_node`。
+`behavior_node` 的职责是从上游 `tracker_node` 发布的 `/tracker_node/output/tracked_objects` 中，筛选出当前关心的目标类别，然后计算该目标相对画面中心的像素偏差，并通过 `/behavior_node/output/pixel_error` 发布给下游 `leg_motion_node`。
 
 对初学者来说，可以把它理解成视觉链路里的“目标选择层”：
 
@@ -35,9 +35,9 @@ gst_receiver -> stereo_splitter -> detection_node -> tracker_node -> behavior_no
 
 `behavior_node` 位于“感知”和“控制”之间，扮演桥梁角色：
 
-- 上游输入：带 `track_id` 的检测框数组 `/tracked_objects`
-- 下游输出：目标相对画面中心的偏差 `/pixel_error`
-- 外部控制：通过 `/set_target_class` 服务切换要跟踪的目标类别
+- 上游输入：带 `track_id` 的检测框数组 `/tracker_node/output/tracked_objects`
+- 下游输出：目标相对画面中心的偏差 `/behavior_node/output/pixel_error`
+- 外部控制：通过 `/behavior_node/input/set_target_class` 服务切换要跟踪的目标类别
 
 它本身不做目标检测，也不做运动控制，只做“目标选择 + 误差计算”。
 
@@ -71,8 +71,8 @@ gst_receiver -> stereo_splitter -> detection_node -> tracker_node -> behavior_no
 
 | 类型 | 名称 | 作用 |
 | --- | --- | --- |
-| 自定义消息 | `robot_interfaces/msg/SimpleDetection.msg` | 描述单个检测框：中心点、宽高、类别、置信度、轨迹 ID |
-| 自定义消息 | `robot_interfaces/msg/SimpleDetection2DArray.msg` | 检测框数组，作为 `/tracked_objects` 的消息类型 |
+| 自定义消息 | `robot_interfaces/msg/Detection2D.msg` | 描述单个检测框：中心点、宽高、类别、置信度、轨迹 ID |
+| 自定义消息 | `robot_interfaces/msg/Detection2DArray.msg` | 检测框数组，作为 `/tracker_node/output/tracked_objects` 的消息类型 |
 | 自定义服务 | `robot_interfaces/srv/SetTargetClass.srv` | 按类别名切换当前目标类别 |
 
 ### 2.4 外部数据文件
@@ -84,7 +84,7 @@ gst_receiver -> stereo_splitter -> detection_node -> tracker_node -> behavior_no
 补充说明：
 
 - 节点启动后会尝试读取 `models/coco_classes.txt`。
-- 如果这个文件打不开，节点仍然能启动，但 `coco_classes_` 映射为空，此时 `/set_target_class` 几乎无法按名称正确切换类别。
+- 如果这个文件打不开，节点仍然能启动，但 `coco_classes_` 映射为空，此时 `/behavior_node/input/set_target_class` 几乎无法按名称正确切换类别。
 
 ## 3. 节点接口清单
 
@@ -94,7 +94,7 @@ ROS 2 中，“订阅”表示节点被动接收其他节点发布的数据。
 
 | 话题名称 | 消息类型 | QoS | 回调函数 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/tracked_objects` | `robot_interfaces/msg/SimpleDetection2DArray` | `SensorDataQoS`，等价于常见的 `KeepLast(5) + BestEffort + Volatile` | `OnTrackedObjects()` | 接收上游跟踪结果，从中选出当前目标类别，并计算像素误差 |
+| `/tracker_node/output/tracked_objects` | `robot_interfaces/msg/Detection2DArray` | `SensorDataQoS`，等价于常见的 `KeepLast(5) + BestEffort + Volatile` | `tracked_objects_callback()` | 接收上游跟踪结果，从中选出当前目标类别，并计算像素误差 |
 
 ### 3.2 发布的话题
 
@@ -102,7 +102,7 @@ ROS 2 中，“发布”表示节点主动把处理结果发送出去。
 
 | 话题名称 | 消息类型 | QoS | 发布频率 | 用途 |
 | --- | --- | --- | --- | --- |
-| `/pixel_error` | `geometry_msgs/msg/Vector3` | `rclcpp::QoS(5)`，默认是 `KeepLast(5) + Reliable + Volatile` | 事件触发；仅在收到 `/tracked_objects` 且成功选到目标时发布，频率通常跟随上游输入频率 | 输出目标中心相对画面中心的偏差：`x = target_cx - center_x`，`y = target_cy - center_y`，`z = 0` |
+| `/behavior_node/output/pixel_error` | `geometry_msgs/msg/Vector3` | `rclcpp::QoS(5)`，默认是 `KeepLast(5) + Reliable + Volatile` | 事件触发；仅在收到 `/tracker_node/output/tracked_objects` 且成功选到目标时发布，频率通常跟随上游输入频率 | 输出目标中心相对画面中心的偏差：`x = target_center_x - center_x`，`y = target_center_y - center_y`，`z = 0` |
 
 ### 3.3 提供的服务 / 动作
 
@@ -110,7 +110,7 @@ ROS 2 服务适合“一问一答”的控制请求，和连续流数据的话�
 
 | 名称 | 类型 | 用途 |
 | --- | --- | --- |
-| `/set_target_class` | `robot_interfaces/srv/SetTargetClass` | 按类别名切换当前目标，例如把跟踪对象从 `person` 切到 `cup` |
+| `/behavior_node/input/set_target_class` | `robot_interfaces/srv/SetTargetClass` | 按类别名切换当前目标，例如把跟踪对象从 `person` 切到 `cup` |
 
 说明：
 
@@ -137,9 +137,9 @@ ROS 2 服务适合“一问一答”的控制请求，和连续流数据的话�
 
 ### 3.6 关键消息字段速查
 
-#### 3.6.1 `/tracked_objects` 中单个目标的字段
+#### 3.6.1 `/tracker_node/output/tracked_objects` 中单个目标的字段
 
-`/tracked_objects` 的消息类型是 `robot_interfaces/msg/SimpleDetection2DArray`，其中每个元素都是 `SimpleDetection`。
+`/tracker_node/output/tracked_objects` 的消息类型是 `robot_interfaces/msg/Detection2DArray`，其中每个元素都是 `Detection2D`。
 
 | 字段名 | 类型 | 含义 |
 | --- | --- | --- |
@@ -151,7 +151,7 @@ ROS 2 服务适合“一问一答”的控制请求，和连续流数据的话�
 | `class_id` | `int32` | COCO 类别 ID |
 | `track_id` | `string` | 跟踪器分配的轨迹 ID |
 
-#### 3.6.2 `/pixel_error` 的字段
+#### 3.6.2 `/behavior_node/output/pixel_error` 的字段
 
 | 字段名 | 类型 | 含义 |
 | --- | --- | --- |
@@ -159,7 +159,7 @@ ROS 2 服务适合“一问一答”的控制请求，和连续流数据的话�
 | `y` | `float64` | 目标中心相对画面中心的垂直偏差，下方为正 |
 | `z` | `float64` | 当前固定写为 `0.0`，预留未使用 |
 
-#### 3.6.3 `/set_target_class` 服务字段
+#### 3.6.3 `/behavior_node/input/set_target_class` 服务字段
 
 | 方向 | 字段名 | 类型 | 含义 |
 | --- | --- | --- | --- |
@@ -175,20 +175,20 @@ ROS 2 服务适合“一问一答”的控制请求，和连续流数据的话�
 
 | 参数名 | 类型 | 默认值 | 取值范围 | 含义 | 是否动态可调 |
 | --- | --- | --- | --- | --- | --- |
-| `image_width` | `int` | `320` | 建议 `> 0`；源码未做校验 | 图像宽度元数据，当前实现中未直接参与误差计算 | 否 |
-| `image_height` | `int` | `480` | 建议 `> 0`；源码未做校验 | 图像高度元数据，当前实现中未直接参与误差计算 | 否 |
-| `center_x` | `int` | `160` | 理论上应在 `[0, image_width - 1]`；源码未做校验 | 画面中心 X 坐标，误差计算基准 | 否 |
-| `center_y` | `int` | `240` | 理论上应在 `[0, image_height - 1]`；源码未做校验 | 画面中心 Y 坐标，误差计算基准 | 否 |
+| `image.width` | `int` | `320` | 建议 `> 0`；源码未做校验 | 图像宽度元数据，当前实现中未直接参与误差计算 | 否 |
+| `image.height` | `int` | `480` | 建议 `> 0`；源码未做校验 | 图像高度元数据，当前实现中未直接参与误差计算 | 否 |
+| `image.center_x` | `int` | `160` | 理论上应在 `[0, image.width - 1]`；源码未做校验 | 画面中心 X 坐标，误差计算基准 | 否 |
+| `image.center_y` | `int` | `240` | 理论上应在 `[0, image.height - 1]`；源码未做校验 | 画面中心 Y 坐标，误差计算基准 | 否 |
 
 当前默认 YAML 如下：
 
 ```yaml
 behavior_node:
   ros__parameters:
-    image_width: 320   # 图像宽度
-    image_height: 480  # 图像高度
-    center_x: 160      # 画面中心 X
-    center_y: 240      # 画面中心 Y
+    image.width: 320   # 图像宽度
+    image.height: 480  # 图像高度
+    image.center_x: 160      # 画面中心 X
+    image.center_y: 240      # 画面中心 Y
 ```
 
 ## 5. 核心代码逻辑
@@ -203,14 +203,14 @@ public:
   BehaviorNode(const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
 
 private:
-  rclcpp::Subscription<robot_interfaces::msg::SimpleDetection2DArray>::SharedPtr tracked_objects_sub_;
+  rclcpp::Subscription<robot_interfaces::msg::Detection2DArray>::SharedPtr tracked_objects_sub_;
   rclcpp::Publisher<geometry_msgs::msg::Vector3>::SharedPtr pixel_error_pub_;
   rclcpp::Service<robot_interfaces::srv::SetTargetClass>::SharedPtr set_target_class_srv_;
 
   int target_class_id_ = 0;   // 当前目标类别，默认 0 = person
   int current_track_id_ = -1; // 最近一次选中的 track_id，当前只记录，不参与再次筛选
-  int target_cx_ = 0;         // 目标中心 X
-  int target_cy_ = 0;         // 目标中心 Y
+  int target_center_x_ = 0;         // 目标中心 X
+  int target_center_y_ = 0;         // 目标中心 Y
 };
 ```
 
@@ -219,7 +219,7 @@ private:
 | 成员类别 | 代表成员 | 作用 |
 | --- | --- | --- |
 | 通信对象 | `tracked_objects_sub_`、`pixel_error_pub_`、`set_target_class_srv_` | 与 ROS 2 图通信中间件交互 |
-| 目标状态 | `target_class_id_`、`current_track_id_`、`target_cx_`、`target_cy_` | 记录当前目标类别和最近一次选中的目标 |
+| 目标状态 | `target_class_id_`、`current_track_id_`、`target_center_x_`、`target_center_y_` | 记录当前目标类别和最近一次选中的目标 |
 | 配置与映射 | `image_width_`、`image_height_`、`center_x_`、`center_y_`、`coco_classes_` | 误差计算基准和类别名映射 |
 
 ### 5.2 构造函数初始化流程
@@ -227,32 +227,32 @@ private:
 构造函数完成了节点几乎全部初始化工作，流程如下：
 
 1. 调用父类构造函数，节点名固定为 `behavior_node`
-2. 声明参数：`image_width`、`image_height`、`center_x`、`center_y`
+2. 声明参数：`image.width`、`image.height`、`image.center_x`、`image.center_y`
 3. 读取参数到成员变量
 4. 从 `models/coco_classes.txt` 加载 COCO 类别名
-5. 创建 `/tracked_objects` 订阅者
-6. 创建 `/pixel_error` 发布者
-7. 创建 `/set_target_class` 服务
+5. 创建 `/tracker_node/output/tracked_objects` 订阅者
+6. 创建 `/behavior_node/output/pixel_error` 发布者
+7. 创建 `/behavior_node/input/set_target_class` 服务
 8. 打印初始化日志
 
 关键片段如下：
 
 ```cpp
-this->declare_parameter<int>("center_x", 160);      // 声明参数，允许 YAML 覆盖默认值
-this->declare_parameter<int>("center_y", 240);      // 画面中心 Y
+this->declare_parameter<int>("image.center_x", 160);      // 声明参数，允许 YAML 覆盖默认值
+this->declare_parameter<int>("image.center_y", 240);      // 画面中心 Y
 
-center_x_ = this->get_parameter("center_x").as_int(); // 启动时读取参数到成员变量
-center_y_ = this->get_parameter("center_y").as_int(); // 后续误差计算直接使用成员变量
+center_x_ = this->get_parameter("image.center_x").as_int(); // 启动时读取参数到成员变量
+center_y_ = this->get_parameter("image.center_y").as_int(); // 后续误差计算直接使用成员变量
 
-LoadCocoClasses();  // 读取 COCO 标签文件，建立 id -> name 映射
+load_coco_classes();  // 读取 COCO 标签文件，建立 id -> name 映射
 
 tracked_objects_sub_ =
-  this->create_subscription<robot_interfaces::msg::SimpleDetection2DArray>(
-    "/tracked_objects", qos,
-    std::bind(&BehaviorNode::OnTrackedObjects, this, std::placeholders::_1)); // 订阅跟踪结果
+  this->create_subscription<robot_interfaces::msg::Detection2DArray>(
+    "/tracker_node/output/tracked_objects", qos,
+    std::bind(&BehaviorNode::tracked_objects_callback, this, std::placeholders::_1)); // 订阅跟踪结果
 
 pixel_error_pub_ =
-  this->create_publisher<geometry_msgs::msg::Vector3>("/pixel_error", rclcpp::QoS(5)); // 发布误差
+  this->create_publisher<geometry_msgs::msg::Vector3>("/behavior_node/output/pixel_error", rclcpp::QoS(5)); // 发布误差
 ```
 
 初始化流程图：
@@ -261,9 +261,9 @@ pixel_error_pub_ =
 flowchart TD
     A[构造 BehaviorNode] --> B[声明并读取参数]
     B --> C[加载 models/coco_classes.txt]
-    C --> D[创建 /tracked_objects 订阅]
-    D --> E[创建 /pixel_error 发布]
-    E --> F[创建 /set_target_class 服务]
+    C --> D[创建 /tracker_node/output/tracked_objects 订阅]
+    D --> E[创建 /behavior_node/output/pixel_error 发布]
+    E --> F[创建 /behavior_node/input/set_target_class 服务]
     F --> G[输出初始化日志]
 ```
 
@@ -273,43 +273,43 @@ flowchart TD
 
 | 回调函数 | 触发条件 | 主要输入 | 处理结果 |
 | --- | --- | --- | --- |
-| `OnTrackedObjects()` | 收到一条 `/tracked_objects` 消息 | `SimpleDetection2DArray` | 若找到目标类别，则更新目标中心并发布 `/pixel_error`；否则仅记录 `No target` 日志 |
-| `OnSetTargetClass()` | 收到一次 `/set_target_class` 服务请求 | `class_name` 字符串 | 若类别名存在，则更新 `target_class_id_` 并重置 `current_track_id_`；否则返回失败 |
+| `tracked_objects_callback()` | 收到一条 `/tracker_node/output/tracked_objects` 消息 | `Detection2DArray` | 若找到目标类别，则更新目标中心并发布 `/behavior_node/output/pixel_error`；否则仅记录 `No target` 日志 |
+| `set_target_class_callback()` | 收到一次 `/behavior_node/input/set_target_class` 服务请求 | `class_name` 字符串 | 若类别名存在，则更新 `target_class_id_` 并重置 `current_track_id_`；否则返回失败 |
 
-#### 5.3.1 `OnTrackedObjects()`
+#### 5.3.1 `tracked_objects_callback()`
 
 触发条件：
 
-- 上游 `tracker_node` 发布一帧 `/tracked_objects`
+- 上游 `tracker_node` 发布一帧 `/tracker_node/output/tracked_objects`
 - ROS 2 执行器把该消息分发给订阅回调
 
 处理步骤：
 
 1. 判断消息是否为空，或 `detections` 是否为空
 2. 若为空，打印 `No target` 并返回
-3. 调用 `SelectTarget()`，从同类别目标中选出面积最大的一个
+3. 调用 `select_target()`，从同类别目标中选出面积最大的一个
 4. 若找到目标，记录日志
 5. 计算像素误差：
-   - `error.x = target_cx_ - center_x_`
-   - `error.y = target_cy_ - center_y_`
+   - `error.x = target_center_x_ - center_x_`
+   - `error.y = target_center_y_ - center_y_`
    - `error.z = 0.0`
-6. 发布 `/pixel_error`
+6. 发布 `/behavior_node/output/pixel_error`
 7. 如果未找到符合类别的目标，打印 `No target`
 
 流程图：
 
 ```mermaid
 flowchart TD
-    A[收到 /tracked_objects] --> B{消息为空或 detections 为空?}
+    A[收到 /tracker_node/output/tracked_objects] --> B{消息为空或 detections 为空?}
     B -- 是 --> C[打印 No target 并返回]
-    B -- 否 --> D[调用 SelectTarget]
+    B -- 否 --> D[调用 select_target]
     D --> E{找到 target_class_id_ 对应目标?}
     E -- 否 --> C
-    E -- 是 --> F[更新 target_cx_ / target_cy_ / current_track_id_]
-    F --> G[计算 error.x = target_cx_ - center_x_]
-    G --> H[计算 error.y = target_cy_ - center_y_]
+    E -- 是 --> F[更新 target_center_x_ / target_center_y_ / current_track_id_]
+    F --> G[计算 error.x = target_center_x_ - center_x_]
+    G --> H[计算 error.y = target_center_y_ - center_y_]
     H --> I[设置 error.z = 0]
-    I --> J[发布 /pixel_error]
+    I --> J[发布 /behavior_node/output/pixel_error]
 ```
 
 关键代码片段：
@@ -320,10 +320,10 @@ if (!msg || msg->detections.empty()) {      // 输入为空时直接返回
   return;
 }
 
-if (SelectTarget(*msg)) {                   // 选择当前目标
+if (select_target(*msg)) {                   // 选择当前目标
   auto error = geometry_msgs::msg::Vector3();
-  error.x = target_cx_ - center_x_;         // 右侧为正，左侧为负
-  error.y = target_cy_ - center_y_;         // 下方为正，上方为负
+  error.x = target_center_x_ - center_x_;         // 右侧为正，左侧为负
+  error.y = target_center_y_ - center_y_;         // 下方为正，上方为负
   error.z = 0.0;                            // 当前未使用 z 轴
   pixel_error_pub_->publish(error);         // 发布给 leg_motion_node
 }
@@ -334,16 +334,16 @@ if (SelectTarget(*msg)) {                   // 选择当前目标
 - 成功时：更新最近目标状态，并向下游发布一条误差消息
 - 失败时：不发布任何误差消息，下游通常依赖超时机制判断“目标丢失”
 
-#### 5.3.2 `OnSetTargetClass()`
+#### 5.3.2 `set_target_class_callback()`
 
 触发条件：
 
-- 外部节点或命令行调用服务 `/set_target_class`
+- 外部节点或命令行调用服务 `/behavior_node/input/set_target_class`
 
 处理步骤：
 
 1. 从请求中取出 `class_name`
-2. 调用 `GetClassIdByName()`，在 `coco_classes_` 中查找对应 `class_id`
+2. 调用 `class_id_by_name()`，在 `coco_classes_` 中查找对应 `class_id`
 3. 如果没找到：
    - `response->success = false`
    - 返回错误信息 `Unknown class: ...`
@@ -356,7 +356,7 @@ if (SelectTarget(*msg)) {                   // 选择当前目标
 
 ```mermaid
 flowchart TD
-    A[收到 /set_target_class 请求] --> B[按类名查询 class_id]
+    A[收到 /behavior_node/input/set_target_class 请求] --> B[按类名查询 class_id]
     B --> C{找到 class_id?}
     C -- 否 --> D[response.success = false]
     D --> E[返回 Unknown class]
@@ -369,7 +369,7 @@ flowchart TD
 关键代码片段：
 
 ```cpp
-int class_id = GetClassIdByName(request->class_name); // 把字符串类别转成 COCO id
+int class_id = class_id_by_name(request->class_name); // 把字符串类别转成 COCO id
 
 if (class_id < 0) {                                   // 没找到时直接返回失败
   response->success = false;
@@ -391,7 +391,7 @@ response->success = true;
 
 #### 5.4.1 目标选择算法
 
-`SelectTarget()` 是这个节点的核心算法。它的策略非常直接：
+`select_target()` 是这个节点的核心算法。它的策略非常直接：
 
 1. 遍历当前帧中的所有检测框
 2. 只保留 `det.class_id == target_class_id_` 的候选
@@ -435,16 +435,16 @@ for (size_t i = 0; i < detections.detections.size(); ++i) {
 | --- | --- |
 | `target_class_id_` | 当前关注的 COCO 类别 |
 | `current_track_id_` | 最近一次被选中的轨迹 ID |
-| `target_cx_`、`target_cy_` | 最近一次选中的目标中心点 |
+| `target_center_x_`、`target_center_y_` | 最近一次选中的目标中心点 |
 | `center_x_`、`center_y_` | 误差参考中心 |
 
 可以把它抽象成下面 3 个逻辑状态：
 
 | 逻辑状态 | 判定条件 | 行为 |
 | --- | --- | --- |
-| 等待输入 | 还没收到 `/tracked_objects` | 空转等待 |
+| 等待输入 | 还没收到 `/tracker_node/output/tracked_objects` | 空转等待 |
 | 有输入但无目标 | 收到消息，但没有匹配 `target_class_id_` 的目标 | 记录 `No target`，不发布误差 |
-| 已锁定一帧目标 | 本帧中找到合适目标 | 更新中心点并发布 `/pixel_error` |
+| 已锁定一帧目标 | 本帧中找到合适目标 | 更新中心点并发布 `/behavior_node/output/pixel_error` |
 
 注意：
 
@@ -503,7 +503,7 @@ rclcpp::spin(node); // 默认使用单线程执行器
 
 说明：
 
-- `behavior_node` 完全依赖上游 `/tracked_objects` 驱动。
+- `behavior_node` 完全依赖上游 `/tracker_node/output/tracked_objects` 驱动。
 - 它不是“周期控制节点”，而是“事件触发节点”。
 
 ## 7. 启动方式
@@ -570,17 +570,17 @@ behavior_node = Node(
 ```yaml
 behavior_node:
   ros__parameters:
-    image_width: 320
-    image_height: 480
-    center_x: 160
-    center_y: 240
+    image.width: 320
+    image.height: 480
+    image.center_x: 160
+    image.center_y: 240
 ```
 
 ### 7.6 运行时切换目标类别
 
 ```bash
-ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'person'}"
-ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
+ros2 service call /behavior_node/input/set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'person'}"
+ros2 service call /behavior_node/input/set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'cup'}"
 ```
 
 前提条件：
@@ -595,12 +595,12 @@ ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_
 ```bash
 ros2 node list
 ros2 topic list
-ros2 topic echo /tracked_objects
-ros2 topic echo /pixel_error
-ros2 topic hz /tracked_objects
-ros2 topic hz /pixel_error
+ros2 topic echo /tracker_node/output/tracked_objects
+ros2 topic echo /behavior_node/output/pixel_error
+ros2 topic hz /tracker_node/output/tracked_objects
+ros2 topic hz /behavior_node/output/pixel_error
 ros2 service list
-ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'person'}"
+ros2 service call /behavior_node/input/set_target_class robot_interfaces/srv/SetTargetClass "{class_name: 'person'}"
 ```
 
 ### 8.2 日志查看方法
@@ -614,7 +614,7 @@ ros2 service call /set_target_class robot_interfaces/srv/SetTargetClass "{class_
 | `BehaviorNode initialized ...` | 节点已启动，参数和默认目标类别已经载入 |
 | `Target: id=..., center=(...), class=...` | 本帧找到了目标，并完成误差计算 |
 | `No target` | 本帧没有找到任何目标，或者没有找到当前类别的目标 |
-| `Unknown class: ...` | `/set_target_class` 请求中的类名未出现在 `coco_classes.txt` |
+| `Unknown class: ...` | `/behavior_node/input/set_target_class` 请求中的类名未出现在 `coco_classes.txt` |
 | `Target class changed to: ...` | 服务调用成功，后续将跟踪新类别 |
 
 如果想看更详细日志，可以在启动时提高日志级别：
@@ -627,8 +627,8 @@ ros2 run behavior_node behavior_node_exe --ros-args --log-level debug
 
 | 工具 | 推荐用途 |
 | --- | --- |
-| `rqt_graph` | 看 `/tracked_objects -> behavior_node -> /pixel_error` 是否连通 |
-| `rqt_plot` | 画 `/pixel_error/x` 与 `/pixel_error/y` 曲线，观察误差是否逐渐收敛 |
+| `rqt_graph` | 看 `/tracker_node/output/tracked_objects -> behavior_node -> /behavior_node/output/pixel_error` 是否连通 |
+| `rqt_plot` | 画 `/behavior_node/output/pixel_error/x` 与 `/behavior_node/output/pixel_error/y` 曲线，观察误差是否逐渐收敛 |
 | `rqt_image_view` | 结合相机画面确认目标是否真的在视野中 |
 | `rviz2` | 本节点本身不直接适合用 RViz 可视化；除非你额外把目标框或中心点转成 Marker |
 
@@ -636,7 +636,7 @@ ros2 run behavior_node behavior_node_exe --ros-args --log-level debug
 
 ```bash
 rqt_graph
-rqt_plot /pixel_error/x /pixel_error/y
+rqt_plot /behavior_node/output/pixel_error/x /behavior_node/output/pixel_error/y
 rqt_image_view
 ```
 
@@ -644,16 +644,16 @@ rqt_image_view
 
 | 现象 | 可能原因 | 排查方法 | 处理建议 |
 | --- | --- | --- | --- |
-| 节点已启动，但 `/pixel_error` 没有数据 | 上游 `/tracked_objects` 没有数据 | `ros2 topic echo /tracked_objects` | 先排查 `detection_node`、`tracker_node` |
-| `/tracked_objects` 有数据，但仍然频繁 `No target` | 当前 `target_class_id_` 与实际目标类别不匹配 | 调用 `/set_target_class` 切换类别 | 先用 `person`、`cup` 之类常见 COCO 类测试 |
+| 节点已启动，但 `/behavior_node/output/pixel_error` 没有数据 | 上游 `/tracker_node/output/tracked_objects` 没有数据 | `ros2 topic echo /tracker_node/output/tracked_objects` | 先排查 `detection_node`、`tracker_node` |
+| `/tracker_node/output/tracked_objects` 有数据，但仍然频繁 `No target` | 当前 `target_class_id_` 与实际目标类别不匹配 | 调用 `/behavior_node/input/set_target_class` 切换类别 | 先用 `person`、`cup` 之类常见 COCO 类测试 |
 | 服务调用失败，提示 `Unknown class` | `class_name` 拼写不对，或 `coco_classes.txt` 未加载成功 | 检查日志是否出现 `Could not open COCO classes file` | 修正路径、工作目录或类名 |
-| 误差方向看起来反了 | `center_x / center_y` 配置不对，或下游对误差正负号理解不同 | `ros2 topic echo /pixel_error` + 对照画面位置 | 先确认“目标在右边时 x 应为正”这一定义 |
-| 误差突然跳来跳去 | 多个同类目标同时出现，面积最大者发生切换 | 观察 `/tracked_objects` 中同类物体数量和尺寸 | 后续可改为“优先保持同一 track_id”策略 |
-| 修改参数后不生效 | 节点只在启动时读取参数一次 | `ros2 param get /behavior_node center_x` 和运行表现对比 | 修改 YAML 后重启节点 |
+| 误差方向看起来反了 | `image.center_x / image.center_y` 配置不对，或下游对误差正负号理解不同 | `ros2 topic echo /behavior_node/output/pixel_error` + 对照画面位置 | 先确认“目标在右边时 x 应为正”这一定义 |
+| 误差突然跳来跳去 | 多个同类目标同时出现，面积最大者发生切换 | 观察 `/tracker_node/output/tracked_objects` 中同类物体数量和尺寸 | 后续可改为“优先保持同一 track_id”策略 |
+| 修改参数后不生效 | 节点只在启动时读取参数一次 | `ros2 param get /behavior_node image.center_x` 和运行表现对比 | 修改 YAML 后重启节点 |
 
 ### 8.5 一个很容易忽略的实现细节
 
-当前代码在 `SelectTarget()` 里有这样一行：
+当前代码在 `select_target()` 里有这样一行：
 
 ```cpp
 current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯数字字符串
@@ -664,7 +664,7 @@ current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯�
 - 如果上游 `track_id` 为空字符串，可能抛异常
 - 如果上游以后改成非数字 ID，例如 `track_7`，也会抛异常
 
-因此联调时一旦节点异常退出，要优先检查 `/tracked_objects` 里的 `track_id` 格式。
+因此联调时一旦节点异常退出，要优先检查 `/tracker_node/output/tracked_objects` 里的 `track_id` 格式。
 
 ## 9. 单元测试与集成测试说明
 
@@ -676,8 +676,8 @@ current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯�
 
 | 文件 | 类型 | 覆盖范围 |
 | --- | --- | --- |
-| `tests/test_stage6_integration.sh` | 集成测试脚本 | 检查 `behavior_node` 是否能启动，以及 `/set_target_class` 服务是否注册 |
-| `scripts/verify_tracking.sh` | 端到端验证脚本 | 检查关键节点、关键话题频率，并采样 `/pixel_error` |
+| `tests/test_stage6_integration.sh` | 集成测试脚本 | 检查 `behavior_node` 是否能启动，以及 `/behavior_node/input/set_target_class` 服务是否注册 |
+| `scripts/verify_tracking.sh` | 端到端验证脚本 | 检查关键节点、关键话题频率，并采样 `/behavior_node/output/pixel_error` |
 
 ### 9.3 测试内容解读
 
@@ -685,12 +685,12 @@ current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯�
 
 1. 尝试启动 `behavior_node`
 2. 尝试启动 `leg_motion_node`
-3. 检查 `/set_target_class` 是否出现在服务列表里
+3. 检查 `/behavior_node/input/set_target_class` 是否出现在服务列表里
 
 这类测试的优点是简单直接，适合快速冒烟验证；缺点是：
 
-- 没有构造假数据去验证 `SelectTarget()` 的算法结果
-- 没有校验 `/pixel_error` 数值是否正确
+- 没有构造假数据去验证 `select_target()` 的算法结果
+- 没有校验 `/behavior_node/output/pixel_error` 数值是否正确
 - 没有覆盖异常输入，例如空 `track_id`、未知类别名等
 
 ### 9.4 建议补充的测试
@@ -699,9 +699,9 @@ current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯�
 
 | 建议测试项 | 价值 |
 | --- | --- |
-| `SelectTarget()` 单元测试 | 验证“同类目标中选面积最大者”的逻辑 |
-| `OnSetTargetClass()` 单元测试 | 验证合法/非法类别名处理 |
-| 参数加载测试 | 验证 `center_x / center_y` 是否按 YAML 生效 |
+| `select_target()` 单元测试 | 验证“同类目标中选面积最大者”的逻辑 |
+| `set_target_class_callback()` 单元测试 | 验证合法/非法类别名处理 |
+| 参数加载测试 | 验证 `image.center_x / image.center_y` 是否按 YAML 生效 |
 | 异常输入测试 | 验证 `track_id` 非数字时节点行为是否稳定 |
 
 ## 10. 变更记录与待办事项
@@ -714,9 +714,9 @@ current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯�
 
 | 项目 | 状态 |
 | --- | --- |
-| 订阅 `/tracked_objects` | 已实现 |
-| 发布 `/pixel_error` | 已实现 |
-| 运行时切换目标类别 `/set_target_class` | 已实现 |
+| 订阅 `/tracker_node/output/tracked_objects` | 已实现 |
+| 发布 `/behavior_node/output/pixel_error` | 已实现 |
+| 运行时切换目标类别 `/behavior_node/input/set_target_class` | 已实现 |
 | 从 `coco_classes.txt` 读取类别名 | 已实现 |
 
 ### 10.3 仍待完善的事项
@@ -725,15 +725,15 @@ current_track_id_ = std::stoi(target.track_id); // 假设 track_id 一定是纯�
 | --- | --- |
 | `/calibrate_center` 服务 | 仓库里有接口定义，但 `behavior_node` 没有实现服务端 |
 | 持续锁定同一 `track_id` | 当前只是记录 `current_track_id_`，并没有在选目标时优先复用 |
-| `image_width` / `image_height` 的实际使用 | 参数已加载，但当前没有参与边界检查或误差归一化 |
+| `image.width` / `image.height` 的实际使用 | 参数已加载，但当前没有参与边界检查或误差归一化 |
 | `track_id` 异常保护 | `std::stoi()` 没有异常处理 |
-| 目标丢失后的输出策略 | 当前只是不再发布 `/pixel_error`，没有发布“目标丢失”标志 |
+| 目标丢失后的输出策略 | 当前只是不再发布 `/behavior_node/output/pixel_error`，没有发布“目标丢失”标志 |
 | 自动化单元测试 | 目前缺少真正针对算法和边界情况的测试 |
 
 ### 10.4 对后续维护者的建议
 
 如果你准备继续扩展这个节点，最值得优先做的三件事是：
 
-1. 让 `SelectTarget()` 优先保持同一 `track_id`
+1. 让 `select_target()` 优先保持同一 `track_id`
 2. 为 `track_id` 转换增加异常保护
 3. 实现 `/calibrate_center` 或者删除这条未落地的接口定义，减少文档和代码之间的歧义

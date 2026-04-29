@@ -41,12 +41,12 @@ flowchart LR
   CAM --> GST
   GST -->|UDP H.264 :5600| GR
   GR -->|/stereo/image_raw| SS
-  SS -->|/camera/image_mono| DN
-  DN -->|/detections| TN
-  TN -->|/tracked_objects| BN
-  BN -->|/pixel_error| VS
-  VS -->|/servo_cmd| UB
-  UB -->|/servo_state| VS
+  SS -->|~/input/image| DN
+  DN -->|/detection_node/output/detections| TN
+  TN -->|/tracker_node/output/tracked_objects| BN
+  BN -->|/behavior_node/output/pixel_error| VS
+  VS -->|/leg_motion_node/output/servo_command| UB
+  UB -->|/uart_bridge_node/output/servo_state| VS
   UB -->|UART 0x01 / 0x10| RX
   TX -->|UART 0x82 / 0x83| UB
   RX --> TP

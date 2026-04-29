@@ -72,11 +72,11 @@ class TargetInfo(metaclass=Metaclass_TargetInfo):
         '_class_name',
         '_track_id',
         '_confidence',
-        '_bbox_cx',
-        '_bbox_cy',
-        '_bbox_w',
-        '_bbox_h',
-        '_locked',
+        '_bounding_box_center_x',
+        '_bounding_box_center_y',
+        '_bounding_box_width',
+        '_bounding_box_height',
+        '_is_locked',
         '_check_fields',
     ]
 
@@ -85,11 +85,11 @@ class TargetInfo(metaclass=Metaclass_TargetInfo):
         'class_name': 'string',
         'track_id': 'string',
         'confidence': 'float',
-        'bbox_cx': 'int32',
-        'bbox_cy': 'int32',
-        'bbox_w': 'int32',
-        'bbox_h': 'int32',
-        'locked': 'boolean',
+        'bounding_box_center_x': 'int32',
+        'bounding_box_center_y': 'int32',
+        'bounding_box_width': 'int32',
+        'bounding_box_height': 'int32',
+        'is_locked': 'boolean',
     }
 
     # This attribute is used to store an rosidl_parser.definition variable
@@ -120,11 +120,11 @@ class TargetInfo(metaclass=Metaclass_TargetInfo):
         self.class_name = kwargs.get('class_name', str())
         self.track_id = kwargs.get('track_id', str())
         self.confidence = kwargs.get('confidence', float())
-        self.bbox_cx = kwargs.get('bbox_cx', int())
-        self.bbox_cy = kwargs.get('bbox_cy', int())
-        self.bbox_w = kwargs.get('bbox_w', int())
-        self.bbox_h = kwargs.get('bbox_h', int())
-        self.locked = kwargs.get('locked', bool())
+        self.bounding_box_center_x = kwargs.get('bounding_box_center_x', int())
+        self.bounding_box_center_y = kwargs.get('bounding_box_center_y', int())
+        self.bounding_box_width = kwargs.get('bounding_box_width', int())
+        self.bounding_box_height = kwargs.get('bounding_box_height', int())
+        self.is_locked = kwargs.get('is_locked', bool())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -164,15 +164,15 @@ class TargetInfo(metaclass=Metaclass_TargetInfo):
             return False
         if self.confidence != other.confidence:
             return False
-        if self.bbox_cx != other.bbox_cx:
+        if self.bounding_box_center_x != other.bounding_box_center_x:
             return False
-        if self.bbox_cy != other.bbox_cy:
+        if self.bounding_box_center_y != other.bounding_box_center_y:
             return False
-        if self.bbox_w != other.bbox_w:
+        if self.bounding_box_width != other.bounding_box_width:
             return False
-        if self.bbox_h != other.bbox_h:
+        if self.bounding_box_height != other.bounding_box_height:
             return False
-        if self.locked != other.locked:
+        if self.is_locked != other.is_locked:
             return False
         return True
 
@@ -237,74 +237,74 @@ class TargetInfo(metaclass=Metaclass_TargetInfo):
         self._confidence = value
 
     @builtins.property
-    def bbox_cx(self):
-        """Message field 'bbox_cx'."""
-        return self._bbox_cx
+    def bounding_box_center_x(self):
+        """Message field 'bounding_box_center_x'."""
+        return self._bounding_box_center_x
 
-    @bbox_cx.setter
-    def bbox_cx(self, value):
+    @bounding_box_center_x.setter
+    def bounding_box_center_x(self, value):
         if self._check_fields:
             assert \
                 isinstance(value, int), \
-                "The 'bbox_cx' field must be of type 'int'"
+                "The 'bounding_box_center_x' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'bbox_cx' field must be an integer in [-2147483648, 2147483647]"
-        self._bbox_cx = value
+                "The 'bounding_box_center_x' field must be an integer in [-2147483648, 2147483647]"
+        self._bounding_box_center_x = value
 
     @builtins.property
-    def bbox_cy(self):
-        """Message field 'bbox_cy'."""
-        return self._bbox_cy
+    def bounding_box_center_y(self):
+        """Message field 'bounding_box_center_y'."""
+        return self._bounding_box_center_y
 
-    @bbox_cy.setter
-    def bbox_cy(self, value):
+    @bounding_box_center_y.setter
+    def bounding_box_center_y(self, value):
         if self._check_fields:
             assert \
                 isinstance(value, int), \
-                "The 'bbox_cy' field must be of type 'int'"
+                "The 'bounding_box_center_y' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'bbox_cy' field must be an integer in [-2147483648, 2147483647]"
-        self._bbox_cy = value
+                "The 'bounding_box_center_y' field must be an integer in [-2147483648, 2147483647]"
+        self._bounding_box_center_y = value
 
     @builtins.property
-    def bbox_w(self):
-        """Message field 'bbox_w'."""
-        return self._bbox_w
+    def bounding_box_width(self):
+        """Message field 'bounding_box_width'."""
+        return self._bounding_box_width
 
-    @bbox_w.setter
-    def bbox_w(self, value):
+    @bounding_box_width.setter
+    def bounding_box_width(self, value):
         if self._check_fields:
             assert \
                 isinstance(value, int), \
-                "The 'bbox_w' field must be of type 'int'"
+                "The 'bounding_box_width' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'bbox_w' field must be an integer in [-2147483648, 2147483647]"
-        self._bbox_w = value
+                "The 'bounding_box_width' field must be an integer in [-2147483648, 2147483647]"
+        self._bounding_box_width = value
 
     @builtins.property
-    def bbox_h(self):
-        """Message field 'bbox_h'."""
-        return self._bbox_h
+    def bounding_box_height(self):
+        """Message field 'bounding_box_height'."""
+        return self._bounding_box_height
 
-    @bbox_h.setter
-    def bbox_h(self, value):
+    @bounding_box_height.setter
+    def bounding_box_height(self, value):
         if self._check_fields:
             assert \
                 isinstance(value, int), \
-                "The 'bbox_h' field must be of type 'int'"
+                "The 'bounding_box_height' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'bbox_h' field must be an integer in [-2147483648, 2147483647]"
-        self._bbox_h = value
+                "The 'bounding_box_height' field must be an integer in [-2147483648, 2147483647]"
+        self._bounding_box_height = value
 
     @builtins.property
-    def locked(self):
-        """Message field 'locked'."""
-        return self._locked
+    def is_locked(self):
+        """Message field 'is_locked'."""
+        return self._is_locked
 
-    @locked.setter
-    def locked(self, value):
+    @is_locked.setter
+    def is_locked(self, value):
         if self._check_fields:
             assert \
                 isinstance(value, bool), \
-                "The 'locked' field must be of type 'bool'"
-        self._locked = value
+                "The 'is_locked' field must be of type 'bool'"
+        self._is_locked = value

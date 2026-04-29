@@ -10,7 +10,7 @@
     "/tracker_node"
   ],
   "topics": {
-    "/pixel_error": {
+    "/behavior_node/output/pixel_error": {
       "types": [
         "geometry_msgs/msg/Vector3"
       ],
@@ -21,9 +21,9 @@
         "/leg_motion_node"
       ]
     },
-    "/tracked_objects": {
+    "/tracker_node/output/tracked_objects": {
       "types": [
-        "robot_interfaces/msg/SimpleDetection2DArray"
+        "robot_interfaces/msg/Detection2DArray"
       ],
       "publishers": [
         "/tracker_node"
@@ -32,9 +32,9 @@
         "/behavior_node"
       ]
     },
-    "/detections": {
+    "/detection_node/output/detections": {
       "types": [
-        "robot_interfaces/msg/SimpleDetection2DArray"
+        "robot_interfaces/msg/Detection2DArray"
       ],
       "publishers": [
         "/detection_node"
@@ -43,7 +43,7 @@
         "/tracker_node"
       ]
     },
-    "/camera/image_mono": {
+    "~/input/image": {
       "types": [
         "sensor_msgs/msg/Image"
       ],
@@ -65,7 +65,7 @@
         "/stereo_splitter_node"
       ]
     },
-    "/servo_cmd": {
+    "/leg_motion_node/output/servo_command": {
       "types": [
         "sensor_msgs/msg/JointState"
       ],
@@ -76,7 +76,7 @@
         "/mock_uart_bridge_node"
       ]
     },
-    "/servo_state": {
+    "/uart_bridge_node/output/servo_state": {
       "types": [
         "sensor_msgs/msg/JointState"
       ],

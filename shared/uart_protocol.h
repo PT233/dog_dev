@@ -1,5 +1,5 @@
-#ifndef SHARED_UART_PROTOCOL_H
-#define SHARED_UART_PROTOCOL_H
+#ifndef SHARED__UART_PROTOCOL_H_
+#define SHARED__UART_PROTOCOL_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -17,20 +17,20 @@ extern "C" {
 #define UART_PROTOCOL_VERSION ((uint8_t)0x03)
 
 typedef enum {
-    UART_CMD_SERVO_CONTROL = 0x01,
-    UART_CMD_QUERY = 0x02,
-    UART_CMD_INIT_HANDSHAKE = 0x10,
-    UART_CMD_SERVO_STATE = 0x81,
-    UART_CMD_SERVO_STATE_V2 = 0x82,
-    UART_CMD_SYSTEM_STATE = 0x83,
-    UART_CMD_EMERGENCY_STOP = 0xFF
+    kUartCmdServoControl = 0x01,
+    kUartCmdQuery = 0x02,
+    kUartCmdInitHandshake = 0x10,
+    kUartCmdServoState = 0x81,
+    kUartCmdServoStateV2 = 0x82,
+    kUartCmdSystemState = 0x83,
+    kUartCmdEmergencyStop = 0xFF
 } UartCmdId;
 
 typedef enum {
-    UART_SYSTEM_STATE_BOOT_CENTERING = 0x01,
-    UART_SYSTEM_STATE_WAITING_CONNECTION = 0x02,
-    UART_SYSTEM_STATE_ACTIVE = 0x03,
-    UART_SYSTEM_STATE_ERROR = 0x7F
+    kUartSystemStateBootCentering = 0x01,
+    kUartSystemStateWaitingConnection = 0x02,
+    kUartSystemStateActive = 0x03,
+    kUartSystemStateError = 0x7F
 } UartSystemState;
 
 typedef struct __attribute__((packed)) {
@@ -51,7 +51,7 @@ typedef struct __attribute__((packed)) {
     uint8_t status;
     uint16_t timestamp_ms;
     uint16_t frame_seq;
-} ServoStateItem_v2;
+} ServoStateItemV2;
 
 typedef struct __attribute__((packed)) {
     uint8_t protocol_version;
@@ -72,4 +72,4 @@ uint16_t crc16_ccitt(const uint8_t* data, size_t len);
 }
 #endif
 
-#endif
+#endif  /* SHARED__UART_PROTOCOL_H_ */

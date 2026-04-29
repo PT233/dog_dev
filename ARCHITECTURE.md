@@ -18,14 +18,14 @@
 /dev/video0
   -> H.264/UDP:5600
   -> /stereo/image_raw
-  -> /camera/image_mono
-  -> /detections
-  -> /tracked_objects
-  -> /pixel_error
-  -> /servo_cmd
+  -> ~/input/image
+  -> /detection_node/output/detections
+  -> /tracker_node/output/tracked_objects
+  -> /behavior_node/output/pixel_error
+  -> /leg_motion_node/output/servo_command
   -> UART
   -> SG90 x4
-  -> /servo_state
+  -> /uart_bridge_node/output/servo_state
 ```
 
 ## 2. ROS 2 包与可执行文件
@@ -33,12 +33,12 @@
 | 包 | 可执行文件 / 入口 | 默认部署位置 | 职责 |
 | --- | --- | --- | --- |
 | `gst_receiver` | `gst_receiver_node` | WSL2 | 监听 `5600/UDP`，把 H.264 视频解码成 `/stereo/image_raw` |
-| `stereo_splitter` | `stereo_splitter_node` | WSL2 | 裁出左目图像，发布 `/camera/image_mono` |
-| `detection_node` | `detection_node_exe` | WSL2 | YOLOv8 ONNX 推理，发布 `/detections` |
-| `tracker_node` | `tracker_node_exe` | WSL2 | ByteTrack 风格的轨迹维护，发布 `/tracked_objects` |
-| `behavior_node` | `behavior_node_exe` | WSL2 | 选择目标类别，计算像素误差，提供 `/set_target_class` |
+| `stereo_splitter` | `stereo_splitter_node` | WSL2 | 裁出左目图像，发布 `~/input/image` |
+| `detection_node` | `detection_node_exe` | WSL2 | YOLOv8 ONNX 推理，发布 `/detection_node/output/detections` |
+| `tracker_node` | `tracker_node_exe` | WSL2 | ByteTrack 风格的轨迹维护，发布 `/tracker_node/output/tracked_objects` |
+| `behavior_node` | `behavior_node_exe` | WSL2 | 选择目标类别，计算像素误差，提供 `/behavior_node/input/set_target_class` |
 | `visual_servo` | `visual_servo_node_exe` | WSL2 | `leg_motion_node`，把误差转换为四足舵机目标角 |
-| `uart_bridge` | `uart_bridge_node` | Raspberry Pi | `/servo_cmd <-> UART <-> /servo_state` |
+| `uart_bridge` | `uart_bridge_node` | Raspberry Pi | `/leg_motion_node/output/servo_command <-> UART <-> /uart_bridge_node/output/servo_state` |
 | `robot_bringup` | launch 文件集合 | WSL2 / Raspberry Pi | 组合启动入口 |
 | `robot_interfaces` | msg/srv 定义 | 两端 | 共享消息和服务接口 |
 
@@ -64,54 +64,54 @@
 | Topic | 类型 | 发布者 | 订阅者 |
 | --- | --- | --- | --- |
 | `/stereo/image_raw` | `sensor_msgs/Image` | `gst_receiver_node` | `stereo_splitter_node` |
-| `/camera/image_mono` | `sensor_msgs/Image` | `stereo_splitter_node` | `detection_node` |
-| `/detections` | `robot_interfaces/msg/SimpleDetection2DArray` | `detection_node` | `tracker_node` |
-| `/tracked_objects` | `robot_interfaces/msg/SimpleDetection2DArray` | `tracker_node` | `behavior_node` |
-| `/pixel_error` | `geometry_msgs/Vector3` | `behavior_node` | `leg_motion_node` |
-| `/servo_cmd` | `sensor_msgs/JointState` | `leg_motion_node` | `uart_bridge_node` |
-| `/servo_state` | `sensor_msgs/JointState` | `uart_bridge_node` | `leg_motion_node` |
+| `~/input/image` | `sensor_msgs/Image` | `stereo_splitter_node` | `detection_node` |
+| `/detection_node/output/detections` | `robot_interfaces/msg/Detection2DArray` | `detection_node` | `tracker_node` |
+| `/tracker_node/output/tracked_objects` | `robot_interfaces/msg/Detection2DArray` | `tracker_node` | `behavior_node` |
+| `/behavior_node/output/pixel_error` | `geometry_msgs/Vector3` | `behavior_node` | `leg_motion_node` |
+| `/leg_motion_node/output/servo_command` | `sensor_msgs/JointState` | `leg_motion_node` | `uart_bridge_node` |
+| `/uart_bridge_node/output/servo_state` | `sensor_msgs/JointState` | `uart_bridge_node` | `leg_motion_node` |
 
 ### Services
 
 | Service | 类型 | 服务端 | 状态 |
 | --- | --- | --- | --- |
-| `/set_target_class` | `robot_interfaces/srv/SetTargetClass` | `behavior_node` | 已实现 |
+| `/behavior_node/input/set_target_class` | `robot_interfaces/srv/SetTargetClass` | `behavior_node` | 已实现 |
 | `/calibrate_center` | `robot_interfaces/srv/CalibrateCenter` | 无 | 仅保留接口定义 |
 
 ## 5. 节点内部职责摘要
 
 ### `detection_node`
 
-- 订阅 `/camera/image_mono`
+- 订阅 `~/input/image`
 - 使用独立推理线程处理图像队列
 - 默认参数：`model_path`、`conf_threshold`、`nms_threshold`、`use_cuda`
-- 输出 `SimpleDetection2DArray`
+- 输出 `Detection2DArray`
 
 ### `tracker_node`
 
-- 输入 `/detections`
+- 输入 `/detection_node/output/detections`
 - 根据中心点和 IoU 风格匹配更新轨迹
-- 输出带 `track_id` 的 `/tracked_objects`
+- 输出带 `track_id` 的 `/tracker_node/output/tracked_objects`
 
 ### `behavior_node`
 
-- 从 `/tracked_objects` 中筛出指定 `class_id`
+- 从 `/tracker_node/output/tracked_objects` 中筛出指定 `class_id`
 - 当前策略：同类别目标中选择面积最大的框
-- 发布像素误差：`(target_cx - center_x, target_cy - center_y, 0)`
-- 支持 `/set_target_class`
+- 发布像素误差：`(target_center_x - center_x, target_center_y - center_y, 0)`
+- 支持 `/behavior_node/input/set_target_class`
 
 ### `leg_motion_node`
 
-- 订阅 `/pixel_error` 与 `/servo_state`
+- 订阅 `/behavior_node/output/pixel_error` 与 `/uart_bridge_node/output/servo_state`
 - 内部含两组 PID：`turn.*` 和 `forward.*`
 - 将转向偏置和步幅叠加到四条腿的中立角上
-- 30 Hz 定时发布 `/servo_cmd`
+- 30 Hz 定时发布 `/leg_motion_node/output/servo_command`
 
 ### `uart_bridge_node`
 
 - 打开 `/dev/ttyAMA0`
-- 在握手未完成前丢弃 `/servo_cmd`
-- 接收 `SERVO_STATE_V2` 后映射时间戳、检测丢包、发布 `/servo_state`
+- 在握手未完成前丢弃 `/leg_motion_node/output/servo_command`
+- 接收 `SERVO_STATE_V2` 后映射时间戳、检测丢包、发布 `/uart_bridge_node/output/servo_state`
 
 ## 6. UART 协议摘要
 
@@ -138,7 +138,7 @@ AA 55 | cmd_id | payload_len | payload... | crc16(lo,hi) | 0D
 2. `500 ms` 后进入 `WAITING_CONNECTION`
 3. `uart_bridge` 周期发送 `INIT_HANDSHAKE`
 4. STM32 收到正确的握手负载后进入 `ACTIVE`
-5. `uart_bridge` 只有在收到 `ACTIVE` 后才转发 `/servo_cmd`
+5. `uart_bridge` 只有在收到 `ACTIVE` 后才转发 `/leg_motion_node/output/servo_command`
 
 ## 7. 参数文件
 

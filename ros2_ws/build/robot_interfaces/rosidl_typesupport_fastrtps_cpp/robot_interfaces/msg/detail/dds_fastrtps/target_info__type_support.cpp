@@ -85,20 +85,20 @@ cdr_serialize(
   // Member: confidence
   cdr << ros_message.confidence;
 
-  // Member: bbox_cx
-  cdr << ros_message.bbox_cx;
+  // Member: bounding_box_center_x
+  cdr << ros_message.bounding_box_center_x;
 
-  // Member: bbox_cy
-  cdr << ros_message.bbox_cy;
+  // Member: bounding_box_center_y
+  cdr << ros_message.bounding_box_center_y;
 
-  // Member: bbox_w
-  cdr << ros_message.bbox_w;
+  // Member: bounding_box_width
+  cdr << ros_message.bounding_box_width;
 
-  // Member: bbox_h
-  cdr << ros_message.bbox_h;
+  // Member: bounding_box_height
+  cdr << ros_message.bounding_box_height;
 
-  // Member: locked
-  cdr << (ros_message.locked ? true : false);
+  // Member: is_locked
+  cdr << (ros_message.is_locked ? true : false);
 
   return true;
 }
@@ -122,23 +122,23 @@ cdr_deserialize(
   // Member: confidence
   cdr >> ros_message.confidence;
 
-  // Member: bbox_cx
-  cdr >> ros_message.bbox_cx;
+  // Member: bounding_box_center_x
+  cdr >> ros_message.bounding_box_center_x;
 
-  // Member: bbox_cy
-  cdr >> ros_message.bbox_cy;
+  // Member: bounding_box_center_y
+  cdr >> ros_message.bounding_box_center_y;
 
-  // Member: bbox_w
-  cdr >> ros_message.bbox_w;
+  // Member: bounding_box_width
+  cdr >> ros_message.bounding_box_width;
 
-  // Member: bbox_h
-  cdr >> ros_message.bbox_h;
+  // Member: bounding_box_height
+  cdr >> ros_message.bounding_box_height;
 
-  // Member: locked
+  // Member: is_locked
   {
     uint8_t tmp;
     cdr >> tmp;
-    ros_message.locked = tmp ? true : false;
+    ros_message.is_locked = tmp ? true : false;
   }
 
   return true;
@@ -180,37 +180,37 @@ get_serialized_size(
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_cx
+  // Member: bounding_box_center_x
   {
-    size_t item_size = sizeof(ros_message.bbox_cx);
+    size_t item_size = sizeof(ros_message.bounding_box_center_x);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_cy
+  // Member: bounding_box_center_y
   {
-    size_t item_size = sizeof(ros_message.bbox_cy);
+    size_t item_size = sizeof(ros_message.bounding_box_center_y);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_w
+  // Member: bounding_box_width
   {
-    size_t item_size = sizeof(ros_message.bbox_w);
+    size_t item_size = sizeof(ros_message.bounding_box_width);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_h
+  // Member: bounding_box_height
   {
-    size_t item_size = sizeof(ros_message.bbox_h);
+    size_t item_size = sizeof(ros_message.bounding_box_height);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: locked
+  // Member: is_locked
   {
-    size_t item_size = sizeof(ros_message.locked);
+    size_t item_size = sizeof(ros_message.is_locked);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -283,35 +283,35 @@ max_serialized_size_TargetInfo(
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
-  // Member: bbox_cx
+  // Member: bounding_box_center_x
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
-  // Member: bbox_cy
+  // Member: bounding_box_center_y
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
-  // Member: bbox_w
+  // Member: bounding_box_width
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
-  // Member: bbox_h
+  // Member: bounding_box_height
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
     current_alignment += array_size * sizeof(uint32_t) +
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
-  // Member: locked
+  // Member: is_locked
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint8_t);
@@ -326,7 +326,7 @@ max_serialized_size_TargetInfo(
     using DataType = robot_interfaces::msg::TargetInfo;
     is_plain =
       (
-      offsetof(DataType, locked) +
+      offsetof(DataType, is_locked) +
       last_member_size
       ) == ret_val;
   }
@@ -354,20 +354,20 @@ cdr_serialize_key(
   // Member: confidence
   cdr << ros_message.confidence;
 
-  // Member: bbox_cx
-  cdr << ros_message.bbox_cx;
+  // Member: bounding_box_center_x
+  cdr << ros_message.bounding_box_center_x;
 
-  // Member: bbox_cy
-  cdr << ros_message.bbox_cy;
+  // Member: bounding_box_center_y
+  cdr << ros_message.bounding_box_center_y;
 
-  // Member: bbox_w
-  cdr << ros_message.bbox_w;
+  // Member: bounding_box_width
+  cdr << ros_message.bounding_box_width;
 
-  // Member: bbox_h
-  cdr << ros_message.bbox_h;
+  // Member: bounding_box_height
+  cdr << ros_message.bounding_box_height;
 
-  // Member: locked
-  cdr << (ros_message.locked ? true : false);
+  // Member: is_locked
+  cdr << (ros_message.is_locked ? true : false);
 
   return true;
 }
@@ -407,37 +407,37 @@ get_serialized_size_key(
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_cx
+  // Member: bounding_box_center_x
   {
-    size_t item_size = sizeof(ros_message.bbox_cx);
+    size_t item_size = sizeof(ros_message.bounding_box_center_x);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_cy
+  // Member: bounding_box_center_y
   {
-    size_t item_size = sizeof(ros_message.bbox_cy);
+    size_t item_size = sizeof(ros_message.bounding_box_center_y);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_w
+  // Member: bounding_box_width
   {
-    size_t item_size = sizeof(ros_message.bbox_w);
+    size_t item_size = sizeof(ros_message.bounding_box_width);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: bbox_h
+  // Member: bounding_box_height
   {
-    size_t item_size = sizeof(ros_message.bbox_h);
+    size_t item_size = sizeof(ros_message.bounding_box_height);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Member: locked
+  // Member: is_locked
   {
-    size_t item_size = sizeof(ros_message.locked);
+    size_t item_size = sizeof(ros_message.is_locked);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -513,7 +513,7 @@ max_serialized_size_key_TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Member: bbox_cx
+  // Member: bounding_box_center_x
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -521,7 +521,7 @@ max_serialized_size_key_TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Member: bbox_cy
+  // Member: bounding_box_center_y
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -529,7 +529,7 @@ max_serialized_size_key_TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Member: bbox_w
+  // Member: bounding_box_width
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -537,7 +537,7 @@ max_serialized_size_key_TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Member: bbox_h
+  // Member: bounding_box_height
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -545,7 +545,7 @@ max_serialized_size_key_TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Member: locked
+  // Member: is_locked
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint8_t);
@@ -560,7 +560,7 @@ max_serialized_size_key_TargetInfo(
     using DataType = robot_interfaces::msg::TargetInfo;
     is_plain =
       (
-      offsetof(DataType, locked) +
+      offsetof(DataType, is_locked) +
       last_member_size
       ) == ret_val;
   }

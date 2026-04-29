@@ -1,5 +1,5 @@
-#ifndef SHARED_UART_PROTOCOL_H
-#define SHARED_UART_PROTOCOL_H
+#ifndef STM32_KEIL__CORE__INC__UART_PROTOCOL_H_
+#define STM32_KEIL__CORE__INC__UART_PROTOCOL_H_
 
 /* UART 二进制协议定义
  *
@@ -18,7 +18,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif  /* STM32_KEIL__CORE__INC__UART_PROTOCOL_H_ */
 
 #define UART_FRAME_HEADER_0 ((uint8_t)0xAA)  /* 帧头第 1 字节，用于在字节流中快速找同步点 */
 #define UART_FRAME_HEADER_1 ((uint8_t)0x55)  /* 帧头第 2 字节，降低误判普通 payload 为帧头的概率 */
@@ -29,20 +29,20 @@ extern "C" {
 #define UART_PROTOCOL_VERSION ((uint8_t)0x03) /* 握手版本号，ROS 2 和 STM32 不一致时拒绝进入 ACTIVE */
 
 typedef enum {
-    UART_CMD_SERVO_CONTROL = 0x01,   /* ROS 2 -> STM32：一帧内可携带多路舵机目标角 */
-    UART_CMD_QUERY = 0x02,           /* 预留查询命令，当前主流程未使用 */
-    UART_CMD_INIT_HANDSHAKE = 0x10,  /* ROS 2 -> STM32：请求完成启动握手并进入可控状态 */
-    UART_CMD_SERVO_STATE = 0x81,     /* STM32 -> ROS 2：舵机状态 v1，无时间戳，保留兼容 */
-    UART_CMD_SERVO_STATE_V2 = 0x82,  /* STM32 -> ROS 2：舵机状态 v2，含时间戳和序号 */
-    UART_CMD_SYSTEM_STATE = 0x83,    /* STM32 -> ROS 2：启动/等待/激活状态上报 */
-    UART_CMD_EMERGENCY_STOP = 0xFF   /* 预留紧急停止命令，双向语义 */
+    kUartCmdServoControl = 0x01,   /* ROS 2 -> STM32：一帧内可携带多路舵机目标角 */
+    kUartCmdQuery = 0x02,           /* 预留查询命令，当前主流程未使用 */
+    kUartCmdInitHandshake = 0x10,  /* ROS 2 -> STM32：请求完成启动握手并进入可控状态 */
+    kUartCmdServoState = 0x81,     /* STM32 -> ROS 2：舵机状态 v1，无时间戳，保留兼容 */
+    kUartCmdServoStateV2 = 0x82,  /* STM32 -> ROS 2：舵机状态 v2，含时间戳和序号 */
+    kUartCmdSystemState = 0x83,    /* STM32 -> ROS 2：启动/等待/激活状态上报 */
+    kUartCmdEmergencyStop = 0xFF   /* 预留紧急停止命令，双向语义 */
 } UartCmdId;
 
 typedef enum {
-    UART_SYSTEM_STATE_BOOT_CENTERING = 0x01,      /* 上电归中阶段，舵机先回到安全中位 */
-    UART_SYSTEM_STATE_WAITING_CONNECTION = 0x02,  /* 归中完成，等待 ROS 2 握手 */
-    UART_SYSTEM_STATE_ACTIVE = 0x03,              /* 握手完成，允许执行舵机控制帧 */
-    UART_SYSTEM_STATE_ERROR = 0x7F                /* 预留错误状态，当前故障主要由 IWDG 复位兜底 */
+    kUartSystemStateBootCentering = 0x01,      /* 上电归中阶段，舵机先回到安全中位 */
+    kUartSystemStateWaitingConnection = 0x02,  /* 归中完成，等待 ROS 2 握手 */
+    kUartSystemStateActive = 0x03,              /* 握手完成，允许执行舵机控制帧 */
+    kUartSystemStateError = 0x7F                /* 预留错误状态，当前故障主要由 IWDG 复位兜底 */
 } UartSystemState;
 
 typedef struct __attribute__((packed)) {
@@ -63,11 +63,11 @@ typedef struct __attribute__((packed)) {
     uint8_t status;              /* 0=idle，1=moving */
     uint16_t timestamp_ms;       /* STM32 端 16-bit 毫秒时间戳，用于上位机估算链路延迟 */
     uint16_t frame_seq;          /* 状态帧序号，用于 uart_bridge 统计丢帧 */
-} ServoStateItem_v2;
+} ServoStateItemV2;
 
 typedef struct __attribute__((packed)) {
     uint8_t protocol_version;    /* 上位机声明的协议版本 */
-    uint8_t requested_state;     /* 期望 STM32 进入的状态，正常为 UART_SYSTEM_STATE_ACTIVE */
+    uint8_t requested_state;     /* 期望 STM32 进入的状态，正常为 kUartSystemStateActive */
     uint16_t reserved;           /* 保留字段，保持 4 字节对齐并给后续扩展留空间 */
 } UartHandshakePayload;
 

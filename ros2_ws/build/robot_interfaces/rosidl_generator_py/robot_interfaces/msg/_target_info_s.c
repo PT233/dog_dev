@@ -107,49 +107,49 @@ bool robot_interfaces__msg__target_info__convert_from_py(PyObject * _pymsg, void
     ros_message->confidence = (float)PyFloat_AS_DOUBLE(field);
     Py_DECREF(field);
   }
-  {  // bbox_cx
-    PyObject * field = PyObject_GetAttrString(_pymsg, "bbox_cx");
+  {  // bounding_box_center_x
+    PyObject * field = PyObject_GetAttrString(_pymsg, "bounding_box_center_x");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->bbox_cx = (int32_t)PyLong_AsLong(field);
+    ros_message->bounding_box_center_x = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
-  {  // bbox_cy
-    PyObject * field = PyObject_GetAttrString(_pymsg, "bbox_cy");
+  {  // bounding_box_center_y
+    PyObject * field = PyObject_GetAttrString(_pymsg, "bounding_box_center_y");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->bbox_cy = (int32_t)PyLong_AsLong(field);
+    ros_message->bounding_box_center_y = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
-  {  // bbox_w
-    PyObject * field = PyObject_GetAttrString(_pymsg, "bbox_w");
+  {  // bounding_box_width
+    PyObject * field = PyObject_GetAttrString(_pymsg, "bounding_box_width");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->bbox_w = (int32_t)PyLong_AsLong(field);
+    ros_message->bounding_box_width = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
-  {  // bbox_h
-    PyObject * field = PyObject_GetAttrString(_pymsg, "bbox_h");
+  {  // bounding_box_height
+    PyObject * field = PyObject_GetAttrString(_pymsg, "bounding_box_height");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->bbox_h = (int32_t)PyLong_AsLong(field);
+    ros_message->bounding_box_height = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
-  {  // locked
-    PyObject * field = PyObject_GetAttrString(_pymsg, "locked");
+  {  // is_locked
+    PyObject * field = PyObject_GetAttrString(_pymsg, "is_locked");
     if (!field) {
       return false;
     }
     assert(PyBool_Check(field));
-    ros_message->locked = (Py_True == field);
+    ros_message->is_locked = (Py_True == field);
     Py_DECREF(field);
   }
 
@@ -233,55 +233,55 @@ PyObject * robot_interfaces__msg__target_info__convert_to_py(void * raw_ros_mess
       }
     }
   }
-  {  // bbox_cx
+  {  // bounding_box_center_x
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->bbox_cx);
+    field = PyLong_FromLong(ros_message->bounding_box_center_x);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "bbox_cx", field);
+      int rc = PyObject_SetAttrString(_pymessage, "bounding_box_center_x", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
       }
     }
   }
-  {  // bbox_cy
+  {  // bounding_box_center_y
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->bbox_cy);
+    field = PyLong_FromLong(ros_message->bounding_box_center_y);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "bbox_cy", field);
+      int rc = PyObject_SetAttrString(_pymessage, "bounding_box_center_y", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
       }
     }
   }
-  {  // bbox_w
+  {  // bounding_box_width
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->bbox_w);
+    field = PyLong_FromLong(ros_message->bounding_box_width);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "bbox_w", field);
+      int rc = PyObject_SetAttrString(_pymessage, "bounding_box_width", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
       }
     }
   }
-  {  // bbox_h
+  {  // bounding_box_height
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->bbox_h);
+    field = PyLong_FromLong(ros_message->bounding_box_height);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "bbox_h", field);
+      int rc = PyObject_SetAttrString(_pymessage, "bounding_box_height", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
       }
     }
   }
-  {  // locked
+  {  // is_locked
     PyObject * field = NULL;
-    field = PyBool_FromLong(ros_message->locked ? 1 : 0);
+    field = PyBool_FromLong(ros_message->is_locked ? 1 : 0);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "locked", field);
+      int rc = PyObject_SetAttrString(_pymessage, "is_locked", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

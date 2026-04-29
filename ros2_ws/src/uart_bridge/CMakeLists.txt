@@ -5,7 +5,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# 依赖：rclcpp 提供 ROS 节点，sensor_msgs 提供 /servo_cmd 和 /servo_state 的 JointState。
+# 依赖：rclcpp 提供 ROS 节点，sensor_msgs 提供舵机命令/状态的 JointState。
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)

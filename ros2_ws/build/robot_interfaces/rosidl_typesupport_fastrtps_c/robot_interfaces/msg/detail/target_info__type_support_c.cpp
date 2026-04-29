@@ -131,29 +131,29 @@ bool cdr_serialize_robot_interfaces__msg__TargetInfo(
     cdr << ros_message->confidence;
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
-    cdr << ros_message->bbox_cx;
+    cdr << ros_message->bounding_box_center_x;
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
-    cdr << ros_message->bbox_cy;
+    cdr << ros_message->bounding_box_center_y;
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
-    cdr << ros_message->bbox_w;
+    cdr << ros_message->bounding_box_width;
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
-    cdr << ros_message->bbox_h;
+    cdr << ros_message->bounding_box_height;
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
-    cdr << (ros_message->locked ? true : false);
+    cdr << (ros_message->is_locked ? true : false);
   }
 
   return true;
@@ -206,31 +206,31 @@ bool cdr_deserialize_robot_interfaces__msg__TargetInfo(
     cdr >> ros_message->confidence;
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
-    cdr >> ros_message->bbox_cx;
+    cdr >> ros_message->bounding_box_center_x;
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
-    cdr >> ros_message->bbox_cy;
+    cdr >> ros_message->bounding_box_center_y;
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
-    cdr >> ros_message->bbox_w;
+    cdr >> ros_message->bounding_box_width;
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
-    cdr >> ros_message->bbox_h;
+    cdr >> ros_message->bounding_box_height;
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
     uint8_t tmp;
     cdr >> tmp;
-    ros_message->locked = tmp ? true : false;
+    ros_message->is_locked = tmp ? true : false;
   }
 
   return true;
@@ -272,37 +272,37 @@ size_t get_serialized_size_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
-    size_t item_size = sizeof(ros_message->bbox_cx);
+    size_t item_size = sizeof(ros_message->bounding_box_center_x);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
-    size_t item_size = sizeof(ros_message->bbox_cy);
+    size_t item_size = sizeof(ros_message->bounding_box_center_y);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
-    size_t item_size = sizeof(ros_message->bbox_w);
+    size_t item_size = sizeof(ros_message->bounding_box_width);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
-    size_t item_size = sizeof(ros_message->bbox_h);
+    size_t item_size = sizeof(ros_message->bounding_box_height);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
-    size_t item_size = sizeof(ros_message->locked);
+    size_t item_size = sizeof(ros_message->is_locked);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -379,7 +379,7 @@ size_t max_serialized_size_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -387,7 +387,7 @@ size_t max_serialized_size_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -395,7 +395,7 @@ size_t max_serialized_size_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -403,7 +403,7 @@ size_t max_serialized_size_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -411,7 +411,7 @@ size_t max_serialized_size_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint8_t);
@@ -427,7 +427,7 @@ size_t max_serialized_size_robot_interfaces__msg__TargetInfo(
     using DataType = robot_interfaces__msg__TargetInfo;
     is_plain =
       (
-      offsetof(DataType, locked) +
+      offsetof(DataType, is_locked) +
       last_member_size
       ) == ret_val;
   }
@@ -478,29 +478,29 @@ bool cdr_serialize_key_robot_interfaces__msg__TargetInfo(
     cdr << ros_message->confidence;
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
-    cdr << ros_message->bbox_cx;
+    cdr << ros_message->bounding_box_center_x;
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
-    cdr << ros_message->bbox_cy;
+    cdr << ros_message->bounding_box_center_y;
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
-    cdr << ros_message->bbox_w;
+    cdr << ros_message->bounding_box_width;
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
-    cdr << ros_message->bbox_h;
+    cdr << ros_message->bounding_box_height;
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
-    cdr << (ros_message->locked ? true : false);
+    cdr << (ros_message->is_locked ? true : false);
   }
 
   return true;
@@ -542,37 +542,37 @@ size_t get_serialized_size_key_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
-    size_t item_size = sizeof(ros_message->bbox_cx);
+    size_t item_size = sizeof(ros_message->bounding_box_center_x);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
-    size_t item_size = sizeof(ros_message->bbox_cy);
+    size_t item_size = sizeof(ros_message->bounding_box_center_y);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
-    size_t item_size = sizeof(ros_message->bbox_w);
+    size_t item_size = sizeof(ros_message->bounding_box_width);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
-    size_t item_size = sizeof(ros_message->bbox_h);
+    size_t item_size = sizeof(ros_message->bounding_box_height);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
-    size_t item_size = sizeof(ros_message->locked);
+    size_t item_size = sizeof(ros_message->is_locked);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -647,7 +647,7 @@ size_t max_serialized_size_key_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_cx
+  // Field name: bounding_box_center_x
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -655,7 +655,7 @@ size_t max_serialized_size_key_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_cy
+  // Field name: bounding_box_center_y
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -663,7 +663,7 @@ size_t max_serialized_size_key_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_w
+  // Field name: bounding_box_width
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -671,7 +671,7 @@ size_t max_serialized_size_key_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: bbox_h
+  // Field name: bounding_box_height
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint32_t);
@@ -679,7 +679,7 @@ size_t max_serialized_size_key_robot_interfaces__msg__TargetInfo(
       eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
-  // Field name: locked
+  // Field name: is_locked
   {
     size_t array_size = 1;
     last_member_size = array_size * sizeof(uint8_t);
@@ -694,7 +694,7 @@ size_t max_serialized_size_key_robot_interfaces__msg__TargetInfo(
     using DataType = robot_interfaces__msg__TargetInfo;
     is_plain =
       (
-      offsetof(DataType, locked) +
+      offsetof(DataType, is_locked) +
       last_member_size
       ) == ret_val;
   }

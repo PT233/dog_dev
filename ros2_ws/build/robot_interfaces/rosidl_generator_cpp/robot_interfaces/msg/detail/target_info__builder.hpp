@@ -24,15 +24,15 @@ namespace msg
 namespace builder
 {
 
-class Init_TargetInfo_locked
+class Init_TargetInfo_is_locked
 {
 public:
-  explicit Init_TargetInfo_locked(::robot_interfaces::msg::TargetInfo & msg)
+  explicit Init_TargetInfo_is_locked(::robot_interfaces::msg::TargetInfo & msg)
   : msg_(msg)
   {}
-  ::robot_interfaces::msg::TargetInfo locked(::robot_interfaces::msg::TargetInfo::_locked_type arg)
+  ::robot_interfaces::msg::TargetInfo is_locked(::robot_interfaces::msg::TargetInfo::_is_locked_type arg)
   {
-    msg_.locked = std::move(arg);
+    msg_.is_locked = std::move(arg);
     return std::move(msg_);
   }
 
@@ -40,64 +40,64 @@ private:
   ::robot_interfaces::msg::TargetInfo msg_;
 };
 
-class Init_TargetInfo_bbox_h
+class Init_TargetInfo_bounding_box_height
 {
 public:
-  explicit Init_TargetInfo_bbox_h(::robot_interfaces::msg::TargetInfo & msg)
+  explicit Init_TargetInfo_bounding_box_height(::robot_interfaces::msg::TargetInfo & msg)
   : msg_(msg)
   {}
-  Init_TargetInfo_locked bbox_h(::robot_interfaces::msg::TargetInfo::_bbox_h_type arg)
+  Init_TargetInfo_is_locked bounding_box_height(::robot_interfaces::msg::TargetInfo::_bounding_box_height_type arg)
   {
-    msg_.bbox_h = std::move(arg);
-    return Init_TargetInfo_locked(msg_);
+    msg_.bounding_box_height = std::move(arg);
+    return Init_TargetInfo_is_locked(msg_);
   }
 
 private:
   ::robot_interfaces::msg::TargetInfo msg_;
 };
 
-class Init_TargetInfo_bbox_w
+class Init_TargetInfo_bounding_box_width
 {
 public:
-  explicit Init_TargetInfo_bbox_w(::robot_interfaces::msg::TargetInfo & msg)
+  explicit Init_TargetInfo_bounding_box_width(::robot_interfaces::msg::TargetInfo & msg)
   : msg_(msg)
   {}
-  Init_TargetInfo_bbox_h bbox_w(::robot_interfaces::msg::TargetInfo::_bbox_w_type arg)
+  Init_TargetInfo_bounding_box_height bounding_box_width(::robot_interfaces::msg::TargetInfo::_bounding_box_width_type arg)
   {
-    msg_.bbox_w = std::move(arg);
-    return Init_TargetInfo_bbox_h(msg_);
+    msg_.bounding_box_width = std::move(arg);
+    return Init_TargetInfo_bounding_box_height(msg_);
   }
 
 private:
   ::robot_interfaces::msg::TargetInfo msg_;
 };
 
-class Init_TargetInfo_bbox_cy
+class Init_TargetInfo_bounding_box_center_y
 {
 public:
-  explicit Init_TargetInfo_bbox_cy(::robot_interfaces::msg::TargetInfo & msg)
+  explicit Init_TargetInfo_bounding_box_center_y(::robot_interfaces::msg::TargetInfo & msg)
   : msg_(msg)
   {}
-  Init_TargetInfo_bbox_w bbox_cy(::robot_interfaces::msg::TargetInfo::_bbox_cy_type arg)
+  Init_TargetInfo_bounding_box_width bounding_box_center_y(::robot_interfaces::msg::TargetInfo::_bounding_box_center_y_type arg)
   {
-    msg_.bbox_cy = std::move(arg);
-    return Init_TargetInfo_bbox_w(msg_);
+    msg_.bounding_box_center_y = std::move(arg);
+    return Init_TargetInfo_bounding_box_width(msg_);
   }
 
 private:
   ::robot_interfaces::msg::TargetInfo msg_;
 };
 
-class Init_TargetInfo_bbox_cx
+class Init_TargetInfo_bounding_box_center_x
 {
 public:
-  explicit Init_TargetInfo_bbox_cx(::robot_interfaces::msg::TargetInfo & msg)
+  explicit Init_TargetInfo_bounding_box_center_x(::robot_interfaces::msg::TargetInfo & msg)
   : msg_(msg)
   {}
-  Init_TargetInfo_bbox_cy bbox_cx(::robot_interfaces::msg::TargetInfo::_bbox_cx_type arg)
+  Init_TargetInfo_bounding_box_center_y bounding_box_center_x(::robot_interfaces::msg::TargetInfo::_bounding_box_center_x_type arg)
   {
-    msg_.bbox_cx = std::move(arg);
-    return Init_TargetInfo_bbox_cy(msg_);
+    msg_.bounding_box_center_x = std::move(arg);
+    return Init_TargetInfo_bounding_box_center_y(msg_);
   }
 
 private:
@@ -110,10 +110,10 @@ public:
   explicit Init_TargetInfo_confidence(::robot_interfaces::msg::TargetInfo & msg)
   : msg_(msg)
   {}
-  Init_TargetInfo_bbox_cx confidence(::robot_interfaces::msg::TargetInfo::_confidence_type arg)
+  Init_TargetInfo_bounding_box_center_x confidence(::robot_interfaces::msg::TargetInfo::_confidence_type arg)
   {
     msg_.confidence = std::move(arg);
-    return Init_TargetInfo_bbox_cx(msg_);
+    return Init_TargetInfo_bounding_box_center_x(msg_);
   }
 
 private:

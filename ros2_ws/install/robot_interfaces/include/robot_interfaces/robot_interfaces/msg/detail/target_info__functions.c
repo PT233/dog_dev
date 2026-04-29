@@ -40,11 +40,11 @@ robot_interfaces__msg__TargetInfo__init(robot_interfaces__msg__TargetInfo * msg)
     return false;
   }
   // confidence
-  // bbox_cx
-  // bbox_cy
-  // bbox_w
-  // bbox_h
-  // locked
+  // bounding_box_center_x
+  // bounding_box_center_y
+  // bounding_box_width
+  // bounding_box_height
+  // is_locked
   return true;
 }
 
@@ -61,11 +61,11 @@ robot_interfaces__msg__TargetInfo__fini(robot_interfaces__msg__TargetInfo * msg)
   // track_id
   rosidl_runtime_c__String__fini(&msg->track_id);
   // confidence
-  // bbox_cx
-  // bbox_cy
-  // bbox_w
-  // bbox_h
-  // locked
+  // bounding_box_center_x
+  // bounding_box_center_y
+  // bounding_box_width
+  // bounding_box_height
+  // is_locked
 }
 
 bool
@@ -96,24 +96,24 @@ robot_interfaces__msg__TargetInfo__are_equal(const robot_interfaces__msg__Target
   if (lhs->confidence != rhs->confidence) {
     return false;
   }
-  // bbox_cx
-  if (lhs->bbox_cx != rhs->bbox_cx) {
+  // bounding_box_center_x
+  if (lhs->bounding_box_center_x != rhs->bounding_box_center_x) {
     return false;
   }
-  // bbox_cy
-  if (lhs->bbox_cy != rhs->bbox_cy) {
+  // bounding_box_center_y
+  if (lhs->bounding_box_center_y != rhs->bounding_box_center_y) {
     return false;
   }
-  // bbox_w
-  if (lhs->bbox_w != rhs->bbox_w) {
+  // bounding_box_width
+  if (lhs->bounding_box_width != rhs->bounding_box_width) {
     return false;
   }
-  // bbox_h
-  if (lhs->bbox_h != rhs->bbox_h) {
+  // bounding_box_height
+  if (lhs->bounding_box_height != rhs->bounding_box_height) {
     return false;
   }
-  // locked
-  if (lhs->locked != rhs->locked) {
+  // is_locked
+  if (lhs->is_locked != rhs->is_locked) {
     return false;
   }
   return true;
@@ -147,16 +147,16 @@ robot_interfaces__msg__TargetInfo__copy(
   }
   // confidence
   output->confidence = input->confidence;
-  // bbox_cx
-  output->bbox_cx = input->bbox_cx;
-  // bbox_cy
-  output->bbox_cy = input->bbox_cy;
-  // bbox_w
-  output->bbox_w = input->bbox_w;
-  // bbox_h
-  output->bbox_h = input->bbox_h;
-  // locked
-  output->locked = input->locked;
+  // bounding_box_center_x
+  output->bounding_box_center_x = input->bounding_box_center_x;
+  // bounding_box_center_y
+  output->bounding_box_center_y = input->bounding_box_center_y;
+  // bounding_box_width
+  output->bounding_box_width = input->bounding_box_width;
+  // bounding_box_height
+  output->bounding_box_height = input->bounding_box_height;
+  // is_locked
+  output->is_locked = input->is_locked;
   return true;
 }
 

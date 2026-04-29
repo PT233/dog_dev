@@ -11,20 +11,20 @@ digraph ros2_runtime_rqt_graph {
   n__stereo_splitter_node [label="/stereo_splitter_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
   n__tracker_node [label="/tracker_node", shape=ellipse, style="filled", fillcolor="#E0F2FE", color="#0284C7", penwidth=1.4];
 
-  t__camera_image_mono [label="/camera/image_mono
+  t__camera_image_mono [label="~/input/image
 sensor_msgs/msg/Image", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
-  t__detections [label="/detections
-robot_interfaces/msg/SimpleDetection2DArray", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
-  t__pixel_error [label="/pixel_error
+  t__detections [label="/detection_node/output/detections
+robot_interfaces/msg/Detection2DArray", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__pixel_error [label="/behavior_node/output/pixel_error
 geometry_msgs/msg/Vector3", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
-  t__servo_cmd [label="/servo_cmd
+  t__servo_cmd [label="/leg_motion_node/output/servo_command
 sensor_msgs/msg/JointState", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
-  t__servo_state [label="/servo_state
+  t__servo_state [label="/uart_bridge_node/output/servo_state
 sensor_msgs/msg/JointState", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
   t__stereo_image_raw [label="/stereo/image_raw
 sensor_msgs/msg/Image", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
-  t__tracked_objects [label="/tracked_objects
-robot_interfaces/msg/SimpleDetection2DArray", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
+  t__tracked_objects [label="/tracker_node/output/tracked_objects
+robot_interfaces/msg/Detection2DArray", shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8"];
 
   n__stereo_splitter_node -> t__camera_image_mono [color="#2563EB"];
   t__camera_image_mono -> n__detection_node [color="#EA580C"];

@@ -5,9 +5,13 @@
 
 module robot_interfaces {
   module srv {
+    @verbatim (language="comment", text=
+      "请求按 COCO 类别名切换目标，例如 person、cup。")
     struct SetTargetClass_Request {
       string class_name;
     };
+    @verbatim (language="comment", text=
+      "success=false 时 message 会说明未知类别等错误原因。")
     struct SetTargetClass_Response {
       boolean success;
 

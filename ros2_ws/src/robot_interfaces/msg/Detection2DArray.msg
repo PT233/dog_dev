@@ -3,4 +3,4 @@
 std_msgs/Header header
 
 # 同一帧内的所有检测框。
-SimpleDetection[] detections
+Detection2D[] detections
