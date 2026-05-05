@@ -1,0 +1,3205 @@
+{
+  "source": "/home/peter/dog/dog_dev/circuit/pcb.md",
+  "generated_with": "9.0.9",
+  "board": {
+    "path": "/home/peter/dog/dog_dev/circuit/circuit.kicad_pcb",
+    "size_mm": [
+      71.0,
+      56.0
+    ],
+    "layers": [
+      "F.Cu",
+      "B.Cu"
+    ],
+    "layer_count": 2,
+    "edge_bbox_mm": [
+      0.0,
+      0.0,
+      71.0,
+      56.0
+    ],
+    "blue_pill_center_mm": [
+      42.5,
+      28.0
+    ],
+    "board_center_mm": [
+      35.5,
+      28.0
+    ],
+    "raspberry_pi_4b_mount_holes_mm": [
+      {
+        "ref": "MH1",
+        "x": 3.5,
+        "y": 3.5,
+        "drill_mm": 3.2,
+        "pad_mm": 6.0
+      },
+      {
+        "ref": "MH2",
+        "x": 61.5,
+        "y": 3.5,
+        "drill_mm": 3.2,
+        "pad_mm": 6.0
+      },
+      {
+        "ref": "MH3",
+        "x": 3.5,
+        "y": 52.5,
+        "drill_mm": 3.2,
+        "pad_mm": 6.0
+      },
+      {
+        "ref": "MH4",
+        "x": 61.5,
+        "y": 52.5,
+        "drill_mm": 3.2,
+        "pad_mm": 6.0
+      }
+    ],
+    "breakout_holes": 80,
+    "via_count": 0,
+    "bottom_gnd_pour_area_ratio_percent": 80.09
+  },
+  "trace_bend_histogram": {
+    "0": 141,
+    "1": 0,
+    "2": 0,
+    ">2": 0
+  },
+  "all_routes": [
+    {
+      "label": "5V_SERVO",
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          5.0,
+          44.0
+        ],
+        [
+          5.0,
+          47.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.0,
+      "angles_deg": [
+        90.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "5V_SERVO",
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          5.0,
+          47.0
+        ],
+        [
+          8.0,
+          49.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.905,
+      "angles_deg": [
+        39.805571
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          8.0,
+          49.5
+        ],
+        [
+          23.5,
+          49.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 15.5,
+      "angles_deg": [
+        0.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "5V_MCU",
+      "net": "5V_MCU",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          23.5,
+          45.0
+        ],
+        [
+          23.5,
+          49.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          2.42,
+          12.0
+        ],
+        [
+          2.42,
+          44.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 32.0,
+      "angles_deg": [
+        90.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          2.5,
+          46.5
+        ],
+        [
+          2.5,
+          43.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.0,
+      "angles_deg": [
+        90.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          2.5,
+          46.545455
+        ],
+        [
+          8.555556,
+          51.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 7.824,
+      "angles_deg": [
+        39.289402
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          21.0,
+          45.0
+        ],
+        [
+          21.0,
+          51.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 6.5,
+      "angles_deg": [
+        90.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          21.0,
+          51.5
+        ],
+        [
+          8.555556,
+          51.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 12.444,
+      "angles_deg": [
+        0.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          22.0,
+          52.5
+        ],
+        [
+          21.0,
+          51.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 1.414,
+      "angles_deg": [
+        135.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          48.96,
+          52.5
+        ],
+        [
+          22.0,
+          52.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 26.96,
+      "angles_deg": [
+        0.0
+      ],
+      "item": "gr_line"
+    },
+    {
+      "label": "VBAT",
+      "net": "VBAT",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          18.37,
+          11.03
+        ],
+        [
+          18.4,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "VBAT",
+      "net": "VBAT",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          18.37,
+          19.11
+        ],
+        [
+          18.37,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "VBAT",
+      "net": "VBAT",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          18.37,
+          14.61
+        ],
+        [
+          18.37,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PC13",
+      "net": "PC13",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          20.91,
+          14.61
+        ],
+        [
+          20.91,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PC13",
+      "net": "PC13",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          20.91,
+          11.03
+        ],
+        [
+          20.94,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PC13",
+      "net": "PC13",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          20.91,
+          19.11
+        ],
+        [
+          20.91,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PC14",
+      "net": "PC14",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          23.45,
+          14.61
+        ],
+        [
+          23.45,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PC14",
+      "net": "PC14",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          23.45,
+          19.11
+        ],
+        [
+          23.45,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PC14",
+      "net": "PC14",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          23.45,
+          11.03
+        ],
+        [
+          23.48,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PC15",
+      "net": "PC15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          25.99,
+          11.03
+        ],
+        [
+          26.02,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PC15",
+      "net": "PC15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          25.99,
+          19.11
+        ],
+        [
+          25.99,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PC15",
+      "net": "PC15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          25.99,
+          14.61
+        ],
+        [
+          25.99,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          15.79,
+          29.29
+        ],
+        [
+          14.0,
+          27.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 2.531,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          14.61
+        ],
+        [
+          28.53,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          28.47
+        ],
+        [
+          27.71,
+          29.29
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 1.16,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          27.71,
+          29.29
+        ],
+        [
+          15.79,
+          29.29
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 11.92,
+      "angles_deg": [
+        0.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          19.11
+        ],
+        [
+          28.53,
+          28.47
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 9.36,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          11.03
+        ],
+        [
+          28.56,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          14.0,
+          27.5
+        ],
+        [
+          14.0,
+          18.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 9.0,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          19.11
+        ],
+        [
+          28.53,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA0_PWM_FL",
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          14.0,
+          18.5
+        ],
+        [
+          7.5,
+          12.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 9.192,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          11.5,
+          29.0
+        ],
+        [
+          11.5,
+          23.96
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 5.04,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          11.5,
+          23.96
+        ],
+        [
+          7.54,
+          20.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 5.6,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          19.11
+        ],
+        [
+          31.07,
+          29.43
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 10.32,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          29.98,
+          30.52
+        ],
+        [
+          13.02,
+          30.52
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 16.96,
+      "angles_deg": [
+        0.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          29.43
+        ],
+        [
+          29.98,
+          30.52
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 1.541,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          11.03
+        ],
+        [
+          31.1,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          19.11
+        ],
+        [
+          31.07,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          13.02,
+          30.52
+        ],
+        [
+          11.5,
+          29.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 2.15,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA1_PWM_FR",
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          14.61
+        ],
+        [
+          31.07,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          19.11
+        ],
+        [
+          33.61,
+          30.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 11.28,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          30.39
+        ],
+        [
+          32.25,
+          31.75
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 1.923,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          11.25,
+          31.75
+        ],
+        [
+          7.5,
+          28.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 5.303,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          11.03
+        ],
+        [
+          33.64,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          14.61
+        ],
+        [
+          33.61,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          32.25,
+          31.75
+        ],
+        [
+          11.25,
+          31.75
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 21.0,
+      "angles_deg": [
+        0.0
+      ]
+    },
+    {
+      "label": "PA2_PWM_RL",
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          19.11
+        ],
+        [
+          33.61,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          35.020001,
+          32.979999
+        ],
+        [
+          13.020001,
+          32.979999
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 22.0,
+      "angles_deg": [
+        0.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          10.0,
+          36.0
+        ],
+        [
+          7.5,
+          36.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 2.5,
+      "angles_deg": [
+        0.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          31.85
+        ],
+        [
+          35.020001,
+          32.979999
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 1.598,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          11.03
+        ],
+        [
+          36.18,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          19.11
+        ],
+        [
+          36.15,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          10.020001,
+          37.979999
+        ],
+        [
+          10.0,
+          38.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.028,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          13.020001,
+          32.979999
+        ],
+        [
+          10.0,
+          36.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.271,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          14.61
+        ],
+        [
+          36.15,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA3_PWM_RR",
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          19.11
+        ],
+        [
+          36.15,
+          31.85
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 12.74,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA4",
+      "net": "PA4",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          38.69,
+          11.03
+        ],
+        [
+          38.72,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA4",
+      "net": "PA4",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          38.69,
+          19.11
+        ],
+        [
+          38.69,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA4",
+      "net": "PA4",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          38.69,
+          14.61
+        ],
+        [
+          38.69,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA5",
+      "net": "PA5",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          41.23,
+          11.03
+        ],
+        [
+          41.26,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA5",
+      "net": "PA5",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          41.23,
+          19.11
+        ],
+        [
+          41.23,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA5",
+      "net": "PA5",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          41.23,
+          14.61
+        ],
+        [
+          41.23,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA6",
+      "net": "PA6",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          43.77,
+          11.03
+        ],
+        [
+          43.8,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA6",
+      "net": "PA6",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          43.77,
+          19.11
+        ],
+        [
+          43.77,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA6",
+      "net": "PA6",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          43.77,
+          14.61
+        ],
+        [
+          43.77,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA7",
+      "net": "PA7",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          46.31,
+          11.03
+        ],
+        [
+          46.34,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA7",
+      "net": "PA7",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          46.31,
+          14.61
+        ],
+        [
+          46.31,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA7",
+      "net": "PA7",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          46.31,
+          19.11
+        ],
+        [
+          46.31,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB0",
+      "net": "PB0",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          48.85,
+          19.11
+        ],
+        [
+          48.85,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB0",
+      "net": "PB0",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          48.85,
+          11.03
+        ],
+        [
+          48.88,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PB0",
+      "net": "PB0",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          48.85,
+          14.61
+        ],
+        [
+          48.85,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB1",
+      "net": "PB1",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          11.03
+        ],
+        [
+          51.42,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PB1",
+      "net": "PB1",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          14.61
+        ],
+        [
+          51.39,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB1",
+      "net": "PB1",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          19.11
+        ],
+        [
+          51.39,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB10",
+      "net": "PB10",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          53.93,
+          11.03
+        ],
+        [
+          53.96,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PB10",
+      "net": "PB10",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          53.93,
+          19.11
+        ],
+        [
+          53.93,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB10",
+      "net": "PB10",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          53.93,
+          14.61
+        ],
+        [
+          53.93,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB11",
+      "net": "PB11",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          56.47,
+          19.11
+        ],
+        [
+          56.47,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB11",
+      "net": "PB11",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          56.47,
+          14.61
+        ],
+        [
+          56.47,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB11",
+      "net": "PB11",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          56.47,
+          11.03
+        ],
+        [
+          56.5,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "RST",
+      "net": "RST",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          59.01,
+          11.03
+        ],
+        [
+          59.04,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "RST",
+      "net": "RST",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          59.01,
+          19.11
+        ],
+        [
+          59.01,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "RST",
+      "net": "RST",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          59.01,
+          14.61
+        ],
+        [
+          59.01,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "3V3_H1",
+      "net": "3V3_H1",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          61.55,
+          19.11
+        ],
+        [
+          61.55,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "3V3_H1",
+      "net": "3V3_H1",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          61.55,
+          11.03
+        ],
+        [
+          61.58,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "3V3_H1",
+      "net": "3V3_H1",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          61.55,
+          14.61
+        ],
+        [
+          61.55,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          64.09,
+          11.03
+        ],
+        [
+          64.12,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          66.629999,
+          11.030001
+        ],
+        [
+          66.66,
+          11.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.042,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          66.629999,
+          19.11
+        ],
+        [
+          66.629999,
+          11.030001
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 8.08,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          20.91,
+          41.39
+        ],
+        [
+          20.91,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          64.09,
+          19.11
+        ],
+        [
+          64.09,
+          14.61
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          20.91,
+          36.89
+        ],
+        [
+          20.91,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "GND",
+      "net": "GND",
+      "layer": "B.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          64.09,
+          14.61
+        ],
+        [
+          64.09,
+          11.03
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.58,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "3V3",
+      "net": "3V3",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          18.37,
+          41.39
+        ],
+        [
+          18.37,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "3V3",
+      "net": "3V3",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          18.37,
+          36.89
+        ],
+        [
+          18.37,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "5V_MCU",
+      "net": "5V_MCU",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          23.45,
+          36.89
+        ],
+        [
+          23.45,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "5V_MCU",
+      "net": "5V_MCU",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          23.45,
+          41.39
+        ],
+        [
+          23.45,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB9",
+      "net": "PB9",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          25.99,
+          41.39
+        ],
+        [
+          25.99,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB9",
+      "net": "PB9",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          25.99,
+          36.89
+        ],
+        [
+          25.99,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB8",
+      "net": "PB8",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          36.89
+        ],
+        [
+          28.53,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB8",
+      "net": "PB8",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          28.53,
+          41.39
+        ],
+        [
+          28.53,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB7",
+      "net": "PB7",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          36.89
+        ],
+        [
+          31.07,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB7",
+      "net": "PB7",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          31.07,
+          41.39
+        ],
+        [
+          31.07,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB6",
+      "net": "PB6",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          41.39
+        ],
+        [
+          33.61,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB6",
+      "net": "PB6",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          33.61,
+          36.89
+        ],
+        [
+          33.61,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB5",
+      "net": "PB5",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          41.39
+        ],
+        [
+          36.15,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB5",
+      "net": "PB5",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          36.15,
+          36.89
+        ],
+        [
+          36.15,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB4",
+      "net": "PB4",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          38.69,
+          36.89
+        ],
+        [
+          38.69,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB4",
+      "net": "PB4",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          38.69,
+          41.39
+        ],
+        [
+          38.69,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB3",
+      "net": "PB3",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          41.23,
+          41.39
+        ],
+        [
+          41.23,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB3",
+      "net": "PB3",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          41.23,
+          36.89
+        ],
+        [
+          41.23,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA15",
+      "net": "PA15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          43.77,
+          41.39
+        ],
+        [
+          43.77,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA15",
+      "net": "PA15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          43.77,
+          36.89
+        ],
+        [
+          43.77,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA12",
+      "net": "PA12",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          46.31,
+          41.39
+        ],
+        [
+          46.31,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA12",
+      "net": "PA12",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          46.31,
+          36.89
+        ],
+        [
+          46.31,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA11",
+      "net": "PA11",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          48.85,
+          36.89
+        ],
+        [
+          48.85,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA11",
+      "net": "PA11",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          48.85,
+          41.39
+        ],
+        [
+          48.85,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA10_RX",
+      "net": "PA10_RX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          45.0
+        ],
+        [
+          51.5,
+          45.11
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.156,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA10_RX",
+      "net": "PA10_RX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          41.39
+        ],
+        [
+          51.39,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA10_RX",
+      "net": "PA10_RX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          36.89
+        ],
+        [
+          51.39,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA10_RX",
+      "net": "PA10_RX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.5,
+          45.11
+        ],
+        [
+          51.5,
+          52.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 7.39,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA10_RX",
+      "net": "PA10_RX",
+      "layer": "B.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          51.39,
+          45.0
+        ],
+        [
+          51.5,
+          45.11
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.156,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA9_TX",
+      "net": "PA9_TX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          54.04,
+          45.11
+        ],
+        [
+          54.04,
+          52.5
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 7.39,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA9_TX",
+      "net": "PA9_TX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          53.93,
+          45.0
+        ],
+        [
+          54.04,
+          45.11
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.156,
+      "angles_deg": [
+        45.0
+      ]
+    },
+    {
+      "label": "PA9_TX",
+      "net": "PA9_TX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          53.93,
+          41.39
+        ],
+        [
+          53.93,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA9_TX",
+      "net": "PA9_TX",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          53.93,
+          36.89
+        ],
+        [
+          53.93,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA8",
+      "net": "PA8",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          56.47,
+          36.89
+        ],
+        [
+          56.47,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PA8",
+      "net": "PA8",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          56.47,
+          41.39
+        ],
+        [
+          56.47,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB15",
+      "net": "PB15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          59.01,
+          36.89
+        ],
+        [
+          59.01,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB15",
+      "net": "PB15",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          59.01,
+          41.39
+        ],
+        [
+          59.01,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB14",
+      "net": "PB14",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          61.55,
+          41.39
+        ],
+        [
+          61.55,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB14",
+      "net": "PB14",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          61.55,
+          36.89
+        ],
+        [
+          61.55,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB13",
+      "net": "PB13",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          64.09,
+          41.39
+        ],
+        [
+          64.09,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 3.61,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB13",
+      "net": "PB13",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          64.09,
+          36.89
+        ],
+        [
+          64.09,
+          41.39
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 4.5,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB12",
+      "net": "PB12",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          66.629999,
+          36.89
+        ],
+        [
+          66.629999,
+          44.999999
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 8.11,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "PB12",
+      "net": "PB12",
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [
+          66.629999,
+          44.999999
+        ],
+        [
+          66.63,
+          45.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.0,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "5V_SERVO",
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          4.96,
+          12.0
+        ],
+        [
+          4.96,
+          43.96
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 31.96,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "5V_SERVO",
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "width_mm": 0.8,
+      "points_mm": [
+        [
+          5.0,
+          20.0
+        ],
+        [
+          4.96,
+          19.96
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.057,
+      "angles_deg": [
+        135.0
+      ]
+    },
+    {
+      "label": "5V_SERVO",
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          4.96,
+          19.96
+        ],
+        [
+          4.96,
+          12.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 7.96,
+      "angles_deg": [
+        90.0
+      ]
+    },
+    {
+      "label": "5V_SERVO",
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "width_mm": 0.5,
+      "points_mm": [
+        [
+          4.96,
+          43.96
+        ],
+        [
+          5.0,
+          44.0
+        ]
+      ],
+      "bends": 0,
+      "length_mm": 0.057,
+      "angles_deg": [
+        45.0
+      ]
+    }
+  ],
+  "connectivity_sample_10": [
+    {
+      "from": "H1:1",
+      "net_from": "VBAT",
+      "targets": [
+        {
+          "to": "B1A:1",
+          "net_to": "VBAT",
+          "connected_by_net": true
+        },
+        {
+          "to": "B1B:1",
+          "net_to": "VBAT",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H1:5",
+      "net_from": "PA0_PWM_FL",
+      "targets": [
+        {
+          "to": "B1A:5",
+          "net_to": "PA0_PWM_FL",
+          "connected_by_net": true
+        },
+        {
+          "to": "B1B:5",
+          "net_to": "PA0_PWM_FL",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H1:8",
+      "net_from": "PA3_PWM_RR",
+      "targets": [
+        {
+          "to": "B1A:8",
+          "net_to": "PA3_PWM_RR",
+          "connected_by_net": true
+        },
+        {
+          "to": "B1B:8",
+          "net_to": "PA3_PWM_RR",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H1:13",
+      "net_from": "PB0",
+      "targets": [
+        {
+          "to": "B1A:13",
+          "net_to": "PB0",
+          "connected_by_net": true
+        },
+        {
+          "to": "B1B:13",
+          "net_to": "PB0",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H1:20",
+      "net_from": "GND",
+      "targets": [
+        {
+          "to": "B1A:20",
+          "net_to": "GND",
+          "connected_by_net": true
+        },
+        {
+          "to": "B1B:20",
+          "net_to": "GND",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H2:1",
+      "net_from": "3V3",
+      "targets": [
+        {
+          "to": "B2A:1",
+          "net_to": "3V3",
+          "connected_by_net": true
+        },
+        {
+          "to": "B2B:1",
+          "net_to": "3V3",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H2:2",
+      "net_from": "GND",
+      "targets": [
+        {
+          "to": "B2A:2",
+          "net_to": "GND",
+          "connected_by_net": true
+        },
+        {
+          "to": "B2B:2",
+          "net_to": "GND",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H2:14",
+      "net_from": "PA10_RX",
+      "targets": [
+        {
+          "to": "B2A:14",
+          "net_to": "PA10_RX",
+          "connected_by_net": true
+        },
+        {
+          "to": "B2B:14",
+          "net_to": "PA10_RX",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H2:15",
+      "net_from": "PA9_TX",
+      "targets": [
+        {
+          "to": "B2A:15",
+          "net_to": "PA9_TX",
+          "connected_by_net": true
+        },
+        {
+          "to": "B2B:15",
+          "net_to": "PA9_TX",
+          "connected_by_net": true
+        }
+      ]
+    },
+    {
+      "from": "H2:20",
+      "net_from": "PB12",
+      "targets": [
+        {
+          "to": "B2A:20",
+          "net_to": "PB12",
+          "connected_by_net": true
+        },
+        {
+          "to": "B2B:20",
+          "net_to": "PB12",
+          "connected_by_net": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+### Footprint positions - created on 2026-05-04T02:29:24+0800 ###
+### Printed by KiCad version 9.0.9
+## Unit = mm, Angle = deg.
+## Side : All
+# Ref     Val                                         Package                PosX       PosY       Rot  Side
+B1A       Top_20_Pin_Breadboard_Row_Near                                  92.8400   -87.6400    0.0000  top
+B1B       Top_20_Pin_Breadboard_Row_Far                                   92.8700   -84.0300    0.0000  top
+B2A       Bottom_20_Pin_Breadboard_Row_Near                               92.8400  -114.4200    0.0000  top
+B2B       Bottom_20_Pin_Breadboard_Row_Far                                92.8400  -118.0300    0.0000  top
+H1        BluePill_Row_A_1x20                                             92.8400   -92.1400   90.0000  top
+H2        BluePill_Row_B_1x20                                             92.8400  -109.9200   90.0000  top
+J2        SG90_FR_GVS                                                     76.9700   -85.0300   90.0000  top
+J2        SG90_FR_GVS                                                     76.9700  -109.0300   90.0000  top
+J2        SG90_FR_GVS                                                     76.9700  -101.0300   90.0000  top
+J2        SG90_FR_GVS                                                     76.8900   -93.0300   90.0000  top
+J5        5V_SERVO_IN_GND                                                 66.0100  -113.5300    0.0000  top
+J7        UART_G_PA9_PA10                                                123.4300  -125.5300   90.0000  top
+MH1       Raspberry_Pi_4B_Aligned_Mount_3.2mm_6mmPad                      77.9700   -76.5300    0.0000  top
+MH2       Raspberry_Pi_4B_Aligned_Mount_3.2mm_6mmPad                     135.9700   -76.5300    0.0000  top
+MH3       Raspberry_Pi_4B_Aligned_Mount_3.2mm_6mmPad                      77.9700  -125.5300    0.0000  top
+MH4       Raspberry_Pi_4B_Aligned_Mount_3.2mm_6mmPad                     135.9700  -125.5300    0.0000  top
+## End

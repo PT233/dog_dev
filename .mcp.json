@@ -1,5 +1,21 @@
 {
   "mcpServers": {
+    "kicad": {
+      "type": "stdio",
+      "command": "/home/peter/.nvm/versions/node/v22.22.2/bin/node",
+      "args": [
+        "/home/peter/KiCAD-MCP-Server/dist/index.js"
+      ],
+      "env": {
+        "KICAD_PYTHON": "/usr/local/bin/kicad-python",
+        "PYTHONPATH": "/opt/kicad9/shared/lib/python3.11/dist-packages",
+        "SHARUN_ALLOW_LD_PRELOAD": "1",
+        "LD_PRELOAD": "/lib/x86_64-linux-gnu/libm.so.6",
+        "LOG_LEVEL": "info",
+        "NODE_ENV": "production",
+        "KICAD_AUTO_LAUNCH": "false"
+      }
+    },
     "tessl": {
       "type": "stdio",
       "command": "tessl",

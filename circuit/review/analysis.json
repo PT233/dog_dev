@@ -1,0 +1,2526 @@
+{
+  "version": "20260206",
+  "generator_version": "10.0",
+  "layers": [
+    "F.Cu",
+    "B.Cu"
+  ],
+  "edge_bbox": [
+    0.0,
+    0.0,
+    71.0,
+    56.0
+  ],
+  "board_size": [
+    71.0,
+    56.0
+  ],
+  "board_area": 3976.0,
+  "net_count": 39,
+  "nets": [
+    "3V3",
+    "3V3_H1",
+    "5V_MCU",
+    "5V_SERVO",
+    "GND",
+    "PA0_PWM_FL",
+    "PA10_RX",
+    "PA11",
+    "PA12",
+    "PA15",
+    "PA1_PWM_FR",
+    "PA2_PWM_RL",
+    "PA3_PWM_RR",
+    "PA4",
+    "PA5",
+    "PA6",
+    "PA7",
+    "PA8",
+    "PA9_TX",
+    "PB0",
+    "PB1",
+    "PB10",
+    "PB11",
+    "PB12",
+    "PB13",
+    "PB14",
+    "PB15",
+    "PB3",
+    "PB4",
+    "PB5",
+    "PB6",
+    "PB7",
+    "PB8",
+    "PB9",
+    "PC13",
+    "PC14",
+    "PC15",
+    "RST",
+    "VBAT"
+  ],
+  "footprint_count": 16,
+  "top_footprint_count": 16,
+  "bottom_footprint_count": 0,
+  "via_count": 0,
+  "segment_count": 130,
+  "gr_cu_line_count": 11,
+  "blue_pill_center": [
+    42.5,
+    28.0
+  ],
+  "board_center": [
+    35.5,
+    28.0
+  ],
+  "blue_pill_offset": [
+    7.0,
+    0.0
+  ],
+  "servos": {
+    "J1": {
+      "value": "SG90_FL_GVS",
+      "at": [
+        2.42,
+        12.0,
+        90.0
+      ],
+      "pads": [
+        {
+          "pad": "1",
+          "xy": [
+            2.42,
+            12.0
+          ],
+          "net": "GND"
+        },
+        {
+          "pad": "2",
+          "xy": [
+            4.96,
+            12.0
+          ],
+          "net": "5V_SERVO"
+        },
+        {
+          "pad": "3",
+          "xy": [
+            7.5,
+            12.0
+          ],
+          "net": "PA0_PWM_FL"
+        }
+      ]
+    },
+    "J2": {
+      "value": "SG90_FR_GVS",
+      "at": [
+        2.46,
+        20.0,
+        90.0
+      ],
+      "pads": [
+        {
+          "pad": "1",
+          "xy": [
+            2.46,
+            20.0
+          ],
+          "net": "GND"
+        },
+        {
+          "pad": "2",
+          "xy": [
+            5.0,
+            20.0
+          ],
+          "net": "5V_SERVO"
+        },
+        {
+          "pad": "3",
+          "xy": [
+            7.54,
+            20.0
+          ],
+          "net": "PA1_PWM_FR"
+        }
+      ]
+    },
+    "J3": {
+      "value": "SG90_RL_GVS",
+      "at": [
+        2.42,
+        28.0,
+        90.0
+      ],
+      "pads": [
+        {
+          "pad": "1",
+          "xy": [
+            2.42,
+            28.0
+          ],
+          "net": "GND"
+        },
+        {
+          "pad": "2",
+          "xy": [
+            4.96,
+            28.0
+          ],
+          "net": "5V_SERVO"
+        },
+        {
+          "pad": "3",
+          "xy": [
+            7.5,
+            28.0
+          ],
+          "net": "PA2_PWM_RL"
+        }
+      ]
+    },
+    "J4": {
+      "value": "SG90_RR_GVS",
+      "at": [
+        2.42,
+        36.0,
+        90.0
+      ],
+      "pads": [
+        {
+          "pad": "1",
+          "xy": [
+            2.42,
+            36.0
+          ],
+          "net": "GND"
+        },
+        {
+          "pad": "2",
+          "xy": [
+            4.96,
+            36.0
+          ],
+          "net": "5V_SERVO"
+        },
+        {
+          "pad": "3",
+          "xy": [
+            7.5,
+            36.0
+          ],
+          "net": "PA3_PWM_RR"
+        }
+      ]
+    }
+  },
+  "mounts": {
+    "MH1": {
+      "xy": [
+        3.5,
+        3.5
+      ],
+      "drill": 3.2,
+      "size": [
+        6.0,
+        6.0
+      ],
+      "net": "GND"
+    },
+    "MH2": {
+      "xy": [
+        61.5,
+        3.5
+      ],
+      "drill": 3.2,
+      "size": [
+        6.0,
+        6.0
+      ],
+      "net": "GND"
+    },
+    "MH3": {
+      "xy": [
+        3.5,
+        52.5
+      ],
+      "drill": 3.2,
+      "size": [
+        6.0,
+        6.0
+      ],
+      "net": "GND"
+    },
+    "MH4": {
+      "xy": [
+        61.5,
+        52.5
+      ],
+      "drill": 3.2,
+      "size": [
+        6.0,
+        6.0
+      ],
+      "net": "GND"
+    }
+  },
+  "breakout_issues": [],
+  "breakout_specs_unique": [
+    [
+      1.0,
+      1.8,
+      1.8
+    ]
+  ],
+  "unbroken_pins": [],
+  "row_misaligned": [],
+  "pad_outside": [],
+  "footprint_outside": [],
+  "zone_outside": [
+    {
+      "net": "GND",
+      "layer": "B.Cu",
+      "area": 4675.759999999999,
+      "outside_points": [
+        [
+          84.7,
+          0.3
+        ],
+        [
+          84.7,
+          55.7
+        ]
+      ]
+    }
+  ],
+  "zones": [
+    {
+      "net": "GND",
+      "layer": "B.Cu",
+      "pts": [
+        [
+          0.3,
+          0.3
+        ],
+        [
+          84.7,
+          0.3
+        ],
+        [
+          84.7,
+          55.7
+        ],
+        [
+          0.3,
+          55.7
+        ]
+      ],
+      "area": 4675.759999999999
+    }
+  ],
+  "zone_area_total": 4675.759999999999,
+  "zone_ratio_vs_edge_percent": 117.59959758551307,
+  "bend_histogram": {
+    "1": 19,
+    "2": 14,
+    ">2": 7,
+    "0": 5
+  },
+  "traces_gt2_bends": [
+    {
+      "net": "5V_SERVO",
+      "layer": "F.Cu",
+      "points": [
+        [
+          5.0,
+          20.0
+        ],
+        [
+          4.96,
+          19.96
+        ],
+        [
+          4.96,
+          12.0
+        ],
+        [
+          4.96,
+          43.96
+        ],
+        [
+          5.0,
+          44.0
+        ]
+      ],
+      "bends": 3,
+      "length": 40.033137084989846,
+      "angles": [
+        44.999999999999375,
+        90.0,
+        90.0,
+        44.99999999999936
+      ],
+      "widths": [
+        0.5,
+        0.8
+      ]
+    },
+    {
+      "net": "PA0_PWM_FL",
+      "layer": "F.Cu",
+      "points": [
+        [
+          28.56,
+          11.0
+        ],
+        [
+          28.53,
+          11.03
+        ],
+        [
+          28.53,
+          14.61
+        ],
+        [
+          28.53,
+          19.11
+        ],
+        [
+          28.53,
+          28.47
+        ],
+        [
+          27.71,
+          29.29
+        ],
+        [
+          15.79,
+          29.29
+        ],
+        [
+          14.0,
+          27.5
+        ],
+        [
+          14.0,
+          18.5
+        ],
+        [
+          7.5,
+          12.0
+        ]
+      ],
+      "bends": 8,
+      "length": 51.28591196009009,
+      "angles": [
+        134.99999999999832,
+        90.0,
+        90.0,
+        90.0,
+        135.0,
+        0.0,
+        45.0,
+        90.0,
+        45.0
+      ],
+      "widths": [
+        0.25
+      ]
+    },
+    {
+      "net": "PA10_RX",
+      "layer": "F.Cu",
+      "points": [
+        [
+          51.39,
+          36.89
+        ],
+        [
+          51.39,
+          41.39
+        ],
+        [
+          51.39,
+          45.0
+        ],
+        [
+          51.5,
+          45.11
+        ],
+        [
+          51.5,
+          52.5
+        ]
+      ],
+      "bends": 3,
+      "length": 15.65556349186104,
+      "angles": [
+        90.0,
+        90.0,
+        45.0,
+        90.0
+      ],
+      "widths": [
+        0.25
+      ]
+    },
+    {
+      "net": "PA1_PWM_FR",
+      "layer": "F.Cu",
+      "points": [
+        [
+          31.1,
+          11.0
+        ],
+        [
+          31.07,
+          11.03
+        ],
+        [
+          31.07,
+          14.61
+        ],
+        [
+          31.07,
+          19.11
+        ],
+        [
+          31.07,
+          29.43
+        ],
+        [
+          29.98,
+          30.52
+        ],
+        [
+          13.02,
+          30.52
+        ],
+        [
+          11.5,
+          29.0
+        ],
+        [
+          11.5,
+          23.96
+        ],
+        [
+          7.54,
+          20.0
+        ]
+      ],
+      "bends": 8,
+      "length": 49.73380951166243,
+      "angles": [
+        135.0000000000017,
+        90.0,
+        90.0,
+        90.0,
+        135.0,
+        0.0,
+        45.0,
+        90.0,
+        45.0
+      ],
+      "widths": [
+        0.25
+      ]
+    },
+    {
+      "net": "PA2_PWM_RL",
+      "layer": "F.Cu",
+      "points": [
+        [
+          33.64,
+          11.0
+        ],
+        [
+          33.61,
+          11.03
+        ],
+        [
+          33.61,
+          14.61
+        ],
+        [
+          33.61,
+          19.11
+        ],
+        [
+          33.61,
+          30.39
+        ],
+        [
+          32.25,
+          31.75
+        ],
+        [
+          11.25,
+          31.75
+        ],
+        [
+          7.5,
+          28.0
+        ]
+      ],
+      "bends": 6,
+      "length": 47.629057710597706,
+      "angles": [
+        135.0000000000017,
+        90.0,
+        90.0,
+        90.0,
+        135.0,
+        0.0,
+        45.0
+      ],
+      "widths": [
+        0.25
+      ]
+    },
+    {
+      "net": "PA3_PWM_RR",
+      "layer": "F.Cu",
+      "points": [
+        [
+          36.18,
+          11.0
+        ],
+        [
+          36.15,
+          11.03
+        ],
+        [
+          36.15,
+          14.61
+        ],
+        [
+          36.15,
+          19.11
+        ],
+        [
+          36.15,
+          31.85
+        ],
+        [
+          35.020001,
+          32.979999
+        ],
+        [
+          13.020001,
+          32.979999
+        ],
+        [
+          10.0,
+          36.0
+        ],
+        [
+          7.5,
+          36.0
+        ]
+      ],
+      "bends": 7,
+      "length": 51.23141269071954,
+      "angles": [
+        135.0000000000017,
+        90.0,
+        90.0,
+        90.0,
+        135.0,
+        0.0,
+        135.0,
+        0.0
+      ],
+      "widths": [
+        0.25
+      ]
+    },
+    {
+      "net": "PA9_TX",
+      "layer": "F.Cu",
+      "points": [
+        [
+          53.93,
+          36.89
+        ],
+        [
+          53.93,
+          41.39
+        ],
+        [
+          53.93,
+          45.0
+        ],
+        [
+          54.04,
+          45.11
+        ],
+        [
+          54.04,
+          52.5
+        ]
+      ],
+      "bends": 3,
+      "length": 15.65556349186104,
+      "angles": [
+        90.0,
+        90.0,
+        45.0,
+        90.0
+      ],
+      "widths": [
+        0.25
+      ]
+    }
+  ],
+  "bad_angles": [],
+  "width_counter": {
+    "3V3@0.25": 2,
+    "3V3_H1@0.25": 3,
+    "5V_MCU@0.5": 2,
+    "5V_SERVO@0.5": 3,
+    "5V_SERVO@0.8": 1,
+    "GND@0.25": 5,
+    "GND@0.5": 2,
+    "PA0_PWM_FL@0.25": 9,
+    "PA10_RX@0.25": 5,
+    "PA11@0.25": 2,
+    "PA12@0.25": 2,
+    "PA15@0.25": 2,
+    "PA1_PWM_FR@0.25": 9,
+    "PA2_PWM_RL@0.25": 7,
+    "PA3_PWM_RR@0.25": 9,
+    "PA4@0.25": 3,
+    "PA5@0.25": 3,
+    "PA6@0.25": 3,
+    "PA7@0.25": 3,
+    "PA8@0.25": 2,
+    "PA9_TX@0.25": 4,
+    "PB0@0.25": 3,
+    "PB1@0.25": 3,
+    "PB10@0.25": 3,
+    "PB11@0.25": 3,
+    "PB12@0.25": 2,
+    "PB13@0.25": 2,
+    "PB14@0.25": 2,
+    "PB15@0.25": 2,
+    "PB3@0.25": 2,
+    "PB4@0.25": 2,
+    "PB5@0.25": 2,
+    "PB6@0.25": 2,
+    "PB7@0.25": 2,
+    "PB8@0.25": 2,
+    "PB9@0.25": 2,
+    "PC13@0.25": 3,
+    "PC14@0.25": 3,
+    "PC15@0.25": 3,
+    "RST@0.25": 3,
+    "VBAT@0.25": 3
+  },
+  "width_issues": [
+    {
+      "net": "3V3",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        18.37,
+        41.39
+      ],
+      "end": [
+        18.37,
+        45.0
+      ]
+    },
+    {
+      "net": "3V3",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        18.37,
+        36.89
+      ],
+      "end": [
+        18.37,
+        41.39
+      ]
+    },
+    {
+      "net": "3V3_H1",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        61.55,
+        19.11
+      ],
+      "end": [
+        61.55,
+        14.61
+      ]
+    },
+    {
+      "net": "3V3_H1",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        61.55,
+        11.03
+      ],
+      "end": [
+        61.58,
+        11.0
+      ]
+    },
+    {
+      "net": "3V3_H1",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        61.55,
+        14.61
+      ],
+      "end": [
+        61.55,
+        11.03
+      ]
+    },
+    {
+      "net": "5V_SERVO",
+      "class": "一般电源",
+      "width": 0.8,
+      "expected": 0.5,
+      "start": [
+        5.0,
+        20.0
+      ],
+      "end": [
+        4.96,
+        19.96
+      ]
+    },
+    {
+      "net": "GND",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        64.09,
+        11.03
+      ],
+      "end": [
+        64.12,
+        11.0
+      ]
+    },
+    {
+      "net": "GND",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        66.629999,
+        11.030001
+      ],
+      "end": [
+        66.66,
+        11.0
+      ]
+    },
+    {
+      "net": "GND",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        66.629999,
+        19.11
+      ],
+      "end": [
+        66.629999,
+        11.030001
+      ]
+    },
+    {
+      "net": "GND",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        64.09,
+        19.11
+      ],
+      "end": [
+        64.09,
+        14.61
+      ]
+    },
+    {
+      "net": "GND",
+      "class": "一般电源",
+      "width": 0.25,
+      "expected": 0.5,
+      "start": [
+        64.09,
+        14.61
+      ],
+      "end": [
+        64.09,
+        11.03
+      ]
+    }
+  ],
+  "pwm_lengths": {
+    "PA0_PWM_FL": 51.28591196009009,
+    "PA1_PWM_FR": 49.73380951166243,
+    "PA2_PWM_RL": 47.629057710597706,
+    "PA3_PWM_RR": 51.259698376180566
+  },
+  "pwm_pad_routes": {
+    "PA0_PWM_FL": {
+      "length": 43.16348555321889,
+      "points": [
+        [
+          28.53,
+          19.11
+        ],
+        [
+          28.53,
+          28.47
+        ],
+        [
+          27.71,
+          29.29
+        ],
+        [
+          15.79,
+          29.29
+        ],
+        [
+          14.0,
+          27.5
+        ],
+        [
+          14.0,
+          18.5
+        ],
+        [
+          7.5,
+          12.0
+        ]
+      ],
+      "bends": 5,
+      "angles": [
+        90.0,
+        135.0,
+        0.0,
+        45.0,
+        90.0,
+        45.0
+      ],
+      "from": "H1:5",
+      "to": "J1:3"
+    },
+    "PA1_PWM_FR": {
+      "length": 41.61138310479123,
+      "points": [
+        [
+          31.07,
+          19.11
+        ],
+        [
+          31.07,
+          29.43
+        ],
+        [
+          29.98,
+          30.52
+        ],
+        [
+          13.02,
+          30.52
+        ],
+        [
+          11.5,
+          29.0
+        ],
+        [
+          11.5,
+          23.96
+        ],
+        [
+          7.54,
+          20.0
+        ]
+      ],
+      "bends": 5,
+      "angles": [
+        90.0,
+        135.0,
+        0.0,
+        45.0,
+        90.0,
+        45.0
+      ],
+      "from": "H1:6",
+      "to": "J2:3"
+    },
+    "PA2_PWM_RL": {
+      "length": 39.506631303726515,
+      "points": [
+        [
+          33.61,
+          19.11
+        ],
+        [
+          33.61,
+          30.39
+        ],
+        [
+          32.25,
+          31.75
+        ],
+        [
+          11.25,
+          31.75
+        ],
+        [
+          7.5,
+          28.0
+        ]
+      ],
+      "bends": 3,
+      "angles": [
+        90.0,
+        135.0,
+        0.0,
+        45.0
+      ],
+      "from": "H1:7",
+      "to": "J3:3"
+    },
+    "PA3_PWM_RR": {
+      "length": 43.108986283848346,
+      "points": [
+        [
+          36.15,
+          19.11
+        ],
+        [
+          36.15,
+          31.85
+        ],
+        [
+          35.02,
+          32.98
+        ],
+        [
+          13.02,
+          32.98
+        ],
+        [
+          10.0,
+          36.0
+        ],
+        [
+          7.5,
+          36.0
+        ]
+      ],
+      "bends": 4,
+      "angles": [
+        90.0,
+        135.0,
+        0.0,
+        134.99999999999997,
+        0.0
+      ],
+      "from": "H1:8",
+      "to": "J4:3"
+    }
+  },
+  "min_pad_clearance_violations": [],
+  "min_component_clearance": {
+    "a": "B2A",
+    "b": "H2",
+    "distance": 2.700000000000003,
+    "a_bbox": [
+      18.37,
+      41.39,
+      66.63,
+      41.39
+    ],
+    "b_bbox": [
+      16.57,
+      35.14,
+      68.37,
+      38.69
+    ]
+  },
+  "component_clearance_lt_1_5": [],
+  "min_hole_edge_distance": {
+    "a": "B1B:12",
+    "b": "B1B:13",
+    "edge_distance": 1.539999999999992,
+    "center_distance": 2.539999999999992
+  },
+  "hole_to_hole_edge_lt_0_5": [],
+  "min_annular_ring": {
+    "pad": "H1:1",
+    "ring": 0.35,
+    "size": [
+      1.7,
+      1.7
+    ],
+    "drill": 1.0
+  },
+  "annular_ring_lt_0_15": [],
+  "silk_text": [
+    {
+      "text": "USB ->",
+      "layer": "F.SilkS",
+      "at": [
+        63.0,
+        26.2,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "USB SIDE",
+      "layer": "F.SilkS",
+      "at": [
+        63.0,
+        29.8,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "PA0 PA1 PA2 PA3",
+      "layer": "B.SilkS",
+      "at": [
+        27.53,
+        8.93,
+        0.0
+      ],
+      "size": [
+        0.7,
+        0.7
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        15.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        23.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        31.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        39.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "FL",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        9.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "FR",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        17.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "RL",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        25.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "RR",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        33.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G PA10 PA9",
+      "layer": "B.SilkS",
+      "at": [
+        51.96,
+        55.0,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "▲",
+      "layer": "B.SilkS",
+      "at": [
+        15.0,
+        38.5,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "▲",
+      "layer": "B.SilkS",
+      "at": [
+        15.17,
+        17.21,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "UART",
+      "layer": "B.SilkS",
+      "at": [
+        44.5,
+        53.5,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "Blue Pill SG90 Carrier",
+      "layer": "B.SilkS",
+      "at": [
+        47.0,
+        25.5,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "v3.0 2026-05-03",
+      "layer": "B.SilkS",
+      "at": [
+        47.0,
+        28.3,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "2-Layer / Pi4B Holes",
+      "layer": "B.SilkS",
+      "at": [
+        47.0,
+        30.7,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0
+      ],
+      "thickness": 0.15
+    }
+  ],
+  "silk_required": {
+    "USB 方向箭头": true,
+    "Pin1 三角": true,
+    "SG90 标签 FL/FR/RL/RR": true,
+    "G-V-S 顺序": true,
+    "5V_SERVO": false,
+    "STAR GND": false,
+    "MPU6050 标签": false,
+    "标题栏": true
+  },
+  "gpio_redundant": [
+    {
+      "text": "PA0 PA1 PA2 PA3",
+      "layer": "B.SilkS",
+      "at": [
+        27.53,
+        8.93,
+        0.0
+      ],
+      "size": [
+        0.7,
+        0.7
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G PA10 PA9",
+      "layer": "B.SilkS",
+      "at": [
+        51.96,
+        55.0,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    }
+  ],
+  "text_size_issues": [
+    {
+      "text": "PA0 PA1 PA2 PA3",
+      "layer": "B.SilkS",
+      "at": [
+        27.53,
+        8.93,
+        0.0
+      ],
+      "size": [
+        0.7,
+        0.7
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        15.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        23.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        31.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G-V-S",
+      "layer": "B.SilkS",
+      "at": [
+        7.5,
+        39.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "FL",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        9.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "FR",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        17.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "RL",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        25.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "RR",
+      "layer": "B.SilkS",
+      "at": [
+        2.0,
+        33.5,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    },
+    {
+      "text": "G PA10 PA9",
+      "layer": "B.SilkS",
+      "at": [
+        51.96,
+        55.0,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.85
+      ],
+      "thickness": 0.15
+    }
+  ],
+  "silk_to_pad_lt_0_3": [],
+  "silk_to_silk_overlap": [
+    {
+      "layer": "B.SilkS",
+      "distance": 0.0,
+      "a_ref": null,
+      "b_ref": null,
+      "a_start": [
+        15.67,
+        16.21
+      ],
+      "a_end": [
+        69.33,
+        16.21
+      ],
+      "b_start": [
+        15.67,
+        39.79
+      ],
+      "b_end": [
+        15.67,
+        16.21
+      ]
+    },
+    {
+      "layer": "B.SilkS",
+      "distance": 0.0,
+      "a_ref": null,
+      "b_ref": null,
+      "a_start": [
+        15.67,
+        16.21
+      ],
+      "a_end": [
+        69.33,
+        16.21
+      ],
+      "b_start": [
+        69.33,
+        16.21
+      ],
+      "b_end": [
+        69.33,
+        39.79
+      ]
+    },
+    {
+      "layer": "B.SilkS",
+      "distance": 0.0,
+      "a_ref": null,
+      "b_ref": null,
+      "a_start": [
+        15.67,
+        39.79
+      ],
+      "a_end": [
+        15.67,
+        16.21
+      ],
+      "b_start": [
+        69.33,
+        39.79
+      ],
+      "b_end": [
+        15.67,
+        39.79
+      ]
+    },
+    {
+      "layer": "B.SilkS",
+      "distance": 0.0,
+      "a_ref": null,
+      "b_ref": null,
+      "a_start": [
+        69.33,
+        16.21
+      ],
+      "a_end": [
+        69.33,
+        39.79
+      ],
+      "b_start": [
+        69.33,
+        39.79
+      ],
+      "b_end": [
+        15.67,
+        39.79
+      ]
+    }
+  ],
+  "silk_to_via_lt_0_3": [],
+  "track_to_silk_lt_0_3": [
+    {
+      "net": "3V3_H1",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        61.55,
+        19.11
+      ],
+      "copper_end": [
+        61.55,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "5V_MCU",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        23.45,
+        36.89
+      ],
+      "copper_end": [
+        23.45,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J4"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J4"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J3"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J3"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J1"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J2"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        12.0
+      ],
+      "copper_end": [
+        4.96,
+        43.96
+      ],
+      "silk_ref": "J2"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        19.96
+      ],
+      "copper_end": [
+        4.96,
+        12.0
+      ],
+      "silk_ref": "J1"
+    },
+    {
+      "net": "5V_SERVO",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        4.96,
+        19.96
+      ],
+      "copper_end": [
+        4.96,
+        12.0
+      ],
+      "silk_ref": "J2"
+    },
+    {
+      "net": "GND",
+      "copper_layer": "B.Cu",
+      "silk_layer": "B.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        66.629999,
+        19.11
+      ],
+      "copper_end": [
+        66.629999,
+        11.030001
+      ],
+      "silk_ref": null
+    },
+    {
+      "net": "GND",
+      "copper_layer": "B.Cu",
+      "silk_layer": "B.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        64.09,
+        19.11
+      ],
+      "copper_end": [
+        64.09,
+        14.61
+      ],
+      "silk_ref": null
+    },
+    {
+      "net": "GND",
+      "copper_layer": "B.Cu",
+      "silk_layer": "B.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        20.91,
+        36.89
+      ],
+      "copper_end": [
+        20.91,
+        41.39
+      ],
+      "silk_ref": null
+    },
+    {
+      "net": "PA0_PWM_FL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        28.53,
+        19.11
+      ],
+      "copper_end": [
+        28.53,
+        28.47
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA0_PWM_FL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        28.53,
+        19.11
+      ],
+      "copper_end": [
+        28.53,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA0_PWM_FL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        14.0,
+        18.5
+      ],
+      "copper_end": [
+        7.5,
+        12.0
+      ],
+      "silk_ref": "J1"
+    },
+    {
+      "net": "PA0_PWM_FL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        14.0,
+        18.5
+      ],
+      "copper_end": [
+        7.5,
+        12.0
+      ],
+      "silk_ref": "J1"
+    },
+    {
+      "net": "PA10_RX",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        51.39,
+        36.89
+      ],
+      "copper_end": [
+        51.39,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PA10_RX",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        51.5,
+        45.11
+      ],
+      "copper_end": [
+        51.5,
+        52.5
+      ],
+      "silk_ref": "J7"
+    },
+    {
+      "net": "PA11",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        48.85,
+        36.89
+      ],
+      "copper_end": [
+        48.85,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PA12",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        46.31,
+        36.89
+      ],
+      "copper_end": [
+        46.31,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PA15",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        43.77,
+        36.89
+      ],
+      "copper_end": [
+        43.77,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PA1_PWM_FR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        11.5,
+        23.96
+      ],
+      "copper_end": [
+        7.54,
+        20.0
+      ],
+      "silk_ref": "J2"
+    },
+    {
+      "net": "PA1_PWM_FR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        11.5,
+        23.96
+      ],
+      "copper_end": [
+        7.54,
+        20.0
+      ],
+      "silk_ref": "J2"
+    },
+    {
+      "net": "PA1_PWM_FR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        31.07,
+        19.11
+      ],
+      "copper_end": [
+        31.07,
+        29.43
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA1_PWM_FR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        31.07,
+        19.11
+      ],
+      "copper_end": [
+        31.07,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA2_PWM_RL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        33.61,
+        19.11
+      ],
+      "copper_end": [
+        33.61,
+        30.39
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA2_PWM_RL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        11.25,
+        31.75
+      ],
+      "copper_end": [
+        7.5,
+        28.0
+      ],
+      "silk_ref": "J3"
+    },
+    {
+      "net": "PA2_PWM_RL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        11.25,
+        31.75
+      ],
+      "copper_end": [
+        7.5,
+        28.0
+      ],
+      "silk_ref": "J3"
+    },
+    {
+      "net": "PA2_PWM_RL",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        33.61,
+        19.11
+      ],
+      "copper_end": [
+        33.61,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA3_PWM_RR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        10.0,
+        36.0
+      ],
+      "copper_end": [
+        7.5,
+        36.0
+      ],
+      "silk_ref": "J4"
+    },
+    {
+      "net": "PA3_PWM_RR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        36.15,
+        19.11
+      ],
+      "copper_end": [
+        36.15,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA3_PWM_RR",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        36.15,
+        19.11
+      ],
+      "copper_end": [
+        36.15,
+        31.85
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA4",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        38.69,
+        19.11
+      ],
+      "copper_end": [
+        38.69,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA5",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        41.23,
+        19.11
+      ],
+      "copper_end": [
+        41.23,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA6",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        43.77,
+        19.11
+      ],
+      "copper_end": [
+        43.77,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA7",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        46.31,
+        19.11
+      ],
+      "copper_end": [
+        46.31,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PA8",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        56.47,
+        36.89
+      ],
+      "copper_end": [
+        56.47,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PA9_TX",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        54.04,
+        45.11
+      ],
+      "copper_end": [
+        54.04,
+        52.5
+      ],
+      "silk_ref": "J7"
+    },
+    {
+      "net": "PA9_TX",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        53.93,
+        36.89
+      ],
+      "copper_end": [
+        53.93,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB0",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        48.85,
+        19.11
+      ],
+      "copper_end": [
+        48.85,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PB1",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        51.39,
+        19.11
+      ],
+      "copper_end": [
+        51.39,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PB10",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        53.93,
+        19.11
+      ],
+      "copper_end": [
+        53.93,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PB11",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        56.47,
+        19.11
+      ],
+      "copper_end": [
+        56.47,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PB12",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        66.629999,
+        36.89
+      ],
+      "copper_end": [
+        66.629999,
+        44.999999
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB13",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        64.09,
+        36.89
+      ],
+      "copper_end": [
+        64.09,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB14",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        61.55,
+        36.89
+      ],
+      "copper_end": [
+        61.55,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB15",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        59.01,
+        36.89
+      ],
+      "copper_end": [
+        59.01,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB3",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        41.23,
+        36.89
+      ],
+      "copper_end": [
+        41.23,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB4",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        38.69,
+        36.89
+      ],
+      "copper_end": [
+        38.69,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB5",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        36.15,
+        36.89
+      ],
+      "copper_end": [
+        36.15,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB6",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        33.61,
+        36.89
+      ],
+      "copper_end": [
+        33.61,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB7",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        31.07,
+        36.89
+      ],
+      "copper_end": [
+        31.07,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB8",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        28.53,
+        36.89
+      ],
+      "copper_end": [
+        28.53,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PB9",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        25.99,
+        36.89
+      ],
+      "copper_end": [
+        25.99,
+        41.39
+      ],
+      "silk_ref": "H2"
+    },
+    {
+      "net": "PC13",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        20.91,
+        19.11
+      ],
+      "copper_end": [
+        20.91,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PC14",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        23.45,
+        19.11
+      ],
+      "copper_end": [
+        23.45,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "PC15",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        25.99,
+        19.11
+      ],
+      "copper_end": [
+        25.99,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "RST",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        59.01,
+        19.11
+      ],
+      "copper_end": [
+        59.01,
+        14.61
+      ],
+      "silk_ref": "H1"
+    },
+    {
+      "net": "VBAT",
+      "copper_layer": "F.Cu",
+      "silk_layer": "F.SilkS",
+      "distance": 0.0,
+      "copper_start": [
+        18.37,
+        19.11
+      ],
+      "copper_end": [
+        18.37,
+        14.61
+      ],
+      "silk_ref": "H1"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "board": "/home/peter/dog/dog_dev/circuit/circuit.kicad_pcb",
+  "timestamp": "2026-05-04T02:48:27+0800",
+  "total_violations": 0,
+  "violation_counts": {},
+  "severity_counts": {
+    "error": 0,
+    "warning": 0,
+    "info": 0
+  },
+  "violations": []
+}
