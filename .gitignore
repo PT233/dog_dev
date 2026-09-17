@@ -10,3 +10,13 @@ ros2_ws/install/
 ros2_ws/src/build/
 ros2_ws/src/install/
 stm32_fw/build/
+
+# Local secrets and generated environment snapshots
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+!.env.sample
+!*.env.example
+!*.env.sample
