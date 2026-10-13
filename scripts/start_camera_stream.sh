@@ -9,6 +9,10 @@ TARGET_PORT=${2:-5600}
 CAMERA_DEVICE=${CAMERA_DEVICE:-/dev/video0}
 CAMERA_ENABLE_SCRIPT=${CAMERA_ENABLE_SCRIPT:-$HOME/camera.sh}
 CAMERA_ENABLE_DELAY_SEC=${CAMERA_ENABLE_DELAY_SEC:-2}
+# Encoder stage. The Pi uses its V4L2 hardware encoder; override it to run the
+# same pipeline elsewhere, e.g. against kernel/vcam on a PC:
+#   H264_ENCODER='x264enc tune=zerolatency speed-preset=ultrafast key-int-max=30'
+H264_ENCODER=${H264_ENCODER:-"v4l2h264enc ! video/x-h264,level=(string)4 ! h264parse"}
 
 echo "Starting camera stream to $TARGET_IP:$TARGET_PORT..."
 
@@ -27,6 +31,6 @@ gst-launch-1.0 -v \
   v4l2src device="$CAMERA_DEVICE" ! \
   'video/x-raw,format=YUY2,width=640,height=480,framerate=30/1' ! \
   videoconvert ! \
-  v4l2h264enc ! 'video/x-h264,level=(string)4' ! h264parse ! \
+  $H264_ENCODER ! \
   rtph264pay config-interval=1 ! \
   udpsink host="$TARGET_IP" port="$TARGET_PORT"
